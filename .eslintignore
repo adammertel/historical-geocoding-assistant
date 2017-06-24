@@ -1,0 +1,5 @@
+node_modules/**
+**/*.css
+**/*.html
+webpack.config.js
+webpack.production.config.js

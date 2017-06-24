@@ -1,0 +1,70 @@
+const webpack = require('webpack');
+const path = require('path');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+
+module.exports = {
+  devServer: {
+    historyApiFallback: true,
+    hot: true,
+    inline: true,
+    contentBase: './app',
+    port: 8080
+  },
+  entry: './app/main.jsx',
+  output: {
+    path: '[name].bundle.js'
+  },
+  module: {
+    rules: [
+      { 
+        test: /\.js[x]?$/, 
+        include: path.resolve(__dirname, 'app'), 
+        exclude: /node_modules/, 
+        loader: 'babel-loader',
+        query:
+        {
+          presets:['react']
+        }
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: { importLoaders: 1 },
+            },
+            'postcss-loader',
+          ],
+        }),
+      },
+      { 
+        test: /\.png$/,
+        loader: "url-loader",
+        query: { mimetype: "image/png" }
+      },
+      { 
+        test: /\.woff(2)?(\?[a-z0-9#=&.]+)?$/, 
+        loader: 'url?limit=10000&mimetype=application/font-woff' 
+      },
+      { 
+        test: /\.(ttf|eot|svg)(\?[a-z0-9#=&.]+)?$/, 
+        loader: 'file' 
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
+    new ExtractTextPlugin('[name].css'),
+    new CopyWebpackPlugin([
+      { from: 'static' }
+    ])
+  ]
+};

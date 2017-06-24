@@ -1,0 +1,27 @@
+{
+  "name": "beste-lagen-project",
+  "description": "",
+  "main": "app/main.jsx",
+  "authors": [
+    "Adam Mertel | Univie"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "es6",
+    "web",
+    "app",
+    "boilerplate"
+  ],
+  "homepage": "https://github.com/adammertel/beste-lagen",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "leaflet": "^1.0.3"
+  }
+}
