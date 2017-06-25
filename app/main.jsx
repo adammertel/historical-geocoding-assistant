@@ -10,44 +10,52 @@ import Sheet from './sheet.js'
 
 import './../ext/leaflet/dist/leaflet.css';
 
-const url = 'https://sheets.googleapis.com/v4/spreadsheets/' + sId + '/values/' + range + '?key=' + key + '&valueInputOption=RAW'
+
+Sheet.init( () => {
+  Sheet.readLine(1, (vals) => console.log(vals));
+  Sheet.readLine(2, (vals) => console.log(vals));
+  Sheet.updateLine(68, ['test'], (vals) => console.log(vals));
+
+})
+
+
+// const url = 'https://sheets.googleapis.com/v4/spreadsheets/' + sId + '/values/' + range + '?key=' + key + '&valueInputOption=RAW'
 
 
   
-const dataToUpdate = {
-  "values": [
-    [null,"4/1/2016", "4/15/2016", ""]
-  ]
-}
+// const dataToUpdate = {
+//   "values": [
+//     [null,"4/1/2016", "4/15/2016", ""]
+//   ]
+// }
 
-const auth = () => {
-  gapi.client.setApiKey(key);
-  gapi.auth2.init({
-    'clientId': clientId,
-    'scope': scopes,
-  }).then(function(result) {
-    const auth2 = gapi.auth2.getAuthInstance();
-    auth2.isSignedIn.listen(afterSignIn);
-    auth2.isSignedIn.get() ? afterSignIn() : auth2.signIn();
-  });
-}
-const afterSignIn = (res) => {
-  console.log(res);
-  console.log('authenticated successfully');
+// const auth = () => {
+//   gapi.client.setApiKey(key);
+//   gapi.auth2.init({
+//     'clientId': clientId,
+//     'scope': scopes,
+//   }).then(function(result) {
+//     const auth2 = gapi.auth2.getAuthInstance();
+//     auth2.isSignedIn.listen(afterSignIn);
+//     auth2.isSignedIn.get() ? afterSignIn() : auth2.signIn();
+//   });
+// }
+// const afterSignIn = (res) => {
+//   console.log(res);
+//   console.log('authenticated successfully');
 
-  gapi.client.request({
-    'path': url,
-    'method': 'PUT',
-    'valueInputOption': 'RAW',
-    'body': dataToUpdate
-  }).then(
-    (response) => console.log(response),
-    (response) => console.log(response)   
-  )
-}
+//   gapi.client.request({
+//     'path': url,
+//     'method': 'PUT',
+//     'body': dataToUpdate
+//   }).then(
+//     (response) => console.log(response),
+//     (response) => console.log(response)   
+//   )
+// }
 
 
-gapi.load('client:auth2', auth);
+// gapi.load('client:auth2', auth);
 // const auth = new auth0.WebAuth({
 //   domain: 'YOUR_AUTH0_DOMAIN',
 //   clientID: 'YOUR_CLIENT_ID',
