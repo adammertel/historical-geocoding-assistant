@@ -9,6 +9,7 @@ import Base from './base.js'
 import Sheet from './sheet.js'
 
 import './../ext/leaflet/dist/leaflet.css';
+import './../ext/bulma/css/bulma.css';
 
 
 Sheet.init( () => {

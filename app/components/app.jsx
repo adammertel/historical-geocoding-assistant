@@ -2,6 +2,9 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import Base from './../base';
+import AppMap from './map';
+import Panel from './panel';
+import Navbar from './navbar';
 
 
 @observer
@@ -17,16 +20,34 @@ export default class App extends React.Component {
     }
   }
 
+  navStyle() {
+    return {
+      
+    }
+  }
+
+  bodyStyle() {
+    return {
+      top: 55,
+      position: 'absolute',
+      bottom: 0,
+      width: '100%'
+    }
+  }
+
   render() {
     const store = this.props.store;
     console.log(store.activeData);
+    
     return (
       <div className="wrapper" style={this.style()} >
-        {store.activeData.map((val, vi) => {
-          console.log(val);
-          return (<div key={vi}>{val}</div>);
-        })}
-        <button onClick={appStore.nextRecord} >next record</button>
+        <div style={this.navStyle()} >
+          <Navbar />
+        </div>
+        <div style={this.bodyStyle()}>
+          <Panel />
+          <AppMap />
+        </div>
       </div>
     )
   }
