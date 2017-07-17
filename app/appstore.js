@@ -9,6 +9,8 @@ export default class AppStore {
     @observable recordRow = 1;
     @observable recordData = [];
 
+    @observable map1Opacity = 1; 
+
     constructor () {
         this.noRecords = 65;
         this.gotoRecord(1);
