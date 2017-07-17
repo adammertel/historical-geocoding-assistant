@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, TileLayer } from 'react-leaflet';
+import { Map, TileLayer, AttributionControl } from 'react-leaflet';
 
 import { observer } from 'mobx-react';
 
@@ -35,14 +35,15 @@ export default class AppMap extends React.Component {
           zoom={5}
           ref="map" 
           style={this.mapStyle()}
+          attributionControl={false}
         >
-          <TileLayer 
-              key="a"
-              url="http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png"
-              zIndex={1}
-              opacity={store.map1Opacity}
-              attribution="<a href='http://openstreetmap.org'>OpenStreetMap</a> contributors, <a href='http://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>"
-            />  
+          <AttributionControl position="bottomleft" />
+          <TileLayer key={2} opacity={store.mapOpacityRatio}
+              {...store.basemap2}
+          />  
+          <TileLayer key={1}  opacity={1 - store.mapOpacityRatio}
+              {...store.basemap1}
+          />  
         </Map>
       </div>
     )

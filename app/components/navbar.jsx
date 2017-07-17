@@ -19,6 +19,14 @@ export default class NavBar extends React.Component {
     }
   }
 
+  handleMapSelect(id, e) {
+    appStore.changeBaseMap(id, e.target.value);
+  }
+
+  handleOpacityRatio(e) {
+    appStore.changeOpacityRatio(e.target.value / 100);
+  }
+
   render() {
     const store = appStore;
     
@@ -29,6 +37,47 @@ export default class NavBar extends React.Component {
             <a className="navbar-item">
               <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28" />
             </a>
+          </div>
+          <div className="navbar-menu">
+
+            <div className="navbar-item">
+              <span className="select">
+                <select value={store.map1Id} onChange={this.handleMapSelect.bind(this, 1)}>
+                  {
+                    Object.keys(basemaps).map(basemapId => {
+                      const basemap = basemaps[basemapId];
+                      return (
+                        <option value={basemapId} key={basemapId} >{basemap.name}</option>
+                      )
+                    })
+                  }
+                </select>
+              </span>
+            </div>
+
+            <div className="navbar-item">
+              <input 
+                value={store.mapOpacityRatio * 100}
+                onChange={this.handleOpacityRatio.bind(this)}
+                type="range" min="0" max="100" step="1" className="navbar-slider slider" />
+            </div>
+            
+            <div className="navbar-item">
+              <span className="select">
+                <select value={store.map2Id} onChange={this.handleMapSelect.bind(this, 2)}>
+                  {
+                    Object.keys(basemaps).map(basemapId => {
+                      const basemap = basemaps[basemapId];
+                      return (
+                        <option value={basemapId} key={basemapId} >{basemap.name}</option>
+                      )
+                    })
+                  }
+                </select>
+              </span>
+            </div>
+
+
           </div>
         </nav>
       </div>

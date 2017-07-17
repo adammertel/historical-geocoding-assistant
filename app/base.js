@@ -20,10 +20,6 @@ var Base =  {
     }
   },
 
-  getColor (colorName) {
-    return config.styles.colors[colorName] ?
-      config.styles.colors[colorName] : 'black';
-  }
 };
 
 module.exports = Base;

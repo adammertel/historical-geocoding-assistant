@@ -17,9 +17,11 @@ Sheet.init( () => {
   // Sheet.readLine(2, (vals) => console.log(vals));
   // Sheet.updateLine(68, ['test'], (vals) => console.log(vals));
 
+  window['basemaps'] = Base.requestConfigFile('basemaps.json', true);
+  window['config'] = Base.requestConfigFile('config.json', true);
+  
   window['appStore'] = new AppStore();
   window['map'] = false;
-  window['config'] = Base.requestConfigFile('config.json', true);
 
   ReactDOM.render(
     <App store={appStore} />,

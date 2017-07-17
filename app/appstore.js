@@ -3,21 +3,23 @@ import Sheet from './sheet.js'
 
 export default class AppStore {
     @observable mapPosition = [[49, 20], [50, 21]];
-    @observable basemaps = {
 
-    };
     @observable recordRow = 1;
     @observable recordData = [];
 
-    @observable map1Opacity = 1; 
+    @observable mapOpacityRatio = 0; 
+    @observable map1Id = false; 
+    @observable map2Id = false; 
 
     constructor () {
         this.noRecords = 65;
         this.gotoRecord(1);
+        this.map1Id = Object.keys(window['basemaps'])[0]; 
+        this.map2Id = Object.keys(window['basemaps'])[1]; 
     }
 
     /*
-        computed
+        GETTERS
     */
     @computed get mapPositionArray () { 
         return [this.mapPosition[0].slice(), this.mapPosition[1].slice()];
@@ -27,14 +29,20 @@ export default class AppStore {
         return this.recordData.slice();
     }
 
-    basemapById (basemapId) { 
-        return this.basemaps.find( bm => bm.id === basemapid);
-    };
+    @computed get basemap1 () {
+        return this.basemapById(this.map1Id);
+    }
+
+    @computed get basemap2 () {
+        return this.basemapById(this.map2Id);
+    }
+
+
 
 
 
     /* 
-        actions
+        ACTIONS
     */
 
     // map position
@@ -49,8 +57,12 @@ export default class AppStore {
     };
 
     // map tiles
-    @action changeBasemapOpacity = (bid, opacity) => {
-        this.basemapById(bid).opacity = opacity;
+    @action changeOpacityRatio = (opacity) => {
+        console.log(opacity);
+        this.mapOpacityRatio = opacity;
+    }
+    @action changeBaseMap = (mid, bmid) => {
+        this['map' + mid + 'Id'] = bmid;
     }
 
     // active record
@@ -72,4 +84,13 @@ export default class AppStore {
     @action updateData = () => {
         Sheet.readLine(this.recordRow, (vals) => this.recordData = vals[0]);
     }
+
+
+    /*
+        METHODS
+    */
+
+    basemapById (basemapId) { 
+        return window['basemaps'][basemapId];
+    };
 }
