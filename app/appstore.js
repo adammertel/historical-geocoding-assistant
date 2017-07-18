@@ -4,16 +4,20 @@ import Sheet from './sheet.js'
 export default class AppStore {
     @observable mapPosition = [[49, 20], [50, 21]];
 
-    @observable recordRow = 1;
+    @observable recordRow = 2;
     @observable recordData = [];
 
     @observable mapOpacityRatio = 0; 
     @observable map1Id = false; 
-    @observable map2Id = false; 
+    @observable map2Id = false;
+
+    @observable columns = {
+
+    }
 
     constructor () {
         this.noRecords = 65;
-        this.gotoRecord(1);
+        this.updateData();
         this.map1Id = Object.keys(window['basemaps'])[0]; 
         this.map2Id = Object.keys(window['basemaps'])[1]; 
     }
@@ -26,7 +30,7 @@ export default class AppStore {
     };
     
     @computed get activeData () {
-        return this.recordData.slice();
+        return Object.assign(this.recordData, {});
     }
 
     @computed get basemap1 () {
@@ -36,8 +40,6 @@ export default class AppStore {
     @computed get basemap2 () {
         return this.basemapById(this.map2Id);
     }
-
-
 
 
 
@@ -58,9 +60,9 @@ export default class AppStore {
 
     // map tiles
     @action changeOpacityRatio = (opacity) => {
-        console.log(opacity);
         this.mapOpacityRatio = opacity;
     }
+
     @action changeBaseMap = (mid, bmid) => {
         this['map' + mid + 'Id'] = bmid;
     }
@@ -82,7 +84,7 @@ export default class AppStore {
     }
 
     @action updateData = () => {
-        Sheet.readLine(this.recordRow, (vals) => this.recordData = vals[0]);
+        Sheet.readLine(this.recordRow, false, (vals) => this.recordData = vals);
     }
 
 

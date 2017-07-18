@@ -9,7 +9,7 @@ export default class Menu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: this.props.defaultOpen
     }
   }
 
@@ -18,9 +18,15 @@ export default class Menu extends React.Component {
     }
   }
 
+  headerStyle() {
+    return {
+      display: 'inline-flex',
+      cursor: 'pointer'
+
+    }
+  }
+
   toggleOpen() {
-    console.log('toggleOpen');
-    console.log(this.state.open);
     this.setState({open: !this.state.open});
   }
 
@@ -29,7 +35,19 @@ export default class Menu extends React.Component {
     
     return (
       <div className="menu-wrapper" style={this.style()} >
-        <h4 className="menu-label" onClick={this.toggleOpen.bind(this)}>{this.props.label}</h4>
+        <div 
+          className="menu-header" 
+          style={this.headerStyle()} 
+          onClick={this.toggleOpen.bind(this)}
+        >
+          <h4 className="menu-label" >{this.props.label}</h4>
+          <span className="icon" >
+            <i 
+              className={this.state.open ? 'fa fa-caret-down' : 'fa fa-caret-right'} 
+              style={{marginBottom: 5}}
+            />
+          </span>
+        </div>
         {
           this.state.open ? this.props.children : null
         }

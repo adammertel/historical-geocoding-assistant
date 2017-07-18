@@ -8,6 +8,7 @@ import AppStore from './appstore.js';
 import Base from './base.js'
 import Sheet from './sheet.js'
 
+import './../ext/font-awesome/css/font-awesome.css';
 import './../ext/leaflet/dist/leaflet.css';
 import './../ext/bulma/css/bulma.css';
 

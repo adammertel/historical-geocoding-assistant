@@ -20,7 +20,8 @@ export default class Panel extends React.Component {
       width: '300px',
       backgroundColor: 'white',
       opacity: .9,
-      height: '94%'
+      height: '94%',
+      padding: 15
     }
   }
 
@@ -29,11 +30,12 @@ export default class Panel extends React.Component {
     
     return (
       <div className="panel-wrapper" style={this.style()} >
-        <Menu label="record">
+        <Menu label="record" defaultOpen={true}>
           <div>
             {
-              store.activeData.map((val, vi) => {
-                return (<div key={vi}>{val}</div>);
+              Object.keys(store.activeData).map((column, ci) => {
+                const value = store.activeData[column];
+                return (<div key={ci}>{column + ' : ' + value}</div>);
               })
             }
             <button onClick={appStore.previousRecord} >previous record</button>

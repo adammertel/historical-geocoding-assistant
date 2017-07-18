@@ -23,5 +23,8 @@
   ],
   "dependencies": {
     "leaflet": "^1.0.3"
+  },
+  "devDependencies": {
+    "font-awesome": "^4.7.0"
   }
 }
