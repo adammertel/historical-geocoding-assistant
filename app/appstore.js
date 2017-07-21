@@ -5,15 +5,18 @@ export default class AppStore {
     @observable mapPosition = [[49, 20], [50, 21]];
 
     @observable recordRow = 2;
-    @observable recordData = [];
+    @observable recordData = {};
+    @observable recordDataBackup = {};
 
     @observable mapOpacityRatio = 0; 
     @observable map1Id = false; 
     @observable map2Id = false;
 
     @observable columns = {
-
-    }
+        name: 'name',
+        x: 'x',
+        y: 'y'
+    };
 
     constructor () {
         this.noRecords = 65;
@@ -41,6 +44,16 @@ export default class AppStore {
         return this.basemapById(this.map2Id);
     }
 
+    @computed get recordName () {
+        return this.activeData[this.columns.name];
+    }
+
+    @computed get recordX () {
+        return this.activeData[this.columns.x];
+    }
+    @computed get recordY () {
+        return this.activeData[this.columns.y];
+    }
 
 
     /* 
@@ -59,6 +72,10 @@ export default class AppStore {
     };
 
     // map tiles
+    @action changeOpacityRatio = (opacity) => {
+        this.mapOpacityRatio = opacity;
+    }
+
     @action changeOpacityRatio = (opacity) => {
         this.mapOpacityRatio = opacity;
     }
@@ -84,7 +101,10 @@ export default class AppStore {
     }
 
     @action updateData = () => {
-        Sheet.readLine(this.recordRow, false, (vals) => this.recordData = vals);
+        Sheet.readLine(this.recordRow, false, (vals) => {
+            this.recordDataBackup = vals
+            this.recordData = vals
+        });
     }
 
 
