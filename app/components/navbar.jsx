@@ -56,7 +56,17 @@ export default class NavBar extends React.Component {
             </div>
 
             <div className="navbar-item">
+              <div 
+                style={{
+                  position: 'absolute',
+                  top: 7,
+                  fontWeight: 600
+                }}
+              >opacity:</div>
               <input 
+                style={{
+                  marginTop: 20
+                }}
                 value={store.mapOpacityRatio * 100}
                 onChange={this.handleOpacityRatio.bind(this)}
                 type="range" min="0" max="100" step="1" className="navbar-slider slider" />

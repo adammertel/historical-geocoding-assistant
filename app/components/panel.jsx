@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 
 import Base from './../base';
 import Menu from './menu';
+import Button from './button';
 
 
 @observer
@@ -32,14 +33,19 @@ export default class Panel extends React.Component {
       <div className="panel-wrapper" style={this.style()} >
         <Menu label="record" defaultOpen={true}>
           <div>
+            <div className="is-inline">
+              <Button label="" icon="caret-left" onClick={appStore.previousRecord} />
+              <h4 className="title is-4 is-inline has-text-centered" style={{margin: 5}}>
+                {store.activeData['name']}
+              </h4>
+              <Button label="" icon="caret-right" onClick={appStore.nextRecord} className="is-pulled-right"/>
+            </div>
             {
               Object.keys(store.activeData).map((column, ci) => {
                 const value = store.activeData[column];
                 return (<div key={ci}>{column + ' : ' + value}</div>);
               })
             }
-            <button onClick={appStore.previousRecord} >previous record</button>
-            <button onClick={appStore.nextRecord} >next record</button>
           </div>
         </Menu>
       </div>
