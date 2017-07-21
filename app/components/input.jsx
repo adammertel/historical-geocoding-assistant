@@ -13,6 +13,7 @@ export default class Input extends React.Component {
             className="input is-primary" 
             type="text" 
             value={this.props.value} 
+            onChange={this.props.onChange}
           />
         </div>
       </div>

@@ -107,6 +107,16 @@ export default class AppStore {
         });
     }
 
+    @action updateRecordValue = (column, value) => {
+        this.recordData[column] = value;
+    }
+
+    @action saveRecord = () => {
+        Sheet.updateLine(this.recordRow, Object.values(this.recordData), () => {
+            this.updateData();
+        })
+    }
+
 
     /*
         METHODS

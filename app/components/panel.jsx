@@ -11,6 +11,7 @@ import Input from './input';
 export default class Panel extends React.Component {
   constructor(props) {
     super(props);
+    this.store = appStore;
   }
 
   style() {
@@ -27,31 +28,35 @@ export default class Panel extends React.Component {
     }
   }
 
+  handleChangeInput(column, e) {
+    const value = e.target.value;
+    this.store.updateRecordValue(column, value);
+  }
+
   render() {
-    const store = appStore;
-    console.log(store.recordData)
+    console.log(this.store.recordData)
     
     return (
       <div className="panel-wrapper" style={this.style()} >
         <div className="is-inline">
-          <Button label="" icon="caret-left" onClick={appStore.previousRecord} />
+          <Button label="" icon="caret-left" onClick={this.store.previousRecord} />
           <h4 className="title is-4 is-inline has-text-centered" style={{margin: 5, fontWeight: 600}}>
-            {store.recordName}
+            {this.store.recordName}
           </h4>
-          <Button label="" icon="caret-right" onClick={appStore.nextRecord} className="is-pulled-right"/>
+          <Button label="" icon="caret-right" onClick={this.store.nextRecord} className="is-pulled-right"/>
         </div>
-        <Menu label="record data" defaultOpen={false}>
+        <Menu label="record data" defaultOpen={true}>
           <div>
             <table className="table">
               <tbody>
               {
-                Object.keys(store.activeData).map((column, ci) => {
-                  const value = store.activeData[column];
+                Object.keys(this.store.activeData).map((column, ci) => {
+                  const value = this.store.activeData[column];
                   return (
                     <tr key={ci}>
                       <td> {column} </td>
                       <td>
-                        <Input value={value} />
+                        <Input value={value} onChange={this.handleChangeInput.bind(this, column)} />
                       </td>
                     </tr>
                   )
@@ -63,8 +68,8 @@ export default class Panel extends React.Component {
         </Menu>
         <Menu label="coordinates" defaultOpen={true}>
           <div>
-            <Input value={store.recordX} />
-            <Input value={store.recordY} />
+            <Input value={this.store.recordX} />
+            <Input value={this.store.recordY} />
           </div>
         </Menu>
         <br />
@@ -72,11 +77,11 @@ export default class Panel extends React.Component {
         <div className="block">
           <Button 
             label="restore changes" icon="refresh" 
-            onClick={appStore.nextRecord} 
+            onClick={this.store.nextRecord} 
             className="is-danger" />
           <Button 
             label="save" icon="save" 
-            onClick={appStore.nextRecord} 
+            onClick={this.store.saveRecord} 
             className="is-success is-pulled-right" 
           />
         </div>
