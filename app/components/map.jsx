@@ -18,9 +18,6 @@ export default class AppMap extends React.Component {
     }
   }
 
-  validateGeo(feat) {
-    return isFinite(feat.x) && feat.x && isFinite(feat.y) && feat.y;
-  }
 
   mapStyle() {
     return {
@@ -49,8 +46,10 @@ export default class AppMap extends React.Component {
     return (
       <div className="map-wrapped" style={this.style()} >
         <Map 
-          center={[50,10]}
-          zoom={5}
+          center={store.mapPosition}
+          zoom={store.mapZoom}
+          onViewportChanged={store.mapMoved}
+          useFlyTo={true}
           ref="map" 
           style={this.mapStyle()}
           attributionControl={false}
@@ -64,7 +63,7 @@ export default class AppMap extends React.Component {
           />  
           {
             // rendering records
-            store.geoRecords.filter(this.validateGeo).map( (record, ri) => {
+            store.geoRecords.filter(Base.validGeo).map( (record, ri) => {
               const active = record.row.toString() === appStore.recordRow.toString()
               const style = this.styleMarker(active);
 

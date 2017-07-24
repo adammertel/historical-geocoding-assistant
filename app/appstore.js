@@ -9,11 +9,21 @@ export default class AppStore {
         y: 'y'
     };
 
+    @observable config = {
+        focusZoom: 12,
+        defaultZoom: 6,
+        defaultCenter: [45, 10],
+    };
+    
     @observable recordRow = 2;
     @observable records = {};
     @observable wikiText = '';
     
-    @observable mapPosition = [[49, 20], [50, 21]];
+
+    @observable map = {
+        center: this.config.defaultCenter,
+        zoom: this.config.defaultZoom
+    };
     @observable mapOpacityRatio = 0; 
     @observable map1Id = false; 
     @observable map2Id = false;
@@ -28,8 +38,13 @@ export default class AppStore {
     /*
         GETTERS
     */
-    @computed get mapPositionArray () { 
-        return [this.mapPosition[0].slice(), this.mapPosition[1].slice()];
+
+    // map
+    @computed get mapPosition () { 
+        return [this.map.center[0], this.map.center[1]];
+    };
+    @computed get mapZoom () { 
+        return this.map.zoom;
     };
 
     @computed get basemap1 () {
@@ -73,23 +88,41 @@ export default class AppStore {
             }
         }) 
     }
+    @computed get activeGeoRecord () {
+        return this.geoRecords.find(record => record.row.toString() === this.recordRow.toString());
+    }
 
 
     /* 
         ACTIONS
     */
 
-    // map position
-    @action setMapPosition = (position) => this.mapPosition = position;
-    @action mapMoved = () => {
-        if (map) {
-            const newBounds = map.getBounds();
-            const sw = newBounds.getSouthWest();
-            const ne = newBounds.getNorthEast();
-            this.mapPosition = [[sw.lat, sw.lng], [ne.lat, ne.lng]];
+    // map
+    @action mapMoved = (change) => {
+        this.map.center = change.center;
+        this.map.zoom = change.zoom;
+    };
+    @action mapCenterChange = (center) => this.map.center = center;
+    @action mapZoomChange = (zoom) => this.map.zoom = zoom;
+
+    @action defaultMapState = () => {
+        this.map.zoom = this.config.defaultZoom;
+        this.map.center = this.config.defaultCenter;
+    }
+    // pan and zoom to active record
+    @action focusRecord = () => {
+        if (Base.validGeo(this.activeGeoRecord)) {
+            this.map.center = [
+                parseFloat(this.activeGeoRecord.y),
+                parseFloat(this.activeGeoRecord.x)
+            ]
+            this.map.zoom = this.config.focusZoom;
+        } else {
+            this.defaultMapState();
         }
     }
 
+    // wiki
     @action updateWiki = () => {
         Base.wiki(this.recordName, (response) => {
             this.wikiText = response;
@@ -131,6 +164,7 @@ export default class AppStore {
         Sheet.readAllLines( this.noRecords, (data) => {
             this.records = data;
             this.updateWiki();
+            this.focusRecord();
         });
     }
 
@@ -156,5 +190,6 @@ export default class AppStore {
 
     basemapById (basemapId) { 
         return window['basemaps'][basemapId];
+
     };
 }

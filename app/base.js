@@ -13,6 +13,10 @@ var Base =  {
     }
   },
 
+  validGeo (feat) {
+    return isFinite(feat.x) && feat.x && isFinite(feat.y) && feat.y;
+  },
+
   doRequestAsync (url) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
