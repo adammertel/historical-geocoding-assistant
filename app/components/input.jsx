@@ -12,6 +12,9 @@ export default class Input extends React.Component {
   }
 
   render() {
+
+    let type = this.props.type;
+    if (type === 'float') type = 'number';
     
     return (
       <div className="field">
@@ -19,7 +22,8 @@ export default class Input extends React.Component {
           <input 
             style={this.style()}
             className="input is-primary" 
-            type="text" 
+            type={type || 'text'} 
+            step={this.props.type === 'float' ? '0.001' : false} 
             value={this.props.value} 
             onChange={this.props.onChange}
           />

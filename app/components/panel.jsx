@@ -78,8 +78,15 @@ export default class Panel extends React.Component {
         </Menu>
         <Menu label="coordinates" defaultOpen={true}>
           <div>
-            <Input value={this.store.recordX} />
-            <Input value={this.store.recordY} />
+            <Input 
+              type="float" 
+              onChange={this.handleChangeInput.bind(this, appStore.columns.x)}
+              value={this.store.recordX} 
+            />
+            <Input 
+              type="float" 
+              onChange={this.handleChangeInput.bind(this, appStore.columns.y)} 
+              value={this.store.recordY} />
           </div>
         </Menu>
         <br />

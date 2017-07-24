@@ -139,7 +139,7 @@ export default class AppStore {
         if (column === this.columns.name) {
             this.updateWiki();
         }
-        this.recordData[column] = value;
+        this.records[this.recordRow][column] = value;
     }
 
     // save local values to sheet
