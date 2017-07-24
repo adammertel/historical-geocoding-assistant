@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, TileLayer, AttributionControl } from 'react-leaflet';
+import { Map, TileLayer, AttributionControl, CircleMarker } from 'react-leaflet';
 
 import { observer } from 'mobx-react';
 
@@ -16,6 +16,10 @@ export default class AppMap extends React.Component {
     return {
 
     }
+  }
+
+  validateGeo(feat) {
+    return isFinite(feat.x) && feat.x && isFinite(feat.y) && feat.y;
   }
 
   mapStyle() {
@@ -44,6 +48,18 @@ export default class AppMap extends React.Component {
           <TileLayer key={1}  opacity={1 - store.mapOpacityRatio}
               {...store.basemap1}
           />  
+          {
+            // rendering records
+            store.geoRecords.filter(this.validateGeo).map( (record, ri) => {
+              return (
+                <CircleMarker 
+                  key={ri} 
+                  center={[parseFloat(record.y), parseFloat(record.x)]} 
+                  radius={3} 
+                />
+              )
+            })
+          }
         </Map>
       </div>
     )

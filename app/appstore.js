@@ -62,6 +62,16 @@ export default class AppStore {
             return this.wikiText.split('</p>')[0] + '</p>';
         }
     }
+    @computed get geoRecords () {
+        return Object.keys(this.records).map( rowNo => {
+            const record = this.records[rowNo];
+            return {
+                x: record[this.columns.x],
+                y: record[this.columns.y],
+                name:  record[this.columns.name]
+            }
+        }) 
+    }
 
 
     /* 
