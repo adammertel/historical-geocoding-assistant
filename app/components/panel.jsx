@@ -34,8 +34,11 @@ export default class Panel extends React.Component {
   }
 
   handleOpenWiki() {
-    console.log(Base.wiki(this.store.recordName));
-    //window.open('https://en.wikipedia.org/w/index.php?action=parse&search=' + this.store.recordName);
+    window.open(
+      'https://en.wikipedia.org/w/index.php?action=parse&search=' + this.store.recordName,
+      '_blank',
+      'width=600,height=900'
+    );
   }
 
   render() {
@@ -79,9 +82,16 @@ export default class Panel extends React.Component {
         </Menu>
         <br />
 
-        <Menu label="sources" defaultOpen={true}>
+        <Menu label="wikipedia" defaultOpen={true}>
           <div>
-            <Button icon="wikipedia-w" onClick={this.handleOpenWiki.bind(this)}/>
+            <div 
+              style={{fontSize: 8.5}}
+              className="notification" 
+              dangerouslySetInnerHTML={{
+                __html:this.store.wikiTextShort
+              }} 
+            />
+            <Button label="open new tab" icon="wikipedia-w" onClick={this.handleOpenWiki.bind(this)}/>
           </div>
         </Menu>
         <br />

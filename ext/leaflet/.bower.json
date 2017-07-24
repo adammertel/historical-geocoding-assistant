@@ -16,12 +16,12 @@
     "build"
   ],
   "homepage": "https://github.com/Leaflet/Leaflet",
-  "version": "1.0.3",
-  "_release": "1.0.3",
+  "version": "1.1.0",
+  "_release": "1.1.0",
   "_resolution": {
     "type": "version",
-    "tag": "v1.0.3",
-    "commit": "ed36a04aefd12cb92c78074fe63a8e460db1d464"
+    "tag": "v1.1.0",
+    "commit": "a3a7e045229898137bb9a3af0a1407e409e06c4f"
   },
   "_source": "https://github.com/Leaflet/Leaflet.git",
   "_target": "^1.0.3",

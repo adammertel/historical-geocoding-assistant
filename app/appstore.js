@@ -12,6 +12,7 @@ export default class AppStore {
     @observable mapOpacityRatio = 0; 
     @observable map1Id = false; 
     @observable map2Id = false;
+    @observable wikiText = '';
 
     @observable columns = {
         name: 'name',
@@ -55,6 +56,13 @@ export default class AppStore {
     @computed get recordY () {
         return this.activeData[this.columns.y];
     }
+    @computed get wikiTextShort () {
+        if (!this.wikiText) {
+            return 'not found'
+        } else {
+            return this.wikiText.split('</p>')[0] + '</p>';
+        }
+    }
 
 
     /* 
@@ -70,7 +78,13 @@ export default class AppStore {
             const ne = newBounds.getNorthEast();
             this.mapPosition = [[sw.lat, sw.lng], [ne.lat, ne.lng]];
         }
-    };
+    }
+
+    @action updateWiki = () => {
+        Base.wiki(this.recordName, (response) => {
+            this.wikiText = response;
+        });
+    }
 
     // map tiles
     @action changeOpacityRatio = (opacity) => {
@@ -101,17 +115,19 @@ export default class AppStore {
         this.updateData();
     }
 
+    // new data are loaded
     @action updateData = () => {
         Sheet.readLine(this.recordRow, false, (vals) => {
-            this.recordDataBackup = vals
-            this.recordData = vals
-
-            console.log('**********')
-            console.log(Base.wiki(this.recordName));
+            this.recordDataBackup = vals;
+            this.recordData = vals;
+            this.updateWiki();
         });
     }
 
     @action updateRecordValue = (column, value) => {
+        if (column === this.columns.name) {
+            this.updateWiki();
+        }
         this.recordData[column] = value;
     }
 
