@@ -24,7 +24,9 @@ export default class Panel extends React.Component {
       backgroundColor: 'white',
       opacity: .9,
       height: '94%',
-      padding: 15
+      padding: 15,
+      overflowY: 'scroll',
+      fontSize: 12
     }
   }
 
@@ -55,7 +57,7 @@ export default class Panel extends React.Component {
         </div>
         <Menu label="record data" defaultOpen={true}>
           <div>
-            <table className="table">
+            <table className="table" style={{fontSize: 11}}>
               <tbody>
               {
                 Object.keys(this.store.activeData).map((column, ci) => {
