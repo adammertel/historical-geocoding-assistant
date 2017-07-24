@@ -44,7 +44,7 @@ export default class Panel extends React.Component {
   }
 
   render() {
-    console.log(this.store.recordData)
+    //console.log(this.store.recordData)
     
     return (
       <div className="panel-wrapper" style={this.style()} >
@@ -60,8 +60,8 @@ export default class Panel extends React.Component {
             <table className="table" style={{fontSize: 11}}>
               <tbody>
               {
-                Object.keys(this.store.activeData).map((column, ci) => {
-                  const value = this.store.activeData[column];
+                Object.keys(this.store.recordData).map((column, ci) => {
+                  const value = this.store.recordData[column];
                   return (
                     <tr key={ci}>
                       <td> {column} </td>

@@ -15,6 +15,7 @@ export default class Menu extends React.Component {
 
   style() {
     return {
+      marginTop: 5
     }
   }
 
@@ -23,6 +24,12 @@ export default class Menu extends React.Component {
       display: 'inline-flex',
       cursor: 'pointer'
 
+    }
+  }
+
+  styleContent() {
+    return {
+      marginLeft: 10
     }
   }
 
@@ -48,9 +55,11 @@ export default class Menu extends React.Component {
             />
           </span>
         </div>
+        <div className="menu-content" style={this.styleContent()}>
         {
           this.state.open ? this.props.children : null
         }
+        </div>
       </div>
     )
   }

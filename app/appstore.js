@@ -3,22 +3,20 @@ import Sheet from './sheet.js'
 import Base from './base.js'
 
 export default class AppStore {
-    @observable mapPosition = [[49, 20], [50, 21]];
-
-    @observable recordRow = 2;
-    @observable recordData = {};
-    @observable recordDataBackup = {};
-
-    @observable mapOpacityRatio = 0; 
-    @observable map1Id = false; 
-    @observable map2Id = false;
-    @observable wikiText = '';
-
     @observable columns = {
         name: 'name',
         x: 'x',
         y: 'y'
     };
+
+    @observable recordRow = 2;
+    @observable records = {};
+    @observable wikiText = '';
+    
+    @observable mapPosition = [[49, 20], [50, 21]];
+    @observable mapOpacityRatio = 0; 
+    @observable map1Id = false; 
+    @observable map2Id = false;
 
     constructor () {
         this.noRecords = 65;
@@ -33,10 +31,6 @@ export default class AppStore {
     @computed get mapPositionArray () { 
         return [this.mapPosition[0].slice(), this.mapPosition[1].slice()];
     };
-    
-    @computed get activeData () {
-        return Object.assign(this.recordData, {});
-    }
 
     @computed get basemap1 () {
         return this.basemapById(this.map1Id);
@@ -46,15 +40,20 @@ export default class AppStore {
         return this.basemapById(this.map2Id);
     }
 
+    @computed get recordData () {
+        return this.records[this.recordRow] ? 
+            Object.assign(this.records[this.recordRow], {}) : {}
+    }
+
     @computed get recordName () {
-        return this.activeData[this.columns.name];
+        return this.recordData[this.columns.name];
     }
 
     @computed get recordX () {
-        return this.activeData[this.columns.x];
+        return this.recordData[this.columns.x];
     }
     @computed get recordY () {
-        return this.activeData[this.columns.y];
+        return this.recordData[this.columns.y];
     }
     @computed get wikiTextShort () {
         if (!this.wikiText) {
@@ -99,7 +98,8 @@ export default class AppStore {
         this['map' + mid + 'Id'] = bmid;
     }
 
-    // active record
+
+    // changing recordRow
     @action nextRecord = () => {
         this.recordRow = this.recordRow === this.noRecords ? 1 : this.recordRow + 1;
         this.updateData();
@@ -117,13 +117,14 @@ export default class AppStore {
 
     // new data are loaded
     @action updateData = () => {
-        Sheet.readLine(this.recordRow, false, (vals) => {
-            this.recordDataBackup = vals;
-            this.recordData = vals;
+        Sheet.readAllLines( this.noRecords, (data) => {
+            console.log(data)
+            this.records = data;
             this.updateWiki();
         });
     }
 
+    // locally store new values
     @action updateRecordValue = (column, value) => {
         if (column === this.columns.name) {
             this.updateWiki();
@@ -131,6 +132,7 @@ export default class AppStore {
         this.recordData[column] = value;
     }
 
+    // save local values to sheet
     @action saveRecord = () => {
         Sheet.updateLine(this.recordRow, Object.values(this.recordData), () => {
             this.updateData();

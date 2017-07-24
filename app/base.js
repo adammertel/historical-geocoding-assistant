@@ -29,7 +29,7 @@ var Base =  {
         if (xhr.status === 200) {
           return xhr.responseText;
         } else {
-          console.log(xhr.statusText);
+          //console.log(xhr.statusText);
           return {}
         }
       } else {

@@ -37,7 +37,7 @@ export default class App extends React.Component {
 
   render() {
     const store = this.props.store;
-    console.log(store.activeData);
+    console.log(store.recordData);
     
     return (
       <div className="wrapper" style={this.style()} >
