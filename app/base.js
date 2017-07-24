@@ -71,7 +71,21 @@ var Base =  {
           next(false);
         }
       },
-      fail: (e) => false 
+      fail: (e) => next(false) 
+    })
+  },
+
+  geonames (term, next) {
+    const path = 'http://api.geonames.org/searchJSON?' + 
+      'q=' +  term + 
+      '&maxRows=20&username=adammertel';
+
+    $.ajax({
+      dataType: 'json',
+      url: path,
+      async: false, 
+      success: (res) => next(res.geonames),
+      fail: (e) => next(false)
     })
   }
 

@@ -15,7 +15,8 @@ export default class Menu extends React.Component {
 
   style() {
     return {
-      marginTop: 5
+      marginTop: 10,
+      marginBottom: 10
     }
   }
 
@@ -47,11 +48,11 @@ export default class Menu extends React.Component {
           style={this.headerStyle()} 
           onClick={this.toggleOpen.bind(this)}
         >
-          <h4 className="menu-label" >{this.props.label}</h4>
+          <h4 className="menu-label" style={{fontWeight: 800, color: 'black'}} >{this.props.label}</h4>
           <span className="icon" >
             <i 
               className={this.state.open ? 'fa fa-caret-down' : 'fa fa-caret-right'} 
-              style={{marginBottom: 5}}
+              style={{marginBottom: 10}}
             />
           </span>
         </div>

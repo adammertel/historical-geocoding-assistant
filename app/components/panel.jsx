@@ -30,6 +30,20 @@ export default class Panel extends React.Component {
     }
   }
 
+  styleTag() {
+    return {
+      margin: '0px 5px',
+      fontSize: 9
+    }
+  }
+
+  styleSmallButton() {
+    return {    
+      margin: '-2px 2px',
+      padding: 0
+    }
+  }
+
   handleChangeInput(column, e) {
     const value = e.target.value;
     this.store.updateRecordValue(column, value);
@@ -89,7 +103,28 @@ export default class Panel extends React.Component {
               value={this.store.recordY} />
           </div>
         </Menu>
-        <br />
+
+        <Menu label="geonames" defaultOpen={true}>
+          <div> 
+            {
+              this.store.geonames.map( (geoname, gi) => {
+                return (
+                  <p key={gi}>
+                    {
+                      geoname.toponymName 
+                    }
+                    <span className="tag" style={this.styleTag()}>
+                    {
+                      geoname.countryCode + ' - ' + geoname.fcodeName
+                    }
+                    </span>
+                    <Button label="apply" className="is-inverted" style={this.styleSmallButton()} />
+                  </p>
+                )
+              })
+            }
+          </div>
+        </Menu>
 
         <Menu label="wikipedia" defaultOpen={true}>
           <div>
@@ -103,7 +138,6 @@ export default class Panel extends React.Component {
             <Button label="open new tab" icon="wikipedia-w" onClick={this.handleOpenWiki.bind(this)}/>
           </div>
         </Menu>
-        <br />
 
         <div className="block">
           <Button 

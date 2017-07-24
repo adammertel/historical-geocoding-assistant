@@ -18,6 +18,7 @@ export default class AppStore {
     @observable recordRow = 2;
     @observable records = {};
     @observable wikiText = '';
+    @observable geonames = [];
     
 
     @observable map = {
@@ -124,6 +125,9 @@ export default class AppStore {
 
     // wiki
     @action updateWiki = () => {
+        Base.geonames(this.recordName, (response) => {
+            this.geonames = response
+        })
         Base.wiki(this.recordName, (response) => {
             this.wikiText = response;
         });
