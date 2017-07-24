@@ -59,7 +59,7 @@ export default class AppStore {
         if (!this.wikiText) {
             return 'not found'
         } else {
-            return this.wikiText.split('</p>')[0] + '</p>';
+            return this.wikiText.split('</p>')[0] + '</p>' + this.wikiText.split('</p>')[1] + '</p>';
         }
     }
     @computed get geoRecords () {
@@ -68,7 +68,8 @@ export default class AppStore {
             return {
                 x: record[this.columns.x],
                 y: record[this.columns.y],
-                name:  record[this.columns.name]
+                name: record[this.columns.name],
+                row: rowNo
             }
         }) 
     }
@@ -116,7 +117,7 @@ export default class AppStore {
     }
 
     @action previousRecord = () => {
-        this.recordRow = this.recordRow === 1 ? this.recordRow - 1 : this.noRecords;
+        this.recordRow = this.recordRow === 2 ? this.noRecords : this.recordRow - 1;
         this.updateData();
     }
     
@@ -128,7 +129,6 @@ export default class AppStore {
     // new data are loaded
     @action updateData = () => {
         Sheet.readAllLines( this.noRecords, (data) => {
-            console.log(data)
             this.records = data;
             this.updateWiki();
         });
@@ -136,10 +136,10 @@ export default class AppStore {
 
     // locally store new values
     @action updateRecordValue = (column, value) => {
+        this.records[this.recordRow][column] = value;
         if (column === this.columns.name) {
             this.updateWiki();
         }
-        this.records[this.recordRow][column] = value;
     }
 
     // save local values to sheet

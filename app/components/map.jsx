@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, TileLayer, AttributionControl, CircleMarker } from 'react-leaflet';
+import { Map, TileLayer, AttributionControl, CircleMarker, Tooltip, Popup, LayerGroup } from 'react-leaflet';
 
 import { observer } from 'mobx-react';
 
@@ -29,6 +29,20 @@ export default class AppMap extends React.Component {
     }
   }
 
+  styleMarker(active) {
+    return {
+      fillColor: active ? 'red' : 'orange',
+      color: 'black',
+      fillOpacity: .8,
+      weight: active ? 2 : 1,
+      radius: active ? 3 : 2,
+    }
+  }
+
+  handleClickCircle(rowId) {
+    appStore.gotoRecord(rowId);
+  }
+
   render() {
     const store = appStore;
     
@@ -51,12 +65,25 @@ export default class AppMap extends React.Component {
           {
             // rendering records
             store.geoRecords.filter(this.validateGeo).map( (record, ri) => {
+              const active = record.row.toString() === appStore.recordRow.toString()
+              const style = this.styleMarker(active);
+
               return (
-                <CircleMarker 
-                  key={ri} 
-                  center={[parseFloat(record.y), parseFloat(record.x)]} 
-                  radius={3} 
-                />
+                <LayerGroup key={ri}>
+                  <CircleMarker 
+                    center={[parseFloat(record.y), parseFloat(record.x)]} 
+                    {...style}
+                  />
+                  <CircleMarker
+                    center={[parseFloat(record.y), parseFloat(record.x)]}
+                    radius={5} fillOpacity={0} opacity={0}
+                    onClick={this.handleClickCircle.bind(this, record.row)}
+                  >
+                    <Tooltip>
+                      <h4>{record.name}</h4>
+                    </Tooltip>
+                  </CircleMarker>
+                </LayerGroup>
               )
             })
           }
