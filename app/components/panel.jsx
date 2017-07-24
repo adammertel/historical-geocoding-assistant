@@ -33,6 +33,11 @@ export default class Panel extends React.Component {
     this.store.updateRecordValue(column, value);
   }
 
+  handleOpenWiki() {
+    console.log(Base.wiki(this.store.recordName));
+    //window.open('https://en.wikipedia.org/w/index.php?action=parse&search=' + this.store.recordName);
+  }
+
   render() {
     console.log(this.store.recordData)
     
@@ -70,6 +75,13 @@ export default class Panel extends React.Component {
           <div>
             <Input value={this.store.recordX} />
             <Input value={this.store.recordY} />
+          </div>
+        </Menu>
+        <br />
+
+        <Menu label="sources" defaultOpen={true}>
+          <div>
+            <Button icon="wikipedia-w" onClick={this.handleOpenWiki.bind(this)}/>
           </div>
         </Menu>
         <br />

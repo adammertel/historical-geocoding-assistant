@@ -1,5 +1,6 @@
 import { observable, action, computed } from 'mobx';
 import Sheet from './sheet.js'
+import Base from './base.js'
 
 export default class AppStore {
     @observable mapPosition = [[49, 20], [50, 21]];
@@ -104,6 +105,9 @@ export default class AppStore {
         Sheet.readLine(this.recordRow, false, (vals) => {
             this.recordDataBackup = vals
             this.recordData = vals
+
+            console.log('**********')
+            console.log(Base.wiki(this.recordName));
         });
     }
 
