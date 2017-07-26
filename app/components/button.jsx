@@ -11,6 +11,7 @@ export default class Button extends React.Component {
         className={'button is-small is-primary ' + this.props.className} 
         onClick={this.props.onClick}
         style={this.props.style}
+        aria-label={this.props.tooltip}
       >
         {
           this.props.icon ? (

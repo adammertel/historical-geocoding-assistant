@@ -29,6 +29,8 @@ export default class AppStore {
     @observable map1Id = false; 
     @observable map2Id = false;
 
+    @observable geonamePoint = false;
+
     constructor () {
         this.noRecords = 65;
         this.updateData();
@@ -121,6 +123,13 @@ export default class AppStore {
         } else {
             this.defaultMapState();
         }
+    }
+
+    @action locateGeoname = (geoname) => {
+        if (this.geonameTimeout) {clearTimeout(this.geonameTimeout);};
+        this.mapCenterChange(geoname.ll);
+        this.geonamePoint = geoname.ll;
+        this.geonameTimeout = setTimeout( () => {this.geonamePoint = false}, 2000 )
     }
 
     // wiki

@@ -39,8 +39,7 @@ export default class Panel extends React.Component {
 
   styleSmallButton() {
     return {    
-      margin: '-2px 2px',
-      padding: 0
+      marginTop: -3
     }
   }
 
@@ -55,6 +54,10 @@ export default class Panel extends React.Component {
       '_blank',
       'width=600,height=900'
     );
+  }
+
+  handleLocateGeocodedPlaceClick(geoname) {
+    appStore.locateGeoname(geoname);
   }
 
   render() {
@@ -110,15 +113,28 @@ export default class Panel extends React.Component {
               this.store.geonames.map( (geoname, gi) => {
                 return (
                   <p key={gi}>
+                    <Button 
+                      tooltip="show on map"
+                      icon="compass" label="" 
+                      onClick={this.handleLocateGeocodedPlaceClick.bind(this, geoname)}
+                      className="is-inverted hint--top-right" 
+                      style={this.styleSmallButton()} 
+                    />
+                    <Button 
+                      icon="floppy-o" label="" 
+                      className="is-inverted" 
+                      style={this.styleSmallButton()} 
+                    />
+                    <span style={{marginLeft: 5}}>
                     {
                       geoname.toponymName 
                     }
-                    <span className="tag" style={this.styleTag()}>
+                    </span>
+                    <span className="tag is-dark" style={this.styleTag()}>
                     {
-                      geoname.countryCode + ' - ' + geoname.fcodeName
+                      geoname.countryCode// + ' - ' + geoname.fcodeName
                     }
                     </span>
-                    <Button label="apply" className="is-inverted" style={this.styleSmallButton()} />
                   </p>
                 )
               })

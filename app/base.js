@@ -84,8 +84,18 @@ var Base =  {
       dataType: 'json',
       url: path,
       async: false, 
-      success: (res) => next(res.geonames),
+      success: (res) => {
+        
+        next(this.parseGeonames(res.geonames))
+      },
       fail: (e) => next(false)
+    })
+  },
+
+  parseGeonames (geonames) {
+    return geonames.map(gn => {
+      gn.ll = [parseFloat(gn.lat), parseFloat(gn.lng)];
+      return gn;
     })
   }
 
