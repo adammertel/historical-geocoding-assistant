@@ -84,6 +84,21 @@ export default class Panel extends React.Component {
           </h4>
           <Button label="" icon="caret-right" onClick={this.store.nextRecord} className="is-pulled-right"/>
         </div>
+
+        <Menu label="coordinates" defaultOpen={true}>
+          <div>
+            <Input 
+              type="float" 
+              onChange={this.handleChangeInput.bind(this, appStore.columns.x)}
+              value={this.store.recordX} 
+            />
+            <Input 
+              type="float" 
+              onChange={this.handleChangeInput.bind(this, appStore.columns.y)} 
+              value={this.store.recordY} />
+          </div>
+        </Menu>
+
         <Menu label="record data" defaultOpen={true}>
           <div>
             <table className="table" style={{fontSize: 11}}>
@@ -103,20 +118,6 @@ export default class Panel extends React.Component {
               }
               </tbody>
             </table>
-          </div>
-        </Menu>
-
-        <Menu label="coordinates" defaultOpen={true}>
-          <div>
-            <Input 
-              type="float" 
-              onChange={this.handleChangeInput.bind(this, appStore.columns.x)}
-              value={this.store.recordX} 
-            />
-            <Input 
-              type="float" 
-              onChange={this.handleChangeInput.bind(this, appStore.columns.y)} 
-              value={this.store.recordY} />
           </div>
         </Menu>
 

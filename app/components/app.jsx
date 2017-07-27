@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import Base from './../base';
 import AppMap from './map';
 import Panel from './panel';
-import Navbar from './navbar';
+import LayerControl from './layercontrol';
 
 
 @observer
@@ -20,15 +20,9 @@ export default class App extends React.Component {
     }
   }
 
-  navStyle() {
-    return {
-      
-    }
-  }
-
   bodyStyle() {
     return {
-      top: 55,
+      top: 0,
       position: 'absolute',
       bottom: 0,
       width: '100%'
@@ -40,12 +34,10 @@ export default class App extends React.Component {
     
     return (
       <div className="wrapper" style={this.style()} >
-        <div style={this.navStyle()} >
-          <Navbar />
-        </div>
         <div style={this.bodyStyle()}>
           <Panel />
           <AppMap />
+          <LayerControl />
         </div>
       </div>
     )
