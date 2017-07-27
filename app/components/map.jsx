@@ -66,7 +66,7 @@ export default class AppMap extends React.Component {
               const iconClasses = active ? 'icon is-medium' : 'icon is-small';
               const iconSize = [20, 20];
               const style = active ? 
-                "color: #00d1b2; vertical-align: bottom" : 
+                "color: #ca5900; vertical-align: bottom" : 
                 "color: black; vertical-align: bottom";
 
               const icon = divIcon({

@@ -69,6 +69,14 @@ export default class Panel extends React.Component {
     
     return (
       <div className="panel-wrapper" style={this.style()} >
+        <div>
+          <img 
+            src="assets/icon.svg" 
+            alt="logo"
+            height="150px"
+            width="300px" 
+          />
+        </div>
         <div className="is-inline">
           <Button label="" icon="caret-left" onClick={this.store.previousRecord} />
           <h4 className="title is-4 is-inline has-text-centered" style={{margin: 5, fontWeight: 600}}>
@@ -97,6 +105,7 @@ export default class Panel extends React.Component {
             </table>
           </div>
         </Menu>
+
         <Menu label="coordinates" defaultOpen={true}>
           <div>
             <Input 
@@ -162,13 +171,13 @@ export default class Panel extends React.Component {
 
         <div className="block">
           <Button 
-            label="restore changes" icon="refresh" 
+            label="restore" icon="refresh" 
             onClick={this.store.nextRecord} 
-            className="is-danger" />
+            className="is-primary is-medium" />
           <Button 
             label="save" icon="save" 
             onClick={this.store.saveRecord} 
-            className="is-success is-pulled-right" 
+            className="is-primary  is-medium is-pulled-right" 
           />
         </div>
 

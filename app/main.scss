@@ -1,0 +1,17 @@
+html {
+  overflow: hidden;
+}
+
+// 1. Import the initial variables
+@import "../node_modules/bulma/sass/utilities/initial-variables";
+
+$primary: #ca5900;
+$success: #00ca59;
+$danger: #ca000c;
+
+
+$family-serif: 'Acme', sans-serif;
+$family-primary: 'Lato', sans-serif;;
+
+// 4. Import the rest of Bulma
+@import "../node_modules/bulma/bulma"

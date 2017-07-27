@@ -3,6 +3,7 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
+
 const uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 module.exports = {
@@ -37,6 +38,18 @@ module.exports = {
           ],
         }),
       },
+      {
+        test: /\.scss$/,
+        use: extractSass.extract({
+          use: [{
+            loader: "css-loader"
+          }, {
+            loader: "sass-loader"
+          }],
+          // use style-loader in development
+          fallback: "style-loader"
+        })
+      },
       { 
         test: /\.png$/,
         loader: "url-loader",
@@ -56,6 +69,10 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
   plugins: [
+    new ExtractTextPlugin({
+      filename: "[name].[contenthash].css",
+      disable: process.env.NODE_ENV === "development"
+    }),
     new uglifyJsPlugin({
       compress: {
         warnings: false

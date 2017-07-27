@@ -3,7 +3,7 @@ import auth0 from 'auth0-js';
 import ReactDOM from 'react-dom';
 
 import App from './components/app';
-import './main.css';
+import './main.scss';
 import AppStore from './appstore.js';
 import Base from './base.js'
 import Sheet from './sheet.js'
