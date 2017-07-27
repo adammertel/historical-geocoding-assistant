@@ -27,18 +27,13 @@ export default class AppMap extends React.Component {
     }
   }
 
-  styleMarker(active) {
-    return {
-      fillColor: active ? 'red' : 'orange',
-      color: 'black',
-      fillOpacity: .8,
-      weight: active ? 2 : 1,
-      radius: active ? 3 : 2,
-    }
+  handleClickMarker(rowId) {
+    appStore.gotoRecord(rowId);
   }
 
-  handleClickCircle(rowId) {
-    appStore.gotoRecord(rowId);
+  handleDragMarker(e) {
+    const targetLatLng = e.target._latlng;
+    appStore.updateRecordLocation(targetLatLng.lng, targetLatLng.lat);
   }
 
   render() {
@@ -71,7 +66,7 @@ export default class AppMap extends React.Component {
               const iconClasses = active ? 'icon is-medium' : 'icon is-small';
               const iconSize = [20, 20];
               const style = active ? 
-                "color: red; vertical-align: bottom" : 
+                "color: #00d1b2; vertical-align: bottom" : 
                 "color: black; vertical-align: bottom";
 
               const icon = divIcon({
@@ -86,7 +81,9 @@ export default class AppMap extends React.Component {
                   <Marker 
                     position={[parseFloat(record.y), parseFloat(record.x)]} 
                     icon={icon}
-                    onClick={this.handleClickCircle.bind(this, record.row)}
+                    onClick={this.handleClickMarker.bind(this, record.row)}
+                    draggable={active}
+                    onDragEnd={this.handleDragMarker.bind(this)}
                   >
                     <Tooltip offset={[10, -10]}>
                       <h4>{record.name}</h4>

@@ -133,10 +133,14 @@ export default class AppStore {
     }
 
     @action useGeoname = (geoname) => {
-        this.updateRecordValue(this.columns.y, geoname.ll[0]);
-        this.updateRecordValue(this.columns.x, geoname.ll[1]);
+        this.updateRecordLocation(geoname.ll[1], geoname.ll[0])
         this.mapCenterChange(geoname.ll);
     }
+
+    @action updateRecordLocation = (x, y) => {
+        this.updateRecordValue(this.columns.y, y);
+        this.updateRecordValue(this.columns.x, x);
+    } 
 
     // wiki
     @action updateWiki = () => {
