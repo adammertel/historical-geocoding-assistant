@@ -60,6 +60,10 @@ export default class Panel extends React.Component {
     appStore.locateGeoname(geoname);
   }
 
+  handleUseGeocodedPlaceClick(geoname) {
+    appStore.useGeoname(geoname);
+  }
+
   render() {
     //console.log(this.store.recordData)
     
@@ -123,6 +127,7 @@ export default class Panel extends React.Component {
                     <Button 
                       icon="floppy-o" label="" 
                       className="is-inverted" 
+                      onClick={this.handleUseGeocodedPlaceClick.bind(this, geoname)}
                       style={this.styleSmallButton()} 
                     />
                     <span style={{marginLeft: 5}}>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Map, TileLayer, AttributionControl, CircleMarker, Tooltip, Popup, LayerGroup } from 'react-leaflet';
+import { Map, TileLayer, AttributionControl, CircleMarker, Tooltip, Popup, Marker, LayerGroup } from 'react-leaflet';
+import { divIcon } from 'leaflet';
 
 import { observer } from 'mobx-react';
 
@@ -65,23 +66,32 @@ export default class AppMap extends React.Component {
             // rendering records
             store.geoRecords.filter(Base.validGeo).map( (record, ri) => {
               const active = record.row.toString() === appStore.recordRow.toString()
-              const style = this.styleMarker(active);
+              //const style = this.styleMarker(active);
+
+              const iconClasses = active ? 'icon is-medium' : 'icon is-small';
+              const iconSize = [20, 20];
+              const style = active ? 
+                "color: red; vertical-align: bottom" : 
+                "color: black; vertical-align: bottom";
+
+              const icon = divIcon({
+                html: '<span style="' + style + '" class="icon"><i class="fa fa-map-marker"></i></span>',
+                className: 'map-sort-icon',
+                iconAnchor: [iconSize[0]/2, iconSize[1]],
+                iconSize: iconSize
+              });
 
               return (
                 <LayerGroup key={ri}>
-                  <CircleMarker 
-                    center={[parseFloat(record.y), parseFloat(record.x)]} 
-                    {...style}
-                  />
-                  <CircleMarker
-                    center={[parseFloat(record.y), parseFloat(record.x)]}
-                    radius={5} fillOpacity={0} opacity={0}
+                  <Marker 
+                    position={[parseFloat(record.y), parseFloat(record.x)]} 
+                    icon={icon}
                     onClick={this.handleClickCircle.bind(this, record.row)}
                   >
-                    <Tooltip>
+                    <Tooltip offset={[10, -10]}>
                       <h4>{record.name}</h4>
                     </Tooltip>
-                  </CircleMarker>
+                  </Marker>
                 </LayerGroup>
               )
             })

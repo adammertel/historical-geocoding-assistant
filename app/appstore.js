@@ -34,8 +34,8 @@ export default class AppStore {
     constructor () {
         this.noRecords = 65;
         this.updateData();
-        this.map1Id = Object.keys(window['basemaps'])[0]; 
-        this.map2Id = Object.keys(window['basemaps'])[1]; 
+        this.map1Id = Object.keys(window['basemaps'])[1]; 
+        this.map2Id = Object.keys(window['basemaps'])[0]; 
     }
 
     /*
@@ -132,6 +132,12 @@ export default class AppStore {
         this.geonameTimeout = setTimeout( () => {this.geonamePoint = false}, 2000 )
     }
 
+    @action useGeoname = (geoname) => {
+        this.updateRecordValue(this.columns.y, geoname.ll[0]);
+        this.updateRecordValue(this.columns.x, geoname.ll[1]);
+        this.mapCenterChange(geoname.ll);
+    }
+
     // wiki
     @action updateWiki = () => {
         Base.geonames(this.recordName, (response) => {
@@ -177,7 +183,7 @@ export default class AppStore {
         Sheet.readAllLines( this.noRecords, (data) => {
             this.records = data;
             this.updateWiki();
-            this.focusRecord();
+            //this.focusRecord();
         });
     }
 

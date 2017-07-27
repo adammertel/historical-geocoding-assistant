@@ -14,7 +14,7 @@ var Base =  {
   },
 
   validGeo (feat) {
-    return isFinite(feat.x) && feat.x && isFinite(feat.y) && feat.y;
+    return feat.x  && feat.y && isFinite(feat.x) && isFinite(feat.y);
   },
 
   doRequestAsync (url) {
