@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import Menu from './menu';
+import Button from './button';
 import Base from './../base';
 
 
@@ -27,8 +28,20 @@ export default class LayerControl extends React.Component {
     appStore.changeBaseMap(id, e.target.value);
   }
 
+  handleOverlaySelect(select, e) {
+    appStore.addOverlay(e.target.value);
+  }
+
   handleOpacityRatio(e) {
     appStore.changeOpacityRatio(e.target.value / 100);
+  }
+
+  handleOverlayOpacity(oid, e) {
+    appStore.overlayChangeOpacity(oid, e.target.value / 100);
+  } 
+
+  handleRemoveOverlay(oid) {
+    appStore.overlayRemove(oid);
   }
 
   render() {
@@ -66,7 +79,7 @@ export default class LayerControl extends React.Component {
                       style={{}}
                       value={store.mapOpacityRatio * 100}
                       onChange={this.handleOpacityRatio.bind(this)}
-                      type="range" min="0" max="100" step="1" className="navbar-slider slider" 
+                      type="range" min="0" max="100" step="1" className="slider" 
                     />
                   </td>
                 </tr>
@@ -93,7 +106,55 @@ export default class LayerControl extends React.Component {
           </div>
         </Menu>
         <Menu label="overlay layers" defaultOpen={true}>
-          <div />
+          <div>
+            <span>Active Overlays</span>
+            <table className="table" style={{fontSize: 11}}>
+              <tbody>
+                {
+                  appStore.overlays.map(overlay => {
+                    return (
+                      <tr key={overlay.id}>
+                        <td>{overlaymaps[overlay.id].name}</td>
+                        <td>
+                          <input 
+                            style={{}}
+                            value={overlay.opacity * 100}
+                            onChange={this.handleOverlayOpacity.bind(this, overlay.id)}
+                            type="range" min="0" max="100" step="1" className="slider" 
+                          />
+                        </td>
+                        <td>
+                          <Button 
+                            icon="trash-o" label="" 
+                            className="is-inverted" 
+                            onClick={this.handleRemoveOverlay.bind(this, overlay.id)}
+                            style={{marginTop: -3}} 
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })
+                }
+                <tr><td>
+                  <span className="select">
+                    <select 
+                      value="default" 
+                      onChange={this.handleOverlaySelect.bind(this, 1)}>
+                      <option value="default" key="default">select overlay to add</option>
+                      {
+                        Object.keys(overlaymaps).map(overlayId => {
+                          const overlay = overlaymaps[overlayId];
+                          return (
+                            <option value={overlayId} key={overlayId} >{overlay.name}</option>
+                          )
+                        })
+                      }
+                    </select>
+                  </span>
+                </td></tr>
+              </tbody>
+            </table>
+          </div>
         </Menu>
       </div>
     )

@@ -29,6 +29,8 @@ export default class AppStore {
     @observable map1Id = false; 
     @observable map2Id = false;
 
+    @observable overlays = [];
+
     @observable geonamePoint = false;
 
     constructor () {
@@ -163,6 +165,29 @@ export default class AppStore {
 
     @action changeBaseMap = (mid, bmid) => {
         this['map' + mid + 'Id'] = bmid;
+    }
+
+    // map overlays
+    @action addOverlay = (overlayId) => {
+      const foundOverlay = this.overlays.find( ov => ov.id === overlayId );
+      if (!foundOverlay) {
+        this.overlays.push(
+          {
+            id: overlayId,
+            opacity: 1
+          }
+        )
+      }
+    }
+    @action overlayChangeOpacity = (overlayId, newOpacity) => {
+        const foundOverlay = this.overlays.find( ov => ov.id === overlayId );
+        if (foundOverlay) {
+            foundOverlay.opacity = newOpacity;
+        }
+    }
+    @action overlayRemove = (overlayId) => {
+        const clonedOverlays = this.overlays.slice();
+        this.overlays = clonedOverlays.filter( ov => ov.id !== overlayId );
     }
 
 

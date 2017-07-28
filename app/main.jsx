@@ -19,6 +19,7 @@ Sheet.init( () => {
   // Sheet.updateLine(68, ['test'], (vals) => console.log(vals));
 
   window['basemaps'] = Base.requestConfigFile('basemaps.json', true);
+  window['overlaymaps'] = Base.requestConfigFile('mapoverlays.json', true);
   window['config'] = Base.requestConfigFile('config.json', true);
   
   window['appStore'] = new AppStore();
