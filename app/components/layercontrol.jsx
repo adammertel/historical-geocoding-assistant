@@ -92,7 +92,7 @@ export default class LayerControl extends React.Component {
             </table>
           </div>
         </Menu>
-        <Menu label="other layers" defaultOpen={true}>
+        <Menu label="overlay layers" defaultOpen={true}>
           <div />
         </Menu>
       </div>

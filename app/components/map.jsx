@@ -1,7 +1,17 @@
 import React from 'react';
-import { Map, TileLayer, AttributionControl, CircleMarker, Tooltip, Popup, Marker, LayerGroup } from 'react-leaflet';
-import { divIcon } from 'leaflet';
+import { 
+  Map, 
+  TileLayer, 
+  WMSTileLayer,
+  AttributionControl, 
+  CircleMarker, 
+  Tooltip, 
+  Popup, 
+  Marker, 
+  LayerGroup
+} from 'react-leaflet';
 
+import { divIcon } from 'leaflet';
 import { observer } from 'mobx-react';
 
 import Base from './../base';
@@ -36,6 +46,33 @@ export default class AppMap extends React.Component {
     appStore.updateRecordLocation(targetLatLng.lng, targetLatLng.lat);
   }
 
+  renderBaseLayer(top) {
+    const basemap = top ? appStore.basemap1 : appStore.basemap2;
+    const opacity = top ? 1 - appStore.mapOpacityRatio : appStore.mapOpacityRatio;
+
+    if (basemap.type === 'tile') {
+      return (
+        <TileLayer key={top ? '1' : '2'} opacity={opacity} {...basemap} />  
+      );
+    } else if (basemap.type === 'wms') {
+      return (
+        <WMSTileLayer key={top ? '1' : '2'} opacity={opacity} {...basemap} />  
+      );
+    } 
+  }
+
+  renderBaseLayers() {
+    return (
+      <LayerGroup>
+        {
+          this.renderBaseLayer(false)
+        }{
+          this.renderBaseLayer(true)
+        }
+      </LayerGroup>
+    )
+  }
+
   render() {
     const store = appStore;
     
@@ -51,12 +88,10 @@ export default class AppMap extends React.Component {
           attributionControl={false}
         >
           <AttributionControl position="bottomleft" />
-          <TileLayer key={2} opacity={store.mapOpacityRatio}
-              {...store.basemap2}
-          />  
-          <TileLayer key={1}  opacity={1 - store.mapOpacityRatio}
-              {...store.basemap1}
-          />  
+          {
+            /* basemaps */
+            this.renderBaseLayers()
+          }
           {
             // rendering records
             store.geoRecords.filter(Base.validGeo).map( (record, ri) => {
@@ -85,7 +120,7 @@ export default class AppMap extends React.Component {
                     draggable={active}
                     onDragEnd={this.handleDragMarker.bind(this)}
                   >
-                    <Tooltip offset={[10, -10]}>
+                    <Tooltip offset={[10, -10]} direction="right" >
                       <h4>{record.name}</h4>
                     </Tooltip>
                   </Marker>
