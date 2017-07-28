@@ -8,7 +8,8 @@ import {
   Tooltip, 
   Popup, 
   Marker, 
-  LayerGroup
+  LayerGroup,
+  GeoJSON
 } from 'react-leaflet';
 
 import { divIcon } from 'leaflet';
@@ -73,6 +74,28 @@ export default class AppMap extends React.Component {
     )
   }
 
+  renderOverlays() {
+    return (
+      <LayerGroup>
+        {
+          appStore.overlays.map( o => {
+            const overlay = overlaymaps[o.id];
+
+            if (overlay.type === 'wms') {
+              return (
+                <WMSTileLayer key={o.id} opacity={o.opacity} {...overlay} />  
+              );
+            } else if (overlay.type === 'geojson') {
+              return (
+                <GeoJSON key={o.id} opacity={o.opacity} {...overlay} />  
+              );
+            }
+          })
+        }
+      </LayerGroup>
+    )
+  }
+
   render() {
     const store = appStore;
     
@@ -91,6 +114,10 @@ export default class AppMap extends React.Component {
           {
             /* basemaps */
             this.renderBaseLayers()
+          }
+          {
+            /* overlays */
+            this.renderOverlays()
           }
           {
             // rendering records

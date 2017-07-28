@@ -29,7 +29,9 @@ export default class AppStore {
     @observable map1Id = false; 
     @observable map2Id = false;
 
-    @observable overlays = [];
+    @observable overlays = [
+      {id: 'COUNTRIES_MODERN', opacity: 0.7}
+    ];
 
     @observable geonamePoint = false;
 
@@ -188,6 +190,28 @@ export default class AppStore {
     @action overlayRemove = (overlayId) => {
         const clonedOverlays = this.overlays.slice();
         this.overlays = clonedOverlays.filter( ov => ov.id !== overlayId );
+    }
+    @action overlayMoveUp = (overlayId) => {
+        const clonedOverlays = this.overlays.slice();
+        
+        const fromIndex = clonedOverlays.findIndex( ov => ov.id === overlayId );
+        const toIndex = fromIndex - 1;
+        
+        if (toIndex > -1) {
+            clonedOverlays.splice(toIndex, 0, clonedOverlays.splice(fromIndex, 1)[0] );
+            this.overlays = clonedOverlays;
+        }
+    }
+    @action overlayMoveDown = (overlayId) => {
+        const clonedOverlays = this.overlays.slice();
+        
+        const fromIndex = clonedOverlays.findIndex( ov => ov.id === overlayId );
+        const toIndex = fromIndex + 1;
+        
+        if (toIndex < clonedOverlays.length) {
+            clonedOverlays.splice(toIndex, 0, clonedOverlays.splice(fromIndex, 1)[0] );
+            this.overlays = clonedOverlays;
+        }
     }
 
 

@@ -2,8 +2,9 @@
   "COUNTRIES_MODERN": {
     "id": "countries_modern",
     "name": "modern countries",
-    "data": "modern_countries",
+    "file": "admin50.geojson",
     "info": "natural earth modern countries geojson",
+    "color": "purple",
     "type": "geojson"
   },
   "ROADS": {

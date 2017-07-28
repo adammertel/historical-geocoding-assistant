@@ -44,6 +44,14 @@ export default class LayerControl extends React.Component {
     appStore.overlayRemove(oid);
   }
 
+  handleMoveOverlayUp(oid) {
+    appStore.overlayMoveUp(oid);
+  }
+
+  handleMoveOverlayDown(oid) {
+    appStore.overlayMoveDown(oid);
+  }
+
   render() {
     const store = appStore;
     
@@ -124,6 +132,18 @@ export default class LayerControl extends React.Component {
                           />
                         </td>
                         <td>
+                          <Button 
+                            icon="arrow-up" label="" 
+                            className="is-inverted" 
+                            onClick={this.handleMoveOverlayUp.bind(this, overlay.id)}
+                            style={{marginTop: -3}} 
+                          />
+                          <Button 
+                            icon="arrow-down" label="" 
+                            className="is-inverted" 
+                            onClick={this.handleMoveOverlayDown.bind(this, overlay.id)}
+                            style={{marginTop: -3}} 
+                          />
                           <Button 
                             icon="trash-o" label="" 
                             className="is-inverted" 

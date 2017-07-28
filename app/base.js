@@ -97,6 +97,18 @@ var Base =  {
       gn.ll = [parseFloat(gn.lat), parseFloat(gn.lng)];
       return gn;
     })
+  },
+
+  processOverlayData () {
+    const overlays = this.requestConfigFile('mapoverlays.json', true);
+    Object.keys(overlays).map( okey => {
+      const overlay = overlays[okey];
+      if (overlay.type === 'geojson') {
+        overlay.data = JSON.parse(this.doRequestSync('./assets/' + overlay.file));
+        console.log(overlay)
+      }
+    })
+    return overlays;
   }
 
 };
