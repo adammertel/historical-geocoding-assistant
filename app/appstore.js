@@ -17,6 +17,7 @@ export default class AppStore {
     
     @observable recordRow = 2;
     @observable records = {};
+    @observable recordBeforeChanges = {};
     @observable wikiText = '';
     @observable geonames = [];
     
@@ -106,9 +107,6 @@ export default class AppStore {
                 row: rowNo
             }
         }) 
-    }
-    @computed get activeGeoRecord () {
-        return this.geoRecords.find(record => record.row.toString() === this.recordRow.toString());
     }
 
 
@@ -256,9 +254,15 @@ export default class AppStore {
     @action updateData = () => {
         Sheet.readAllLines( this.noRecords, (data) => {
             this.records = data;
+            this.recordBeforeChanges = Object.assign({}, data[this.recordRow]);
+            console.log(this.recordBeforeChanges);
             this.updateWiki();
             //this.focusRecord();
         });
+    }
+
+    @action revertChangesRecord = () => {
+        this.records[this.recordRow] = Object.assign({}, this.recordBeforeChanges);
     }
 
     // locally store new values

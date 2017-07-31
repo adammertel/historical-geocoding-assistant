@@ -75,8 +75,12 @@ export default class Panel extends React.Component {
   handleCoordinatesFocus() {
     appStore.mapFocus(appStore.recordGeo);
   }
-  handleCoordinatesChoose() {
-    
+  handleCoordinatesRevert() {
+    appStore.revertChangesRecord();
+  }
+
+  handleGlobalSettingOpen() {
+    console.log('global setting will be opened');
   }
 
   render() {
@@ -84,6 +88,7 @@ export default class Panel extends React.Component {
     
     return (
       <div className="panel-wrapper" style={this.style()} >
+        
         <div>
           <img 
             src="assets/icon.svg" 
@@ -92,6 +97,19 @@ export default class Panel extends React.Component {
             width="300px" 
           />
         </div>
+
+        <div>
+          <Button 
+            className="is-inverted is-medium" 
+            label="global settings" 
+            icon="wrench" 
+            onClick={this.handleGlobalSettingOpen.bind(this)} 
+          />
+          <div style={{marginTop: 25}} className="is-pulled-right">
+            displaying record {appStore.recordRow - 1} / {appStore.noRecords - 1}
+          </div>
+        </div>
+
         <div className="is-inline">
           <Button 
             className="is-inverted" 
@@ -128,27 +146,35 @@ export default class Panel extends React.Component {
               type="float" 
               onChange={this.handleChangeInput.bind(this, appStore.columns.y)} 
               value={this.store.recordY} />
-            <Button 
-              onClick={this.handleCoordinatesHighlight.bind(this)}
-              tooltip="highlight location on map"
-              icon="lightbulb-o" label="highlight"
-              className="is-inverted hint--top-right" 
-              style={this.styleSmallButton()} 
-            />
-            <Button 
-              onClick={this.handleCoordinatesFocus.bind(this)}
-              tooltip="pan map to the location"
-              icon="compass" label="focus"
-              className="is-inverted hint--top-right" 
-              style={this.styleSmallButton()} 
-            />
-            <Button 
-              onClick={this.handleCoordinatesChoose.bind(this)}
-              tooltip="change the location by map click"
-              icon="compass" label="choose"
-              className="is-inverted hint--top-right" 
-              style={this.styleSmallButton()} 
-            />
+            <div>
+              {
+                Base.validGeo({x: this.store.recordX, y: this.store.recordY}) ? (
+                  <div>
+                    <Button 
+                      onClick={this.handleCoordinatesHighlight.bind(this)}
+                      tooltip="highlight location on map"
+                      icon="lightbulb-o" label="highlight"
+                      className="is-inverted hint--top-right" 
+                      style={this.styleSmallButton()} 
+                    />
+                    <Button 
+                      onClick={this.handleCoordinatesFocus.bind(this)}
+                      tooltip="pan map to the location"
+                      icon="compass" label="focus"
+                      className="is-inverted hint--top-right" 
+                      style={this.styleSmallButton()} 
+                    />
+                    <Button 
+                      onClick={this.handleCoordinatesRevert.bind(this)}
+                      tooltip="revert changes to record coordinates"
+                      icon="recycle" label="revert coordinates"
+                      className="is-inverted hint--top-right"
+                      style={this.styleSmallButton()}
+                    />
+                  </div>
+                ) : null
+              }
+            </div>
           </div>
         </Menu>
 
