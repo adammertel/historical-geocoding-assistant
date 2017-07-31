@@ -49,6 +49,10 @@ export default class AppMap extends React.Component {
     appStore.updateRecordLocation(targetLatLng.lng, targetLatLng.lat);
   }
 
+  handleMapClick(e) {
+    appStore.updateRecordLocation(e.latlng.lng, e.latlng.lat);
+  }
+
   renderBaseLayer(top) {
     const basemap = top ? appStore.basemap1 : appStore.basemap2;
     const opacity = top ? 1 - appStore.mapOpacityRatio : appStore.mapOpacityRatio;
@@ -119,6 +123,7 @@ export default class AppMap extends React.Component {
           onViewportChanged={store.mapMoved}
           useFlyTo={true}
           ref="map" 
+          onClick={this.handleMapClick.bind(this)}
           style={this.mapStyle()}
           attributionControl={false}
         >
@@ -171,10 +176,11 @@ export default class AppMap extends React.Component {
             /* geoname point */
             appStore.hlPoint ?
               (
-                <LayerGroup key="hl point" >
+                <LayerGroup key="hl-point"  >
                   <CircleMarker 
+                    className="hl-point"
                     center={[appStore.hlPoint[0], appStore.hlPoint[1]]} 
-                    radius={10} 
+                    radius={10}
                   />
                 </LayerGroup>
               ) : null

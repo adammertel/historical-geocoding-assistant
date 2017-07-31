@@ -68,6 +68,17 @@ export default class Panel extends React.Component {
     appStore.gotoRecord(e.target.value);
   }
 
+  /* Coordinates actions */
+  handleCoordinatesHighlight() {
+    appStore.hlLocality(appStore.recordGeo);
+  }
+  handleCoordinatesFocus() {
+    appStore.mapFocus(appStore.recordGeo);
+  }
+  handleCoordinatesChoose() {
+    
+  }
+
   render() {
     //console.log(this.store.recordData)
     
@@ -102,7 +113,7 @@ export default class Panel extends React.Component {
               }
             </select>
           </div>
-          
+
           <Button label="" icon="caret-right" onClick={this.store.nextRecord} className="is-inverted is-pulled-right"/>
         </div>
 
@@ -118,18 +129,21 @@ export default class Panel extends React.Component {
               onChange={this.handleChangeInput.bind(this, appStore.columns.y)} 
               value={this.store.recordY} />
             <Button 
+              onClick={this.handleCoordinatesHighlight.bind(this)}
               tooltip="highlight location on map"
               icon="lightbulb-o" label="highlight"
               className="is-inverted hint--top-right" 
               style={this.styleSmallButton()} 
             />
             <Button 
+              onClick={this.handleCoordinatesFocus.bind(this)}
               tooltip="pan map to the location"
               icon="compass" label="focus"
               className="is-inverted hint--top-right" 
               style={this.styleSmallButton()} 
             />
             <Button 
+              onClick={this.handleCoordinatesChoose.bind(this)}
               tooltip="change the location by map click"
               icon="compass" label="choose"
               className="is-inverted hint--top-right" 

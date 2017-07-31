@@ -13,5 +13,18 @@ $danger: #ca000c;
 $family-serif: 'Acme', sans-serif;
 $family-primary: 'Lato', sans-serif;;
 
+@keyframes blink { 
+  from { opacity: 0.2; color: $primary; fill: $primary} 
+}
+
+
+.hl-point{
+  stroke: $danger;
+  fill: $danger;
+  animation: blink .5s infinite ease-out;
+  fill-opacity: 1;
+  stroke-width: 0;
+}
+
 // 4. Import the rest of Bulma
 @import "../node_modules/bulma/bulma"

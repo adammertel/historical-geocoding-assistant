@@ -77,6 +77,9 @@ export default class AppStore {
     @computed get recordY () {
         return this.recordData[this.columns.y];
     }
+    @computed get recordGeo () {
+        return [parseFloat(this.recordY), parseFloat(this.recordX)];
+    }
     @computed get wikiTextShort () {
         if (!this.wikiText) {
             return 'not found'
@@ -138,8 +141,13 @@ export default class AppStore {
         }
     }
 
+    @action mapFocus = (ll) => {
+        this.mapCenterChange(ll);
+        this.mapZoomChange(this.config.focusZoom);
+    }
+
     @action locateGeoname = (geoname) => {
-        this.mapCenterChange(geoname.ll);
+        this.mapFocus(geoname.ll);
         this.hlLocality(geoname.ll)
     }
 
