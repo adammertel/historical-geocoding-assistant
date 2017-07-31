@@ -7,6 +7,15 @@
     "color": "purple",
     "type": "geojson"
   },
+  "FRENCH_CANTONS": {
+    "id": "french_cantons",
+    "name": "french cantons",
+    "file": "fra_adm_3.geojson",
+    "info": "simplified geometry of french cantons",
+    "color": "red",
+    "fillOpacity": 0.1,
+    "type": "geojson"
+  },
   "ROADS": {
     "id": "roads",
     "name": "roads of Roman Empire",

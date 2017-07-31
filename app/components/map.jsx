@@ -9,7 +9,9 @@ import {
   Popup, 
   Marker, 
   LayerGroup,
-  GeoJSON
+  GeoJSON,
+  FeatureGroup,
+  Pane
 } from 'react-leaflet';
 
 import { divIcon } from 'leaflet';
@@ -78,16 +80,26 @@ export default class AppMap extends React.Component {
     return (
       <LayerGroup>
         {
-          appStore.overlays.map( o => {
+          appStore.overlays.map( (o, oid) => {
             const overlay = overlaymaps[o.id];
+            const zIndex = 400 - oid;
 
             if (overlay.type === 'wms') {
               return (
-                <WMSTileLayer key={o.id} opacity={o.opacity} {...overlay} />  
+                <WMSTileLayer key={o.id} zIndex={zIndex}
+                  {...overlay} 
+                  opacity={o.opacity}
+                />
               );
             } else if (overlay.type === 'geojson') {
               return (
-                <GeoJSON key={o.id} opacity={o.opacity} {...overlay} />  
+                <Pane style={{zIndex: zIndex}} key={o.id} name={overlay.id}>
+                  <GeoJSON 
+                    {...overlay} 
+                    opacity={o.opacity * overlay.opacity || o.opacity} 
+                    fillOpacity={o.opacity * overlay.fillOpacity || o.opacity}  
+                  /> 
+                </Pane> 
               );
             }
           })
