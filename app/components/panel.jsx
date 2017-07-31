@@ -64,6 +64,10 @@ export default class Panel extends React.Component {
     appStore.useGeoname(geoname);
   }
 
+  handleSelectRecord(e) {
+    appStore.gotoRecord(e.target.value);
+  }
+
   render() {
     //console.log(this.store.recordData)
     
@@ -79,9 +83,19 @@ export default class Panel extends React.Component {
         </div>
         <div className="is-inline">
           <Button label="" icon="caret-left" onClick={this.store.previousRecord} />
-          <h4 className="title is-4 is-inline has-text-centered" style={{margin: 5, fontWeight: 600}}>
-            {this.store.recordName}
-          </h4>
+          <div className="select" style={{width: 300}}>
+            <select style={{width: '100%'}} value={appStore.recordRow} onChange={this.handleSelectRecord.bind(this)}>
+              {
+                appStore.recordNames.map( record => {
+                  return (
+                    <option key={record.row} value={record.row}>
+                      {record.name}
+                    </option>
+                  )
+                })
+              }
+            </select>
+          </div>
           <Button label="" icon="caret-right" onClick={this.store.nextRecord} className="is-pulled-right"/>
         </div>
 

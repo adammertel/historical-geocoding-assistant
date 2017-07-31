@@ -95,6 +95,15 @@ export default class AppStore {
             }
         }) 
     }
+    @computed get recordNames () {
+        return Object.keys(this.records).map( rowNo => {
+            const record = this.records[rowNo];
+            return {
+                name: record[this.columns.name],
+                row: rowNo
+            }
+        }) 
+    }
     @computed get activeGeoRecord () {
         return this.geoRecords.find(record => record.row.toString() === this.recordRow.toString());
     }
@@ -169,7 +178,7 @@ export default class AppStore {
         this['map' + mid + 'Id'] = bmid;
     }
 
-    // map overlays
+    // map overlayrow
     @action addOverlay = (overlayId) => {
       const foundOverlay = this.overlays.find( ov => ov.id === overlayId );
       if (!foundOverlay) {
@@ -217,6 +226,8 @@ export default class AppStore {
 
     // changing recordRow
     @action nextRecord = () => {
+        console.log(this.recordRow);
+        console.log(this.noRecords);
         this.recordRow = this.recordRow === this.noRecords ? 1 : this.recordRow + 1;
         this.updateData();
     }
@@ -227,7 +238,7 @@ export default class AppStore {
     }
     
     @action gotoRecord = (recordRow) => {
-        this.recordRow = recordRow;
+        this.recordRow = parseInt(recordRow, 10);
         this.updateData();
     }
 
