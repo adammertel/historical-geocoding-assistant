@@ -169,10 +169,13 @@ export default class AppMap extends React.Component {
           }
           {
             /* geoname point */
-            appStore.geonamePoint ?
+            appStore.hlPoint ?
               (
-                <LayerGroup key="geoname point" >
-                  <CircleMarker center={[appStore.geonamePoint[0], appStore.geonamePoint[1]]} radius={10} />
+                <LayerGroup key="hl point" >
+                  <CircleMarker 
+                    center={[appStore.hlPoint[0], appStore.hlPoint[1]]} 
+                    radius={10} 
+                  />
                 </LayerGroup>
               ) : null
 

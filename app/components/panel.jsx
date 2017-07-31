@@ -82,7 +82,13 @@ export default class Panel extends React.Component {
           />
         </div>
         <div className="is-inline">
-          <Button label="" icon="caret-left" onClick={this.store.previousRecord} />
+          <Button 
+            className="is-inverted" 
+            label="" 
+            icon="caret-left" 
+            onClick={this.store.previousRecord} 
+          />
+
           <div className="select" style={{width: 300}}>
             <select style={{width: '100%'}} value={appStore.recordRow} onChange={this.handleSelectRecord.bind(this)}>
               {
@@ -96,7 +102,8 @@ export default class Panel extends React.Component {
               }
             </select>
           </div>
-          <Button label="" icon="caret-right" onClick={this.store.nextRecord} className="is-pulled-right"/>
+          
+          <Button label="" icon="caret-right" onClick={this.store.nextRecord} className="is-inverted is-pulled-right"/>
         </div>
 
         <Menu label="coordinates" defaultOpen={true}>
@@ -110,6 +117,24 @@ export default class Panel extends React.Component {
               type="float" 
               onChange={this.handleChangeInput.bind(this, appStore.columns.y)} 
               value={this.store.recordY} />
+            <Button 
+              tooltip="highlight location on map"
+              icon="lightbulb-o" label="highlight"
+              className="is-inverted hint--top-right" 
+              style={this.styleSmallButton()} 
+            />
+            <Button 
+              tooltip="pan map to the location"
+              icon="compass" label="focus"
+              className="is-inverted hint--top-right" 
+              style={this.styleSmallButton()} 
+            />
+            <Button 
+              tooltip="change the location by map click"
+              icon="compass" label="choose"
+              className="is-inverted hint--top-right" 
+              style={this.styleSmallButton()} 
+            />
           </div>
         </Menu>
 

@@ -33,7 +33,7 @@ export default class AppStore {
       {id: 'COUNTRIES_MODERN', opacity: 0.7}
     ];
 
-    @observable geonamePoint = false;
+    @observable hlPoint = false;
 
     constructor () {
         this.noRecords = 65;
@@ -139,10 +139,14 @@ export default class AppStore {
     }
 
     @action locateGeoname = (geoname) => {
-        if (this.geonameTimeout) {clearTimeout(this.geonameTimeout);};
         this.mapCenterChange(geoname.ll);
-        this.geonamePoint = geoname.ll;
-        this.geonameTimeout = setTimeout( () => {this.geonamePoint = false}, 2000 )
+        this.hlLocality(geoname.ll)
+    }
+
+    @action hlLocality = (ll) => {
+        if (this.hlTimeout) {clearTimeout(this.hlTimeout);};
+        this.hlPoint = ll;
+        this.hlTimeout = setTimeout( () => {this.hlPoint = false}, 2000 );
     }
 
     @action useGeoname = (geoname) => {
@@ -226,8 +230,6 @@ export default class AppStore {
 
     // changing recordRow
     @action nextRecord = () => {
-        console.log(this.recordRow);
-        console.log(this.noRecords);
         this.recordRow = this.recordRow === this.noRecords ? 1 : this.recordRow + 1;
         this.updateData();
     }
