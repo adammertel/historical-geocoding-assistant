@@ -12,8 +12,14 @@ export default class AppStore {
     @observable config = {
         focusZoom: 12,
         defaultZoom: 6,
+        focusOnRecordChange: 1,
         defaultCenter: [45, 10],
+        maxGeoExtent: [[-180, -90], [180, 90]],
+        wikiNoColumns: 2,
+        geonameMaxResults: 10,
     };
+
+    @observable openedSettings = true;
     
     @observable recordRow = 2;
     @observable records = {};
@@ -31,7 +37,7 @@ export default class AppStore {
     @observable map2Id = false;
 
     @observable overlays = [
-      {id: 'COUNTRIES_MODERN', opacity: 0.7}
+        {id: 'COUNTRIES_MODERN', opacity: 0.7}
     ];
 
     @observable hlPoint = false;
@@ -46,9 +52,8 @@ export default class AppStore {
     /*
         GETTERS
     */
-
     // map
-    @computed get mapPosition () { 
+    @computed get mapPosition () {
         return [this.map.center[0], this.map.center[1]];
     };
     @computed get mapZoom () { 
@@ -61,6 +66,11 @@ export default class AppStore {
 
     @computed get basemap2 () {
         return this.basemapById(this.map2Id);
+    }
+
+    @computed get configMaxGeoExtent () {
+        const geoExtent = this.config.maxGeoExtent;
+        return [[geoExtent[0][0], geoExtent[0][1]], [geoExtent[1][0], geoExtent[1][1]]]
     }
 
     @computed get recordData () {
@@ -85,7 +95,14 @@ export default class AppStore {
         if (!this.wikiText) {
             return 'not found'
         } else {
-            return this.wikiText.split('</p>')[0] + '</p>' + this.wikiText.split('</p>')[1] + '</p>';
+            const wikiColumns = this.wikiText.split('</p>');
+            let shortenedText = '';
+            wikiColumns.map((column, ci) => {
+                if (ci < this.config.wikiNoColumns) {
+                    shortenedText += column + '</p>'
+                }
+            })
+            return shortenedText;
         }
     }
     @computed get geoRecords () {
@@ -109,11 +126,9 @@ export default class AppStore {
         }) 
     }
 
-
     /* 
         ACTIONS
     */
-
     // map
     @action mapMoved = (change) => {
         this.map.center = change.center;
@@ -128,11 +143,9 @@ export default class AppStore {
     }
     // pan and zoom to active record
     @action focusRecord = () => {
-        if (Base.validGeo(this.activeGeoRecord)) {
-            this.map.center = [
-                parseFloat(this.activeGeoRecord.y),
-                parseFloat(this.activeGeoRecord.x)
-            ]
+        const activeGeoRecord = this.recordGeo;
+        if (Base.validGeo(activeGeoRecord)) {
+            this.map.center = activeGeoRecord;
             this.map.zoom = this.config.focusZoom;
         } else {
             this.defaultMapState();
@@ -167,7 +180,7 @@ export default class AppStore {
 
     // wiki
     @action updateWiki = () => {
-        Base.geonames(this.recordName, (response) => {
+        Base.geonames(this.recordName, this.config.geonameMaxResults, this.config.maxGeoExtent, (response) => {
             this.geonames = response
         })
         Base.wiki(this.recordName, (response) => {
@@ -255,9 +268,11 @@ export default class AppStore {
         Sheet.readAllLines( this.noRecords, (data) => {
             this.records = data;
             this.recordBeforeChanges = Object.assign({}, data[this.recordRow]);
-            console.log(this.recordBeforeChanges);
             this.updateWiki();
-            //this.focusRecord();
+            
+            if (this.config.focusOnRecordChange === 1) {
+                this.focusRecord();
+            }
         });
     }
 
@@ -280,6 +295,20 @@ export default class AppStore {
         })
     }
 
+
+    // settings
+    @action openSettings = () => {
+        this.openedSettings = true;
+    }
+    @action closeSettings = () => {
+        this.openedSettings = false;
+    }
+
+    @action saveSettings = (settings) => {
+        this.config = Object.assign( this.config, settings);
+        this.updateWiki();
+        console.log(this.config.maxGeoExtent)
+    }
 
     /*
         METHODS

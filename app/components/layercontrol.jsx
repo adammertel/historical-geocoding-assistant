@@ -115,7 +115,10 @@ export default class LayerControl extends React.Component {
         </Menu>
         <Menu label="overlay layers" defaultOpen={true}>
           <div>
-            <span>Active Overlays</span>
+            {
+              appStore.overlays.length ? 
+              (<span style={{marginLeft: 8}}>Active Overlays</span>) : null
+            }
             <table className="table" style={{fontSize: 11}}>
               <tbody>
                 {

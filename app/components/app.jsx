@@ -5,6 +5,7 @@ import Base from './../base';
 import AppMap from './map';
 import Panel from './panel';
 import LayerControl from './layercontrol';
+import Settings from './settings';
 
 
 @observer
@@ -31,10 +32,14 @@ export default class App extends React.Component {
 
   render() {
     const store = this.props.store;
-    
+    console.log(store.openedSettings)
+
     return (
       <div className="wrapper" style={this.style()} >
         <div style={this.bodyStyle()}>
+          {
+            store.openedSettings ? (<Settings />) : null
+          }
           <Panel />
           <AppMap />
           <LayerControl />

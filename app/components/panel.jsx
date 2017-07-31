@@ -80,7 +80,7 @@ export default class Panel extends React.Component {
   }
 
   handleGlobalSettingOpen() {
-    console.log('global setting will be opened');
+    appStore.openSettings();
   }
 
   render() {
@@ -203,7 +203,7 @@ export default class Panel extends React.Component {
         <Menu label="geonames" defaultOpen={true}>
           <div> 
             {
-              this.store.geonames.map( (geoname, gi) => {
+              this.store.geonames.filter(g => g).map( (geoname, gi) => {
                 return (
                   <p key={gi}>
                     <Button 
@@ -221,12 +221,12 @@ export default class Panel extends React.Component {
                     />
                     <span style={{marginLeft: 5}}>
                     {
-                      geoname.toponymName 
+                      geoname.toponymName || ''
                     }
                     </span>
                     <span className="tag is-dark" style={this.styleTag()}>
                     {
-                      geoname.countryCode// + ' - ' + geoname.fcodeName
+                      geoname.countryCode // + ' - ' + geoname.fcodeName
                     }
                     </span>
                   </p>

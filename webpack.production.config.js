@@ -2,9 +2,12 @@ const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
-
 const uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+
+const extractSass = new ExtractTextPlugin({
+    filename: "[name].[contenthash].css",
+    disable: process.env.NODE_ENV === "development"
+});
 
 module.exports = {
   devtool: 'cheap-source-map',
@@ -40,15 +43,13 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: extractSass.extract({
-          use: [{
-            loader: "css-loader"
+        use: [{
+            loader: "style-loader" // creates style nodes from JS strings
+        }, {
+          loader: "css-loader" // translates CSS into CommonJS
           }, {
-            loader: "sass-loader"
-          }],
-          // use style-loader in development
-          fallback: "style-loader"
-        })
+            loader: "sass-loader" // compiles Sass to CSS
+        }]
       },
       { 
         test: /\.png$/,
@@ -56,12 +57,12 @@ module.exports = {
         query: { mimetype: "image/png" }
       },
       { 
-        test: /\.woff(2)?(\?[a-z0-9#=&.]+)?$/, 
-        loader: 'url?limit=10000&mimetype=application/font-woff' 
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
+        loader: 'url-loader?limit=10000&mimetype=application/font-woff' 
       },
       { 
-        test: /\.(ttf|eot|svg)(\?[a-z0-9#=&.]+)?$/, 
-        loader: 'file' 
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
+        loader: 'file-loader' 
       }
     ]
   },
@@ -69,6 +70,7 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
   plugins: [
+    extractSass,
     new ExtractTextPlugin({
       filename: "[name].[contenthash].css",
       disable: process.env.NODE_ENV === "development"

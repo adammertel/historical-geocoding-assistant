@@ -14,7 +14,8 @@ var Base =  {
   },
 
   validGeo (feat) {
-    return feat.x  && feat.y && isFinite(feat.x) && isFinite(feat.y);
+    return (feat && (feat.x || feat[0]) && (feat.y || feat[1]) && 
+      (isFinite(feat.x) || isFinite(feat[0])) && (isFinite(feat.y) || isFinite(feat[1])));
   },
 
   doRequestAsync (url) {
@@ -75,27 +76,34 @@ var Base =  {
     })
   },
 
-  geonames (term, next) {
+  geonames (term, noResults, extent, next) {
     const path = 'http://api.geonames.org/searchJSON?' + 
       'q=' +  term + 
-      '&maxRows=20&username=adammertel';
+      '&maxRows=' + noResults + '&username=adammertel';
 
     $.ajax({
       dataType: 'json',
       url: path,
       async: false, 
       success: (res) => {
-        
-        next(this.parseGeonames(res.geonames))
+        next(this.parseGeonames(res.geonames, extent))
       },
       fail: (e) => next(false)
     })
   },
 
-  parseGeonames (geonames) {
+  parseGeonames (geonames, e) {
     return geonames.map(gn => {
       gn.ll = [parseFloat(gn.lat), parseFloat(gn.lng)];
-      return gn;
+      
+      if (e &&
+        e[0][0] < gn.ll[0] && 
+        e[1][0] > gn.ll[0] && 
+        e[0][1] < gn.ll[1] && 
+        e[1][1] > gn.ll[1]
+      ) {
+        return gn;
+      }
     })
   },
 
