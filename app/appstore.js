@@ -169,7 +169,7 @@ export default class AppStore {
     }
 
     @action useGeoname = (geoname) => {
-        this.updateRecordLocation(geoname.ll[1], geoname.ll[0])
+        this.updateRecordLocation(geoname.ll[1], geoname.ll[0]);
         this.mapCenterChange(geoname.ll);
     }
 
@@ -274,6 +274,13 @@ export default class AppStore {
                 this.focusRecord();
             }
         });
+    }
+
+    @action revertChangesCoordinates = () => {
+        this.updateRecordLocation(
+            this.recordBeforeChanges[this.columns.x],
+            this.recordBeforeChanges[this.columns.y]
+        );
     }
 
     @action revertChangesRecord = () => {

@@ -8,7 +8,7 @@ import AppStore from './appstore.js';
 import Base from './base.js'
 import Sheet from './sheet.js'
 
-
+console.log('sheet will be initialised')
 Sheet.init( () => {
   // Sheet.readLine(1, (vals) => console.log(vals));
   // Sheet.readLine(2, (vals) => console.log(vals));

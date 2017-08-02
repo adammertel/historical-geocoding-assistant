@@ -3,7 +3,7 @@ var Sheet =  {
   apiKey: 'AIzaSyDtuOsC56z_7VODWG1-Q4OVH2dls3z6C9A',
   cliendSecret: 'AQVeRvDict5TYYhNXPL324lA',
   clientId: '580409468161-q3obqkdkn61uf28sfe9u43djejtv84o8.apps.googleusercontent.com',
-  scope: 'https://www.googleapis.com/auth/spreadsheets',
+  scope: 'https://www.googleapis.com/auth/spreadsheets', //'https://www.googleapis.com/auth/spreadsheets',
 
   header: [],
 
@@ -16,17 +16,30 @@ var Sheet =  {
 
   _authentificate (next) {
     gapi.load('client:auth2', () => {
+      console.log('client loaded')
       gapi.client.setApiKey(this.apiKey);
+
       gapi.auth2.init({
         'clientId': this.clientId,
-        'scope': this.scopes,
+        'scope': this.scope,
       }).then( result => {
         this.auth = gapi.auth2.getAuthInstance();
-        this.auth.isSignedIn.get() ? 
-          next() : () => {
-            this.auth.isSignedIn.listen(next);
+
+
+        if (this.auth.isSignedIn.get()) {
+          next()
+        } else {
+            alert('please enable pop up - need to be signed in')
+            
+            const signedStateChanged = (value) => {
+              console.log('should be signed in now');
+              next()
+            }
+            
+            this.auth.isSignedIn.listen(signedStateChanged);
             this.auth.signIn();
-          }
+
+        }
       })
     });
   },
@@ -41,9 +54,12 @@ var Sheet =  {
 
   _loadHeader(next) {
     this.readLine(1, true, (headerData) => {
-      this.header = headerData.result.values[0];
-      //console.log(this.header);
+      if (headerData) {
+        this.header = headerData.result.values[0];
+      }
+
       next()
+      //console.log(this.header);
     });
   },
 

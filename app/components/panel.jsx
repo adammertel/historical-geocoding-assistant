@@ -77,6 +77,9 @@ export default class Panel extends React.Component {
     appStore.mapFocus(appStore.recordGeo);
   }
   handleCoordinatesRevert() {
+    appStore.revertChangesCoordinates();
+  }
+  handleRecordRevert() {
     appStore.revertChangesRecord();
   }
 
@@ -265,7 +268,7 @@ export default class Panel extends React.Component {
         <div className="block is-pulled-right" style={{float: 'right', padding: 5, margin: 10}}>
           <Button 
             label="restore" icon="refresh" 
-            onClick={this.store.nextRecord} 
+            onClick={this.handleRecordRevert.bind(this)} 
             className="is-primary is-inverted is-small" />
           <Button 
             label="save" icon="save" 
