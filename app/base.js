@@ -14,7 +14,7 @@ var Base =  {
   },
 
   validGeo (feat) {
-    return (feat && (feat.x || feat[0]) && (feat.y || feat[1]) && 
+    return !!(feat && (feat.x || feat[0]) && (feat.y || feat[1]) && 
       (isFinite(feat.x) || isFinite(feat[0])) && (isFinite(feat.y) || isFinite(feat[1])));
   },
 

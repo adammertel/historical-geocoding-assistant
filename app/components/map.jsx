@@ -44,11 +44,6 @@ export default class AppMap extends React.Component {
     appStore.gotoRecord(rowId);
   }
 
-  handleDragMarker(e) {
-    const targetLatLng = e.target._latlng;
-    appStore.updateRecordLocation(targetLatLng.lng, targetLatLng.lat);
-  }
-
   handleMapClick(e) {
     appStore.updateRecordLocation(e.latlng.lng, e.latlng.lat);
   }
@@ -161,8 +156,6 @@ export default class AppMap extends React.Component {
                     position={[parseFloat(record.y), parseFloat(record.x)]} 
                     icon={icon}
                     onClick={this.handleClickMarker.bind(this, record.row)}
-                    draggable={active}
-                    onDragEnd={this.handleDragMarker.bind(this)}
                   >
                     <Tooltip offset={[10, -10]} direction="right" >
                       <h4>{record.name}</h4>

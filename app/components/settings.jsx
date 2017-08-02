@@ -19,7 +19,7 @@ export default class Settings extends React.Component {
     }
 
     this.options = {
-      geonameMaxResults: [3, 5, 10, 15, 20],
+      geonameMaxResults: [1, 3, 5, 10, 15, 20],
       focusZoom: [8, 9, 10, 11, 12, 13, 14, 15],
       focusOnRecordChange: [1, 0],
       wikiNoColumns: [1, 2, 3, 4, 5, 10]

@@ -19,7 +19,7 @@ export default class AppStore {
         geonameMaxResults: 10,
     };
 
-    @observable openedSettings = true;
+    @observable openedSettings = false;
     
     @observable recordRow = 2;
     @observable records = {};

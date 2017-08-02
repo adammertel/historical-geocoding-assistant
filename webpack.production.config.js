@@ -5,8 +5,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 const extractSass = new ExtractTextPlugin({
-    filename: "[name].[contenthash].css",
-    disable: process.env.NODE_ENV === "development"
+    filename: "main.css",
 });
 
 module.exports = {
@@ -45,8 +44,8 @@ module.exports = {
         test: /\.scss$/,
         use: [{
             loader: "style-loader" // creates style nodes from JS strings
-        }, {
-          loader: "css-loader" // translates CSS into CommonJS
+          }, {
+            loader: "css-loader" // translates CSS into CommonJS
           }, {
             loader: "sass-loader" // compiles Sass to CSS
         }]
@@ -71,16 +70,12 @@ module.exports = {
   },
   plugins: [
     extractSass,
-    new ExtractTextPlugin({
-      filename: "[name].[contenthash].css",
-      disable: process.env.NODE_ENV === "development"
-    }),
     new uglifyJsPlugin({
       compress: {
         warnings: false
       }
     }),
-    new ExtractTextPlugin('[name].css'),
+    new ExtractTextPlugin('main.css'),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production')
@@ -89,7 +84,10 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: './app/index.html', to: 'index.html' },
       { from: './app/assets', to: './assets' },
-      { from: './app/config.json', to: 'config.json' }
+      { from: './app/config.json', to: 'config.json' },
+      { from: './app/basemaps.json', to: 'basemaps.json' },
+      { from: './app/mapoverlays.json', to: 'mapoverlays.json' },
+      { from: './app/ext', to: 'ext' }
     ])
   ]
 };

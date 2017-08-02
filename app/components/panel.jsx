@@ -26,6 +26,7 @@ export default class Panel extends React.Component {
       height: '94%',
       padding: 15,
       overflowY: 'scroll',
+      overflowX: 'hidden',
       fontSize: 12
     }
   }
@@ -90,11 +91,13 @@ export default class Panel extends React.Component {
       <div className="panel-wrapper" style={this.style()} >
         
         <div>
-          <img 
-            src="assets/icon.svg" 
+          <object type="image/svg+xml" 
+            data="assets/icon.svg" 
             alt="logo"
-            height="150px"
-            width="300px" 
+            style={{
+              height: 150,
+              width: 300
+            }} 
           />
         </div>
 
@@ -121,12 +124,22 @@ export default class Panel extends React.Component {
           <div className="select" style={{width: 300}}>
             <select style={{width: '100%'}} value={appStore.recordRow} onChange={this.handleSelectRecord.bind(this)}>
               {
-                appStore.recordNames.map( record => {
-                  return (
-                    <option key={record.row} value={record.row}>
-                      {record.name}
-                    </option>
-                  )
+                appStore.geoRecords.map( record => {
+                  console.log();
+
+                  if (Base.validGeo(record)) {
+                    return (
+                      <option key={record.row} value={record.row}>
+                        {record.name} &#9873;
+                      </option>
+                    )
+                  } else {
+                    return (
+                      <option key={record.row} value={record.row}>
+                        {record.name}
+                      </option>
+                    )
+                  }
                 })
               }
             </select>
@@ -249,15 +262,15 @@ export default class Panel extends React.Component {
           </div>
         </Menu>
 
-        <div className="block">
+        <div className="block is-pulled-right" style={{float: 'right', padding: 5, margin: 10}}>
           <Button 
             label="restore" icon="refresh" 
             onClick={this.store.nextRecord} 
-            className="is-primary is-medium" />
+            className="is-primary is-inverted is-small" />
           <Button 
             label="save" icon="save" 
             onClick={this.store.saveRecord} 
-            className="is-primary  is-medium is-pulled-right" 
+            className="is-success  is-small " 
           />
         </div>
 
