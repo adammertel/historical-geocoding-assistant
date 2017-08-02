@@ -94,13 +94,9 @@ export default class Panel extends React.Component {
       <div className="panel-wrapper" style={this.style()} >
         
         <div>
-          <object type="image/svg+xml" 
-            data="assets/icon.svg" 
+          <img  
+            src="assets/icon.png" 
             alt="logo"
-            style={{
-              height: 150,
-              width: 300
-            }} 
           />
         </div>
 
