@@ -45,7 +45,10 @@ export default class AppMap extends React.Component {
   }
 
   handleMapClick(e) {
-    appStore.updateRecordLocation(e.latlng.lng, e.latlng.lat);
+    appStore.updateRecordLocation(
+      e.latlng.lng, 
+      e.latlng.lat
+    );
   }
 
   renderBaseLayer(top) {

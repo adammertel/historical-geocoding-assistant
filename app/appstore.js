@@ -169,13 +169,16 @@ export default class AppStore {
     }
 
     @action useGeoname = (geoname) => {
-        this.updateRecordLocation(geoname.ll[1], geoname.ll[0]);
+        this.updateRecordLocation(
+            geoname.ll[1], 
+            geoname.ll[0]
+        );
         this.mapCenterChange(geoname.ll);
     }
 
     @action updateRecordLocation = (x, y) => {
-        this.updateRecordValue(this.columns.y, y);
-        this.updateRecordValue(this.columns.x, x);
+        this.updateRecordValue(this.columns.y, this.roundCoordinate(y));
+        this.updateRecordValue(this.columns.x, this.roundCoordinate(x));
     } 
 
     // wiki
@@ -314,7 +317,6 @@ export default class AppStore {
     @action saveSettings = (settings) => {
         this.config = Object.assign( this.config, settings);
         this.updateWiki();
-        console.log(this.config.maxGeoExtent)
     }
 
     /*
@@ -323,6 +325,10 @@ export default class AppStore {
 
     basemapById (basemapId) { 
         return window['basemaps'][basemapId];
-
     };
+
+    roundCoordinate (coord) {
+        const floatCoef = 1000;
+        return Math.round(coord * floatCoef) / floatCoef;
+    }
 }

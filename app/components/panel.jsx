@@ -129,13 +129,13 @@ export default class Panel extends React.Component {
                   if (Base.validGeo(record)) {
                     return (
                       <option key={record.row} value={record.row}>
-                        {record.name} &#9873;
+                        {record.name}
                       </option>
                     )
                   } else {
                     return (
                       <option key={record.row} value={record.row}>
-                        {record.name}
+                        {record.name} (no coordinates)
                       </option>
                     )
                   }
@@ -157,7 +157,19 @@ export default class Panel extends React.Component {
             <Input 
               type="float" 
               onChange={this.handleChangeInput.bind(this, appStore.columns.y)} 
-              value={this.store.recordY} />
+              value={this.store.recordY} 
+            />
+            {
+              !Base.inExtent(
+                [this.store.recordY, this.store.recordX],
+                this.store.config.maxGeoExtent
+              ) ? 
+              (
+                <div className="is-danger notification">
+                  <i className="icon fa fa-exclamation"></i>The coordinates are outside of the chosen geographical extent
+                </div>
+              ) : null
+            }
             <div>
               {
                 Base.validGeo({x: this.store.recordX, y: this.store.recordY}) ? (

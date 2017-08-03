@@ -29,7 +29,7 @@ var Sheet =  {
         if (this.auth.isSignedIn.get()) {
           next()
         } else {
-            alert('please enable pop up - need to be signed in')
+            alert('Application needs to be signed in - please enable pop-ups and log in')
             
             const signedStateChanged = (value) => {
               console.log('should be signed in now');

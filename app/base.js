@@ -96,15 +96,30 @@ var Base =  {
     return geonames.map(gn => {
       gn.ll = [parseFloat(gn.lat), parseFloat(gn.lng)];
       
-      if (e &&
-        e[0][0] < gn.ll[0] && 
-        e[1][0] > gn.ll[0] && 
-        e[0][1] < gn.ll[1] && 
-        e[1][1] > gn.ll[1]
-      ) {
-        return gn;
+      if (this.inExtent(gn, e)) {
+        return gn
       }
     })
+  },
+
+  inExtent (geom, e) {
+    if (!geom || !e) {
+      return false;
+    } else if (geom.ll) {
+      return (
+        e[0][0] < geom.ll[0] && 
+        e[1][0] > geom.ll[0] && 
+        e[0][1] < geom.ll[1] && 
+        e[1][1] > geom.ll[1]
+      )
+    } else {
+      return (
+        e[0][0] < geom[0] && 
+        e[1][0] > geom[0] && 
+        e[0][1] < geom[1] && 
+        e[1][1] > geom[1]
+      )
+    }
   },
 
   processOverlayData () {
