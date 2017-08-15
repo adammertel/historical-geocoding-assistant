@@ -39,6 +39,18 @@ export default class Settings extends React.Component {
     }
   }
 
+  styleLabel() {
+    return {
+      fontSize: 12
+    }
+  }
+
+  styleSelect() {
+    return {
+      fontSize: 12
+    }
+  }
+
   handleSave() {
     appStore.saveSettings(this.state);
     appStore.closeSettings();
@@ -67,15 +79,24 @@ export default class Settings extends React.Component {
     this.setState(newState);
   }
 
+  _renderLabel (label) {
+    return (
+      <td key="label" className="has-text-right" style={{width: 250, paddingTop: 12}}>
+        <label style={this.styleLabel()} className="label">{label}</label>
+      </td>
+    )
+  }
+
   renderSelect(propName, propLabel) {
     return (
-      <div className="field columns is-gapless">
-        <div className="column has-text-right">
-          <label style={{marginRight: 10, marginTop: 5}} className="label">{propLabel}</label>
-        </div>
-        <div className="control column">
-          <div className="select">
-            <select value={this.state[propName]} onChange={this.handleChangeSelect.bind(this, propName)} >
+      <tr key={propName} >
+        { this._renderLabel(propLabel) }
+        <td className="control">
+          <div style={this.styleSelect()} className="select">
+            <select 
+              value={this.state[propName]} 
+              onChange={this.handleChangeSelect.bind(this, propName)} 
+            >
               {
                 this.options[propName].map( (option, oi) => {
                   return (
@@ -85,8 +106,31 @@ export default class Settings extends React.Component {
               }
             </select>
           </div>
-        </div>
-      </div>
+        </td>
+      </tr>
+    )
+  }
+
+  renderColumnSelect(columnId, columnLabel) {
+    return (
+      <tr key={columnId} >
+        { this._renderLabel(columnLabel) }
+        <td className="control">
+          <div style={this.styleSelect()} className="select">
+            <select 
+              value={appStore.columns[columnId]} 
+            >
+              {
+                Object.keys(appStore.recordData).map((column, ci) => {
+                  return (
+                    <option key={ci} value={column}>{column}</option>
+                  )
+                })
+              }
+            </select>
+          </div>
+        </td>
+      </tr>
     )
   }
 
@@ -109,27 +153,36 @@ export default class Settings extends React.Component {
             <p className="modal-card-title">Global Settings</p>
           </header>
           <section className="modal-card-body">
-            {this.renderSelect('geonameMaxResults', 'max geonames to search')}          
-            {this.renderSelect('focusZoom', 'level of zoom on focus')}          
-            {this.renderSelect('focusOnRecordChange', 'focus on record change? (1 = on)')}
-            {this.renderSelect('wikiNoColumns', 'max columns from wikipedia')}
-            <div className="field columns is-gapless">
-              <div className="column has-text-right">
-                <label style={{marginRight: 10, marginTop: 5}} className="label">Geo extent</label>
-              </div>
-              <div className="control column">
-                <Map 
-                  zoomControl={false} 
-                  zoomSnap={0.1} 
-                  ref="refMap" 
-                  bounds={bounds} 
-                  onViewportChanged={this.handleGeoExtentChange.bind(this)} 
-                  style={{width: '100%', height: 200}}
-                >
-                  <TileLayer {...basemap} />  
-                </Map>
-              </div>
-            </div>          
+            <table className="table">
+              <tbody>
+                {this.renderSelect('geonameMaxResults', 'max geonames to search')}          
+                {this.renderSelect('focusZoom', 'level of zoom on focus')}          
+                {this.renderSelect('focusOnRecordChange', 'focus on record change? (1 = on)')}
+                {this.renderSelect('wikiNoColumns', 'max columns from wikipedia')}
+
+                {this.renderColumnSelect('name', 'name column')}
+                {this.renderColumnSelect('localisation', 'localisation column')}
+                {this.renderColumnSelect('x', 'x coordinate column')}
+                {this.renderColumnSelect('y', 'y coordinate column')}
+                
+                <tr>
+                  { this._renderLabel('Geo extent') }
+                  <td>
+                    <Map 
+                      zoomControl={false} 
+                      zoomSnap={0.1} 
+                      ref="refMap" 
+                      bounds={bounds} 
+                      onViewportChanged={this.handleGeoExtentChange.bind(this)} 
+                      style={{width: '100%', height: 200}}
+                    >
+                      <TileLayer {...basemap} />  
+                    </Map>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
           </section>
           <footer className="modal-card-foot">
             <div className="container has-text-right">
