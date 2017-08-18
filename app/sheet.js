@@ -8,12 +8,15 @@ var Sheet =  {
 
   header: [],
 
+  noLines: 999999,
+  noColumns: 'ZZ',
+
   auth: false,
 
   init (next) {
-    this._authentificate( () => this._loadHeader(next));
-  },
+    this._authentificate( () => this._preRead(next));
 
+  },
 
   _authentificate (next) {
     gapi.load('client:auth2', () => {
@@ -53,13 +56,50 @@ var Sheet =  {
     }
   },
 
+  _preRead(next) {
+    this._checkColumns( () => {
+      this._checkRows( () => {
+        this._loadHeader(next);
+      })
+    })
+  },
+
+  _checkColumns(next) {
+    this.readLine(1, true, (headerData) => {
+      if (headerData) {
+        try {
+          this.noColumns = headerData.result.range
+            .split('!')[1]
+            .split(':')[1]
+            .split('1')[0];
+        } catch (e) {
+          console.log('error reading columns', e);
+        }
+      }
+      next();
+    })
+  },
+
+  _checkRows(next) {
+    this.readAllLines( (rowsData) => {
+      if (rowsData) {
+        try {
+          this.noLines = Math.max(...Object.keys(rowsData));
+        } catch (e) {
+          console.log('error reading rows', e);
+        }
+      }
+      next();
+    })
+  },
+
   _loadHeader(next) {
     this.readLine(1, true, (headerData) => {
       if (headerData) {
         this.header = headerData.result.values[0];
       }
 
-      next()
+      next();
       //console.log(this.header);
     });
   },
@@ -81,26 +121,26 @@ var Sheet =  {
   _parseRecords (response) {
     const records = {};
     response.result.values.map( (row, i) => {
-      const rowColumns = {}
+      const rowColumns = {};
       row.map((value, vi) => rowColumns[this.header[vi]] = value);
-      records[i + 2] = rowColumns
+      records[i + 2] = rowColumns;
     });
     
     return records;
   },
 
   _readLineUrl (lineNo) {
-    const range = 'A' + lineNo + ':H' + lineNo;
+    const range = 'A' + lineNo + ':' + this.noColumns + lineNo;
     return 'https://sheets.googleapis.com/v4/spreadsheets/' + this.sId + '/values/' + range + '?key=' + this.apiKey;
   },
 
   _updateLineUrl (lineNo) {
-    const range = 'A' + lineNo + ':H' + lineNo;
+    const range = 'A' + lineNo + ':' + this.noColumns + lineNo;
     return 'https://sheets.googleapis.com/v4/spreadsheets/' + this.sId + '/values/' + range + '?key=' + this.apiKey + '&valueInputOption=RAW';
   },
 
-  _readAll (noLines) {
-    const range = 'A2:H' + noLines;
+  _readAll () {
+    const range = 'A2:' + this.noColumns + this.noLines;
     return 'https://sheets.googleapis.com/v4/spreadsheets/' + this.sId + '/values/' + range + '?key=' + this.apiKey;
   },
 
@@ -125,10 +165,10 @@ var Sheet =  {
     })
   },
 
-  readAllLines (noLines, next) {
+  readAllLines (next) {
     this._ensureAuthentificated( (res) => {
       gapi.client.request({
-        'path': this._readAll(noLines),
+        'path': this._readAll(),
         'method': 'GET',
       }).then(
         (response) => {

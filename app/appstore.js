@@ -4,9 +4,10 @@ import Base from './base.js'
 
 export default class AppStore {
     @observable columns = {
-        name: 'name',
-        x: 'x',
-        y: 'y'
+        name: '',
+        localisation: '',
+        x: '',
+        y: ''
     };
 
     @observable config = {
@@ -43,7 +44,7 @@ export default class AppStore {
     @observable hlPoint = false;
 
     constructor () {
-        this.noRecords = 65;
+        this.noRecords = Sheet.noLines;
         this.updateData();
         this.map1Id = Object.keys(window['basemaps'])[1]; 
         this.map2Id = Object.keys(window['basemaps'])[0]; 
@@ -129,6 +130,12 @@ export default class AppStore {
     /* 
         ACTIONS
     */
+
+    // columns
+    @action setColumn = (columnType, columnName) => {
+        this.columns[columnType] = columnName;
+    }
+
     // map
     @action mapMoved = (change) => {
         this.map.center = change.center;
@@ -268,7 +275,7 @@ export default class AppStore {
 
     // new data are loaded
     @action updateData = () => {
-        Sheet.readAllLines( this.noRecords, (data) => {
+        Sheet.readAllLines( (data) => {
             this.records = data;
             this.recordBeforeChanges = Object.assign({}, data[this.recordRow]);
             this.updateWiki();
