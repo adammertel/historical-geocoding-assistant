@@ -16,6 +16,10 @@ export default class Settings extends React.Component {
       maxGeoExtent: store.config.maxGeoExtent,
       wikiNoColumns: store.config.wikiNoColumns,
       geonameMaxResults: store.config.geonameMaxResults,
+      column_name: store.columns.name,
+      column_x: store.columns.x,
+      column_y: store.columns.y,
+      column_localisation: store.columns.localisation,
     }
 
     this.options = {
@@ -79,6 +83,13 @@ export default class Settings extends React.Component {
     this.setState(newState);
   }
 
+  handleChangeColumn(columnName, e) {
+    const newState = {};
+    const value = e.target.value;
+    newState['column_' + columnName] = e.target.value;
+    this.setState(newState);
+  }
+
   _renderLabel (label) {
     return (
       <td key="label" className="has-text-right" style={{width: 250, paddingTop: 12}}>
@@ -118,7 +129,8 @@ export default class Settings extends React.Component {
         <td className="control">
           <div style={this.styleSelect()} className="select">
             <select 
-              value={appStore.columns[columnId]} 
+              value={this.state['column_' + columnId]}
+              onChange={this.handleChangeColumn.bind(this, columnId)}
             >
               {
                 Object.keys(appStore.recordData).map((column, ci) => {
