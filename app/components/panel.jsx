@@ -209,9 +209,13 @@ export default class Panel extends React.Component {
               {
                 Object.keys(this.store.recordData).map((column, ci) => {
                   const value = this.store.recordData[column];
+
+                  const shortenColumn = column.length > 15 ?
+                    column.substr(0, 14) + '...' : column;
+
                   return (
                     <tr key={ci}>
-                      <td> {column} </td>
+                      <td> {shortenColumn} </td>
                       <td>
                         <Input value={value} onChange={this.handleChangeInput.bind(this, column)} />
                       </td>
