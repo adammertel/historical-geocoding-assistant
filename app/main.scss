@@ -20,6 +20,10 @@ $family-primary: 'Lato', sans-serif;;
   from { opacity: 0.2; color: $primary; fill: $primary} 
 }
 
+.modal .table td, .table th {
+  border: 0px;
+}
+
 
 .hl-point{
   stroke: $danger;

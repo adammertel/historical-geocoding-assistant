@@ -173,12 +173,19 @@ export default class Settings extends React.Component {
                 {this.renderSelect('focusZoom', 'level of zoom on focus')}          
                 {this.renderSelect('focusOnRecordChange', 'focus on record change? (1 = on)')}
                 {this.renderSelect('wikiNoColumns', 'max columns from wikipedia')}
+                
+                <tr>
+                { this._renderLabel('') }
+                </tr>
 
                 {this.renderColumnSelect('name', 'name column')}
                 {this.renderColumnSelect('localisation', 'localisation column')}
                 {this.renderColumnSelect('x', 'x coordinate column')}
                 {this.renderColumnSelect('y', 'y coordinate column')}
                 
+                <tr>
+                { this._renderLabel('') }
+                </tr>
                 <tr>
                   { this._renderLabel('Geo extent') }
                   <td>

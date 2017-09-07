@@ -79,6 +79,9 @@ export default class Panel extends React.Component {
   handleCoordinatesRevert() {
     appStore.revertChangesCoordinates();
   }
+  handleCoordinatesRemove() {
+    appStore.removetChangesCoordinates();
+  }
   handleRecordRevert() {
     appStore.revertChangesRecord();
   }
@@ -192,7 +195,14 @@ export default class Panel extends React.Component {
                     <Button 
                       onClick={this.handleCoordinatesRevert.bind(this)}
                       tooltip="revert changes to record coordinates"
-                      icon="recycle" label="revert coordinates"
+                      icon="recycle" label="revert"
+                      className="is-inverted hint--top-right"
+                      style={this.styleSmallButton()}
+                    />
+                    <Button 
+                      onClick={this.handleCoordinatesRemove.bind(this)}
+                      tooltip="truncate coordinates"
+                      icon="trash" label="remove"
                       className="is-inverted hint--top-right"
                       style={this.styleSmallButton()}
                     />
@@ -274,7 +284,8 @@ export default class Panel extends React.Component {
                 __html:this.store.wikiTextShort
               }} 
             />
-            <Button label="open new tab" icon="wikipedia-w" onClick={this.handleOpenWiki.bind(this)}/>
+            <Button label="open new tab" icon="wikipedia-w" className="is-inverted" 
+              onClick={this.handleOpenWiki.bind(this)}/>
           </div>
         </Menu>
 

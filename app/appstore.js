@@ -129,12 +129,15 @@ export default class AppStore {
     @computed get recordX () {
       return this.recordData[this.config.columns.x];
     }
+
     @computed get recordY () {
       return this.recordData[this.config.columns.y];
     }
+
     @computed get recordGeo () {
       return [parseFloat(this.recordY), parseFloat(this.recordX)];
     }
+
     @computed get wikiTextShort () {
       if (!this.wikiText) {
         return 'not found'
@@ -329,6 +332,9 @@ export default class AppStore {
         this.recordBeforeChanges[this.config.columns.x],
         this.recordBeforeChanges[this.config.columns.y]
       );
+    }
+    @action removetChangesCoordinates = () => {
+      this.updateRecordLocation('', '');
     }
 
     @action revertChangesRecord = () => {
