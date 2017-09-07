@@ -15,7 +15,6 @@ var Sheet =  {
 
   init (next) {
     this._authentificate( () => this._preRead(next));
-
   },
 
   _authentificate (next) {

@@ -18,12 +18,13 @@ Sheet.init( () => {
   window['overlaymaps'] = Base.processOverlayData();
   window['config'] = Base.requestConfigFile('config.json', true);
   
-  window['appStore'] = new AppStore();
   window['map'] = false;
-
-  ReactDOM.render(
-    <App store={appStore} />,
-    document.body.appendChild(document.createElement('div'))
-  );
+  window['appStore'] = new AppStore();
+  appStore.init( () => {
+    ReactDOM.render(
+      <App store={appStore} />,
+      document.body.appendChild(document.createElement('div'))
+    );
+  })
 
 })

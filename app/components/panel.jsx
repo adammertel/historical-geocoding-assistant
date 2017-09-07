@@ -170,6 +170,7 @@ export default class Panel extends React.Component {
                 </div>
               ) : null
             }
+            <span>Localisation: <strong>{this.store.recordLocalisation}</strong></span>
             <div>
               {
                 Base.validGeo({x: this.store.recordX, y: this.store.recordY}) ? (
