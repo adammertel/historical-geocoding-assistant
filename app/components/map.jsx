@@ -32,6 +32,9 @@ export default class AppMap extends React.Component {
     }
   }
 
+  componentDidMount() {
+    window['map'] = this.refs.map.leafletElement;
+  }
 
   mapStyle() {
     return {
@@ -42,6 +45,13 @@ export default class AppMap extends React.Component {
 
   handleClickMarker(rowId) {
     appStore.gotoRecord(rowId);
+  }
+  
+  handleClickGeoname(geoname, e) {
+    appStore.useGeoname(geoname);
+    console.log(e);
+    console.log(e.target);
+    map.closeTooltip(e.target._tooltip);
   }
 
   handleMapClick(e) {
@@ -112,10 +122,10 @@ export default class AppMap extends React.Component {
 
   render() {
     const store = appStore;
-
     const icon = (classes, style, size) => {
       return divIcon({
-        html: '<span style="' + style + '" class="icon"><i class="' + classes + '"></i></span>',
+        html: '<span style="' + style + '; vertical-align: bottom"' + 
+          ' class="icon"><i class="' + classes + '"></i></span>',
         className: 'map-sort-icon',
         iconAnchor: [size[0]/2, size[1]],
         iconSize: size
@@ -143,29 +153,47 @@ export default class AppMap extends React.Component {
             /* overlays */
             this.renderOverlays()
           }
+          <Pane style={{zIndex: 500}}  >
+          {
+            /* all geonames points  */
+            appStore.geonames.filter(g => g && g.ll).map( (geoname, gi) => {
+              return (
+                <Marker 
+                  key={gi} className="geoname-point"
+                  position={[geoname.ll[0], geoname.ll[1]]} 
+                  icon={icon('fa fa-map-marker', 'color: #D9AE5F', [20, 20])}
+                  onClick={this.handleClickGeoname.bind(this, geoname)}
+                >
+                  <Tooltip offset={[10, -10]} direction="right" >
+                    <h4>{'geoname: ' + geoname.toponymName}</h4>
+                  </Tooltip>
+                </Marker>
+              )
+            })
+          }
+          </Pane>
+          <Pane style={{zIndex: 600}}  >
           {
             // rendering records
             store.geoRecords.filter(Base.validGeo).map( (record, ri) => {
               const active = record.row.toString() === appStore.recordRow.toString()
-              const style = active ? 
-                "color: #A64005; vertical-align: bottom" : 
-                "color: black; vertical-align: bottom";
+              const style = active ? 'color: #A64005' : 'color: black';
 
               return (
-                <LayerGroup key={ri}>
-                  <Marker 
-                    position={[parseFloat(record.y), parseFloat(record.x)]} 
-                    icon={icon('fa fa-map-marker', style, [20, 20])}
-                    onClick={this.handleClickMarker.bind(this, record.row)}
-                  >
-                    <Tooltip offset={[10, -10]} direction="right" >
-                      <h4>{record.name}</h4>
-                    </Tooltip>
-                  </Marker>
-                </LayerGroup>
+                <Marker 
+                  key={ri}
+                  position={[parseFloat(record.y), parseFloat(record.x)]} 
+                  icon={icon('fa fa-map-marker', style, [20, 20])}
+                  onClick={this.handleClickMarker.bind(this, record.row)}
+                >
+                  <Tooltip offset={[10, -10]} direction="right" >
+                    <h4>{record.name}</h4>
+                  </Tooltip>
+                </Marker>
               )
             })
           }
+          </Pane>
           {
             /* geoname point */
             appStore.hlPoint ?

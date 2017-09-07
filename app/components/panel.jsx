@@ -213,7 +213,7 @@ export default class Panel extends React.Component {
           </div>
         </Menu>
 
-        <Menu label="record data" defaultOpen={true}>
+        <Menu label="record data" defaultOpen={false}>
           <div>
             <table className="table" style={{fontSize: 11}}>
               <tbody>

@@ -22,7 +22,7 @@ export default class AppStore {
 
     @observable openedSettings = true;
     
-    @observable recordRow = 2;
+    @observable recordRow = 4;
     @observable records = {};
     @observable recordBeforeChanges = {};
     @observable wikiText = '';
@@ -220,7 +220,9 @@ export default class AppStore {
         geoname.ll[1], 
         geoname.ll[0]
       );
-      this.mapCenterChange(geoname.ll);
+      if (!map.getBounds().contains(L.latLng(geoname.ll[0], geoname.ll[1]))) {
+        this.mapCenterChange(geoname.ll);
+      }
     }
 
     @action updateRecordLocation = (x, y) => {
