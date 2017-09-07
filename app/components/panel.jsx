@@ -228,7 +228,7 @@ export default class Panel extends React.Component {
                     <tr key={ci}>
                       <td> {shortenColumn} </td>
                       <td>
-                        <Input value={value} onChange={this.handleChangeInput.bind(this, column)} />
+                        <Input info={true} value={value} onChange={this.handleChangeInput.bind(this, column)} />
                       </td>
                     </tr>
                   )
@@ -293,11 +293,13 @@ export default class Panel extends React.Component {
           <Button 
             label="restore" icon="refresh" 
             onClick={this.handleRecordRevert.bind(this)} 
-            className="is-primary is-inverted is-small" />
+            className="is-danger is-small" 
+          />
+          <span style={{marginLeft: 5}} />
           <Button 
             label="save" icon="save" 
             onClick={this.store.saveRecord} 
-            className="is-success  is-small " 
+            className="is-success is-small " 
           />
         </div>
 
