@@ -112,6 +112,15 @@ export default class AppMap extends React.Component {
 
   render() {
     const store = appStore;
+
+    const icon = (classes, style, size) => {
+      return divIcon({
+        html: '<span style="' + style + '" class="icon"><i class="' + classes + '"></i></span>',
+        className: 'map-sort-icon',
+        iconAnchor: [size[0]/2, size[1]],
+        iconSize: size
+      })
+    }
     
     return (
       <div className="map-wrapped" style={this.style()} >
@@ -138,26 +147,15 @@ export default class AppMap extends React.Component {
             // rendering records
             store.geoRecords.filter(Base.validGeo).map( (record, ri) => {
               const active = record.row.toString() === appStore.recordRow.toString()
-              //const style = this.styleMarker(active);
-
-              const iconClasses = active ? 'icon is-medium' : 'icon is-small';
-              const iconSize = [20, 20];
               const style = active ? 
-                "color: #ca5900; vertical-align: bottom" : 
+                "color: #A64005; vertical-align: bottom" : 
                 "color: black; vertical-align: bottom";
-
-              const icon = divIcon({
-                html: '<span style="' + style + '" class="icon"><i class="fa fa-map-marker"></i></span>',
-                className: 'map-sort-icon',
-                iconAnchor: [iconSize[0]/2, iconSize[1]],
-                iconSize: iconSize
-              });
 
               return (
                 <LayerGroup key={ri}>
                   <Marker 
                     position={[parseFloat(record.y), parseFloat(record.x)]} 
-                    icon={icon}
+                    icon={icon('fa fa-map-marker', style, [20, 20])}
                     onClick={this.handleClickMarker.bind(this, record.row)}
                   >
                     <Tooltip offset={[10, -10]} direction="right" >
