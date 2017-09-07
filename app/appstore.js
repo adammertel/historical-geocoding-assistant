@@ -3,21 +3,21 @@ import Sheet from './sheet.js'
 import Base from './base.js'
 
 export default class AppStore {
-    @observable columns = {
+
+    @observable config = {
+      focusZoom: 12,
+      defaultZoom: 6,
+      focusOnRecordChange: 1,
+      defaultCenter: [45, 10],
+      maxGeoExtent: [[-180, -90], [180, 90]],
+      wikiNoColumns: 2,
+      geonameMaxResults: 10,
+      columns: {
         name: '',
         localisation: '',
         x: '',
         y: ''
-    };
-
-    @observable config = {
-        focusZoom: 12,
-        defaultZoom: 6,
-        focusOnRecordChange: 1,
-        defaultCenter: [45, 10],
-        maxGeoExtent: [[-180, -90], [180, 90]],
-        wikiNoColumns: 2,
-        geonameMaxResults: 10,
+      }
     };
 
     @observable openedSettings = true;
@@ -80,14 +80,14 @@ export default class AppStore {
     }
 
     @computed get recordName () {
-        return this.recordData[this.columns.name];
+        return this.recordData[this.config.columns.name];
     }
 
     @computed get recordX () {
-        return this.recordData[this.columns.x];
+        return this.recordData[this.config.columns.x];
     }
     @computed get recordY () {
-        return this.recordData[this.columns.y];
+        return this.recordData[this.config.columns.y];
     }
     @computed get recordGeo () {
         return [parseFloat(this.recordY), parseFloat(this.recordX)];
@@ -110,9 +110,9 @@ export default class AppStore {
         return Object.keys(this.records).map( rowNo => {
             const record = this.records[rowNo];
             return {
-                x: record[this.columns.x],
-                y: record[this.columns.y],
-                name: record[this.columns.name],
+                x: record[this.config.columns.x],
+                y: record[this.config.columns.y],
+                name: record[this.config.columns.name],
                 row: rowNo
             }
         }) 
@@ -121,7 +121,7 @@ export default class AppStore {
         return Object.keys(this.records).map( rowNo => {
             const record = this.records[rowNo];
             return {
-                name: record[this.columns.name],
+                name: record[this.config.columns.name],
                 row: rowNo
             }
         }) 
@@ -130,12 +130,6 @@ export default class AppStore {
     /* 
         ACTIONS
     */
-
-    // columns
-    @action setColumn = (columnType, columnName) => {
-        this.columns[columnType] = columnName;
-    }
-
     // map
     @action mapMoved = (change) => {
         this.map.center = change.center;
@@ -184,8 +178,8 @@ export default class AppStore {
     }
 
     @action updateRecordLocation = (x, y) => {
-        this.updateRecordValue(this.columns.y, this.roundCoordinate(y));
-        this.updateRecordValue(this.columns.x, this.roundCoordinate(x));
+        this.updateRecordValue(this.config.columns.y, this.roundCoordinate(y));
+        this.updateRecordValue(this.config.columns.x, this.roundCoordinate(x));
     } 
 
     // wiki
@@ -288,8 +282,8 @@ export default class AppStore {
 
     @action revertChangesCoordinates = () => {
         this.updateRecordLocation(
-            this.recordBeforeChanges[this.columns.x],
-            this.recordBeforeChanges[this.columns.y]
+            this.recordBeforeChanges[this.config.columns.x],
+            this.recordBeforeChanges[this.config.columns.y]
         );
     }
 
@@ -300,7 +294,7 @@ export default class AppStore {
     // locally store new values
     @action updateRecordValue = (column, value) => {
         this.records[this.recordRow][column] = value;
-        if (column === this.columns.name) {
+        if (column === this.config.columns.name) {
             this.updateWiki();
         }
     }
@@ -323,6 +317,7 @@ export default class AppStore {
 
     @action saveSettings = (settings) => {
         this.config = Object.assign( this.config, settings);
+        console.log(this.config);
         this.updateWiki();
     }
 

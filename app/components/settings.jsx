@@ -9,17 +9,19 @@ import Base from './../base';
 export default class Settings extends React.Component {
   constructor(props) {
     super(props);
-    const store = appStore;
+    const config = appStore.config;
     this.state = {
-      focusZoom: store.config.focusZoom,
-      focusOnRecordChange: store.config.focusOnRecordChange,
-      maxGeoExtent: store.config.maxGeoExtent,
-      wikiNoColumns: store.config.wikiNoColumns,
-      geonameMaxResults: store.config.geonameMaxResults,
-      column_name: store.columns.name,
-      column_x: store.columns.x,
-      column_y: store.columns.y,
-      column_localisation: store.columns.localisation,
+      focusZoom: config.focusZoom,
+      focusOnRecordChange: config.focusOnRecordChange,
+      maxGeoExtent: config.maxGeoExtent,
+      wikiNoColumns: config.wikiNoColumns,
+      geonameMaxResults: config.geonameMaxResults,
+      columns: {
+        name: config.columns.name,
+        x: config.columns.x,
+        y: config.columns.y,
+        localisation: config.columns.localisation,
+      }
     }
 
     this.options = {
@@ -84,9 +86,9 @@ export default class Settings extends React.Component {
   }
 
   handleChangeColumn(columnName, e) {
-    const newState = {};
+    const newState = Object.assign(this.state, {});
     const value = e.target.value;
-    newState['column_' + columnName] = e.target.value;
+    newState.columns[columnName] = e.target.value;
     this.setState(newState);
   }
 
@@ -129,7 +131,7 @@ export default class Settings extends React.Component {
         <td className="control">
           <div style={this.styleSelect()} className="select">
             <select 
-              value={this.state['column_' + columnId]}
+              value={this.state.columns[columnId]}
               onChange={this.handleChangeColumn.bind(this, columnId)}
             >
               {

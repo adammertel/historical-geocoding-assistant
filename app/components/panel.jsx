@@ -151,12 +151,12 @@ export default class Panel extends React.Component {
           <div>
             <Input 
               type="float" 
-              onChange={this.handleChangeInput.bind(this, appStore.columns.x)}
+              onChange={this.handleChangeInput.bind(this, appStore.config.columns.x)}
               value={this.store.recordX} 
             />
             <Input 
               type="float" 
-              onChange={this.handleChangeInput.bind(this, appStore.columns.y)} 
+              onChange={this.handleChangeInput.bind(this, appStore.config.columns.y)} 
               value={this.store.recordY} 
             />
             {
