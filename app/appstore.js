@@ -8,10 +8,12 @@ export default class AppStore {
       focusZoom: 12,
       defaultZoom: 6,
       focusOnRecordChange: 0,
+      displayGeonamesOnMap: 1,
       defaultCenter: [45, 10],
       maxGeoExtent: [[-180, -90], [180, 90]],
       wikiNoColumns: 2,
       geonameMaxResults: 10,
+      displayOtherRecords: 1,
       columns: {
         name: '',
         localisation: '',

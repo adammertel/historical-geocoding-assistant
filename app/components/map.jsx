@@ -156,6 +156,7 @@ export default class AppMap extends React.Component {
           <Pane style={{zIndex: 500}}  >
           {
             /* all geonames points  */
+            store.config.displayGeonamesOnMap === 1 ? 
             appStore.geonames.filter(g => g && g.ll).map( (geoname, gi) => {
               return (
                 <Marker 
@@ -169,7 +170,7 @@ export default class AppMap extends React.Component {
                   </Tooltip>
                 </Marker>
               )
-            })
+            }) : null
           }
           </Pane>
           <Pane style={{zIndex: 600}}  >

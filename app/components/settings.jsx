@@ -15,6 +15,7 @@ export default class Settings extends React.Component {
       focusOnRecordChange: config.focusOnRecordChange,
       maxGeoExtent: config.maxGeoExtent,
       wikiNoColumns: config.wikiNoColumns,
+      displayGeonamesOnMap: config.displayGeonamesOnMap,
       geonameMaxResults: config.geonameMaxResults,
       displayOtherRecords: config.displayOtherRecords,
       columns: {
@@ -28,6 +29,7 @@ export default class Settings extends React.Component {
     this.options = {
       geonameMaxResults: [1, 3, 5, 10, 15, 20],
       focusZoom: [8, 9, 10, 11, 12, 13, 14, 15],
+      displayGeonamesOnMap: [1, 0],
       focusOnRecordChange: [1, 0],
       displayOtherRecords: [1, 0],
       wikiNoColumns: [1, 2, 3, 4, 5, 10]
@@ -171,6 +173,7 @@ export default class Settings extends React.Component {
           <section className="modal-card-body">
             <table className="table">
               <tbody>
+                {this.renderSelect('displayGeonamesOnMap', 'display geonames on map? (1 = on)')}          
                 {this.renderSelect('geonameMaxResults', 'max geonames to search')}          
                 {this.renderSelect('displayOtherRecords', 'display other records (1 = on)')}          
                 {this.renderSelect('focusZoom', 'level of zoom on focus')}          
