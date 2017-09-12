@@ -30,26 +30,28 @@ export default class AppStore {
     @observable wikiText = '';
     @observable geonames = [];
     
-
+    
     @observable map = {
-        center: this.config.defaultCenter,
-        zoom: this.config.defaultZoom
+      center: this.config.defaultCenter,
+      zoom: this.config.defaultZoom
     };
     @observable mapOpacityRatio = 0; 
     @observable map1Id = false; 
     @observable map2Id = false;
-
+    
     @observable overlays = [
-        {id: 'COUNTRIES_MODERN', opacity: 0.7}
+      {id: 'COUNTRIES_MODERN', opacity: 0.7}
     ];
-
+    
     @observable hlPoint = false;
-
-
+    
+    
     constructor () {
       this.noRecords = Sheet.noLines;
       this.map1Id = Object.keys(window['basemaps'])[1]; 
       this.map2Id = Object.keys(window['basemaps'])[0]; 
+      this.firstRecordRow = 2;
+      this.recordRow = this.firstRecordRow;
     }
     
     init (next) {
@@ -303,12 +305,14 @@ export default class AppStore {
 
     // changing recordRow
     @action nextRecord = () => {
-      this.recordRow = this.recordRow === this.noRecords ? 1 : this.recordRow + 1;
+      this.recordRow = this.recordRow === this.noRecords ?
+        this.firstRecordRow : this.recordRow + 1;
       this.updateData();
     }
 
     @action previousRecord = () => {
-      this.recordRow = this.recordRow === 2 ? this.noRecords : this.recordRow - 1;
+      this.recordRow = this.recordRow === this.firstRecordRow ? 
+        this.noRecords : this.recordRow - 1;
       this.updateData();
     }
     
