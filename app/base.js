@@ -58,7 +58,7 @@ var Base =  {
     window.open(
       'https://' + path,
       '_blank',
-      'width=600,height=900'
+      'width=800,height=900'
     );
   },
 
@@ -111,8 +111,8 @@ var Base =  {
   },
 
   inExtent (geom, e) {
-    if (!geom || !e) {
-      return false;
+    if (!this.validGeo(geom) || !e) {
+      return true;
     } else if (geom.ll) {
       return (
         e[0][0] < geom.ll[0] && 

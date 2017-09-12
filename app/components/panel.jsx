@@ -105,7 +105,7 @@ export default class Panel extends React.Component {
 
   render() {
     //console.log(this.store.recordData)
-    
+
     return (
       <div className="panel-wrapper" style={this.style()} >
         
@@ -166,13 +166,11 @@ export default class Panel extends React.Component {
         <Menu label="coordinates" defaultOpen={true}>
           <div>
             <Input 
-              type="float" 
               onChange={this.handleChangeInput.bind(this, appStore.config.columns.x)}
               value={this.store.recordX} 
             />
-            <Input 
-              type="float" 
-              onChange={this.handleChangeInput.bind(this, appStore.config.columns.y)} 
+            <Input  
+              onChange={this.handleChangeInput.bind(this, appStore.config.columns.y)}
               value={this.store.recordY} 
             />
             {

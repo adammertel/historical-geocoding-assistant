@@ -14,7 +14,7 @@ export default class Input extends React.Component {
   render() {
 
     let type = this.props.type;
-    if (type === 'float') type = 'number';
+    if (type === 'float') type = 'tel';
     
     const className = this.props.info ? 'is-info' : 'is-primary';
 

@@ -351,10 +351,11 @@ export default class AppStore {
 
     // locally store new values
     @action updateRecordValue = (column, value) => {
-        this.records[this.recordRow][column] = value;
-        if (column === this.config.columns.name) {
-            this.updateWiki();
-        }
+      if ((column === 'x' || column === 'y') && value) value = parseFloat(value);
+      this.records[this.recordRow][column] = value;
+      if (column === this.config.columns.name) {
+          this.updateWiki();
+      }
     }
 
     // save local values to sheet
@@ -388,7 +389,11 @@ export default class AppStore {
     };
 
     roundCoordinate (coord) {
+      if (!coord) {
+        return coord
+      } else {
         const floatCoef = 1000;
         return Math.round(coord * floatCoef) / floatCoef;
+      }
     }
 }
