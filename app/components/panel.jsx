@@ -50,11 +50,24 @@ export default class Panel extends React.Component {
   }
 
   handleOpenWiki() {
-    window.open(
-      'https://en.wikipedia.org/w/index.php?action=parse&search=' + this.store.recordName,
-      '_blank',
-      'width=600,height=900'
-    );
+    Base.openTab(
+      'en.wikipedia.org/w/index.php?action=parse&search=' + 
+      this.store.recordName
+    )
+  }
+
+  handleOpenGMaps() {
+    Base.openTab(
+      'www.google.cz/maps/search/' + 
+      this.store.recordLocalisation
+    )
+  }
+
+  handleOpenGSearch() {
+    Base.openTab(
+      'www.google.com/search?q=' + 
+      this.store.recordName
+    )
   }
 
   handleLocateGeocodedPlaceClick(geoname) {
@@ -286,6 +299,16 @@ export default class Panel extends React.Component {
             />
             <Button label="open new tab" icon="wikipedia-w" className="is-inverted" 
               onClick={this.handleOpenWiki.bind(this)}/>
+          </div>
+        </Menu>
+        <Menu label="google" defaultOpen={true}>
+          <div>
+            <Button label="open google search" icon="google" className="is-inverted" 
+              onClick={this.handleOpenGSearch.bind(this)}/>
+          </div>
+          <div>
+            <Button label="open google maps" icon="map" className="is-inverted" 
+              onClick={this.handleOpenGMaps.bind(this)}/>
           </div>
         </Menu>
 

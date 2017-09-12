@@ -54,6 +54,14 @@ var Base =  {
     }
   },
 
+  openTab (path) {
+    window.open(
+      'https://' + path,
+      '_blank',
+      'width=600,height=900'
+    );
+  },
+
   wiki (term, next) {
     const path = 'https://en.wikipedia.org/w/api.php?' + 
       'action=query&prop=extracts&callback=?&' + 
