@@ -175,6 +175,7 @@ export default class AppMap extends React.Component {
           <Pane style={{zIndex: 600}}  >
           {
             // rendering records
+            store.config.displayOtherRecords === 1 ?
             store.geoRecords.filter(Base.validGeo).map( (record, ri) => {
               const active = record.row.toString() === appStore.recordRow.toString()
               const style = active ? 'color: #A64005' : 'color: black';
@@ -191,7 +192,7 @@ export default class AppMap extends React.Component {
                   </Tooltip>
                 </Marker>
               )
-            })
+            }) : null
           }
           </Pane>
           {

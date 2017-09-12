@@ -16,6 +16,7 @@ export default class Settings extends React.Component {
       maxGeoExtent: config.maxGeoExtent,
       wikiNoColumns: config.wikiNoColumns,
       geonameMaxResults: config.geonameMaxResults,
+      displayOtherRecords: config.displayOtherRecords,
       columns: {
         name: config.columns.name,
         x: config.columns.x,
@@ -28,6 +29,7 @@ export default class Settings extends React.Component {
       geonameMaxResults: [1, 3, 5, 10, 15, 20],
       focusZoom: [8, 9, 10, 11, 12, 13, 14, 15],
       focusOnRecordChange: [1, 0],
+      displayOtherRecords: [1, 0],
       wikiNoColumns: [1, 2, 3, 4, 5, 10]
     }
   }
@@ -170,6 +172,7 @@ export default class Settings extends React.Component {
             <table className="table">
               <tbody>
                 {this.renderSelect('geonameMaxResults', 'max geonames to search')}          
+                {this.renderSelect('displayOtherRecords', 'display other records (1 = on)')}          
                 {this.renderSelect('focusZoom', 'level of zoom on focus')}          
                 {this.renderSelect('focusOnRecordChange', 'focus on record change? (1 = on)')}
                 {this.renderSelect('wikiNoColumns', 'max columns from wikipedia')}

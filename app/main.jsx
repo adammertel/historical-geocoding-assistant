@@ -8,9 +8,16 @@ import AppStore from './appstore.js';
 import Base from './base.js'
 import Sheet from './sheet.js'
 
-window['sheetId'] = prompt('Please enter id of your google sheet', '1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA');
-console.log(sheetId);
-console.log('sheet will be initialised');
+const testing = true;
+
+if (!testing) {
+  window['sheetId'] = prompt('Please enter id of your google sheet', '1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA');
+  console.log(sheetId);
+  console.log('sheet will be initialised');
+} else {
+  window['sheetId'] = '1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA';
+};
+
 
 if (sheetId !== null) {
   Sheet.init( () => {

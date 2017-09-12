@@ -106,7 +106,7 @@ export default class Panel extends React.Component {
         <div>
           <Button 
             className="is-inverted is-medium" 
-            label="global settings" 
+            label="settings" 
             icon="wrench" 
             onClick={this.handleGlobalSettingOpen.bind(this)} 
           />
