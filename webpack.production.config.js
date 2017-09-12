@@ -83,6 +83,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: './app/index.html', to: 'index.html' },
+      { from: './app/assets/favicon.ico', to: 'favicon.ico' },
       { from: './app/assets', to: './assets' },
       { from: './app/config.json', to: 'config.json' },
       { from: './app/basemaps.json', to: 'basemaps.json' },
