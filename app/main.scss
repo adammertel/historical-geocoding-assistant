@@ -1,9 +1,6 @@
 html {
   overflow: hidden;
 }
-select {
-  font-family: 'FontAwesome', 'sans-serif';
-}
 
 // 1. Import the initial variables
 @import "../node_modules/bulma/sass/utilities/initial-variables";
@@ -35,4 +32,9 @@ $family-primary: 'Lato', sans-serif;;
 }
 
 // 4. Import the rest of Bulma
-@import "../node_modules/bulma/bulma"
+@import "../node_modules/bulma/bulma";
+
+.select select {
+  font-family: 'FontAwesome', 'sans-serif';
+  border-color: $primary
+}

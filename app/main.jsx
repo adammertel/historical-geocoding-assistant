@@ -18,6 +18,12 @@ if (!testing) {
   window['sheetId'] = '1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA';
 };
 
+window['certaintyOptions'] = {
+  1: 'definite',
+  2: 'area',
+  3: 'not certain',
+  4: 'unknown'
+}
 
 if (sheetId !== null) {
   Sheet.init( () => {

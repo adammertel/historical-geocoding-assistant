@@ -16,7 +16,7 @@
    id="svg2"
    inkscape:version="0.91 r13725"
    sodipodi:docname="favicon.svg"
-   inkscape:export-filename="/home/adam/projects/inkvisition/historical-geocoder-assistant/app/assets/icon.png"
+   inkscape:export-filename="/home/adam/projects/inkvisition/historical-geocoder-assistant/app/assets/favicon.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <metadata
@@ -45,12 +45,12 @@
      id="namedview110"
      showgrid="false"
      inkscape:zoom="0.45846154"
-     inkscape:cx="-197.39932"
+     inkscape:cx="614.01007"
      inkscape:cy="216.20839"
      inkscape:window-x="55"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g34" />
+     inkscape:current-layer="g32" />
   <defs
      id="defs4">
     <path
@@ -206,7 +206,8 @@
   <g
      id="g32">
     <g
-       id="g34">
+       id="g34"
+       transform="translate(303.18792,2.181208)">
       <g
          id="g44"
          transform="translate(-45.805369,6.5436242)">
@@ -347,36 +348,6 @@
              height="100%" />
         </g>
       </g>
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:112.5px;line-height:125%;font-family:'Bitstream Charter';-inkscape-font-specification:'Bitstream Charter, Bold';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         x="556.20807"
-         y="231.20805"
-         id="text4240"
-         sodipodi:linespacing="125%"><tspan
-           sodipodi:role="line"
-           id="tspan4274"
-           x="556.20807"
-           y="231.20805" /><tspan
-           sodipodi:role="line"
-           id="tspan4276"
-           x="556.20807"
-           y="371.83307">GEOCODING</tspan><tspan
-           sodipodi:role="line"
-           id="tspan4278"
-           x="556.20807"
-           y="512.45807">ASSISTANT</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:112.5px;line-height:125%;font-family:'Bitstream Charter';-inkscape-font-specification:'Bitstream Charter, Bold';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#a64005;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         x="558.71442"
-         y="232.49324"
-         id="text4240-5"
-         sodipodi:linespacing="125%"><tspan
-           sodipodi:role="line"
-           id="tspan4272"
-           x="558.71442"
-           y="232.49324">HISTORICAL</tspan></text>
     </g>
   </g>
 </svg>

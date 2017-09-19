@@ -102,6 +102,9 @@ export default class Panel extends React.Component {
   handleGlobalSettingOpen() {
     appStore.openSettings();
   }
+  handleChangeCertainty(e) {
+    appStore.changeCertainty(e.target.value);
+  }
 
   render() {
     //console.log(this.store.recordData)
@@ -184,7 +187,29 @@ export default class Panel extends React.Component {
                 </div>
               ) : null
             }
-            <span>Localisation: <strong>{this.store.recordLocalisation}</strong></span>
+            <div>
+              <span>Localisation: 
+                <strong>{this.store.recordLocalisation}</strong>
+              </span>
+            </div>
+            <div id="certainty-select" style={{marginTop: '5px', marginBottom: '5px'}}>
+              <span>Certainty level</span>
+              <div className="select" style={{verticalAlign: 'middle'}}>
+                <select 
+                  value={appStore.recordCertainty} 
+                  onChange={this.handleChangeCertainty.bind(this)} 
+                >
+                  {
+                    Object.keys(certaintyOptions).map(cKey => {
+                      const value = certaintyOptions[cKey]
+                      return (
+                        <option key={cKey} value={cKey}>{value}</option>
+                      ) 
+                    })
+                  }
+                </select>
+              </div>
+            </div>
             <div>
               {
                 Base.validGeo({x: this.store.recordX, y: this.store.recordY}) ? (

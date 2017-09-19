@@ -18,7 +18,8 @@ export default class AppStore {
         name: '',
         localisation: '',
         x: '',
-        y: ''
+        y: '',
+        certainty: ''
       }
     };
 
@@ -66,7 +67,8 @@ export default class AppStore {
         'name': ['name'],
         'localisation': ['localisation'],
         'x': ['coordinate', 'geo', 'x'],
-        'y': ['coordinate', 'geo', 'y']
+        'y': ['coordinate', 'geo', 'y'],
+        'certainty': ['certainty'],
       }
 
       Object.keys(keywordsDictionary).map(id => {
@@ -124,6 +126,10 @@ export default class AppStore {
 
     @computed get recordName () {
       return this.recordData[this.config.columns.name];
+    }
+
+    @computed get recordCertainty () {
+      return this.recordData[this.config.columns.certainty];
     }
 
     @computed get recordLocalisation () {
@@ -236,9 +242,14 @@ export default class AppStore {
 
     // wiki
     @action updateWiki = () => {
-      Base.geonames(this.recordName, this.config.geonameMaxResults, this.config.maxGeoExtent, (response) => {
-        this.geonames = response
-      })
+      Base.geonames(
+        this.recordLocalisation, 
+        this.config.geonameMaxResults, 
+        this.config.maxGeoExtent, 
+        (response) => {
+          this.geonames = response
+        }
+      )
       Base.wiki(this.recordName, (response) => {
         this.wikiText = response;
       });
@@ -356,6 +367,10 @@ export default class AppStore {
       if (column === this.config.columns.name) {
           this.updateWiki();
       }
+    }
+
+    @action changeCertainty = (newCertaintyValue) => {
+      this.updateRecordValue(this.config.columns.certainty, newCertaintyValue)
     }
 
     // save local values to sheet
