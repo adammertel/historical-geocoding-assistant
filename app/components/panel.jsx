@@ -194,7 +194,7 @@ export default class Panel extends React.Component {
             </div>
             <div id="certainty-select" style={{marginTop: '5px', marginBottom: '5px'}}>
               <span>Certainty level</span>
-              <div className="select" style={{verticalAlign: 'middle'}}>
+              <div className="select" style={{verticalAlign: 'middle', marginLeft: '5px'}}>
                 <select 
                   value={appStore.recordCertainty} 
                   onChange={this.handleChangeCertainty.bind(this)} 

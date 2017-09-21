@@ -3,6 +3,7 @@ import {
   Map, 
   TileLayer, 
   WMSTileLayer,
+  ScaleControl,
   AttributionControl, 
   CircleMarker, 
   Tooltip, 
@@ -144,6 +145,7 @@ export default class AppMap extends React.Component {
           style={this.mapStyle()}
           attributionControl={false}
         >
+          <ScaleControl position="topleft" imperial={false}/>
           <AttributionControl position="bottomleft" />
           {
             /* basemaps */
