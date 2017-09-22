@@ -350,7 +350,7 @@ export default class Panel extends React.Component {
           <div>
             {
               this.store.wikis.map( (wiki, wi) => {
-                return (
+                return ( 
                   <p key={wi}>
                     <Button 
                       tooltip="show on map"

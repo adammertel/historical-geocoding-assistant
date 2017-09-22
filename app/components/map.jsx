@@ -158,6 +158,7 @@ export default class AppMap extends React.Component {
             /* overlays */
             this.renderOverlays()
           }
+
           <Pane style={{zIndex: 500}}  >
           {
             /* all geonames points  */
@@ -178,6 +179,28 @@ export default class AppMap extends React.Component {
             }) : null
           }
           </Pane>
+
+          <Pane style={{zIndex: 500}}  >
+          {
+            /* all wikipedia points  */
+            store.config.displayWikisOnMap === 1 ? 
+            appStore.wikis.filter(g => g && g.ll).map( (wiki, gi) => {
+              return (
+                <Marker 
+                  key={gi} className="wiki-point"
+                  position={[wiki.ll[0], wiki.ll[1]]} 
+                  icon={icon('fa fa-map-marker', 'color: #5f8ad9', [20, 20])}
+                  onClick={this.handleClickGeoname.bind(this, wiki)}
+                >
+                  <Tooltip offset={[10, -10]} direction="right" >
+                    <h4>{'wikipedia: ' + wiki.title}</h4>
+                  </Tooltip>
+                </Marker>
+              )
+            }) : null
+          }
+          </Pane>
+
           <Pane style={{zIndex: 600}}  >
           {
             // rendering records

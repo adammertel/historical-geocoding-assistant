@@ -14,9 +14,9 @@ export default class Settings extends React.Component {
       focusZoom: config.focusZoom,
       focusOnRecordChange: config.focusOnRecordChange,
       maxGeoExtent: config.maxGeoExtent,
-      wikiNoColumns: config.wikiNoColumns,
       displayGeonamesOnMap: config.displayGeonamesOnMap,
-      geonameMaxResults: config.geonameMaxResults,
+      displayWikisOnMap: config.displayWikisOnMap,
+      maxResults: config.maxResults,
       displayOtherRecords: config.displayOtherRecords,
       columns: {
         name: config.columns.name,
@@ -29,12 +29,12 @@ export default class Settings extends React.Component {
     }
 
     this.options = {
-      geonameMaxResults: [1, 3, 5, 10, 15, 20],
+      maxResults: [1, 3, 5, 10, 15, 20],
       focusZoom: [8, 9, 10, 11, 12, 13, 14, 15],
       displayGeonamesOnMap: [1, 0],
+      displayWikisOnMap: [1, 0],
       focusOnRecordChange: [1, 0],
-      displayOtherRecords: [1, 0],
-      wikiNoColumns: [1, 2, 3, 4, 5, 10]
+      displayOtherRecords: [1, 0]
     }
   }
 
@@ -107,6 +107,7 @@ export default class Settings extends React.Component {
   }
 
   renderSelect(propName, propLabel) {
+    console.log(propName)
     return (
       <tr key={propName} >
         { this._renderLabel(propLabel) }
@@ -175,12 +176,12 @@ export default class Settings extends React.Component {
           <section className="modal-card-body">
             <table className="table">
               <tbody>
-                {this.renderSelect('displayGeonamesOnMap', 'display geonames on map? (1 = on)')}          
-                {this.renderSelect('geonameMaxResults', 'max geonames to search')}          
+                {this.renderSelect('displayGeonamesOnMap', 'display geonames on map? (yellow markers) (1 = on)')}          
+                {this.renderSelect('displayWikisOnMap', 'display wikipedia results on map? (blue markers) (1 = on)')}          
+                {this.renderSelect('maxResults', 'max results of search (geonames, wikipedia)')}          
                 {this.renderSelect('displayOtherRecords', 'display other records (1 = on)')}          
                 {this.renderSelect('focusZoom', 'level of zoom on focus')}          
                 {this.renderSelect('focusOnRecordChange', 'focus on record change? (1 = on)')}
-                {this.renderSelect('wikiNoColumns', 'max columns from wikipedia')}
                 
                 <tr>
                 { this._renderLabel('') }

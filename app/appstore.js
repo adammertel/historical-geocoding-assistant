@@ -9,10 +9,10 @@ export default class AppStore {
       defaultZoom: 6,
       focusOnRecordChange: 0,
       displayGeonamesOnMap: 1,
+      displayWikisOnMap: 1,
       defaultCenter: [45, 10],
       maxGeoExtent: [[-180, -90], [180, 90]],
-      wikiNoColumns: 2,
-      geonameMaxResults: 10,
+      maxResults: 10,
       displayOtherRecords: 1,
       columns: {
         name: '',
@@ -233,18 +233,23 @@ export default class AppStore {
     } 
 
     // wiki
-    @action updateWiki = () => {
+    @action updateSearch = () => {
       Base.geonames(
         this.recordLocalisation, 
-        this.config.geonameMaxResults, 
+        this.config.maxResults, 
         this.config.maxGeoExtent, 
         (response) => {
           this.geonames = response
         }
       )
-      Base.wiki(this.recordName, (response) => {
-        this.wikis = response;
-      });
+      Base.wiki(
+        this.recordName, 
+        this.config.maxResults, 
+        this.config.maxGeoExtent,
+        (response) => {
+          this.wikis = response;
+        }
+      );
     }
 
     // map tiles
@@ -329,7 +334,7 @@ export default class AppStore {
       Sheet.readAllLines( (data) => {
         this.records = data;
         this.recordBeforeChanges = Object.assign({}, data[this.recordRow]);
-        this.updateWiki();
+        this.updateSearch();
         
         if (this.config.focusOnRecordChange === 1) {
           this.focusRecord();
@@ -360,7 +365,7 @@ export default class AppStore {
         column === this.config.columns.name ||
         column === this.config.columns.localisation
       ) {
-        this.updateWiki();
+        this.updateSearch();
       }
     }
 
@@ -386,8 +391,7 @@ export default class AppStore {
 
     @action saveSettings = (settings) => {
       this.config = Object.assign( this.config, settings);
-      console.log(this.config);
-      this.updateWiki();
+      this.updateSearch();
     }
 
     /*

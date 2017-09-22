@@ -62,9 +62,10 @@ var Base =  {
     );
   },
 
-  wiki (term, next) {
+  wiki (term, noResults, extent, next) {
     const path = 'http://api.geonames.org/wikipediaSearchJSON?' + 
-    'q=' + term + '&maxRows=10&username=adammertel'
+    'q=' + term + 
+    '&maxRows=10&username=adammertel'
 
     $.ajax({
       dataType: 'json',
@@ -72,40 +73,22 @@ var Base =  {
       async: false, 
       success: (res) => {
         if (res.geonames) {
-          next(this.parseWikis(res.geonames));
+          next(this.parseWikis(res.geonames, extent));
         } else {
           next([]);
         }
       },
       fail: (e) => next([]) 
     })
-    
-    /* const path = 'https://en.wikipedia.org/w/api.php?' + 
-      'action=query&prop=extracts&callback=?&' + 
-      'titles=' +  term + 
-      '&format=json';
-
-    $.ajax({
-      dataType: 'json',
-      url: path,
-      async: false, 
-      success: (res) => {
-        if (res.query && res.query.pages) {
-          const pgs = res.query.pages;
-          next(pgs[Object.keys(pgs)[0]].extract);
-        } else {
-          next(false);
-        }
-      },
-      fail: (e) => next(false) 
-    }) */
   },
 
-  parseWikis (wikis) {
+  parseWikis (wikis, e) {
     return wikis.map(w => {
       w.ll = [w.lat, w.lng]
-      return w
-    })
+      if (this.inExtent(w, e)) {
+        return w
+      }
+    }).filter(w => w)
   },
 
   geonames (term, noResults, extent, next) {
@@ -127,11 +110,10 @@ var Base =  {
   parseGeonames (geonames, e) {
     return geonames.map(gn => {
       gn.ll = [parseFloat(gn.lat), parseFloat(gn.lng)];
-      
       if (this.inExtent(gn, e)) {
         return gn
       }
-    })
+    }).filter(g => g)
   },
 
   inExtent (geom, e) {
