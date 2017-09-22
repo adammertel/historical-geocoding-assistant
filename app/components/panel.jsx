@@ -168,14 +168,6 @@ export default class Panel extends React.Component {
 
         <Menu label="coordinates" defaultOpen={true}>
           <div>
-            <Input 
-              onChange={this.handleChangeInput.bind(this, appStore.config.columns.x)}
-              value={this.store.recordX} 
-            />
-            <Input  
-              onChange={this.handleChangeInput.bind(this, appStore.config.columns.y)}
-              value={this.store.recordY} 
-            />
             {
               !Base.inExtent(
                 [this.store.recordY, this.store.recordX],
@@ -187,40 +179,73 @@ export default class Panel extends React.Component {
                 </div>
               ) : null
             }
-            <div>
-              <span>Localisation:  
-                <Input  
-                  onChange={this.handleChangeInput.bind(this, appStore.config.columns.localisation)}
-                  value={this.store.recordLocalisation} 
-                />
-              </span>
-            </div>
-            <div>
-              <span>Notes:  
-                <Input  
-                  onChange={this.handleChangeInput.bind(this, appStore.config.columns.note)}
-                  value={this.store.recordNote} 
-                />
-              </span>
-            </div>
-            <div id="certainty-select" style={{marginTop: '5px', marginBottom: '5px'}}>
-              <span>Certainty level</span>
-              <div className="select" style={{verticalAlign: 'middle', marginLeft: '5px'}}>
-                <select 
-                  value={appStore.recordCertainty} 
-                  onChange={this.handleChangeCertainty.bind(this)} 
-                >
-                  {
-                    Object.keys(certaintyOptions).map(cKey => {
-                      const value = certaintyOptions[cKey]
-                      return (
-                        <option key={cKey} value={cKey}>{value}</option>
-                      ) 
-                    })
-                  }
-                </select>
-              </div>
-            </div>
+            <table className="table" style={{fontSize:12}} >
+              <tbody>
+                <tr key="0">
+                  <td>coordinate X</td>
+                  <td>
+                    <Input 
+                      onChange={this.handleChangeInput.bind(this, appStore.config.columns.x)}
+                      value={this.store.recordX} 
+                    />
+                  </td>
+                </tr>
+
+                <tr key="1">
+                  <td>coordinate Y</td>
+                  <td>
+                    <Input  
+                      onChange={this.handleChangeInput.bind(this, appStore.config.columns.y)}
+                      value={this.store.recordY} 
+                    />
+                  </td>
+                </tr>
+
+                <tr key="2">
+                  <td>localisation</td>
+                  <td>
+                    <Input  
+                      onChange={this.handleChangeInput.bind(this, appStore.config.columns.localisation)}
+                      value={this.store.recordLocalisation} 
+                    />
+                  </td>
+                </tr>
+
+                <tr key="3">
+                  <td>notes</td>
+                  <td>
+                    <Input  
+                      onChange={this.handleChangeInput.bind(this, appStore.config.columns.note)}
+                      value={this.store.recordNote} 
+                    />
+                  </td>
+                </tr>
+
+                <tr key="4">
+                  <td>certainty level</td>
+                  <td>
+                    <div className="select">
+                      <select 
+                        value={appStore.recordCertainty} 
+                        onChange={this.handleChangeCertainty.bind(this)} 
+                      >
+                        {
+                          Object.keys(certaintyOptions).map(cKey => {
+                            const value = certaintyOptions[cKey]
+                            return (
+                              <option key={cKey} value={cKey}>{value}</option>
+                            ) 
+                          })
+                        }
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+
+
+              </tbody>
+            </table>
+
             <div>
               {
                 Base.validGeo({x: this.store.recordX, y: this.store.recordY}) ? (
@@ -262,7 +287,7 @@ export default class Panel extends React.Component {
 
         <Menu label="record data" defaultOpen={false}>
           <div>
-            <table className="table" style={{fontSize: 11}}>
+            <table className="table" style={{fontSize: 12}}>
               <tbody>
               {
                 Object.keys(this.store.recordData).map((column, ci) => {

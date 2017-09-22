@@ -1,6 +1,4 @@
-html {
-  overflow: hidden;
-}
+
 
 // 1. Import the initial variables
 @import '../node_modules/bulma/sass/utilities/initial-variables';
@@ -38,4 +36,13 @@ $family-primary: 'Lato', sans-serif;;
 .select select {
   font-family: 'FontAwesome', 'sans-serif';
   border-color: $primary
+}
+
+html {
+  overflow: hidden;
+  color: black !important
+}
+
+.table td, .table th {
+  vertical-align: middle;
 }
