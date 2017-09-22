@@ -136,7 +136,6 @@ var Base =  {
       const overlay = overlays[okey];
       if (overlay.type === 'geojson') {
         overlay.data = JSON.parse(this.doRequestSync('./assets/' + overlay.file));
-        console.log(overlay)
       }
     })
     return overlays;

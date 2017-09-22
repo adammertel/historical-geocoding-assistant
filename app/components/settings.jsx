@@ -39,7 +39,7 @@ export default class Settings extends React.Component {
 
   style() {
     return {
-      zIndex: 10000
+      zIndex: 10000,
     }
   }
 
@@ -167,7 +167,7 @@ export default class Settings extends React.Component {
     return (
       <div className="modal is-active" style={this.style()}>
         <div className="modal-background"></div>
-        <div className="modal-card">
+        <div className="modal-card" style={{width: '700px'}}>
           <header className="modal-card-head">
             <p className="modal-card-title">Global Settings</p>
           </header>
@@ -195,7 +195,7 @@ export default class Settings extends React.Component {
                 { this._renderLabel('') }
                 </tr>
                 <tr>
-                  { this._renderLabel('Geo extent') }
+                  { this._renderLabel('geographical extent') }
                   <td>
                     <Map 
                       zoomControl={false} 

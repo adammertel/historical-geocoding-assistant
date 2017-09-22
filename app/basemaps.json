@@ -1,9 +1,26 @@
 {
+  "OSM_DE": {
+    "url": "https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png",
+    "attribution": "&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>",
+    "name": "OSM.DE",
+    "info": "http://openstreetmap.org",
+    "type": "tile"
+  },
+  
   "AWMC": {
     "url": "http://a.tiles.mapbox.com/v3/isawnyu.map-knmctlkh/{z}/{x}/{y}.png",
     "attribution": "awmc",
     "name": "AWMC",
     "info": "Ancient World Mapping Center",
+    "type": "tile"
+  },
+  
+  "CartoDB_Positron": {
+    "url": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+    "attribution": "&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> &copy; <a href='http://cartodb.com/attributions'>CartoDB</a>",
+    "subdomains": "abcd",
+    "name": "CartoDB",
+    "maxZoom": 19,
     "type": "tile"
   },
 
@@ -15,6 +32,14 @@
     "type": "tile"
   },
   
+  "ESRIWORLD": {
+    "url": "http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "attribution": "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
+    "name": "WorldImagery ESRI",
+    "info": "WorldImagery ESRI ArcGIS Online WMS",
+    "type": "tile"
+  },
+  
   "IMPERIUM": {
     "url": "http://pelagios.org/tilesets/imperium/{z}/{x}/{y}.png",
     "attribution": "<a href='http://dare.ht.lu.se/'>Digital Atlas of the Roman Empire (DARE)</a>",
@@ -23,13 +48,6 @@
     "type": "tile"
   },
 
-  "ESRIWORLD": {
-    "url": "http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-	  "attribution": "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
-    "name": "WorldImagery ESRI",
-    "info": "WorldImagery ESRI ArcGIS Online WMS",
-    "type": "tile"
-  },
 
   "CASSINI": {
     "url": "http://geobretagne.fr/geoserver/geobretagne/wms?",

@@ -36,7 +36,7 @@ export default class AppStore {
       center: this.config.defaultCenter,
       zoom: this.config.defaultZoom
     };
-    @observable mapOpacityRatio = 0; 
+    @observable mapOpacityRatio = 0.4; 
     @observable map1Id = false; 
     @observable map2Id = false;
     
@@ -49,8 +49,8 @@ export default class AppStore {
     
     constructor () {
       this.noRecords = Sheet.noLines;
-      this.map1Id = Object.keys(window['basemaps'])[1]; 
-      this.map2Id = Object.keys(window['basemaps'])[0]; 
+      this.map1Id = Object.keys(window['basemaps'])[0]; 
+      this.map2Id = Object.keys(window['basemaps'])[4]; 
       this.firstRecordRow = 2;
       this.recordRow = this.firstRecordRow;
     }
@@ -364,7 +364,10 @@ export default class AppStore {
     @action updateRecordValue = (column, value) => {
       if ((column === 'x' || column === 'y') && value) value = parseFloat(value);
       this.records[this.recordRow][column] = value;
-      if (column === this.config.columns.name) {
+      if (
+        column === this.config.columns.name ||
+        column === this.config.columns.localisation
+      ) {
           this.updateWiki();
       }
     }

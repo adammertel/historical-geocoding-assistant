@@ -188,8 +188,11 @@ export default class Panel extends React.Component {
               ) : null
             }
             <div>
-              <span>Localisation: 
-                <strong>{this.store.recordLocalisation}</strong>
+              <span>Localisation:  
+                <Input  
+                  onChange={this.handleChangeInput.bind(this, appStore.config.columns.localisation)}
+                  value={this.store.recordLocalisation} 
+                />
               </span>
             </div>
             <div id="certainty-select" style={{marginTop: '5px', marginBottom: '5px'}}>
@@ -279,7 +282,6 @@ export default class Panel extends React.Component {
           <div> 
             {
               this.store.geonames.filter(g => g).map( (geoname, gi) => {
-                console.log(geoname);
                 return (
                   <p key={gi}>
                     <Button 

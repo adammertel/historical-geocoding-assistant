@@ -144,6 +144,7 @@ export default class AppMap extends React.Component {
           onClick={this.handleMapClick.bind(this)}
           style={this.mapStyle()}
           attributionControl={false}
+          maxZoom={18}
         >
           <ScaleControl position="topleft" imperial={false}/>
           <AttributionControl position="bottomleft" />
