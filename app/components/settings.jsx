@@ -22,6 +22,7 @@ export default class Settings extends React.Component {
         name: config.columns.name,
         x: config.columns.x,
         y: config.columns.y,
+        note: config.columns.note,
         localisation: config.columns.localisation,
         certainty: config.columns.certainty,
       }
@@ -190,6 +191,7 @@ export default class Settings extends React.Component {
                 {this.renderColumnSelect('x', 'x coordinate column')}
                 {this.renderColumnSelect('y', 'y coordinate column')}
                 {this.renderColumnSelect('certainty', 'certainty column')}
+                {this.renderColumnSelect('note', 'localisation notes column')}
                 
                 <tr>
                 { this._renderLabel('') }

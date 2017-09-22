@@ -195,6 +195,14 @@ export default class Panel extends React.Component {
                 />
               </span>
             </div>
+            <div>
+              <span>Notes:  
+                <Input  
+                  onChange={this.handleChangeInput.bind(this, appStore.config.columns.note)}
+                  value={this.store.recordNote} 
+                />
+              </span>
+            </div>
             <div id="certainty-select" style={{marginTop: '5px', marginBottom: '5px'}}>
               <span>Certainty level</span>
               <div className="select" style={{verticalAlign: 'middle', marginLeft: '5px'}}>

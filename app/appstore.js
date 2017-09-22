@@ -17,6 +17,7 @@ export default class AppStore {
       columns: {
         name: '',
         localisation: '',
+        note: '',
         x: '',
         y: '',
         certainty: ''
@@ -69,6 +70,7 @@ export default class AppStore {
         'x': ['coordinate', 'geo', 'x'],
         'y': ['coordinate', 'geo', 'y'],
         'certainty': ['certainty'],
+        'note': ['note', 'notes'],
       }
 
       Object.keys(keywordsDictionary).map(id => {
@@ -134,6 +136,10 @@ export default class AppStore {
 
     @computed get recordLocalisation () {
       return this.recordData[this.config.columns.localisation];
+    }
+
+    @computed get recordNote () {
+      return this.recordData[this.config.columns.note];
     }
 
     @computed get recordX () {
@@ -368,7 +374,7 @@ export default class AppStore {
         column === this.config.columns.name ||
         column === this.config.columns.localisation
       ) {
-          this.updateWiki();
+        this.updateWiki();
       }
     }
 
@@ -378,24 +384,24 @@ export default class AppStore {
 
     // save local values to sheet
     @action saveRecord = () => {
-        Sheet.updateLine(this.recordRow, Object.values(this.recordData), () => {
-            this.updateData();
-        })
+      Sheet.updateLine(this.recordRow, Object.values(this.recordData), () => {
+        this.updateData();
+      })
     }
 
 
     // settings
     @action openSettings = () => {
-        this.openedSettings = true;
+      this.openedSettings = true;
     }
     @action closeSettings = () => {
-        this.openedSettings = false;
+      this.openedSettings = false;
     }
 
     @action saveSettings = (settings) => {
-        this.config = Object.assign( this.config, settings);
-        console.log(this.config);
-        this.updateWiki();
+      this.config = Object.assign( this.config, settings);
+      console.log(this.config);
+      this.updateWiki();
     }
 
     /*
