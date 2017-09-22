@@ -18,7 +18,7 @@ export default class LayerControl extends React.Component {
       bottom: 50,
       left: 30,
       opacity: .9,
-      padding: 20,
+      padding: '15px 15px 0px 15px',
       backgroundColor: 'white',
       zIndex: 9999
     }

@@ -17,13 +17,12 @@ export default class Panel extends React.Component {
   style() {
     return {
       position: 'absolute',
-      top: '3%',
-      right: '3%',
+      top: '0',
+      right: '0',
       zIndex: 9999,
       width: '400px',
       backgroundColor: 'white',
-      opacity: .9,
-      height: '94%',
+      height: '100%',
       padding: 15,
       overflowY: 'scroll',
       overflowX: 'hidden',

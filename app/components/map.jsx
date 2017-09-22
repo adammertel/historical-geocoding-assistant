@@ -39,7 +39,9 @@ export default class AppMap extends React.Component {
 
   mapStyle() {
     return {
-      width: '100%',
+      position: 'absolute',
+      left: '0',
+      right: '400px',
       height: '100%'
     }
   }
