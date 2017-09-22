@@ -48,11 +48,8 @@ export default class Panel extends React.Component {
     this.store.updateRecordValue(column, value);
   }
 
-  handleOpenWiki() {
-    Base.openTab(
-      'en.wikipedia.org/w/index.php?action=parse&search=' + 
-      this.store.recordName
-    )
+  handleOpenWiki(url) {
+    Base.openTab(url)
   }
 
   handleOpenGMaps() {
@@ -106,7 +103,7 @@ export default class Panel extends React.Component {
   }
 
   render() {
-    //console.log(this.store.recordData)
+    console.log(this.store.wikis)
 
     return (
       <div className="panel-wrapper" style={this.style()} >
@@ -142,8 +139,6 @@ export default class Panel extends React.Component {
             <select style={{width: '100%'}} value={appStore.recordRow} onChange={this.handleSelectRecord.bind(this)}>
               {
                 appStore.geoRecords.map( record => {
-                  console.log();
-
                   if (Base.validGeo(record)) {
                     return (
                       <option key={record.row} value={record.row}>
@@ -353,15 +348,42 @@ export default class Panel extends React.Component {
 
         <Menu label="wikipedia" defaultOpen={true}>
           <div>
-            <div 
-              style={{fontSize: 8.5}}
-              className="notification" 
-              dangerouslySetInnerHTML={{
-                __html:this.store.wikiTextShort
-              }} 
-            />
-            <Button label="open new tab" icon="wikipedia-w" className="is-inverted" 
-              onClick={this.handleOpenWiki.bind(this)}/>
+            {
+              this.store.wikis.map( (wiki, wi) => {
+                return (
+                  <p key={wi}>
+                    <Button 
+                      tooltip="show on map"
+                      icon="compass" label="" 
+                      onClick={this.handleLocateGeocodedPlaceClick.bind(this, wiki)}
+                      className="is-inverted hint--top-right" 
+                      style={this.styleSmallButton()} 
+                    />
+                    <Button 
+                      icon="floppy-o" label="" 
+                      className="is-inverted" 
+                      onClick={this.handleUseGeocodedPlaceClick.bind(this, wiki)}
+                      style={this.styleSmallButton()} 
+                    />
+                    <Button 
+                      icon="wikipedia-w" label="" 
+                      className="is-inverted" 
+                      onClick={this.handleOpenWiki.bind(this, wiki.wikipediaUrl)}
+                      style={this.styleSmallButton()} 
+                    />
+                    <span 
+                      className="tooltip is-tooltip-multiline"
+                      data-tooltip={wiki.summary} 
+                      style={{marginLeft: 5}}
+                    >
+                    {
+                      wiki.title || ''
+                    }
+                    </span>
+                  </p>
+                )
+              })
+            }
           </div>
         </Menu>
         <Menu label="google" defaultOpen={true}>

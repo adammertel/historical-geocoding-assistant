@@ -63,7 +63,24 @@ var Base =  {
   },
 
   wiki (term, next) {
-    const path = 'https://en.wikipedia.org/w/api.php?' + 
+    const path = 'http://api.geonames.org/wikipediaSearchJSON?' + 
+    'q=' + term + '&maxRows=10&username=adammertel'
+
+    $.ajax({
+      dataType: 'json',
+      url: path,
+      async: false, 
+      success: (res) => {
+        if (res.geonames) {
+          next(this.parseWikis(res.geonames));
+        } else {
+          next([]);
+        }
+      },
+      fail: (e) => next([]) 
+    })
+    
+    /* const path = 'https://en.wikipedia.org/w/api.php?' + 
       'action=query&prop=extracts&callback=?&' + 
       'titles=' +  term + 
       '&format=json';
@@ -81,13 +98,20 @@ var Base =  {
         }
       },
       fail: (e) => next(false) 
+    }) */
+  },
+
+  parseWikis (wikis) {
+    return wikis.map(w => {
+      w.ll = [w.lat, w.lng]
+      return w
     })
   },
 
   geonames (term, noResults, extent, next) {
     const path = 'http://api.geonames.org/searchJSON?' + 
       'q=' +  term + 
-      '&maxRows=' + noResults + '&username=adammertel';
+      '&maxRows=' + noResults + '&username=adammertel&fuzzy=0.6';
 
     $.ajax({
       dataType: 'json',
@@ -96,7 +120,7 @@ var Base =  {
       success: (res) => {
         next(this.parseGeonames(res.geonames, extent))
       },
-      fail: (e) => next(false)
+      fail: (e) => next([])
     })
   },
 

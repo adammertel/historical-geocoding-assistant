@@ -5,7 +5,7 @@ import Base from './base.js'
 export default class AppStore {
 
     @observable config = {
-      focusZoom: 12,
+      focusZoom: 11,
       defaultZoom: 6,
       focusOnRecordChange: 0,
       displayGeonamesOnMap: 1,
@@ -29,7 +29,7 @@ export default class AppStore {
     @observable recordRow = 4;
     @observable records = {};
     @observable recordBeforeChanges = {};
-    @observable wikiText = '';
+    @observable wikis = [];
     @observable geonames = [];
     
     
@@ -154,20 +154,6 @@ export default class AppStore {
       return [parseFloat(this.recordY), parseFloat(this.recordX)];
     }
 
-    @computed get wikiTextShort () {
-      if (!this.wikiText) {
-        return 'not found'
-      } else {
-        const wikiColumns = this.wikiText.split('</p>');
-        let shortenedText = '';
-        wikiColumns.map((column, ci) => {
-          if (ci < this.config.wikiNoColumns) {
-            shortenedText += column + '</p>'
-          }
-        })
-        return shortenedText;
-      }
-    }
     @computed get geoRecords () {
       return Object.keys(this.records).map( rowNo => {
         const record = this.records[rowNo];
@@ -257,7 +243,7 @@ export default class AppStore {
         }
       )
       Base.wiki(this.recordName, (response) => {
-        this.wikiText = response;
+        this.wikis = response;
       });
     }
 

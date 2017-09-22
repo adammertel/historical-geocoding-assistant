@@ -7,6 +7,7 @@ $info: #D9AE5F;
 $primary: #A64005;
 $success: #707322;
 $danger: #BF0606;
+$tooltip-max-width: 200px;
 
 
 $family-serif: 'Acme', sans-serif;
@@ -37,6 +38,7 @@ $family-primary: 'Lato', sans-serif;;
   font-family: 'FontAwesome', 'sans-serif';
   border-color: $primary
 }
+
 
 html {
   overflow: hidden;
