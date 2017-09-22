@@ -3,7 +3,7 @@ html {
 }
 
 // 1. Import the initial variables
-@import "../node_modules/bulma/sass/utilities/initial-variables";
+@import '../node_modules/bulma/sass/utilities/initial-variables';
 
 $info: #D9AE5F;
 $primary: #A64005;
@@ -32,7 +32,8 @@ $family-primary: 'Lato', sans-serif;;
 }
 
 // 4. Import the rest of Bulma
-@import "../node_modules/bulma/bulma";
+@import '../node_modules/bulma/bulma';
+@import './tooltip.sass';
 
 .select select {
   font-family: 'FontAwesome', 'sans-serif';

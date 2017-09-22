@@ -19,10 +19,10 @@ if (!testing) {
 };
 
 window['certaintyOptions'] = {
-  1: 'definite',
-  2: 'area',
-  3: 'not certain',
-  4: 'unknown'
+  1: '1 - definite',
+  2: '2 - area',
+  3: '3 - not certain',
+  4: '4 - unknown'
 }
 
 if (sheetId !== null) {

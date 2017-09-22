@@ -199,7 +199,7 @@ export default class Settings extends React.Component {
                   <td>
                     <Map 
                       zoomControl={false} 
-                      zoomSnap={0.1} 
+                      zoomSnap={0.1} zoomDelta={0.05}
                       ref="refMap" 
                       bounds={bounds} 
                       onViewportChanged={this.handleGeoExtentChange.bind(this)} 

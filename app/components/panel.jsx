@@ -279,6 +279,7 @@ export default class Panel extends React.Component {
           <div> 
             {
               this.store.geonames.filter(g => g).map( (geoname, gi) => {
+                console.log(geoname);
                 return (
                   <p key={gi}>
                     <Button 
@@ -294,12 +295,17 @@ export default class Panel extends React.Component {
                       onClick={this.handleUseGeocodedPlaceClick.bind(this, geoname)}
                       style={this.styleSmallButton()} 
                     />
-                    <span style={{marginLeft: 5}}>
+                    <span 
+                      style={{marginLeft: 5}}>
                     {
                       geoname.toponymName || ''
                     }
                     </span>
-                    <span className="tag is-dark" style={this.styleTag()}>
+                    <span 
+                      className="tag is-dark tooltip"
+                      data-tooltip={geoname.countryName} 
+                      style={this.styleTag()} 
+                    >
                     {
                       geoname.countryCode // + ' - ' + geoname.fcodeName
                     }
