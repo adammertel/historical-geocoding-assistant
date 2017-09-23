@@ -305,7 +305,7 @@ export default class Panel extends React.Component {
           </div>
         </Menu>
 
-        <Menu label="geonames" defaultOpen={true}>
+        <Menu label="geonames" defaultOpen={true} icon="map-marker"  iconColor="#D9AE5F">
           <div> 
             {
               this.store.geonames.filter(g => g).map( (geoname, gi) => {
@@ -346,7 +346,7 @@ export default class Panel extends React.Component {
           </div>
         </Menu>
 
-        <Menu label="wikipedia" defaultOpen={true}>
+        <Menu label="wikipedia" defaultOpen={true} icon="map-marker"  iconColor="#5f8ad9" >
           <div>
             {
               this.store.wikis.map( (wiki, wi) => {

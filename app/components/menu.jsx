@@ -48,7 +48,16 @@ export default class Menu extends React.Component {
           style={this.headerStyle()} 
           onClick={this.toggleOpen.bind(this)}
         >
-          <h4 className="menu-label" style={{fontWeight: 800, color: 'black'}} >{this.props.label}</h4>
+          <h4 className="menu-label" style={{fontWeight: 800, color: 'black'}} >{this.props.label}
+          </h4>
+          {
+            this.props.icon ?
+            (
+              <span className="icon is-small" style={{color: this.props.iconColor}}>
+                <i className={'fa fa-' + this.props.icon}></i>
+              </span>
+            ) : null
+          }
           <span className="icon" >
             <i 
               className={this.state.open ? 'fa fa-caret-down' : 'fa fa-caret-right'} 

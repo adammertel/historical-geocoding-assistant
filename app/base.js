@@ -64,13 +64,14 @@ var Base =  {
 
   wiki (term, noResults, extent, next) {
     const path = 'http://api.geonames.org/wikipediaSearchJSON?' + 
-    'q=' + term + 
+    'q=' + encodeURIComponent(term) + 
     '&maxRows=10&username=adammertel'
 
     $.ajax({
       dataType: 'json',
       url: path,
       async: false, 
+      processData: false,
       success: (res) => {
         if (res.geonames) {
           next(this.parseWikis(res.geonames, extent));
@@ -93,11 +94,12 @@ var Base =  {
 
   geonames (term, noResults, extent, next) {
     const path = 'http://api.geonames.org/searchJSON?' + 
-      'q=' +  term + 
+      'q=' +  encodeURIComponent(term) + 
       '&maxRows=' + noResults + '&username=adammertel&fuzzy=0.6';
 
     $.ajax({
       dataType: 'json',
+      processData: false,
       url: path,
       async: false, 
       success: (res) => {
