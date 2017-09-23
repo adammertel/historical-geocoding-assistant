@@ -160,7 +160,7 @@ export default class Panel extends React.Component {
           <Button label="" icon="caret-right" onClick={this.store.nextRecord} className="is-inverted is-pulled-right"/>
         </div>
 
-        <Menu label="coordinates" defaultOpen={true}>
+        <Menu label="coordinates" defaultOpen={true} icon="map-marker"  iconColor="#A64005">
           <div>
             {
               !Base.inExtent(
@@ -306,6 +306,7 @@ export default class Panel extends React.Component {
         </Menu>
 
         <Menu label="geonames" defaultOpen={true} icon="map-marker"  iconColor="#D9AE5F">
+          
           <div> 
             {
               this.store.geonames.filter(g => g).map( (geoname, gi) => {

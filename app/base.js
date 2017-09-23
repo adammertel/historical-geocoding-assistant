@@ -126,7 +126,6 @@ var Base =  {
   },
 
   inExtent (geom, e) {
-    console.log(geom);
     if (!this.validGeo(geom) || !e) {
       return true;
     } else if (geom.ll) {
