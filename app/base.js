@@ -62,10 +62,18 @@ var Base =  {
     );
   },
 
+  extentToUrl(e) {
+    return 'south=' + e[0][1] + 
+      '&north=' + e[1][1] + 
+      '&west=' + e[0][0] + 
+      '&east=' + e[1][0];
+  },
+
   wiki (term, noResults, extent, next) {
     const path = 'http://api.geonames.org/wikipediaSearchJSON?' + 
     'q=' + encodeURIComponent(term) + 
-    '&maxRows=10&username=adammertel'
+    '&maxRows=10&username=adammertel&' + 
+    this.extentToUrl(extent)
 
     $.ajax({
       dataType: 'json',
@@ -84,18 +92,19 @@ var Base =  {
   },
 
   parseWikis (wikis, e) {
-    return wikis.map(w => {
+    return wikis ? wikis.map(w => {
       w.ll = [w.lat, w.lng]
-      if (this.inExtent(w, e)) {
+      if (this.inExtent(w.ll, e)) {
         return w
       }
-    }).filter(w => w)
+    }).filter(w => w) : []
   },
 
   geonames (term, noResults, extent, next) {
     const path = 'http://api.geonames.org/searchJSON?' + 
       'q=' +  encodeURIComponent(term) + 
-      '&maxRows=' + noResults + '&username=adammertel&fuzzy=0.6';
+      '&maxRows=' + noResults + '&username=adammertel&' + 
+      this.extentToUrl(extent);
 
     $.ajax({
       dataType: 'json',
@@ -110,15 +119,14 @@ var Base =  {
   },
 
   parseGeonames (geonames, e) {
-    return geonames.map(gn => {
+    return geonames ? geonames.map(gn => {
       gn.ll = [parseFloat(gn.lat), parseFloat(gn.lng)];
-      if (this.inExtent(gn, e)) {
-        return gn
-      }
-    }).filter(g => g)
+      return gn;
+    }).filter(g => g) : []
   },
 
   inExtent (geom, e) {
+    console.log(geom);
     if (!this.validGeo(geom) || !e) {
       return true;
     } else if (geom.ll) {

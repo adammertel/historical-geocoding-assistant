@@ -327,7 +327,7 @@ export default class Panel extends React.Component {
                     <span 
                       style={{marginLeft: 5}}>
                     {
-                      geoname.toponymName || ''
+                      geoname.name || ''
                     }
                     </span>
                     <span 
