@@ -103,8 +103,6 @@ export default class Panel extends React.Component {
   }
 
   render() {
-    console.log(this.store.wikis)
-
     return (
       <div className="panel-wrapper" style={this.style()} >
         
