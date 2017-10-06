@@ -94,7 +94,7 @@ export default class AppMap extends React.Component {
   renderOverlays() {
     console.log(appStore.overlays);
     return (
-      <LayerGroup>
+      <div>
         {
           appStore.overlays.map( (o, oid) => {
             const overlay = overlaymaps[o.id];
@@ -120,7 +120,7 @@ export default class AppMap extends React.Component {
             }
           })
         }
-      </LayerGroup>
+      </div>
     )
   }
 
