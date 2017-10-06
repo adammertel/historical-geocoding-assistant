@@ -92,6 +92,7 @@ export default class AppMap extends React.Component {
   }
 
   renderOverlays() {
+    console.log(appStore.overlays);
     return (
       <LayerGroup>
         {
@@ -156,7 +157,7 @@ export default class AppMap extends React.Component {
           }
           {
             /* overlays */
-            this.renderOverlays()
+            appStore.overlays.length > 0 && this.renderOverlays()
           }
 
           <Pane style={{zIndex: 500}}  >
@@ -221,7 +222,18 @@ export default class AppMap extends React.Component {
                   </Tooltip>
                 </Marker>
               )
-            }) : null
+            }) : 
+            (
+              <Marker 
+                key={0}
+                position={[parseFloat(appStore.recordY), parseFloat(appStore.recordX)]} 
+                icon={icon('fa fa-map-marker', 'color: black', [20, 20])}
+              >
+                <Tooltip offset={[10, -10]} direction="right" >
+                  <h4>{appStore.recordName}</h4>
+                </Tooltip>
+              </Marker>
+            )
           }
           </Pane>
           {
