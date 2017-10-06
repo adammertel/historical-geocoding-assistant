@@ -92,7 +92,6 @@ export default class AppMap extends React.Component {
   }
 
   renderOverlays() {
-    console.log(appStore.overlays);
     return (
       <div>
         {

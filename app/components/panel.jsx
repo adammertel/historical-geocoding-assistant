@@ -38,6 +38,17 @@ export default class Panel extends React.Component {
     }
   }
 
+  styleLabel() {
+    return {
+      marginLeft: '5px', 
+      overflow: 'hidden', 
+      width: '220px', 
+      display: 'inline-block',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap'
+    }
+  }
+
   styleSmallButton() {
     return {    
       marginTop: -3
@@ -134,7 +145,7 @@ export default class Panel extends React.Component {
             onClick={this.store.previousRecord} 
           />
 
-          <div className="select" style={{width: 300}}>
+          <div className="select" style={{width: '295px'}}>
             <select style={{width: '100%'}} value={appStore.recordRow} onChange={this.handleSelectRecord.bind(this)}>
               {
                 appStore.geoRecords.map( record => {
@@ -338,19 +349,6 @@ export default class Panel extends React.Component {
                       onClick={this.handleUseGeocodedPlaceClick.bind(this, geoname)}
                       style={this.styleSmallButton()} 
                     />
-                    <div 
-                      style={{
-                        marginLeft: '5px', 
-                        overflow: 'hidden', 
-                        width: '180px', 
-                        display: 'inline-block',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                      }}>
-                    {
-                      geoname.name || ''
-                    }
-                    </div>
                     <span 
                       className="tag is-dark tooltip"
                       data-tooltip={geoname.countryName} 
@@ -360,6 +358,12 @@ export default class Panel extends React.Component {
                       geoname.countryCode // + ' - ' + geoname.fcodeName
                     }
                     </span>
+                    <div 
+                      style={this.styleLabel()}>
+                    {
+                      geoname.name || ''
+                    }
+                    </div>
                   </div>
                 )
               })
@@ -395,7 +399,7 @@ export default class Panel extends React.Component {
                     <span 
                       className="tooltip is-tooltip-multiline"
                       data-tooltip={wiki.summary} 
-                      style={{marginLeft: 5}}
+                      style={this.styleLabel()}
                     >
                     {
                       wiki.title || ''
