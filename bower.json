@@ -6,13 +6,7 @@
     "Adam Mertel"
   ],
   "license": "MIT",
-  "keywords": [
-    "es6",
-    "web",
-    "app",
-    "boilerplate"
-  ],
-  "homepage": "https://github.com/adammertel/beste-lagen",
+  "homepage": "https://github.com/adammertel/",
   "private": true,
   "ignore": [
     "**/.*",
@@ -22,7 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "leaflet": "^1.0.3"
+    "leaflet": "^1.2.0"
   },
   "devDependencies": {
     "font-awesome": "^4.7.0"

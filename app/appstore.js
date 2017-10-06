@@ -13,7 +13,7 @@ export default class AppStore {
       defaultCenter: [45, 10],
       maxGeoExtent: [[-180, -90], [180, 90]],
       maxResults: 10,
-      displayOtherRecords: 1,
+      displayOtherRecords: 0,
       columns: {
         name: '',
         localisation: '',
