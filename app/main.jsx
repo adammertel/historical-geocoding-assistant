@@ -10,13 +10,14 @@ import Sheet from './sheet.js'
 
 const testing = true;
 
-if (!testing) {
+if (location.hash === '') {
   window['sheetId'] = prompt('Please enter id of your google sheet', '1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA');
-  console.log(sheetId);
   console.log('sheet will be initialised');
+  location.hash = window['sheetId'];
 } else {
-  window['sheetId'] = '1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA';
-};
+  window['sheetId'] = location.hash.substring(1);
+}
+
 
 window['certaintyOptions'] = {
   '': '-',

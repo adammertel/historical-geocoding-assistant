@@ -154,8 +154,22 @@ export default class Panel extends React.Component {
               }
             </select>
           </div>
-
-          <Button label="" icon="caret-right" onClick={this.store.nextRecord} className="is-inverted is-pulled-right"/>
+          
+          <Button label="" icon="caret-right" onClick={this.store.nextRecord} className="is-inverted is-pulled-right"
+          />
+          <div style={{width: '100%', margin: 20}}>
+            <Button 
+              label="restore" icon="refresh" 
+              onClick={this.handleRecordRevert.bind(this)} 
+              className="is-danger is-small" 
+            />
+            <span style={{marginLeft: 5}} />
+            <Button 
+              label="save" icon="save" 
+              onClick={this.store.saveRecord} 
+              className="is-success is-small " 
+            />
+          </div>
         </div>
 
         <Menu label="coordinates" defaultOpen={true} icon="map-marker"  iconColor="#A64005">

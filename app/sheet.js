@@ -14,12 +14,25 @@ var Sheet =  {
   
   init (next) {
     this.sId = sheetId;
-    this._authentificate( () => this._preRead(next));
+    this._authentificate( 
+      () => {
+        this._pingTable( 
+          (pinged) => {
+            console.log(pinged);
+            if (pinged) {
+              this._preRead(next)
+            } else {
+              alert('table was not ititialized, wrong id');
+            }
+          }
+        )
+      }
+    );
   },
 
   _authentificate (next) {
     gapi.load('client:auth2', () => {
-      console.log('client loaded')
+      console.log('client loaded');
       gapi.client.setApiKey(this.apiKey);
 
       gapi.auth2.init({
@@ -41,7 +54,6 @@ var Sheet =  {
             
             this.auth.isSignedIn.listen(signedStateChanged);
             this.auth.signIn();
-
         }
       })
     });
@@ -63,6 +75,16 @@ var Sheet =  {
     })
   },
 
+  _pingTable(next) {
+    this.readLine(1, true, (pingedData) => {
+      if (pingedData) {
+        next(true);
+      } else {
+        next(false);
+      }
+    })
+  },
+  
   _checkColumns(next) {
     this.readLine(1, true, (headerData) => {
       if (headerData) {
@@ -171,11 +193,11 @@ var Sheet =  {
         'method': 'GET',
       }).then(
         (response) => {
-          next(this._parseRecords(response))
+          next(this._parseRecords(response));
         },
         (response) => {
-          this._reportError(response)
-          next(false)
+          this._reportError(response);
+          next(false);
         }
       )
     })
