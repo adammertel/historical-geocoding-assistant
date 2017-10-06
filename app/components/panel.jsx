@@ -33,7 +33,8 @@ export default class Panel extends React.Component {
   styleTag() {
     return {
       margin: '0px 5px',
-      fontSize: 9
+      fontSize: 9,
+      verticalAlign: 'top'
     }
   }
 
@@ -323,7 +324,7 @@ export default class Panel extends React.Component {
             {
               this.store.geonames.filter(g => g).map( (geoname, gi) => {
                 return (
-                  <p key={gi}>
+                  <div key={gi}>
                     <Button 
                       tooltip="show on map"
                       icon="compass" label="" 
@@ -337,12 +338,19 @@ export default class Panel extends React.Component {
                       onClick={this.handleUseGeocodedPlaceClick.bind(this, geoname)}
                       style={this.styleSmallButton()} 
                     />
-                    <span 
-                      style={{marginLeft: 5}}>
+                    <div 
+                      style={{
+                        marginLeft: '5px', 
+                        overflow: 'hidden', 
+                        width: '180px', 
+                        display: 'inline-block',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}>
                     {
                       geoname.name || ''
                     }
-                    </span>
+                    </div>
                     <span 
                       className="tag is-dark tooltip"
                       data-tooltip={geoname.countryName} 
@@ -352,7 +360,7 @@ export default class Panel extends React.Component {
                       geoname.countryCode // + ' - ' + geoname.fcodeName
                     }
                     </span>
-                  </p>
+                  </div>
                 )
               })
             }
