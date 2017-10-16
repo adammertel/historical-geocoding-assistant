@@ -21,10 +21,10 @@ if (location.hash === '') {
 
 window['certaintyOptions'] = {
   '': '-',
-  1: '1 - definite',
-  2: '2 - area',
-  3: '3 - not certain',
-  4: '4 - unknown locality'
+  1: '1 - precise',
+  2: '2 - approximate',
+  3: '3 - localized but ambiguous',
+  4: '4 - not found'
 }
 
 if (sheetId !== null) {

@@ -24,7 +24,7 @@ export default class AppStore {
       }
     };
 
-    @observable openedSettings = true;
+    @observable openedSettings = false;
     
     @observable recordRow = 4;
     @observable records = {};
@@ -277,16 +277,19 @@ export default class AppStore {
         )
       }
     }
+
     @action overlayChangeOpacity = (overlayId, newOpacity) => {
       const foundOverlay = this.overlays.find( ov => ov.id === overlayId );
       if (foundOverlay) {
         foundOverlay.opacity = newOpacity;
       }
     }
+
     @action overlayRemove = (overlayId) => {
       const clonedOverlays = this.overlays.slice();
       this.overlays = clonedOverlays.filter( ov => ov.id !== overlayId );
     }
+
     @action overlayMoveUp = (overlayId) => {
       const clonedOverlays = this.overlays.slice();
       
@@ -309,7 +312,6 @@ export default class AppStore {
         this.overlays = clonedOverlays;
       }
     }
-
 
     // changing recordRow
     @action nextRecord = () => {
@@ -359,8 +361,16 @@ export default class AppStore {
 
     // locally store new values
     @action updateRecordValue = (column, value) => {
-      if ((column === 'x' || column === 'y') && value) value = parseFloat(value);
+      if (
+        (
+          column === this.config.columns.x || 
+          column === this.config.columns.y
+        ) && value
+      ) {
+        value = parseFloat(value)
+      };
       this.records[this.recordRow][column] = value;
+      
       if (
         column === this.config.columns.name ||
         column === this.config.columns.localisation
@@ -375,9 +385,14 @@ export default class AppStore {
 
     // save local values to sheet
     @action saveRecord = () => {
-      Sheet.updateLine(this.recordRow, Object.values(this.recordData), () => {
-        this.updateData();
-      })
+      const cols = this.config.columns;
+      this.recordData[cols.x] = parseFloat(this.recordData[cols.x]);
+      this.recordData[cols.y] = parseFloat(this.recordData[cols.y]);
+
+      Sheet.updateLine(
+        this.recordRow, Object.values(this.recordData), 
+        () => this.updateData()
+      )
     }
 
 
@@ -397,7 +412,6 @@ export default class AppStore {
     /*
         METHODS
     */
-
     basemapById (basemapId) { 
         return window['basemaps'][basemapId];
     };

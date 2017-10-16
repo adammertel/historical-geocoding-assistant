@@ -204,6 +204,7 @@ export default class Panel extends React.Component {
                   <td>
                     <Input 
                       onChange={this.handleChangeInput.bind(this, appStore.config.columns.x)}
+                      type="number"
                       value={this.store.recordX} 
                     />
                   </td>
@@ -214,6 +215,7 @@ export default class Panel extends React.Component {
                   <td>
                     <Input  
                       onChange={this.handleChangeInput.bind(this, appStore.config.columns.y)}
+                      type="number"
                       value={this.store.recordY} 
                     />
                   </td>
