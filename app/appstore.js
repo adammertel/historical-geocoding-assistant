@@ -11,11 +11,11 @@ export default class AppStore {
       
       displayGeonamesOnMap: true,
       displayWikisOnMap: true,
+      displayOtherRecords: false,
 
       defaultCenter: [45, 10],
       maxGeoExtent: [[-180, -90], [180, 90]],
       maxResults: 10,
-      displayOtherRecords: 0,
       columns: {
         name: '',
         localisation: '',
@@ -425,6 +425,12 @@ export default class AppStore {
     @action toggleDisplayWikisOnMap = () => {
       const newConfig = {
         displayWikisOnMap: !this.config.displayWikisOnMap
+      };
+      this.saveSettings(newConfig);
+    }
+    @action toggleDisplayOtherRecordsOnMap = () => {
+      const newConfig = {
+        displayOtherRecords: !this.config.displayOtherRecords
       };
       this.saveSettings(newConfig);
     }

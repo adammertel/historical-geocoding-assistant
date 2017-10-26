@@ -168,9 +168,23 @@ export default class Panel extends React.Component {
               }
             </select>
           </div>
+
           
           <Button label="" icon="caret-right" onClick={this.store.nextRecord} className="is-inverted is-pulled-right"
           />
+          <div
+              style={{paddingTop: '20px', paddingLeft: '20px'}}
+          >
+            <Checkbox
+              id="switch-geonames"
+              label="display all records on map"
+              classes="is-small"
+              checked={appStore.config.displayOtherRecords}
+              onChange={appStore.toggleDisplayOtherRecordsOnMap.bind(appStore)}
+            />
+          </div>
+
+
           <div style={{width: '100%', margin: 20}}>
             <Button 
               label="restore" icon="refresh" 
