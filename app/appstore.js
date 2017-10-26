@@ -167,6 +167,11 @@ export default class AppStore {
         }
       }) 
     }
+
+    @computed get validRecordCoordinates () {
+      return Base.validGeo(this.recordGeo);
+    }
+
     @computed get recordNames () {
       return Object.keys(this.records).map( rowNo => {
         const record = this.records[rowNo];
@@ -194,9 +199,8 @@ export default class AppStore {
     }
     // pan and zoom to active record
     @action focusRecord = () => {
-      const activeGeoRecord = this.recordGeo;
-      if (Base.validGeo(activeGeoRecord)) {
-        this.map.center = activeGeoRecord;
+      if (this.validRecordCoordinates) {
+        this.map.center = this.recordGeo;
         this.map.zoom = this.config.focusZoom;
       } else {
         this.defaultMapState();
