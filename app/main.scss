@@ -9,6 +9,7 @@ $primary: #A64005;
 $success: #707322;
 $danger: #BF0606;
 $tooltip-max-width: 200px;
+$checkbox-border: .1rem solid $primary;
 
 
 $family-serif: 'Acme', sans-serif;
@@ -36,6 +37,7 @@ $family-primary: 'Lato', sans-serif;;
 @import './tooltip.sass';
 @import './checkbox.sass';
 @import './switch.sass';
+
 
 .select select {
   font-family: 'FontAwesome', 'sans-serif';

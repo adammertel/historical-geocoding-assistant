@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import Base from './../base';
+import Switch from './switch';
 
 
 @observer
@@ -23,7 +24,6 @@ export default class Menu extends React.Component {
     return {
       display: 'inline-flex',
       cursor: 'pointer'
-
     }
   }
 
@@ -37,6 +37,32 @@ export default class Menu extends React.Component {
     this.setState({open: !this.state.open});
   }
 
+  renderIcon() {
+    return (
+      this.props.icon ?
+      (
+        <span className="icon is-small" style={{color: this.props.iconColor, paddingBottom: 8}}>
+          <i className={'fa fa-' + this.props.icon}></i>
+        </span>
+      ) : null
+    )
+  }
+
+  renderSwitch() {
+    return (
+      this.props.switch ?
+      (
+        <Switch
+          id={this.props.switchId}
+          label={this.props.switchLabel}
+          classes={this.props.switchClasses}
+          checked={this.props.switchChecked}
+          onChange={this.props.switchOnChange}
+        />
+      ) : null
+    )
+  }
+
   render() {
     const store = appStore;
     
@@ -45,22 +71,21 @@ export default class Menu extends React.Component {
         <div 
           className="menu-header" 
           style={this.headerStyle()} 
-          onClick={this.toggleOpen.bind(this)}
         >
-          <h4 className="menu-label" style={{fontWeight: 800, color: 'black'}} >{this.props.label}
+          <h4 
+            className="menu-label" 
+            style={{fontWeight: 800, color: 'black', marginTop: 0}} 
+            onClick={this.toggleOpen.bind(this)}
+          >
+            {this.props.label}
           </h4>
           {
-            this.props.icon ?
-            (
-              <span className="icon is-small" style={{color: this.props.iconColor, paddingBottom: 8}}>
-                <i className={'fa fa-' + this.props.icon}></i>
-              </span>
-            ) : null
+            this.renderIcon()
           }
           <span className="icon" >
             <i 
               className={this.state.open ? 'fa fa-caret-down' : 'fa fa-caret-right'} 
-              style={{marginBottom: 10}}
+              style={{marginBottom: 15}}
             />
           </span>
         </div>

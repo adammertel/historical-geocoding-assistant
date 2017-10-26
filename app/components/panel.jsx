@@ -4,6 +4,8 @@ import { observer } from 'mobx-react';
 import Base from './../base';
 import Menu from './menu';
 import Button from './button';
+import Switch from './switch';
+import Checkbox from './checkbox';
 import Input from './input';
 
 
@@ -332,9 +334,20 @@ export default class Panel extends React.Component {
           </div>
         </Menu>
 
-        <Menu label="geonames" defaultOpen={true} icon="map-marker"  iconColor="#D9AE5F">
-          
-          <div> 
+        <Menu 
+          label="geonames" 
+          defaultOpen={true} 
+          icon="map-marker" 
+          iconColor="#D9AE5F"
+        >
+          <div>
+            <Checkbox
+              id="switch-geonames"
+              label="display places geonames on map"
+              classes="is-small"
+              checked={appStore.config.displayGeonamesOnMap}
+              onChange={appStore.toggleDisplayGeonames.bind(appStore)}
+            />
             {
               this.store.geonames.filter(g => g).map( (geoname, gi) => {
                 return (
@@ -361,8 +374,7 @@ export default class Panel extends React.Component {
                       geoname.countryCode // + ' - ' + geoname.fcodeName
                     }
                     </span>
-                    <div 
-                      style={this.styleLabel()}>
+                    <div style={this.styleLabel()}>
                     {
                       geoname.name || ''
                     }
@@ -371,10 +383,18 @@ export default class Panel extends React.Component {
                 )
               })
             }
+
           </div>
         </Menu>
 
         <Menu label="wikipedia" defaultOpen={true} icon="map-marker"  iconColor="#5f8ad9" >
+          <Checkbox
+            id="switch-wikipedia"
+            label="display wikipedia places on map"
+            classes="is-small"
+            checked={appStore.config.displayWikisOnMap}
+            onChange={appStore.toggleDisplayWikisOnMap.bind(appStore)}
+          />
           <div>
             {
               this.store.wikis.map( (wiki, wi) => {

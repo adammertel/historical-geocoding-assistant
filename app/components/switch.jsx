@@ -19,7 +19,9 @@ export default class Switch extends React.Component {
           type="checkbox" 
           name={this.props.id}
           className={'switch ' + this.props.classes} 
-          checked={this.props.checked} />
+          checked={this.props.checked} 
+          onChange={this.props.onChange}
+        />
         <label htmlFor={this.props.id}>{this.props.label}</label>
       </div>
     )

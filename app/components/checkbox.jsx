@@ -15,7 +15,7 @@ export default class Checkbox extends React.Component {
     return (
       <div className="field">
         <input 
-          className="is-checkbox" 
+          className={'is-checkbox ' + this.props.classes}  
           id={this.props.id} 
           type="checkbox" 
           name={this.props.id} 

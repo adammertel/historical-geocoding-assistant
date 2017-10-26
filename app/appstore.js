@@ -8,8 +8,10 @@ export default class AppStore {
       focusZoom: 11,
       defaultZoom: 6,
       focusOnRecordChange: 0,
-      displayGeonamesOnMap: 1,
-      displayWikisOnMap: 1,
+      
+      displayGeonamesOnMap: true,
+      displayWikisOnMap: true,
+
       defaultCenter: [45, 10],
       maxGeoExtent: [[-180, -90], [180, 90]],
       maxResults: 10,
@@ -405,8 +407,22 @@ export default class AppStore {
     }
 
     @action saveSettings = (settings) => {
-      this.config = Object.assign( this.config, settings);
+      this.config = Object.assign(this.config, settings);
+      console.log(this.config);
       this.updateSearch();
+    }
+
+    @action toggleDisplayGeonames = () => {
+      const newConfig = {
+        displayGeonamesOnMap: !this.config.displayGeonamesOnMap
+      };
+      this.saveSettings(newConfig);
+    }
+    @action toggleDisplayWikisOnMap = () => {
+      const newConfig = {
+        displayWikisOnMap: !this.config.displayWikisOnMap
+      };
+      this.saveSettings(newConfig);
     }
 
     /*

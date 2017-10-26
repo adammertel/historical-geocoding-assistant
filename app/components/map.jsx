@@ -162,7 +162,7 @@ export default class AppMap extends React.Component {
           <Pane style={{zIndex: 500}}  >
           {
             /* all geonames points  */
-            store.config.displayGeonamesOnMap === 1 ? 
+            store.config.displayGeonamesOnMap ? 
             appStore.geonames.filter(g => g && g.ll).map( (geoname, gi) => {
               return (
                 <Marker 
@@ -183,7 +183,7 @@ export default class AppMap extends React.Component {
           <Pane style={{zIndex: 500}}  >
           {
             /* all wikipedia points  */
-            store.config.displayWikisOnMap === 1 ? 
+            store.config.displayWikisOnMap ? 
             appStore.wikis.filter(g => g && g.ll).map( (wiki, gi) => {
               return (
                 <Marker 
