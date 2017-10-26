@@ -197,10 +197,10 @@ export default class Panel extends React.Component {
                 </div>
               ) : null
             }
-            <table className="table" style={{fontSize:12}} >
+            <table className="table" style={{fontSize:12, marginBottom: '0.5rem'}} >
               <tbody>
                 <tr key="0">
-                  <td>coordinate X</td>
+                  <td style={{textAlign: 'right'}}>coordinate X</td>
                   <td>
                     <Input 
                       onChange={this.handleChangeInput.bind(this, appStore.config.columns.x)}
@@ -211,7 +211,7 @@ export default class Panel extends React.Component {
                 </tr>
 
                 <tr key="1">
-                  <td>coordinate Y</td>
+                  <td style={{textAlign: 'right'}}>coordinate Y</td>
                   <td>
                     <Input  
                       onChange={this.handleChangeInput.bind(this, appStore.config.columns.y)}
@@ -222,7 +222,7 @@ export default class Panel extends React.Component {
                 </tr>
 
                 <tr key="2">
-                  <td>localisation</td>
+                  <td style={{textAlign: 'right'}}>localisation</td>
                   <td>
                     <Input  
                       onChange={this.handleChangeInput.bind(this, appStore.config.columns.localisation)}
@@ -232,7 +232,7 @@ export default class Panel extends React.Component {
                 </tr>
 
                 <tr key="3">
-                  <td>notes</td>
+                  <td style={{textAlign: 'right'}}>notes</td>
                   <td>
                     <Input  
                       onChange={this.handleChangeInput.bind(this, appStore.config.columns.note)}
@@ -242,10 +242,11 @@ export default class Panel extends React.Component {
                 </tr>
 
                 <tr key="4">
-                  <td>certainty level</td>
+                  <td style={{textAlign: 'right'}}>certainty level</td>
                   <td>
-                    <div className="select">
+                    <div className="select" style={{width: '100%'}}>
                       <select 
+                        style={{fontSize: '11px', width: '100%'}}
                         value={appStore.recordCertainty} 
                         onChange={this.handleChangeCertainty.bind(this)} 
                       >

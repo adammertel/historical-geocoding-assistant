@@ -15,8 +15,7 @@ export default class Menu extends React.Component {
 
   style() {
     return {
-      marginTop: 10,
-      marginBottom: 10
+      marginBottom: 15
     }
   }
 
@@ -53,7 +52,7 @@ export default class Menu extends React.Component {
           {
             this.props.icon ?
             (
-              <span className="icon is-small" style={{color: this.props.iconColor}}>
+              <span className="icon is-small" style={{color: this.props.iconColor, paddingBottom: 8}}>
                 <i className={'fa fa-' + this.props.icon}></i>
               </span>
             ) : null
