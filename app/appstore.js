@@ -9,8 +9,8 @@ export default class AppStore {
       defaultZoom: 6,
       focusOnRecordChange: 0,
       
-      displayGeonamesOnMap: true,
-      displayWikisOnMap: true,
+      displayGeonames: true,
+      displayWikis: true,
       displayOtherRecords: false,
 
       defaultCenter: [45, 10],
@@ -418,17 +418,17 @@ export default class AppStore {
 
     @action toggleDisplayGeonames = () => {
       const newConfig = {
-        displayGeonamesOnMap: !this.config.displayGeonamesOnMap
+        displayGeonames: !this.config.displayGeonames
       };
       this.saveSettings(newConfig);
     }
-    @action toggleDisplayWikisOnMap = () => {
+    @action toggleDisplayWikis = () => {
       const newConfig = {
-        displayWikisOnMap: !this.config.displayWikisOnMap
+        displayWikis: !this.config.displayWikis
       };
       this.saveSettings(newConfig);
     }
-    @action toggleDisplayOtherRecordsOnMap = () => {
+    @action toggleDisplayOtherRecords = () => {
       const newConfig = {
         displayOtherRecords: !this.config.displayOtherRecords
       };

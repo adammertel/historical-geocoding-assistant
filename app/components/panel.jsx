@@ -176,11 +176,11 @@ export default class Panel extends React.Component {
               style={{paddingTop: '20px', paddingLeft: '20px'}}
           >
             <Checkbox
-              id="switch-geonames"
+              id="switch-otherrecords"
               label="display all records on map"
               classes="is-small"
               checked={appStore.config.displayOtherRecords}
-              onChange={appStore.toggleDisplayOtherRecordsOnMap.bind(appStore)}
+              onChange={appStore.toggleDisplayOtherRecords.bind(appStore)}
             />
           </div>
 
@@ -359,7 +359,7 @@ export default class Panel extends React.Component {
               id="switch-geonames"
               label="display places geonames on map"
               classes="is-small"
-              checked={appStore.config.displayGeonamesOnMap}
+              checked={appStore.config.displayGeonames}
               onChange={appStore.toggleDisplayGeonames.bind(appStore)}
             />
             {
@@ -406,8 +406,8 @@ export default class Panel extends React.Component {
             id="switch-wikipedia"
             label="display wikipedia places on map"
             classes="is-small"
-            checked={appStore.config.displayWikisOnMap}
-            onChange={appStore.toggleDisplayWikisOnMap.bind(appStore)}
+            checked={appStore.config.displayWikis}
+            onChange={appStore.toggleDisplayWikis.bind(appStore)}
           />
           <div>
             {
