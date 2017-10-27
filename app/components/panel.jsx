@@ -2,11 +2,11 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import Base from './../base';
-import Menu from './menu';
-import Button from './button';
-import Switch from './switch';
-import Checkbox from './checkbox';
-import Input from './input';
+import Menu from './../bulma/menu';
+import Button from './../bulma/button';
+import Switch from './../bulma/switch';
+import Checkbox from './../bulma/checkbox';
+import Input from './../bulma/input';
 
 
 @observer

@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Map, TileLayer} from 'react-leaflet';
-import Button from './button';
-import Modal from './modal';
+import Button from './../bulma/button';
+import Modal from './../bulma/modal';
 import Base from './../base';
 
 
