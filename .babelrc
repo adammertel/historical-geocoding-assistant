@@ -1,6 +1,8 @@
 {
   "presets": ["es2015", "stage-0", "react"],
-  "plugins": ["transform-decorators-legacy"],
+  "plugins": [
+    "transform-decorators-legacy", "transform-class-properties"
+  ],
   "env": {
     "build": {
       "optional": ["optimisation", "minification"]

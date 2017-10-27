@@ -26,10 +26,10 @@ var Base =  {
 
     xhr.setRequestHeader('X-PINGOTHER', 'pingpong');
     xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET');
-    xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
 
-    xhr.onload = (e) => {
+    xhr.onload = () => {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           return xhr.responseText;
@@ -87,7 +87,7 @@ var Base =  {
           next([]);
         }
       },
-      fail: (e) => next([]) 
+      fail: () => next([]) 
     })
   },
 
@@ -114,11 +114,11 @@ var Base =  {
       success: (res) => {
         next(this.parseGeonames(res.geonames, extent))
       },
-      fail: (e) => next([])
+      fail: () => next([])
     })
   },
 
-  parseGeonames (geonames, e) {
+  parseGeonames (geonames) {
     return geonames ? geonames.map(gn => {
       gn.ll = [parseFloat(gn.lat), parseFloat(gn.lng)];
       return gn;

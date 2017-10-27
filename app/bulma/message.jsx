@@ -19,9 +19,9 @@ export default class Message extends React.Component {
           <button className="delete" ariaLabel="delete"></button>
         </div>
         <div className="message-body">
-        {
-          this.props.children
-        }
+          {
+            this.props.children
+          }
         </div>
       </article>
     )

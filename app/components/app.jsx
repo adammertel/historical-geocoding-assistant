@@ -6,9 +6,7 @@ import Panel from './panel';
 import LayerControl from './layercontrol';
 import Settings from './settings';
 
-
-@observer
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -17,7 +15,7 @@ export default class App extends React.Component {
     return {
       width: '100%',
       height: '100%'
-    }
+    };
   }
 
   bodyStyle() {
@@ -26,24 +24,24 @@ export default class App extends React.Component {
       position: 'absolute',
       bottom: 0,
       width: '100%'
-    }
+    };
   }
 
   render() {
     const store = this.props.store;
-    console.log(store.openedSettings)
+    console.log(store.openedSettings);
 
     return (
-      <div className="wrapper" style={this.style()} >
+      <div className="wrapper" style={this.style()}>
         <div style={this.bodyStyle()}>
-          {
-            store.openedSettings ? (<Settings />) : null
-          }
+          {store.openedSettings ? <Settings /> : null}
           <Panel />
           <AppMap />
           <LayerControl />
         </div>
       </div>
-    )
+    );
   }
 }
+
+export default observer(App);

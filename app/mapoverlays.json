@@ -20,7 +20,8 @@
     "id": "roads",
     "name": "roads of Roman Empire",
     "info": "roads of the Roman Empire",
-    "url": "http://awmc.unc.edu/cgi-bin/mapserv?map=/awmc-stor/html/awmc/mapfiles/a_la_carte_framework_web_mercator_wms.map",
+    "url":
+      "http://awmc.unc.edu/cgi-bin/mapserv?map=/awmc-stor/html/awmc/mapfiles/a_la_carte_framework_web_mercator_wms.map",
     "layers": "roads_m",
     "format": "image/png",
     "transparent": "true",
@@ -31,7 +32,8 @@
     "id": "rome_provinces",
     "name": "Roman Provinces",
     "info": "awmc rome provinces",
-    "url": "http://awmc.unc.edu/cgi-bin/mapserv?map=/awmc-stor/html/awmc/mapfiles/a_la_carte_framework_web_mercator_wms.map",
+    "url":
+      "http://awmc.unc.edu/cgi-bin/mapserv?map=/awmc-stor/html/awmc/mapfiles/a_la_carte_framework_web_mercator_wms.map",
     "layers": "roman_provinces",
     "format": "image/png",
     "transparent": "true",

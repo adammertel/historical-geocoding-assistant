@@ -1,4 +1,7 @@
 node_modules/**
+static/**
+app/assets/**
+app/ext/**
 **/*.css
 **/*.html
 webpack.config.js

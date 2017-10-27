@@ -1,36 +1,40 @@
 {
-    "env": {
-        "browser": true,
-        "commonjs": true,
-        "node": true,
-        "browser": true,
-        "es6": true
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "node": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "allowJs": true,
+      "experimentalObjectRestSpread": true
     },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true,
-            "experimentalObjectRestSpread": true
-        },
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-        "strict": 0,
-        "indent": [
-            "error",
-            2
-        ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "react/jsx-uses-vars": [2]
-    }
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "globals": {
+    "appStore": true,
+    "Base": true,
+    "basemaps": true,
+    "certaintyOptions": true,
+    "computed": true,
+    "config": true,
+    "gapi": true,
+    "map": true,
+    "overlaymaps": true,
+    "sheetId": true,
+    "$": true
+  },
+  "rules": {
+    "no-console": "off",
+    "strict": 0,
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "windows"],
+    "quotes": ["error", "single"],
+    "react/jsx-uses-vars": [2]
+  }
 }
