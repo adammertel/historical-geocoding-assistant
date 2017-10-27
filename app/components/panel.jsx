@@ -47,6 +47,20 @@ class Panel extends React.Component {
     };
   }
 
+  hiderStyle() {
+    const opacity = appStore.changingLoadingStatus ? 0 : 0.5;
+    return {
+      backgroundColor: 'black',
+      top: 0,
+      height: 'inherit',
+      right: 0,
+      width: '400px',
+      opacity: opacity,
+      position: 'fixed',
+      zIndex: 100
+    };
+  }
+
   styleSmallButton() {
     return {
       marginTop: -3
@@ -109,6 +123,12 @@ class Panel extends React.Component {
   render() {
     return (
       <div className="panel-wrapper" style={this.style()}>
+        {!appStore.isLoaded ? (
+          <div
+            className="panel-hider is-transition"
+            style={this.hiderStyle()}
+          />
+        ) : null}
         <div>
           <img src="assets/icon.png" alt="logo" />
         </div>
@@ -121,15 +141,25 @@ class Panel extends React.Component {
             onClick={this.handleGlobalSettingOpen.bind(this)}
           />
           <div style={{ marginTop: 25 }} className="is-pulled-right">
-            displaying record {appStore.recordRow - 1} / {appStore.noRecords - 1}
+            displaying record {appStore.recordRow - 1} /{' '}
+            {appStore.noRecords - 1}
           </div>
         </div>
 
         <div className="is-inline">
-          <Button className="is-inverted" label="" icon="caret-left" onClick={this.store.previousRecord} />
+          <Button
+            className="is-inverted"
+            label=""
+            icon="caret-left"
+            onClick={this.store.previousRecord}
+          />
 
           <div className="select" style={{ width: '295px' }}>
-            <select style={{ width: '100%' }} value={appStore.recordRow} onChange={this.handleSelectRecord.bind(this)}>
+            <select
+              style={{ width: '100%' }}
+              value={appStore.recordRow}
+              onChange={this.handleSelectRecord.bind(this)}
+            >
               {appStore.geoRecords.map(record => {
                 if (Base.validGeo(record)) {
                   return (
@@ -148,7 +178,12 @@ class Panel extends React.Component {
             </select>
           </div>
 
-          <Button label="" icon="caret-right" onClick={this.store.nextRecord} className="is-inverted is-pulled-right" />
+          <Button
+            label=""
+            icon="caret-right"
+            onClick={this.store.nextRecord}
+            className="is-inverted is-pulled-right"
+          />
           <div style={{ paddingTop: '20px', paddingLeft: '20px' }}>
             <Checkbox
               id="switch-otherrecords"
@@ -167,24 +202,44 @@ class Panel extends React.Component {
               className="is-danger is-small"
             />
             <span style={{ marginLeft: 5 }} />
-            <Button label="save" icon="save" onClick={this.store.saveRecord} className="is-success is-small " />
+            <Button
+              label="save"
+              icon="save"
+              onClick={this.store.saveRecord}
+              className="is-success is-small "
+            />
           </div>
         </div>
 
-        <Menu label="coordinates" defaultOpen={true} icon="map-marker" iconColor="#A64005">
+        <Menu
+          label="coordinates"
+          defaultOpen={true}
+          icon="map-marker"
+          iconColor="#A64005"
+        >
           <div>
-            {!Base.inExtent([this.store.recordY, this.store.recordX], this.store.config.maxGeoExtent) ? (
-              <div className="is-danger notification">
-                <i className="icon fa fa-exclamation" />The coordinates are outside of the chosen geographical extent
-              </div>
-            ) : null}
-            <table className="table" style={{ fontSize: 12, marginBottom: '0.5rem' }}>
+            {!Base.inExtent(
+              [this.store.recordY, this.store.recordX],
+              this.store.config.maxGeoExtent
+            ) ? (
+                <div className="is-danger notification">
+                  <i className="icon fa fa-exclamation" />The coordinates are
+                outside of the chosen geographical extent
+                </div>
+              ) : null}
+            <table
+              className="table"
+              style={{ fontSize: 12, marginBottom: '0.5rem' }}
+            >
               <tbody>
                 <tr key="0">
                   <td style={{ textAlign: 'right' }}>coordinate X</td>
                   <td>
                     <Input
-                      onChange={this.handleChangeInput.bind(this, appStore.config.columns.x)}
+                      onChange={this.handleChangeInput.bind(
+                        this,
+                        appStore.config.columns.x
+                      )}
                       type="number"
                       value={this.store.recordX}
                     />
@@ -195,7 +250,10 @@ class Panel extends React.Component {
                   <td style={{ textAlign: 'right' }}>coordinate Y</td>
                   <td>
                     <Input
-                      onChange={this.handleChangeInput.bind(this, appStore.config.columns.y)}
+                      onChange={this.handleChangeInput.bind(
+                        this,
+                        appStore.config.columns.y
+                      )}
                       type="number"
                       value={this.store.recordY}
                     />
@@ -206,7 +264,10 @@ class Panel extends React.Component {
                   <td style={{ textAlign: 'right' }}>localisation</td>
                   <td>
                     <Input
-                      onChange={this.handleChangeInput.bind(this, appStore.config.columns.localisation)}
+                      onChange={this.handleChangeInput.bind(
+                        this,
+                        appStore.config.columns.localisation
+                      )}
                       value={this.store.recordLocalisation}
                     />
                   </td>
@@ -216,7 +277,10 @@ class Panel extends React.Component {
                   <td style={{ textAlign: 'right' }}>notes</td>
                   <td>
                     <Input
-                      onChange={this.handleChangeInput.bind(this, appStore.config.columns.note)}
+                      onChange={this.handleChangeInput.bind(
+                        this,
+                        appStore.config.columns.note
+                      )}
                       value={this.store.recordNote}
                     />
                   </td>
@@ -247,42 +311,45 @@ class Panel extends React.Component {
             </table>
 
             <div>
-              {Base.validGeo({ x: this.store.recordX, y: this.store.recordY }) ? (
-                <div>
-                  <Button
-                    onClick={this.handleCoordinatesHighlight.bind(this)}
-                    tooltip="highlight location on map"
-                    icon="lightbulb-o"
-                    label="highlight"
-                    className="is-inverted hint--top-right"
-                    style={this.styleSmallButton()}
-                  />
-                  <Button
-                    onClick={this.handleCoordinatesFocus.bind(this)}
-                    tooltip="pan map to the location"
-                    icon="compass"
-                    label="focus"
-                    className="is-inverted hint--top-right"
-                    style={this.styleSmallButton()}
-                  />
-                  <Button
-                    onClick={this.handleCoordinatesRevert.bind(this)}
-                    tooltip="revert changes to record coordinates"
-                    icon="recycle"
-                    label="revert"
-                    className="is-inverted hint--top-right"
-                    style={this.styleSmallButton()}
-                  />
-                  <Button
-                    onClick={this.handleCoordinatesRemove.bind(this)}
-                    tooltip="truncate coordinates"
-                    icon="trash"
-                    label="remove"
-                    className="is-inverted hint--top-right"
-                    style={this.styleSmallButton()}
-                  />
-                </div>
-              ) : null}
+              {Base.validGeo({
+                x: this.store.recordX,
+                y: this.store.recordY
+              }) ? (
+                  <div>
+                    <Button
+                      onClick={this.handleCoordinatesHighlight.bind(this)}
+                      tooltip="highlight location on map"
+                      icon="lightbulb-o"
+                      label="highlight"
+                      className="is-inverted hint--top-right"
+                      style={this.styleSmallButton()}
+                    />
+                    <Button
+                      onClick={this.handleCoordinatesFocus.bind(this)}
+                      tooltip="pan map to the location"
+                      icon="compass"
+                      label="focus"
+                      className="is-inverted hint--top-right"
+                      style={this.styleSmallButton()}
+                    />
+                    <Button
+                      onClick={this.handleCoordinatesRevert.bind(this)}
+                      tooltip="revert changes to record coordinates"
+                      icon="recycle"
+                      label="revert"
+                      className="is-inverted hint--top-right"
+                      style={this.styleSmallButton()}
+                    />
+                    <Button
+                      onClick={this.handleCoordinatesRemove.bind(this)}
+                      tooltip="truncate coordinates"
+                      icon="trash"
+                      label="remove"
+                      className="is-inverted hint--top-right"
+                      style={this.styleSmallButton()}
+                    />
+                  </div>
+                ) : null}
             </div>
           </div>
         </Menu>
@@ -294,13 +361,18 @@ class Panel extends React.Component {
                 {Object.keys(this.store.recordData).map((column, ci) => {
                   const value = this.store.recordData[column];
 
-                  const shortenColumn = column.length > 15 ? column.substr(0, 14) + '...' : column;
+                  const shortenColumn =
+                    column.length > 15 ? column.substr(0, 14) + '...' : column;
 
                   return (
                     <tr key={ci}>
                       <td> {shortenColumn} </td>
                       <td>
-                        <Input info={true} value={value} onChange={this.handleChangeInput.bind(this, column)} />
+                        <Input
+                          info={true}
+                          value={value}
+                          onChange={this.handleChangeInput.bind(this, column)}
+                        />
                       </td>
                     </tr>
                   );
@@ -310,7 +382,12 @@ class Panel extends React.Component {
           </div>
         </Menu>
 
-        <Menu label="geonames" defaultOpen={true} icon="map-marker" iconColor="#D9AE5F">
+        <Menu
+          label="geonames"
+          defaultOpen={true}
+          icon="map-marker"
+          iconColor="#D9AE5F"
+        >
           <div>
             <Checkbox
               id="switch-geonames"
@@ -326,7 +403,10 @@ class Panel extends React.Component {
                     tooltip="show on map"
                     icon="compass"
                     label=""
-                    onClick={this.handleLocateGeocodedPlaceClick.bind(this, geoname)}
+                    onClick={this.handleLocateGeocodedPlaceClick.bind(
+                      this,
+                      geoname
+                    )}
                     className="is-inverted hint--top-right"
                     style={this.styleSmallButton()}
                   />
@@ -334,10 +414,17 @@ class Panel extends React.Component {
                     icon="floppy-o"
                     label=""
                     className="is-inverted"
-                    onClick={this.handleUseGeocodedPlaceClick.bind(this, geoname)}
+                    onClick={this.handleUseGeocodedPlaceClick.bind(
+                      this,
+                      geoname
+                    )}
                     style={this.styleSmallButton()}
                   />
-                  <span className="tag is-dark tooltip" data-tooltip={geoname.countryName} style={this.styleTag()}>
+                  <span
+                    className="tag is-dark tooltip"
+                    data-tooltip={geoname.countryName}
+                    style={this.styleTag()}
+                  >
                     {
                       geoname.countryCode // + ' - ' + geoname.fcodeName
                     }
@@ -349,7 +436,12 @@ class Panel extends React.Component {
           </div>
         </Menu>
 
-        <Menu label="wikipedia" defaultOpen={true} icon="map-marker" iconColor="#5f8ad9">
+        <Menu
+          label="wikipedia"
+          defaultOpen={true}
+          icon="map-marker"
+          iconColor="#5f8ad9"
+        >
           <Checkbox
             id="switch-wikipedia"
             label="display wikipedia places on map"
@@ -365,7 +457,10 @@ class Panel extends React.Component {
                     tooltip="show on map"
                     icon="compass"
                     label=""
-                    onClick={this.handleLocateGeocodedPlaceClick.bind(this, wiki)}
+                    onClick={this.handleLocateGeocodedPlaceClick.bind(
+                      this,
+                      wiki
+                    )}
                     className="is-inverted hint--top-right"
                     style={this.styleSmallButton()}
                   />
@@ -383,7 +478,11 @@ class Panel extends React.Component {
                     onClick={this.handleOpenWiki.bind(this, wiki.wikipediaUrl)}
                     style={this.styleSmallButton()}
                   />
-                  <span className="tooltip is-tooltip-multiline" data-tooltip={wiki.summary} style={this.styleLabel()}>
+                  <span
+                    className="tooltip is-tooltip-multiline"
+                    data-tooltip={wiki.summary}
+                    style={this.styleLabel()}
+                  >
                     {wiki.title || ''}
                   </span>
                 </p>
@@ -410,7 +509,10 @@ class Panel extends React.Component {
           </div>
         </Menu>
 
-        <div className="block is-pulled-right" style={{ float: 'right', padding: 5, margin: 10 }}>
+        <div
+          className="block is-pulled-right"
+          style={{ float: 'right', padding: 5, margin: 10 }}
+        >
           <Button
             label="restore"
             icon="refresh"
@@ -418,7 +520,12 @@ class Panel extends React.Component {
             className="is-danger is-small"
           />
           <span style={{ marginLeft: 5 }} />
-          <Button label="save" icon="save" onClick={this.store.saveRecord} className="is-success is-small " />
+          <Button
+            label="save"
+            icon="save"
+            onClick={this.store.saveRecord}
+            className="is-success is-small "
+          />
         </div>
       </div>
     );

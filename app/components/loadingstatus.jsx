@@ -24,7 +24,7 @@ class LoadingStatus extends React.Component {
     return (
       <Message
         style={this.style()}
-        classes="is-danger loading-message"
+        classes="is-danger is-transition"
         body={<strong>{appStore.loadingMessage}</strong>}
       />
     );

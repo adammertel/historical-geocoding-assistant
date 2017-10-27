@@ -64,7 +64,7 @@ export default class AppStore extends React.Component {
   init() {
     this.updateData(() => {
       this.findDefaultColumnNames();
-      this.loadApplication();
+      // this.loadApplication();
     });
   }
 
@@ -221,15 +221,15 @@ export default class AppStore extends React.Component {
   // loading status
   @action
   changeLoadingStatus = newStatus => {
-    this.changingLoadingStatus = true;
-    setTimeout(() => {
-      this.changingLoadingStatus = false;
-      this.loadingStatus = newStatus;
-    }, config.messageLoadingTime);
+    this.changingLoadingStatus = false;
+    this.loadingStatus = newStatus;
   };
   @action
   loadApplication = () => {
-    this.changeLoadingStatus('loaded');
+    this.changingLoadingStatus = true;
+    setTimeout(() => {
+      this.changeLoadingStatus('loaded');
+    }, config.messageLoadingTime);
   };
 
   // map
@@ -410,6 +410,7 @@ export default class AppStore extends React.Component {
   // new data are loaded
   @action
   updateData = (next = function() {}) => {
+    this.changeLoadingStatus('record');
     Sheet.readAllLines(data => {
       this.records = data;
       this.recordBeforeChanges = Object.assign({}, data[this.recordRow]);
@@ -419,6 +420,7 @@ export default class AppStore extends React.Component {
         this.focusRecord();
       }
       next();
+      this.loadApplication();
     });
   };
 
