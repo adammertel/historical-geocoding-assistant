@@ -36,6 +36,7 @@ $family-primary: 'Lato', sans-serif;
 // 4. Import the rest of Bulma
 @import '../node_modules/bulma/bulma';
 @import './bulma/tooltip.sass';
+@import './bulma/slider.sass';
 @import './bulma/checkbox.sass';
 @import './bulma/switch.sass';
 

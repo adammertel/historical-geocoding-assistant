@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 
 import Menu from './../bulma/menu';
 import Button from './../bulma/button';
+import Slider from './../bulma/slider';
 
 class LayerControl extends React.Component {
   constructor(props) {
@@ -85,15 +86,13 @@ class LayerControl extends React.Component {
                 <tr>
                   <td>opacity</td>
                   <td>
-                    <input
-                      style={{}}
+                    <Slider
                       value={store.mapOpacityRatio * 100}
                       onChange={this.handleOpacityRatio.bind(this)}
-                      type="range"
                       min="0"
                       max="100"
                       step="1"
-                      className="slider"
+                      classes="is-primary"
                     />
                   </td>
                 </tr>
@@ -134,18 +133,16 @@ class LayerControl extends React.Component {
                     <tr key={overlay.id}>
                       <td>{overlaymaps[overlay.id].name}</td>
                       <td>
-                        <input
-                          style={{}}
+                        <Slider
                           value={overlay.opacity * 100}
                           onChange={this.handleOverlayOpacity.bind(
                             this,
                             overlay.id
                           )}
-                          type="range"
                           min="0"
                           max="100"
                           step="1"
-                          className="slider"
+                          classes="is-primary"
                         />
                       </td>
                       <td>
