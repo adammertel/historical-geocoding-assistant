@@ -231,8 +231,8 @@ class Panel extends React.Component {
                         value={appStore.recordCertainty}
                         onChange={this.handleChangeCertainty.bind(this)}
                       >
-                        {Object.keys(certaintyOptions).map(cKey => {
-                          const value = certaintyOptions[cKey];
+                        {Object.keys(config.certaintyOptions).map(cKey => {
+                          const value = config.certaintyOptions[cKey];
                           return (
                             <option key={cKey} value={cKey}>
                               {value}
@@ -425,4 +425,4 @@ class Panel extends React.Component {
   }
 }
 
-export default observer(Panel)
+export default observer(Panel);
