@@ -5,5 +5,12 @@
     "2": "2 - approximate",
     "3": "3 - localized but ambiguous",
     "4": "4 - not found"
+  },
+  "loadingMessages": {
+    "loaded": "",
+    "signing": "application is signing in",
+    "table": "loading table",
+    "record": "loading record",
+    "saving": "saving..."
   }
 }

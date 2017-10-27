@@ -221,4 +221,4 @@ class AppMap extends React.Component {
   }
 }
 
-export default observer(AppMap)
+export default observer(AppMap);

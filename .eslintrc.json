@@ -20,7 +20,6 @@
     "appStore": true,
     "Base": true,
     "basemaps": true,
-    "certaintyOptions": true,
     "computed": true,
     "config": true,
     "gapi": true,

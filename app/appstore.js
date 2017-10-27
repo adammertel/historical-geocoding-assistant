@@ -29,6 +29,7 @@ export default class AppStore extends React.Component {
     }
   };
 
+  @observable loadingStatus = 'signing in';
   @observable openedSettings = false;
 
   @observable recordRow = 4;
@@ -59,10 +60,10 @@ export default class AppStore extends React.Component {
     this.recordRow = this.firstRecordRow;
   }
 
-  init(next) {
+  init() {
     this.updateData(() => {
       this.findDefaultColumnNames();
-      next();
+      this.loadApplication();
     });
   }
 
@@ -199,9 +200,28 @@ export default class AppStore extends React.Component {
     });
   }
 
+  @computed
+  get isLoaded() {
+    return this.loadingStatus === 'loaded';
+  }
+  get loadingMessage() {
+    return config.loadMessages[this.loadingStatus];
+  }
+
   /* 
         ACTIONS
     */
+
+  // loading status
+  @action
+  changeLoadingStatus = newStatus => {
+    this.loadingStatus = newStatus;
+  };
+  @action
+  loadApplication = () => {
+    this.loadingStatus = 'loaded';
+  };
+
   // map
   @action
   mapMoved = change => {
