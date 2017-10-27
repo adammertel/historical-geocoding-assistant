@@ -71,11 +71,11 @@ export default class Menu extends React.Component {
         <div 
           className="menu-header" 
           style={this.headerStyle()} 
+          onClick={this.toggleOpen.bind(this)}
         >
           <h4 
             className="menu-label" 
             style={{fontWeight: 800, color: 'black', marginTop: 0}} 
-            onClick={this.toggleOpen.bind(this)}
           >
             {this.props.label}
           </h4>

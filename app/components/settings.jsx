@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Map, TileLayer} from 'react-leaflet';
 import Button from './button';
+import Modal from './modal';
 import Base from './../base';
 
 
@@ -161,54 +162,14 @@ export default class Settings extends React.Component {
     const basemap = appStore.basemapById('OSM');
     
     return (
-      <div className="modal is-active" style={this.style()}>
-        <div className="modal-background"></div>
-        <div className="modal-card" style={{width: '700px'}}>
-          <header className="modal-card-head">
-            <p className="modal-card-title">Global Settings</p>
-          </header>
-          <section className="modal-card-body">
-            <table className="table">
-              <tbody>        
-                {this.renderSelect('maxResults', 'max results of search (geonames, wikipedia)')}          
-                {this.renderSelect('displayOtherRecords', 'display other records (1 = on)')}          
-                {this.renderSelect('focusZoom', 'level of zoom on focus')}          
-                {this.renderSelect('focusOnRecordChange', 'focus on record change? (1 = on)')}
-                
-                <tr>
-                { this._renderLabel('') }
-                </tr>
-
-                {this.renderColumnSelect('name', 'name column')}
-                {this.renderColumnSelect('localisation', 'localisation column')}
-                {this.renderColumnSelect('x', 'x coordinate column')}
-                {this.renderColumnSelect('y', 'y coordinate column')}
-                {this.renderColumnSelect('certainty', 'certainty column')}
-                {this.renderColumnSelect('note', 'localisation notes column')}
-                
-                <tr>
-                { this._renderLabel('') }
-                </tr>
-                <tr>
-                  { this._renderLabel('geographical extent') }
-                  <td>
-                    <Map 
-                      zoomControl={false} 
-                      zoomSnap={0.1} zoomDelta={0.05}
-                      ref="refMap" 
-                      bounds={bounds} 
-                      onViewportChanged={this.handleGeoExtentChange.bind(this)} 
-                      style={{width: '100%', height: 200}}
-                    >
-                      <TileLayer {...basemap} />  
-                    </Map>
-                  </td>
-                </tr>
-
-              </tbody>
-            </table>
-          </section>
-          <footer className="modal-card-foot">
+      <Modal
+        style={this.style()}
+        active={true}
+        classes=""
+        header="Global Settings"
+        closeIcon={false}
+        footer={
+          (
             <div className="container has-text-right">
               <Button 
                 className="is-danger" 
@@ -222,9 +183,50 @@ export default class Settings extends React.Component {
                 onClick={this.handleSave.bind(this)} 
               />
             </div>
-          </footer>
-        </div>
-      </div>
+          )
+        }
+        body={
+          <table className="table">
+            <tbody>        
+              {this.renderSelect('maxResults', 'max results of search (geonames, wikipedia)')}         
+              {this.renderSelect('focusZoom', 'level of zoom on focus')}          
+              {this.renderSelect('focusOnRecordChange', 'focus on record change? (1 = on)')}
+              
+              <tr>
+              { this._renderLabel('') }
+              </tr>
+
+              {this.renderColumnSelect('name', 'name column')}
+              {this.renderColumnSelect('localisation', 'localisation column')}
+              {this.renderColumnSelect('x', 'x coordinate column')}
+              {this.renderColumnSelect('y', 'y coordinate column')}
+              {this.renderColumnSelect('certainty', 'certainty column')}
+              {this.renderColumnSelect('note', 'localisation notes column')}
+              
+              <tr>
+              { this._renderLabel('') }
+              </tr>
+              <tr>
+                { this._renderLabel('geographical extent') }
+                <td>
+                  <Map 
+                    zoomControl={false} 
+                    zoomSnap={0.1} zoomDelta={0.05}
+                    ref="refMap" 
+                    bounds={bounds} 
+                    onViewportChanged={this.handleGeoExtentChange.bind(this)} 
+                    style={{width: '100%', height: 200}}
+                  >
+                    <TileLayer {...basemap} />  
+                  </Map>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        }
+      />
     )
   }
+      
 }

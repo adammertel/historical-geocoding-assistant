@@ -17,14 +17,19 @@ export default class Message extends React.Component {
       ('modal ' + this.props.classes);
 
     return (
-      <div className={classes}>
+      <div 
+        className={classes} 
+        style={Object.assign(
+          this.style(), this.props.style)
+        }
+      >
         <div className="modal-background" />
         <div className="modal-card">
           <header className="modal-card-head">
             <p className="modal-card-title">{this.props.header}</p>
             {
               this.props.closeIcon ? (
-                <button className="delete" aria-label="close"></button>
+                <button className="delete" ariaLabel="close"></button>
               ) : null
             }
           </header>
