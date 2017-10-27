@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import Base from './../base';
 import AppMap from './map';
 import Panel from './panel';
 import LayerControl from './layercontrol';

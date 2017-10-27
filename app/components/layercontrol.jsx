@@ -3,8 +3,6 @@ import { observer } from 'mobx-react';
 
 import Menu from './../bulma/menu';
 import Button from './../bulma/button';
-import Base from './../base';
-
 
 @observer
 export default class LayerControl extends React.Component {

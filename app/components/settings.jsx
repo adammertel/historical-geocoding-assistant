@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import { Map, TileLayer} from 'react-leaflet';
 import Button from './../bulma/button';
 import Modal from './../bulma/modal';
-import Base from './../base';
 
 
 @observer

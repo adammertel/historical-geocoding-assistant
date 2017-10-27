@@ -18,8 +18,6 @@ import {
 import { divIcon } from 'leaflet';
 import { observer } from 'mobx-react';
 
-import Base from './../base';
-
 
 @observer
 export default class AppMap extends React.Component {

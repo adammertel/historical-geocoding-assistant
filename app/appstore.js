@@ -1,6 +1,5 @@
 import { observable, action, computed } from 'mobx';
 import Sheet from './sheet.js'
-import Base from './base.js'
 
 export default class AppStore {
 

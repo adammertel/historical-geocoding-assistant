@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import Base from './../base';
 import Menu from './../bulma/menu';
 import Button from './../bulma/button';
 import Switch from './../bulma/switch';

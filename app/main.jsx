@@ -5,8 +5,7 @@ import ReactDOM from 'react-dom';
 import App from './components/app';
 import './main.scss';
 import AppStore from './appstore.js';
-import Base from './base.js'
-import Sheet from './sheet.js'
+import Sheet from './sheet.js';
 
 const testing = true;
 
@@ -26,6 +25,8 @@ window['certaintyOptions'] = {
   3: '3 - localized but ambiguous',
   4: '4 - not found'
 }
+
+window['Base'] = Base;
 
 if (sheetId !== null) {
   Sheet.init( () => {
