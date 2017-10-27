@@ -9,8 +9,9 @@
   "loadingMessages": {
     "loaded": "",
     "signing": "application is signing in",
-    "table": "loading table",
-    "record": "loading record",
+    "table": "table is loading",
+    "record": "record is loading",
     "saving": "saving..."
-  }
+  },
+  "messageLoadingTime": 1000
 }

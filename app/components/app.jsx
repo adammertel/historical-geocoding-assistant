@@ -5,6 +5,7 @@ import AppMap from './map';
 import Panel from './panel';
 import LayerControl from './layercontrol';
 import Settings from './settings';
+import LoadingStatus from './loadingstatus';
 
 class App extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class App extends React.Component {
       <div className="wrapper" style={this.style()}>
         <div style={this.bodyStyle()}>
           {appStore.openedSettings ? <Settings /> : null}
+          {!appStore.isLoaded ? <LoadingStatus /> : null}
           <Panel />
           <AppMap />
           <LayerControl />

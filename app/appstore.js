@@ -29,7 +29,8 @@ export default class AppStore extends React.Component {
     }
   };
 
-  @observable loadingStatus = 'signing in';
+  @observable loadingStatus = 'signing';
+  @observable changingLoadingStatus = false;
   @observable openedSettings = false;
 
   @observable recordRow = 4;
@@ -128,12 +129,17 @@ export default class AppStore extends React.Component {
   @computed
   get configMaxGeoExtent() {
     const geoExtent = this.config.maxGeoExtent;
-    return [[geoExtent[0][0], geoExtent[0][1]], [geoExtent[1][0], geoExtent[1][1]]];
+    return [
+      [geoExtent[0][0], geoExtent[0][1]],
+      [geoExtent[1][0], geoExtent[1][1]]
+    ];
   }
 
   @computed
   get recordData() {
-    return this.records[this.recordRow] ? Object.assign(this.records[this.recordRow], {}) : {};
+    return this.records[this.recordRow]
+      ? Object.assign(this.records[this.recordRow], {})
+      : {};
   }
 
   @computed
@@ -205,7 +211,7 @@ export default class AppStore extends React.Component {
     return this.loadingStatus === 'loaded';
   }
   get loadingMessage() {
-    return config.loadMessages[this.loadingStatus];
+    return config.loadingMessages[this.loadingStatus];
   }
 
   /* 
@@ -215,11 +221,15 @@ export default class AppStore extends React.Component {
   // loading status
   @action
   changeLoadingStatus = newStatus => {
-    this.loadingStatus = newStatus;
+    this.changingLoadingStatus = true;
+    setTimeout(() => {
+      this.changingLoadingStatus = false;
+      this.loadingStatus = newStatus;
+    }, config.messageLoadingTime);
   };
   @action
   loadApplication = () => {
-    this.loadingStatus = 'loaded';
+    this.changeLoadingStatus('loaded');
   };
 
   // map
@@ -287,12 +297,22 @@ export default class AppStore extends React.Component {
   // wiki
   @action
   updateSearch = () => {
-    Base.geonames(this.recordLocalisation, this.config.maxResults, this.config.maxGeoExtent, response => {
-      this.geonames = response;
-    });
-    Base.wiki(this.recordName, this.config.maxResults, this.config.maxGeoExtent, response => {
-      this.wikis = response;
-    });
+    Base.geonames(
+      this.recordLocalisation,
+      this.config.maxResults,
+      this.config.maxGeoExtent,
+      response => {
+        this.geonames = response;
+      }
+    );
+    Base.wiki(
+      this.recordName,
+      this.config.maxResults,
+      this.config.maxGeoExtent,
+      response => {
+        this.wikis = response;
+      }
+    );
   };
 
   // map tiles
@@ -365,13 +385,19 @@ export default class AppStore extends React.Component {
   // changing recordRow
   @action
   nextRecord = () => {
-    this.recordRow = this.recordRow === this.noRecords ? this.firstRecordRow : this.recordRow + 1;
+    this.recordRow =
+      this.recordRow === this.noRecords
+        ? this.firstRecordRow
+        : this.recordRow + 1;
     this.updateData();
   };
 
   @action
   previousRecord = () => {
-    this.recordRow = this.recordRow === this.firstRecordRow ? this.noRecords : this.recordRow - 1;
+    this.recordRow =
+      this.recordRow === this.firstRecordRow
+        ? this.noRecords
+        : this.recordRow - 1;
     this.updateData();
   };
 
@@ -416,12 +442,18 @@ export default class AppStore extends React.Component {
   // locally store new values
   @action
   updateRecordValue = (column, value) => {
-    if ((column === this.config.columns.x || column === this.config.columns.y) && value) {
+    if (
+      (column === this.config.columns.x || column === this.config.columns.y) &&
+      value
+    ) {
       value = parseFloat(value);
     }
     this.records[this.recordRow][column] = value;
 
-    if (column === this.config.columns.name || column === this.config.columns.localisation) {
+    if (
+      column === this.config.columns.name ||
+      column === this.config.columns.localisation
+    ) {
       this.updateSearch();
     }
   };
@@ -438,7 +470,9 @@ export default class AppStore extends React.Component {
     this.recordData[cols.x] = parseFloat(this.recordData[cols.x]);
     this.recordData[cols.y] = parseFloat(this.recordData[cols.y]);
 
-    Sheet.updateLine(this.recordRow, Object.values(this.recordData), () => this.updateData());
+    Sheet.updateLine(this.recordRow, Object.values(this.recordData), () =>
+      this.updateData()
+    );
   };
 
   // settings

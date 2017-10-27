@@ -17,7 +17,7 @@ class Panel extends React.Component {
       position: 'absolute',
       top: '0',
       right: '0',
-      zIndex: 9999,
+      zIndex: 1000,
       width: '400px',
       backgroundColor: 'white',
       height: '100%',

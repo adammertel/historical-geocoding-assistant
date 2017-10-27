@@ -5,25 +5,29 @@ export default class Message extends React.Component {
     super(props);
   }
 
-  style () {
+  style() {
     return {
-      fontSize: 11
-    }
+      fontSize: 11,
+      zIndex: 1200
+    };
   }
 
   render() {
     return (
-      <article className="message">
-        <div className={'message-header' + this.props.classes}>
-          <p>{this.props.header}</p>
-          <button className="delete" ariaLabel="delete"></button>
-        </div>
-        <div className="message-body">
-          {
-            this.props.children
-          }
-        </div>
+      <article
+        className={'message ' + this.props.classes}
+        style={Object.assign(this.style(), this.props.style)}
+      >
+        {this.props.header ? (
+          <div className="message-header">
+            <p>{this.props.header}</p>
+            {this.props.closeIcon ? (
+              <button className="delete" aria-label="delete" />
+            ) : null}
+          </div>
+        ) : null}
+        <div className="message-body">{this.props.body}</div>
       </article>
-    )
+    );
   }
 }

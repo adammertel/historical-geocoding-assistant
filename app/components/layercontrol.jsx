@@ -17,7 +17,7 @@ class LayerControl extends React.Component {
       opacity: 0.9,
       padding: '15px 15px 0px 15px',
       backgroundColor: 'white',
-      zIndex: 9999
+      zIndex: 1100
     };
   }
 
@@ -65,7 +65,10 @@ class LayerControl extends React.Component {
                   <td>top layer</td>
                   <td>
                     <span className="select">
-                      <select value={store.map1Id} onChange={this.handleMapSelect.bind(this, 1)}>
+                      <select
+                        value={store.map1Id}
+                        onChange={this.handleMapSelect.bind(this, 1)}
+                      >
                         {Object.keys(basemaps).map(basemapId => {
                           const basemap = basemaps[basemapId];
                           return (
@@ -99,7 +102,10 @@ class LayerControl extends React.Component {
                   <td>bottom layer</td>
                   <td>
                     <span className="select">
-                      <select value={store.map2Id} onChange={this.handleMapSelect.bind(this, 2)}>
+                      <select
+                        value={store.map2Id}
+                        onChange={this.handleMapSelect.bind(this, 2)}
+                      >
                         {Object.keys(basemaps).map(basemapId => {
                           const basemap = basemaps[basemapId];
                           return (
@@ -118,7 +124,9 @@ class LayerControl extends React.Component {
         </Menu>
         <Menu label="overlay layers" defaultOpen={false}>
           <div>
-            {appStore.overlays.length ? <span style={{ marginLeft: 8 }}>Active Overlays</span> : null}
+            {appStore.overlays.length ? (
+              <span style={{ marginLeft: 8 }}>Active Overlays</span>
+            ) : null}
             <table className="table" style={{ fontSize: 11 }}>
               <tbody>
                 {appStore.overlays.map(overlay => {
@@ -129,7 +137,10 @@ class LayerControl extends React.Component {
                         <input
                           style={{}}
                           value={overlay.opacity * 100}
-                          onChange={this.handleOverlayOpacity.bind(this, overlay.id)}
+                          onChange={this.handleOverlayOpacity.bind(
+                            this,
+                            overlay.id
+                          )}
                           type="range"
                           min="0"
                           max="100"
@@ -142,21 +153,30 @@ class LayerControl extends React.Component {
                           icon="arrow-up"
                           label=""
                           className="is-inverted"
-                          onClick={this.handleMoveOverlayUp.bind(this, overlay.id)}
+                          onClick={this.handleMoveOverlayUp.bind(
+                            this,
+                            overlay.id
+                          )}
                           style={{ marginTop: -3 }}
                         />
                         <Button
                           icon="arrow-down"
                           label=""
                           className="is-inverted"
-                          onClick={this.handleMoveOverlayDown.bind(this, overlay.id)}
+                          onClick={this.handleMoveOverlayDown.bind(
+                            this,
+                            overlay.id
+                          )}
                           style={{ marginTop: -3 }}
                         />
                         <Button
                           icon="trash-o"
                           label=""
                           className="is-inverted"
-                          onClick={this.handleRemoveOverlay.bind(this, overlay.id)}
+                          onClick={this.handleRemoveOverlay.bind(
+                            this,
+                            overlay.id
+                          )}
                           style={{ marginTop: -3 }}
                         />
                       </td>
@@ -166,7 +186,10 @@ class LayerControl extends React.Component {
                 <tr>
                   <td>
                     <span className="select">
-                      <select value="default" onChange={this.handleOverlaySelect.bind(this, 1)}>
+                      <select
+                        value="default"
+                        onChange={this.handleOverlaySelect.bind(this, 1)}
+                      >
                         <option value="default" key="default">
                           select overlay to add
                         </option>
