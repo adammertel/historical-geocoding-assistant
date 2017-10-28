@@ -181,14 +181,14 @@ class LayerControl extends React.Component {
                 })}
                 <tr>
                   <td>
+                    <b>select overlay to add</b>
+                  </td>
+                  <td>
                     <span className="select">
                       <select
                         value="default"
                         onChange={this.handleOverlaySelect.bind(this, 1)}
                       >
-                        <option value="default" key="default">
-                          select overlay to add
-                        </option>
                         {Object.keys(overlaymaps).map(overlayId => {
                           const overlay = overlaymaps[overlayId];
                           return (

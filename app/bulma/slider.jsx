@@ -7,7 +7,8 @@ export default class Slider extends React.Component {
 
   style() {
     return {
-      fontSize: 11
+      fontSize: 11,
+      width: 140
     };
   }
 
