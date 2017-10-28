@@ -46,20 +46,6 @@ class Panel extends React.Component {
     };
   }
 
-  hiderStyle() {
-    const opacity = store.changingLoadingStatus ? 0 : 0.5;
-    return {
-      backgroundColor: 'white',
-      top: 0,
-      height: 'inherit',
-      right: 0,
-      width: '400px',
-      opacity: opacity,
-      position: 'fixed',
-      zIndex: 100
-    };
-  }
-
   styleSmallButton() {
     return {
       marginTop: -3
@@ -122,12 +108,6 @@ class Panel extends React.Component {
   render() {
     return (
       <div className="panel-wrapper" style={this.style()}>
-        {!store.isLoaded ? (
-          <div
-            className="panel-hider is-transition"
-            style={this.hiderStyle()}
-          />
-        ) : null}
         <div>
           <img src="assets/icon.png" alt="logo" />
         </div>

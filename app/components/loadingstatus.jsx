@@ -18,7 +18,8 @@ class LoadingStatus extends React.Component {
       fontSize: 25,
       borderWidth: 0,
       textAlign: 'center',
-      opacity: opacity
+      opacity: opacity,
+      zIndex: 1500
     };
   }
 
