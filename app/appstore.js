@@ -433,17 +433,15 @@ export default class AppStore extends React.Component {
   // locally store new values
   @action
   updateRecordValue = (column, value) => {
-    if (
-      (column === this.config.columns.x || column === this.config.columns.y) &&
-      value
-    ) {
+    const config = this.config;
+    if ((column === config.columns.x || column === config.columns.y) && value) {
       value = parseFloat(value);
     }
     this.records[this.recordRow][column] = value;
 
     if (
-      column === this.config.columns.name ||
-      column === this.config.columns.localisation
+      column === config.columns.name ||
+      column === config.columns.localisation
     ) {
       this.updateSearch();
     }

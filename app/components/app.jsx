@@ -30,13 +30,12 @@ class App extends React.Component {
   }
 
   render() {
-    console.log('     app loaded', store.loadingStatus);
     return (
       <div className="wrapper" style={this.style()}>
         <div style={this.bodyStyle()}>
           {store.openedSettings && <Settings />}
           {!store.isLoaded && <LoadingStatus />}
-          <Panel />
+          {store.shouldRenderApp && <Panel />}
           {store.shouldRenderApp && <AppMap />}
           {store.shouldRenderApp && <LayerControl />}
         </div>

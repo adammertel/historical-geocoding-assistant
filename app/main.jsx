@@ -42,7 +42,7 @@ store.loadConfig();
 store.changeLoadingStatus('signing');
 
 ReactDOM.render(
-  <App store={store} />,
+  <App />,
   document.body.appendChild(document.createElement('div'))
 );
 
