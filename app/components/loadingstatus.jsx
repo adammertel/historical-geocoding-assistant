@@ -9,13 +9,14 @@ class LoadingStatus extends React.Component {
   }
 
   style() {
-    const opacity = store.changingLoadingStatus ? 0 : 0.9;
+    const opacity = store.changingLoadingStatus ? 0 : 0.8;
     return {
       position: 'absolute',
-      bottom: '5%',
-      width: '80%',
-      left: '10%',
-      fontSize: 20,
+      top: '0%',
+      width: '100%',
+      left: '0%',
+      fontSize: 25,
+      borderWidth: 0,
       textAlign: 'center',
       opacity: opacity
     };
@@ -25,8 +26,17 @@ class LoadingStatus extends React.Component {
     return (
       <Message
         style={this.style()}
-        classes="is-danger is-transition"
-        body={<strong>{store.loadingMessage}</strong>}
+        classes="is-primary is-transition loading-status"
+        body={
+          <div>
+            <span className="icon is-medium is-primary">
+              <i className="fa fa-cog fa-spin" />
+            </span>
+            <span style={{ verticalAlign: 'baseline', paddingLeft: 5 }}>
+              <strong>{store.loadingMessage}</strong>
+            </span>
+          </div>
+        }
       />
     );
   }

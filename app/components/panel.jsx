@@ -49,7 +49,7 @@ class Panel extends React.Component {
   hiderStyle() {
     const opacity = store.changingLoadingStatus ? 0 : 0.5;
     return {
-      backgroundColor: 'black',
+      backgroundColor: 'white',
       top: 0,
       height: 'inherit',
       right: 0,

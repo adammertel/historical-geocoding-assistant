@@ -10,17 +10,6 @@ import Base from './base.js';
 const TESTING = true;
 console.log('testing mode', TESTING);
 
-// getting table id
-if (location.hash === '') {
-  window['sheetId'] = prompt(
-    'Please enter id of your google sheet',
-    '1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA'
-  );
-  location.hash = window['sheetId'];
-} else {
-  window['sheetId'] = location.hash.substring(1);
-}
-
 // global variables
 window['map'] = false;
 window['Base'] = Base;
@@ -37,6 +26,17 @@ if (TESTING) {
   window['config'] = Object.assign(config, testConfig);
 }
 store.loadConfig();
+
+// getting table id
+if (location.hash === '') {
+  window['sheetId'] = prompt(
+    'Please enter id of your google sheet',
+    '1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA'
+  );
+  location.hash = window['sheetId'];
+} else {
+  window['sheetId'] = location.hash.substring(1);
+}
 
 // signing
 store.changeLoadingStatus('signing');
