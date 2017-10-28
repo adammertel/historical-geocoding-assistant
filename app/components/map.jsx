@@ -15,6 +15,7 @@ import {
 
 import { divIcon } from 'leaflet';
 import { observer } from 'mobx-react';
+import MarkerClusterGroup from 'react-leaflet-markercluster';
 
 class AppMap extends React.Component {
   constructor(props) {
@@ -55,12 +56,16 @@ class AppMap extends React.Component {
 
   renderBaseLayer(top) {
     const basemap = top ? appStore.basemap1 : appStore.basemap2;
-    const opacity = top ? 1 - appStore.mapOpacityRatio : appStore.mapOpacityRatio;
+    const opacity = top
+      ? 1 - appStore.mapOpacityRatio
+      : appStore.mapOpacityRatio;
 
     if (basemap.type === 'tile') {
       return <TileLayer key={top ? '1' : '2'} opacity={opacity} {...basemap} />;
     } else if (basemap.type === 'wms') {
-      return <WMSTileLayer key={top ? '1' : '2'} opacity={opacity} {...basemap} />;
+      return (
+        <WMSTileLayer key={top ? '1' : '2'} opacity={opacity} {...basemap} />
+      );
     }
   }
 
@@ -81,7 +86,14 @@ class AppMap extends React.Component {
           const zIndex = 400 - oid;
 
           if (overlay.type === 'wms') {
-            return <WMSTileLayer key={o.id} zIndex={zIndex} {...overlay} opacity={o.opacity} />;
+            return (
+              <WMSTileLayer
+                key={o.id}
+                zIndex={zIndex}
+                {...overlay}
+                opacity={o.opacity}
+              />
+            );
           } else if (overlay.type === 'geojson') {
             return (
               <Pane style={{ zIndex: zIndex }} key={o.id} name={overlay.id}>
@@ -98,29 +110,138 @@ class AppMap extends React.Component {
     );
   }
 
-  render() {
-    const store = appStore;
-    const icon = (classes, style, size) => {
-      return divIcon({
-        html:
-          '<span style="' +
-          style +
-          '; vertical-align: bottom"' +
-          ' class="icon"><i class="' +
-          classes +
-          '"></i></span>',
-        className: 'map-sort-icon',
-        iconAnchor: [size[0] / 2, size[1]],
-        iconSize: size
-      });
-    };
+  icon(classes, style, size) {
+    return divIcon({
+      html:
+        '<span style="' +
+        style +
+        '; vertical-align: bottom"' +
+        ' class="icon"><i class="' +
+        classes +
+        '"></i></span>',
+      className: 'map-sort-icon',
+      iconAnchor: [size[0] / 2, size[1]],
+      iconSize: size
+    });
+  }
 
+  renderOtherRecords() {
+    return (
+      <Pane style={{ zIndex: 600 }}>
+        <MarkerClusterGroup
+          options={{
+            showCoverageOnHover: false,
+            zoomToBoundsOnClick: true,
+            removeOutsideVisibleBounds: true,
+            animate: false,
+            singleMarkerMode: true,
+            spiderLegPolylineOptions: { weight: 0 }
+          }}
+        >
+          {appStore.geoRecords
+            .filter(Base.validGeo)
+            .filter(r => r.row.toString() !== appStore.recordRow.toString())
+            .map((record, ri) => {
+              return (
+                <Marker
+                  key={ri}
+                  position={[parseFloat(record.y), parseFloat(record.x)]}
+                  icon={this.icon('fa fa-map-marker', 'color: black', [20, 20])}
+                  onClick={this.handleClickMarker.bind(this, record.row)}
+                >
+                  <Tooltip offset={[10, -10]} direction="right">
+                    <h4>{record.name}</h4>
+                  </Tooltip>
+                </Marker>
+              );
+            })}
+        </MarkerClusterGroup>
+      </Pane>
+    );
+  }
+
+  renderThisCoordinate() {
+    return (
+      <Pane style={{ zIndex: 700 }}>
+        <Marker
+          key={0}
+          position={[
+            parseFloat(appStore.recordY),
+            parseFloat(appStore.recordX)
+          ]}
+          icon={this.icon('fa fa-map-marker', 'color: #a64005', [20, 20])}
+        >
+          <Tooltip offset={[10, -10]} direction="right">
+            <h4>{appStore.recordName}</h4>
+          </Tooltip>
+        </Marker>
+      </Pane>
+    );
+  }
+
+  renderGeonames() {
+    return (
+      <Pane style={{ zIndex: 500 }}>
+        {appStore.geonames.filter(g => g && g.ll).map((geoname, gi) => {
+          return (
+            <Marker
+              key={gi}
+              className="geoname-point"
+              position={[geoname.ll[0], geoname.ll[1]]}
+              icon={this.icon('fa fa-map-marker', 'color: #D9AE5F', [20, 20])}
+              onClick={this.handleClickGeoname.bind(this, geoname)}
+            >
+              <Tooltip offset={[10, -10]} direction="right">
+                <h4>{'geoname: ' + geoname.toponymName}</h4>
+              </Tooltip>
+            </Marker>
+          );
+        })}
+      </Pane>
+    );
+  }
+
+  renderWikis() {
+    return (
+      <Pane style={{ zIndex: 500 }}>
+        {appStore.wikis.filter(g => g && g.ll).map((wiki, gi) => {
+          return (
+            <Marker
+              key={gi}
+              className="wiki-point"
+              position={[wiki.ll[0], wiki.ll[1]]}
+              icon={this.icon('fa fa-map-marker', 'color: #5f8ad9', [20, 20])}
+              onClick={this.handleClickGeoname.bind(this, wiki)}
+            >
+              <Tooltip offset={[10, -10]} direction="right">
+                <h4>{'wikipedia: ' + wiki.title}</h4>
+              </Tooltip>
+            </Marker>
+          );
+        })}
+      </Pane>
+    );
+  }
+
+  renderHighlighted() {
+    return (
+      <LayerGroup key="hl-point">
+        <CircleMarker
+          className="hl-point"
+          center={[appStore.hlPoint[0], appStore.hlPoint[1]]}
+          radius={10}
+        />
+      </LayerGroup>
+    );
+  }
+
+  render() {
     return (
       <div className="map-wrapped" style={this.style()}>
         <Map
-          center={store.mapPosition}
-          zoom={store.mapZoom}
-          onViewportChanged={store.mapMoved}
+          center={appStore.mapPosition}
+          zoom={appStore.mapZoom}
+          onViewportChanged={appStore.mapMoved}
           useFlyTo={true}
           ref="map"
           onClick={this.handleMapClick.bind(this)}
@@ -130,91 +251,16 @@ class AppMap extends React.Component {
         >
           <ScaleControl position="topleft" imperial={false} />
           <AttributionControl position="bottomleft" />
-          {/* basemaps */
-            this.renderBaseLayers()}
-          {/* overlays */
-            appStore.overlays.length > 0 && this.renderOverlays()}
 
-          <Pane style={{ zIndex: 500 }}>
-            {/* all geonames points  */
-              store.config.displayGeonames
-                ? appStore.geonames.filter(g => g && g.ll).map((geoname, gi) => {
-                  return (
-                    <Marker
-                      key={gi}
-                      className="geoname-point"
-                      position={[geoname.ll[0], geoname.ll[1]]}
-                      icon={icon('fa fa-map-marker', 'color: #D9AE5F', [20, 20])}
-                      onClick={this.handleClickGeoname.bind(this, geoname)}
-                    >
-                      <Tooltip offset={[10, -10]} direction="right">
-                        <h4>{'geoname: ' + geoname.toponymName}</h4>
-                      </Tooltip>
-                    </Marker>
-                  );
-                })
-                : null}
-          </Pane>
+          {this.renderBaseLayers()}
+          {appStore.overlays.length > 0 && this.renderOverlays()}
 
-          <Pane style={{ zIndex: 500 }}>
-            {/* all wikipedia points  */
-              store.config.displayWikis
-                ? appStore.wikis.filter(g => g && g.ll).map((wiki, gi) => {
-                  return (
-                    <Marker
-                      key={gi}
-                      className="wiki-point"
-                      position={[wiki.ll[0], wiki.ll[1]]}
-                      icon={icon('fa fa-map-marker', 'color: #5f8ad9', [20, 20])}
-                      onClick={this.handleClickGeoname.bind(this, wiki)}
-                    >
-                      <Tooltip offset={[10, -10]} direction="right">
-                        <h4>{'wikipedia: ' + wiki.title}</h4>
-                      </Tooltip>
-                    </Marker>
-                  );
-                })
-                : null}
-          </Pane>
+          {appStore.validRecordCoordinates && this.renderThisCoordinate()}
 
-          <Pane style={{ zIndex: 600 }}>
-            {// rendering records
-              store.config.displayOtherRecords
-                ? store.geoRecords.filter(Base.validGeo).map((record, ri) => {
-                  const active = record.row.toString() === appStore.recordRow.toString();
-                  const style = active ? 'color: #A64005' : 'color: black';
-
-                  return (
-                    <Marker
-                      key={ri}
-                      position={[parseFloat(record.y), parseFloat(record.x)]}
-                      icon={icon('fa fa-map-marker', style, [20, 20])}
-                      onClick={this.handleClickMarker.bind(this, record.row)}
-                    >
-                      <Tooltip offset={[10, -10]} direction="right">
-                        <h4>{record.name}</h4>
-                      </Tooltip>
-                    </Marker>
-                  );
-                })
-                : appStore.validRecordCoordinates && (
-                  <Marker
-                    key={0}
-                    position={[parseFloat(appStore.recordY), parseFloat(appStore.recordX)]}
-                    icon={icon('fa fa-map-marker', 'color: black', [20, 20])}
-                  >
-                    <Tooltip offset={[10, -10]} direction="right">
-                      <h4>{appStore.recordName}</h4>
-                    </Tooltip>
-                  </Marker>
-                )}
-          </Pane>
-          {/* geoname point */
-            appStore.hlPoint ? (
-              <LayerGroup key="hl-point">
-                <CircleMarker className="hl-point" center={[appStore.hlPoint[0], appStore.hlPoint[1]]} radius={10} />
-              </LayerGroup>
-            ) : null}
+          {appStore.config.displayOtherRecords && this.renderOtherRecords()}
+          {appStore.config.displayGeonames && this.renderGeonames()}
+          {appStore.config.displayWikis && this.renderWikis()}
+          {appStore.hlPoint && this.renderHighlighted()}
         </Map>
       </div>
     );

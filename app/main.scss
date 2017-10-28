@@ -1,4 +1,4 @@
-// 1. Import the initial variables
+// Import the initial variables
 @import '../node_modules/bulma/sass/utilities/initial-variables';
 
 $info: #d9ae5f;
@@ -33,12 +33,15 @@ $family-primary: 'Lato', sans-serif;
   stroke-width: 0;
 }
 
-// 4. Import the rest of Bulma
+// Import the rest of Bulma
 @import '../node_modules/bulma/bulma';
 @import './bulma/tooltip.sass';
 @import './bulma/slider.sass';
 @import './bulma/checkbox.sass';
 @import './bulma/switch.sass';
+
+// Import other libraries
+@import '~react-leaflet-markercluster/dist/styles.min.css';
 
 .select select {
   font-family: 'FontAwesome', 'sans-serif';
