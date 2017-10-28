@@ -132,10 +132,11 @@ class AppMap extends React.Component {
             showCoverageOnHover: false,
             zoomToBoundsOnClick: true,
             removeOutsideVisibleBounds: true,
-            elementsPlacementStrategy: 'clock',
+            elementsPlacementStrategy: 'clock-concentric',
             animate: false,
             singleMarkerMode: true,
-            spiderLegPolylineOptions: { weight: 0 }
+            spiderLegPolylineOptions: { weight: 0 },
+            clockHelpingCircleOptions: { weight: 0 }
           }}
         >
           {store.geoRecords
@@ -244,7 +245,8 @@ class AppMap extends React.Component {
           onClick={this.handleMapClick.bind(this)}
           style={this.mapStyle()}
           attributionControl={false}
-          maxZoom={8}
+          maxZoom={config.map.max}
+          minZoom={config.map.min}
         >
           <ScaleControl position="topleft" imperial={false} />
           <AttributionControl position="bottomleft" />

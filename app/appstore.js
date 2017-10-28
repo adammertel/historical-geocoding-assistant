@@ -6,32 +6,12 @@ import Sheet from './sheet.js';
 import React from 'react';
 
 export default class AppStore extends React.Component {
-  @observable
-  config = {
-    focusZoom: 11,
-    defaultZoom: 6,
-    focusOnRecordChange: 0,
+  @observable config = {};
 
-    displayGeonames: true,
-    displayWikis: true,
-    displayOtherRecords: true,
-
-    defaultCenter: [45, 10],
-    maxGeoExtent: [[-180, -90], [180, 90]],
-    maxResults: 10,
-    columns: {
-      name: '',
-      localisation: '',
-      note: '',
-      x: '',
-      y: '',
-      certainty: ''
-    }
-  };
-
-  @observable loadingStatus = 'signing';
+  @observable loadingStatus = '';
   @observable changingLoadingStatus = false;
   @observable openedSettings = false;
+  @observable shouldRenderApp = false;
 
   @observable recordRow = 4;
   @observable records = {};
@@ -39,29 +19,37 @@ export default class AppStore extends React.Component {
   @observable wikis = [];
   @observable geonames = [];
 
-  @observable
-  map = {
-    center: this.config.defaultCenter,
-    zoom: this.config.defaultZoom
-  };
+  @observable map = {};
   @observable mapOpacityRatio = 0.4;
   @observable map1Id = false;
   @observable map2Id = false;
 
-  @observable overlays = [{ id: 'COUNTRIES_MODERN', opacity: 0.7 }];
+  @observable overlays;
 
   @observable hlPoint = false;
 
   constructor() {
     super();
+  }
+
+  @action
+  loadConfig() {
+    this.config = config.storeConfig;
+    this.map = {
+      center: this.config.defaultCenter,
+      zoom: this.config.defaultZoom
+    };
+    this.overlays = config.defaultOverlays;
+  }
+
+  @action
+  init() {
     this.noRecords = Sheet.noLines;
     this.map1Id = Object.keys(window['basemaps'])[0];
     this.map2Id = Object.keys(window['basemaps'])[4];
     this.firstRecordRow = 2;
     this.recordRow = this.firstRecordRow;
-  }
-
-  init() {
+    this.shouldRenderApp = true;
     this.updateData(() => {
       this.findDefaultColumnNames();
       // this.loadApplication();
@@ -210,13 +198,13 @@ export default class AppStore extends React.Component {
   get isLoaded() {
     return this.loadingStatus === 'loaded';
   }
+
+  @computed
   get loadingMessage() {
     return config.loadingMessages[this.loadingStatus];
   }
 
-  /* 
-        ACTIONS
-    */
+  /* ACTIONS */
 
   // loading status
   @action
@@ -224,6 +212,7 @@ export default class AppStore extends React.Component {
     this.changingLoadingStatus = false;
     this.loadingStatus = newStatus;
   };
+
   @action
   loadApplication = () => {
     this.changingLoadingStatus = true;
@@ -490,7 +479,6 @@ export default class AppStore extends React.Component {
   @action
   saveSettings = settings => {
     this.config = Object.assign(this.config, settings);
-    console.log(this.config);
     this.updateSearch();
   };
 

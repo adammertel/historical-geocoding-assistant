@@ -1,0 +1,27 @@
+{
+  "map": {
+    "max": 10,
+    "min": 3
+  },
+  "storeConfig": {
+    "focusZoom": 11,
+    "defaultZoom": 5,
+    "focusOnRecordChange": 0,
+
+    "displayGeonames": true,
+    "displayWikis": true,
+    "displayOtherRecords": true,
+
+    "defaultCenter": [45, 10],
+    "maxGeoExtent": [[-180, -90], [180, 90]],
+    "maxResults": 10,
+    "columns": {
+      "name": "",
+      "localisation": "",
+      "note": "",
+      "x": "",
+      "y": "",
+      "certainty": ""
+    }
+  }
+}

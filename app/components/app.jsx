@@ -7,6 +7,7 @@ import LayerControl from './layercontrol';
 import Settings from './settings';
 import LoadingStatus from './loadingstatus';
 
+@observer
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -29,14 +30,15 @@ class App extends React.Component {
   }
 
   render() {
+    console.log('     app loaded', store.loadingStatus);
     return (
       <div className="wrapper" style={this.style()}>
         <div style={this.bodyStyle()}>
-          {store.openedSettings ? <Settings /> : null}
-          {!store.isLoaded ? <LoadingStatus /> : null}
+          {store.openedSettings && <Settings />}
+          {!store.isLoaded && <LoadingStatus />}
           <Panel />
-          <AppMap />
-          <LayerControl />
+          {store.shouldRenderApp && <AppMap />}
+          {store.shouldRenderApp && <LayerControl />}
         </div>
       </div>
     );

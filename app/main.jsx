@@ -7,31 +7,44 @@ import AppStore from './appstore.js';
 import Sheet from './sheet.js';
 import Base from './base.js';
 
-const testing = true;
-console.log('testing mode', testing);
+const TESTING = true;
+console.log('testing mode', TESTING);
 
-window['map'] = false;
-window['Base'] = Base;
-window['basemaps'] = Base.requestConfigFile('basemaps.json', true);
-window['overlaymaps'] = Base.processOverlayData();
-window['config'] = Base.requestConfigFile('config.json', true);
-
-window['store'] = new AppStore();
-ReactDOM.render(
-  <App />,
-  document.body.appendChild(document.createElement('div'))
-);
-
+// getting table id
 if (location.hash === '') {
   window['sheetId'] = prompt(
     'Please enter id of your google sheet',
     '1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA'
   );
-  console.log('sheet will be initialised');
   location.hash = window['sheetId'];
 } else {
   window['sheetId'] = location.hash.substring(1);
 }
+
+// global variables
+window['map'] = false;
+window['Base'] = Base;
+window['basemaps'] = Base.requestConfigFile('basemaps.json', true);
+window['overlaymaps'] = Base.processOverlayData();
+window['store'] = new AppStore();
+
+// assigning config. If TESTING === true, config will be extended with config_testing.json
+
+window['config'] = Base.requestConfigFile('config.json', true);
+store.changeLoadingStatus('config');
+if (TESTING) {
+  const testConfig = Base.requestConfigFile('config_testing.json', true);
+  window['config'] = Object.assign(config, testConfig);
+}
+store.loadConfig();
+
+// signing
+store.changeLoadingStatus('signing');
+
+ReactDOM.render(
+  <App store={store} />,
+  document.body.appendChild(document.createElement('div'))
+);
 
 if (sheetId !== null) {
   Sheet.init(() => {

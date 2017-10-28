@@ -17,7 +17,6 @@ var Sheet = {
     this.sId = sheetId;
     this._authentificate(() => {
       this._pingTable(pinged => {
-        console.log(pinged);
         if (pinged) {
           this._preRead(next);
         } else {

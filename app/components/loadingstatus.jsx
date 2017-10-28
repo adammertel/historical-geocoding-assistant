@@ -2,13 +2,14 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import Message from './../bulma/message';
 
+@observer
 class LoadingStatus extends React.Component {
   constructor(props) {
     super(props);
   }
 
   style() {
-    const opacity = store.changingLoadingStatus ? 0.1 : 0.9;
+    const opacity = store.changingLoadingStatus ? 0 : 0.9;
     return {
       position: 'absolute',
       bottom: '5%',
