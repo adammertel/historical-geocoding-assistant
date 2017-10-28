@@ -16,6 +16,7 @@ import {
 import { divIcon } from 'leaflet';
 import { observer } from 'mobx-react';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
+require('leaflet.markercluster.placementstrategies');
 
 class AppMap extends React.Component {
   constructor(props) {
@@ -131,6 +132,7 @@ class AppMap extends React.Component {
             showCoverageOnHover: false,
             zoomToBoundsOnClick: true,
             removeOutsideVisibleBounds: true,
+            elementsPlacementStrategy: 'clock',
             animate: false,
             singleMarkerMode: true,
             spiderLegPolylineOptions: { weight: 0 }
@@ -242,7 +244,7 @@ class AppMap extends React.Component {
           onClick={this.handleMapClick.bind(this)}
           style={this.mapStyle()}
           attributionControl={false}
-          maxZoom={18}
+          maxZoom={8}
         >
           <ScaleControl position="topleft" imperial={false} />
           <AttributionControl position="bottomleft" />

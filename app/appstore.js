@@ -14,7 +14,7 @@ export default class AppStore extends React.Component {
 
     displayGeonames: true,
     displayWikis: true,
-    displayOtherRecords: false,
+    displayOtherRecords: true,
 
     defaultCenter: [45, 10],
     maxGeoExtent: [[-180, -90], [180, 90]],
