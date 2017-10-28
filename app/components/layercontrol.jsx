@@ -90,7 +90,7 @@ class LayerControl extends React.Component {
                       min="0"
                       max="100"
                       step="1"
-                      classes="is-primary"
+                      classes=""
                     />
                   </td>
                 </tr>
@@ -140,7 +140,7 @@ class LayerControl extends React.Component {
                           min="0"
                           max="100"
                           step="1"
-                          classes="is-primary"
+                          classes=""
                         />
                       </td>
                       <td>
