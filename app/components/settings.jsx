@@ -7,7 +7,7 @@ import Modal from './../bulma/modal';
 class Settings extends React.Component {
   constructor(props) {
     super(props);
-    const config = appStore.config;
+    const config = store.config;
     this.state = {
       focusZoom: config.focusZoom,
       focusOnRecordChange: config.focusOnRecordChange,
@@ -56,12 +56,12 @@ class Settings extends React.Component {
   }
 
   handleSave() {
-    appStore.saveSettings(this.state);
-    appStore.closeSettings();
+    store.saveSettings(this.state);
+    store.closeSettings();
   }
 
   handleClose() {
-    appStore.closeSettings();
+    store.closeSettings();
   }
 
   handleGeoExtentChange() {
@@ -90,7 +90,11 @@ class Settings extends React.Component {
 
   _renderLabel(label) {
     return (
-      <td key="label" className="has-text-right" style={{ width: 250, paddingTop: 12 }}>
+      <td
+        key="label"
+        className="has-text-right"
+        style={{ width: 250, paddingTop: 12 }}
+      >
         <label style={this.styleLabel()} className="label">
           {label}
         </label>
@@ -105,7 +109,10 @@ class Settings extends React.Component {
         {this._renderLabel(propLabel)}
         <td className="control">
           <div style={this.styleSelect()} className="select">
-            <select value={this.state[propName]} onChange={this.handleChangeSelect.bind(this, propName)}>
+            <select
+              value={this.state[propName]}
+              onChange={this.handleChangeSelect.bind(this, propName)}
+            >
               {this.options[propName].map((option, oi) => {
                 return (
                   <option key={oi} value={option}>
@@ -126,8 +133,11 @@ class Settings extends React.Component {
         {this._renderLabel(columnLabel)}
         <td className="control">
           <div style={this.styleSelect()} className="select">
-            <select value={this.state.columns[columnId]} onChange={this.handleChangeColumn.bind(this, columnId)}>
-              {Object.keys(appStore.recordData).map((column, ci) => {
+            <select
+              value={this.state.columns[columnId]}
+              onChange={this.handleChangeColumn.bind(this, columnId)}
+            >
+              {Object.keys(store.recordData).map((column, ci) => {
                 return (
                   <option key={ci} value={column}>
                     {column}
@@ -145,7 +155,7 @@ class Settings extends React.Component {
     const extent = this.state.maxGeoExtent;
     const bounds = [[extent[0][0], extent[0][1]], [extent[1][0], extent[1][1]]];
 
-    const basemap = appStore.basemapById('OSM');
+    const basemap = store.basemapById('OSM');
 
     return (
       <Modal
@@ -173,9 +183,15 @@ class Settings extends React.Component {
         body={
           <table className="table">
             <tbody>
-              {this.renderSelect('maxResults', 'max results of search (geonames, wikipedia)')}
+              {this.renderSelect(
+                'maxResults',
+                'max results of search (geonames, wikipedia)'
+              )}
               {this.renderSelect('focusZoom', 'level of zoom on focus')}
-              {this.renderSelect('focusOnRecordChange', 'focus on record change? (1 = on)')}
+              {this.renderSelect(
+                'focusOnRecordChange',
+                'focus on record change? (1 = on)'
+              )}
 
               <tr>{this._renderLabel('')}</tr>
 

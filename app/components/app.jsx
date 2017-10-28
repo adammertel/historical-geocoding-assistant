@@ -32,8 +32,8 @@ class App extends React.Component {
     return (
       <div className="wrapper" style={this.style()}>
         <div style={this.bodyStyle()}>
-          {appStore.openedSettings ? <Settings /> : null}
-          {!appStore.isLoaded ? <LoadingStatus /> : null}
+          {store.openedSettings ? <Settings /> : null}
+          {!store.isLoaded ? <LoadingStatus /> : null}
           <Panel />
           <AppMap />
           <LayerControl />

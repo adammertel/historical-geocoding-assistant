@@ -40,25 +40,23 @@ class AppMap extends React.Component {
   }
 
   handleClickMarker(rowId) {
-    appStore.gotoRecord(rowId);
+    store.gotoRecord(rowId);
   }
 
   handleClickGeoname(geoname, e) {
-    appStore.useGeoname(geoname);
+    store.useGeoname(geoname);
     console.log(e);
     console.log(e.target);
     map.closeTooltip(e.target._tooltip);
   }
 
   handleMapClick(e) {
-    appStore.updateRecordLocation(e.latlng.lng, e.latlng.lat);
+    store.updateRecordLocation(e.latlng.lng, e.latlng.lat);
   }
 
   renderBaseLayer(top) {
-    const basemap = top ? appStore.basemap1 : appStore.basemap2;
-    const opacity = top
-      ? 1 - appStore.mapOpacityRatio
-      : appStore.mapOpacityRatio;
+    const basemap = top ? store.basemap1 : store.basemap2;
+    const opacity = top ? 1 - store.mapOpacityRatio : store.mapOpacityRatio;
 
     if (basemap.type === 'tile') {
       return <TileLayer key={top ? '1' : '2'} opacity={opacity} {...basemap} />;
@@ -81,7 +79,7 @@ class AppMap extends React.Component {
   renderOverlays() {
     return (
       <div>
-        {appStore.overlays.map((o, oid) => {
+        {store.overlays.map((o, oid) => {
           const overlay = overlaymaps[o.id];
           const zIndex = 400 - oid;
 
@@ -138,9 +136,9 @@ class AppMap extends React.Component {
             spiderLegPolylineOptions: { weight: 0 }
           }}
         >
-          {appStore.geoRecords
+          {store.geoRecords
             .filter(Base.validGeo)
-            .filter(r => r.row.toString() !== appStore.recordRow.toString())
+            .filter(r => r.row.toString() !== store.recordRow.toString())
             .map((record, ri) => {
               return (
                 <Marker
@@ -165,14 +163,11 @@ class AppMap extends React.Component {
       <Pane style={{ zIndex: 700 }}>
         <Marker
           key={0}
-          position={[
-            parseFloat(appStore.recordY),
-            parseFloat(appStore.recordX)
-          ]}
+          position={[parseFloat(store.recordY), parseFloat(store.recordX)]}
           icon={this.icon('fa fa-map-marker', 'color: #a64005', [20, 20])}
         >
           <Tooltip offset={[10, -10]} direction="right">
-            <h4>{appStore.recordName}</h4>
+            <h4>{store.recordName}</h4>
           </Tooltip>
         </Marker>
       </Pane>
@@ -182,7 +177,7 @@ class AppMap extends React.Component {
   renderGeonames() {
     return (
       <Pane style={{ zIndex: 500 }}>
-        {appStore.geonames.filter(g => g && g.ll).map((geoname, gi) => {
+        {store.geonames.filter(g => g && g.ll).map((geoname, gi) => {
           return (
             <Marker
               key={gi}
@@ -204,7 +199,7 @@ class AppMap extends React.Component {
   renderWikis() {
     return (
       <Pane style={{ zIndex: 500 }}>
-        {appStore.wikis.filter(g => g && g.ll).map((wiki, gi) => {
+        {store.wikis.filter(g => g && g.ll).map((wiki, gi) => {
           return (
             <Marker
               key={gi}
@@ -228,7 +223,7 @@ class AppMap extends React.Component {
       <LayerGroup key="hl-point">
         <CircleMarker
           className="hl-point"
-          center={[appStore.hlPoint[0], appStore.hlPoint[1]]}
+          center={[store.hlPoint[0], store.hlPoint[1]]}
           radius={10}
         />
       </LayerGroup>
@@ -239,9 +234,9 @@ class AppMap extends React.Component {
     return (
       <div className="map-wrapped" style={this.style()}>
         <Map
-          center={appStore.mapPosition}
-          zoom={appStore.mapZoom}
-          onViewportChanged={appStore.mapMoved}
+          center={store.mapPosition}
+          zoom={store.mapZoom}
+          onViewportChanged={store.mapMoved}
           useFlyTo={true}
           ref="map"
           onClick={this.handleMapClick.bind(this)}
@@ -253,14 +248,14 @@ class AppMap extends React.Component {
           <AttributionControl position="bottomleft" />
 
           {this.renderBaseLayers()}
-          {appStore.overlays.length > 0 && this.renderOverlays()}
+          {store.overlays.length > 0 && this.renderOverlays()}
 
-          {appStore.validRecordCoordinates && this.renderThisCoordinate()}
+          {store.validRecordCoordinates && this.renderThisCoordinate()}
 
-          {appStore.config.displayOtherRecords && this.renderOtherRecords()}
-          {appStore.config.displayGeonames && this.renderGeonames()}
-          {appStore.config.displayWikis && this.renderWikis()}
-          {appStore.hlPoint && this.renderHighlighted()}
+          {store.config.displayOtherRecords && this.renderOtherRecords()}
+          {store.config.displayGeonames && this.renderGeonames()}
+          {store.config.displayWikis && this.renderWikis()}
+          {store.hlPoint && this.renderHighlighted()}
         </Map>
       </div>
     );

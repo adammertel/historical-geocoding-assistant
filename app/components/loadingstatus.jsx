@@ -8,7 +8,7 @@ class LoadingStatus extends React.Component {
   }
 
   style() {
-    const opacity = appStore.changingLoadingStatus ? 0.1 : 0.9;
+    const opacity = store.changingLoadingStatus ? 0.1 : 0.9;
     return {
       position: 'absolute',
       bottom: '5%',
@@ -25,7 +25,7 @@ class LoadingStatus extends React.Component {
       <Message
         style={this.style()}
         classes="is-danger is-transition"
-        body={<strong>{appStore.loadingMessage}</strong>}
+        body={<strong>{store.loadingMessage}</strong>}
       />
     );
   }

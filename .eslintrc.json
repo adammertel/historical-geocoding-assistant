@@ -17,7 +17,7 @@
   },
   "plugins": ["react"],
   "globals": {
-    "appStore": true,
+    "store": true,
     "Base": true,
     "basemaps": true,
     "computed": true,

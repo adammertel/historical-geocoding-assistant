@@ -2,7 +2,8 @@ var Sheet = {
   //sId: '1mo_Oj3XoaY5-3pH5TP-9KJrWomthcJ7G_ymOp3eqyR4',
   apiKey: 'AIzaSyDtuOsC56z_7VODWG1-Q4OVH2dls3z6C9A',
   cliendSecret: 'AQVeRvDict5TYYhNXPL324lA',
-  clientId: '580409468161-q3obqkdkn61uf28sfe9u43djejtv84o8.apps.googleusercontent.com',
+  clientId:
+    '580409468161-q3obqkdkn61uf28sfe9u43djejtv84o8.apps.googleusercontent.com',
   scope: 'https://www.googleapis.com/auth/spreadsheets', //'https://www.googleapis.com/auth/spreadsheets',
 
   header: [],
@@ -28,8 +29,7 @@ var Sheet = {
 
   _authentificate(next) {
     gapi.load('client:auth2', () => {
-      console.log('client loaded');
-      appStore.changeLoadingStatus('table');
+      store.changeLoadingStatus('table');
       gapi.client.setApiKey(this.apiKey);
 
       gapi.auth2
@@ -43,7 +43,9 @@ var Sheet = {
           if (this.auth.isSignedIn.get()) {
             next();
           } else {
-            alert('Application needs to be signed in - please enable pop-ups and log in');
+            alert(
+              'Application needs to be signed in - please enable pop-ups and log in'
+            );
 
             const signedStateChanged = () => {
               console.log('should be signed in now');
@@ -128,7 +130,9 @@ var Sheet = {
     } else {
       if (row && row.result && row.result.values) {
         const data = {};
-        row.result.values[0].map((value, vi) => (data[this.header[vi]] = value));
+        row.result.values[0].map(
+          (value, vi) => (data[this.header[vi]] = value)
+        );
         return data;
       } else {
         return row;
@@ -149,7 +153,14 @@ var Sheet = {
 
   _readLineUrl(lineNo) {
     const range = 'A' + lineNo + ':' + this.noColumns + lineNo;
-    return 'https://sheets.googleapis.com/v4/spreadsheets/' + this.sId + '/values/' + range + '?key=' + this.apiKey;
+    return (
+      'https://sheets.googleapis.com/v4/spreadsheets/' +
+      this.sId +
+      '/values/' +
+      range +
+      '?key=' +
+      this.apiKey
+    );
   },
 
   _updateLineUrl(lineNo) {
@@ -167,7 +178,14 @@ var Sheet = {
 
   _readAll() {
     const range = 'A2:' + this.noColumns + this.noLines;
-    return 'https://sheets.googleapis.com/v4/spreadsheets/' + this.sId + '/values/' + range + '?key=' + this.apiKey;
+    return (
+      'https://sheets.googleapis.com/v4/spreadsheets/' +
+      this.sId +
+      '/values/' +
+      range +
+      '?key=' +
+      this.apiKey
+    );
   },
 
   _updateBody(data) {

@@ -23,36 +23,34 @@ class LayerControl extends React.Component {
   }
 
   handleMapSelect(id, e) {
-    appStore.changeBaseMap(id, e.target.value);
+    store.changeBaseMap(id, e.target.value);
   }
 
   handleOverlaySelect(select, e) {
-    appStore.addOverlay(e.target.value);
+    store.addOverlay(e.target.value);
   }
 
   handleOpacityRatio(e) {
-    appStore.changeOpacityRatio(e.target.value / 100);
+    store.changeOpacityRatio(e.target.value / 100);
   }
 
   handleOverlayOpacity(oid, e) {
-    appStore.overlayChangeOpacity(oid, e.target.value / 100);
+    store.overlayChangeOpacity(oid, e.target.value / 100);
   }
 
   handleRemoveOverlay(oid) {
-    appStore.overlayRemove(oid);
+    store.overlayRemove(oid);
   }
 
   handleMoveOverlayUp(oid) {
-    appStore.overlayMoveUp(oid);
+    store.overlayMoveUp(oid);
   }
 
   handleMoveOverlayDown(oid) {
-    appStore.overlayMoveDown(oid);
+    store.overlayMoveDown(oid);
   }
 
   render() {
-    const store = appStore;
-
     return (
       <div className="layercontrol-wrapper" style={this.style()}>
         <h4 className="title is-4" style={{ color: 'black', fontWeight: 600 }}>
@@ -123,12 +121,12 @@ class LayerControl extends React.Component {
         </Menu>
         <Menu label="overlay layers" defaultOpen={false}>
           <div>
-            {appStore.overlays.length ? (
+            {store.overlays.length ? (
               <span style={{ marginLeft: 8 }}>Active Overlays</span>
             ) : null}
             <table className="table" style={{ fontSize: 11 }}>
               <tbody>
-                {appStore.overlays.map(overlay => {
+                {store.overlays.map(overlay => {
                   return (
                     <tr key={overlay.id}>
                       <td>{overlaymaps[overlay.id].name}</td>

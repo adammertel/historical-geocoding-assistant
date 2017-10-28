@@ -9,7 +9,6 @@ import Input from './../bulma/input';
 class Panel extends React.Component {
   constructor(props) {
     super(props);
-    this.store = appStore;
   }
 
   style() {
@@ -48,7 +47,7 @@ class Panel extends React.Component {
   }
 
   hiderStyle() {
-    const opacity = appStore.changingLoadingStatus ? 0 : 0.5;
+    const opacity = store.changingLoadingStatus ? 0 : 0.5;
     return {
       backgroundColor: 'black',
       top: 0,
@@ -69,7 +68,7 @@ class Panel extends React.Component {
 
   handleChangeInput(column, e) {
     const value = e.target.value;
-    this.store.updateRecordValue(column, value);
+    store.updateRecordValue(column, value);
   }
 
   handleOpenWiki(url) {
@@ -77,53 +76,53 @@ class Panel extends React.Component {
   }
 
   handleOpenGMaps() {
-    Base.openTab('www.google.cz/maps/search/' + this.store.recordLocalisation);
+    Base.openTab('www.google.cz/maps/search/' + store.recordLocalisation);
   }
 
   handleOpenGSearch() {
-    Base.openTab('www.google.com/search?q=' + this.store.recordName);
+    Base.openTab('www.google.com/search?q=' + store.recordName);
   }
 
   handleLocateGeocodedPlaceClick(geoname) {
-    appStore.locateGeoname(geoname);
+    store.locateGeoname(geoname);
   }
 
   handleUseGeocodedPlaceClick(geoname) {
-    appStore.useGeoname(geoname);
+    store.useGeoname(geoname);
   }
 
   handleSelectRecord(e) {
-    appStore.gotoRecord(e.target.value);
+    store.gotoRecord(e.target.value);
   }
 
   /* Coordinates actions */
   handleCoordinatesHighlight() {
-    appStore.hlLocality(appStore.recordGeo);
+    store.hlLocality(store.recordGeo);
   }
   handleCoordinatesFocus() {
-    appStore.mapFocus(appStore.recordGeo);
+    store.mapFocus(store.recordGeo);
   }
   handleCoordinatesRevert() {
-    appStore.revertChangesCoordinates();
+    store.revertChangesCoordinates();
   }
   handleCoordinatesRemove() {
-    appStore.removetChangesCoordinates();
+    store.removetChangesCoordinates();
   }
   handleRecordRevert() {
-    appStore.revertChangesRecord();
+    store.revertChangesRecord();
   }
 
   handleGlobalSettingOpen() {
-    appStore.openSettings();
+    store.openSettings();
   }
   handleChangeCertainty(e) {
-    appStore.changeCertainty(e.target.value);
+    store.changeCertainty(e.target.value);
   }
 
   render() {
     return (
       <div className="panel-wrapper" style={this.style()}>
-        {!appStore.isLoaded ? (
+        {!store.isLoaded ? (
           <div
             className="panel-hider is-transition"
             style={this.hiderStyle()}
@@ -141,8 +140,7 @@ class Panel extends React.Component {
             onClick={this.handleGlobalSettingOpen.bind(this)}
           />
           <div style={{ marginTop: 25 }} className="is-pulled-right">
-            displaying record {appStore.recordRow - 1} /{' '}
-            {appStore.noRecords - 1}
+            displaying record {store.recordRow - 1} / {store.noRecords - 1}
           </div>
         </div>
 
@@ -151,16 +149,16 @@ class Panel extends React.Component {
             className="is-inverted"
             label=""
             icon="caret-left"
-            onClick={this.store.previousRecord}
+            onClick={store.previousRecord}
           />
 
           <div className="select" style={{ width: '295px' }}>
             <select
               style={{ width: '100%' }}
-              value={appStore.recordRow}
+              value={store.recordRow}
               onChange={this.handleSelectRecord.bind(this)}
             >
-              {appStore.geoRecords.map(record => {
+              {store.geoRecords.map(record => {
                 if (Base.validGeo(record)) {
                   return (
                     <option key={record.row} value={record.row}>
@@ -181,7 +179,7 @@ class Panel extends React.Component {
           <Button
             label=""
             icon="caret-right"
-            onClick={this.store.nextRecord}
+            onClick={store.nextRecord}
             className="is-inverted is-pulled-right"
           />
           <div style={{ paddingTop: '20px', paddingLeft: '20px' }}>
@@ -189,8 +187,8 @@ class Panel extends React.Component {
               id="switch-otherrecords"
               label="display all records on map"
               classes="is-small"
-              checked={appStore.config.displayOtherRecords}
-              onChange={appStore.toggleDisplayOtherRecords.bind(appStore)}
+              checked={store.config.displayOtherRecords}
+              onChange={store.toggleDisplayOtherRecords.bind(store)}
             />
           </div>
 
@@ -205,7 +203,7 @@ class Panel extends React.Component {
             <Button
               label="save"
               icon="save"
-              onClick={this.store.saveRecord}
+              onClick={store.saveRecord}
               className="is-success is-small "
             />
           </div>
@@ -219,8 +217,8 @@ class Panel extends React.Component {
         >
           <div>
             {!Base.inExtent(
-              [this.store.recordY, this.store.recordX],
-              this.store.config.maxGeoExtent
+              [store.recordY, store.recordX],
+              store.config.maxGeoExtent
             ) ? (
                 <div className="is-danger notification">
                   <i className="icon fa fa-exclamation" />The coordinates are
@@ -238,10 +236,10 @@ class Panel extends React.Component {
                     <Input
                       onChange={this.handleChangeInput.bind(
                         this,
-                        appStore.config.columns.x
+                        store.config.columns.x
                       )}
                       type="number"
-                      value={this.store.recordX}
+                      value={store.recordX}
                     />
                   </td>
                 </tr>
@@ -252,10 +250,10 @@ class Panel extends React.Component {
                     <Input
                       onChange={this.handleChangeInput.bind(
                         this,
-                        appStore.config.columns.y
+                        store.config.columns.y
                       )}
                       type="number"
-                      value={this.store.recordY}
+                      value={store.recordY}
                     />
                   </td>
                 </tr>
@@ -266,9 +264,9 @@ class Panel extends React.Component {
                     <Input
                       onChange={this.handleChangeInput.bind(
                         this,
-                        appStore.config.columns.localisation
+                        store.config.columns.localisation
                       )}
-                      value={this.store.recordLocalisation}
+                      value={store.recordLocalisation}
                     />
                   </td>
                 </tr>
@@ -279,9 +277,9 @@ class Panel extends React.Component {
                     <Input
                       onChange={this.handleChangeInput.bind(
                         this,
-                        appStore.config.columns.note
+                        store.config.columns.note
                       )}
-                      value={this.store.recordNote}
+                      value={store.recordNote}
                     />
                   </td>
                 </tr>
@@ -292,7 +290,7 @@ class Panel extends React.Component {
                     <div className="select" style={{ width: '100%' }}>
                       <select
                         style={{ fontSize: '11px', width: '100%' }}
-                        value={appStore.recordCertainty}
+                        value={store.recordCertainty}
                         onChange={this.handleChangeCertainty.bind(this)}
                       >
                         {Object.keys(config.certaintyOptions).map(cKey => {
@@ -312,8 +310,8 @@ class Panel extends React.Component {
 
             <div>
               {Base.validGeo({
-                x: this.store.recordX,
-                y: this.store.recordY
+                x: store.recordX,
+                y: store.recordY
               }) ? (
                   <div>
                     <Button
@@ -358,8 +356,8 @@ class Panel extends React.Component {
           <div>
             <table className="table" style={{ fontSize: 12 }}>
               <tbody>
-                {Object.keys(this.store.recordData).map((column, ci) => {
-                  const value = this.store.recordData[column];
+                {Object.keys(store.recordData).map((column, ci) => {
+                  const value = store.recordData[column];
 
                   const shortenColumn =
                     column.length > 15 ? column.substr(0, 14) + '...' : column;
@@ -393,10 +391,10 @@ class Panel extends React.Component {
               id="switch-geonames"
               label="display places geonames on map"
               classes="is-small"
-              checked={appStore.config.displayGeonames}
-              onChange={appStore.toggleDisplayGeonames.bind(appStore)}
+              checked={store.config.displayGeonames}
+              onChange={store.toggleDisplayGeonames.bind(store)}
             />
-            {this.store.geonames.filter(g => g).map((geoname, gi) => {
+            {store.geonames.filter(g => g).map((geoname, gi) => {
               return (
                 <div key={gi}>
                   <Button
@@ -446,11 +444,11 @@ class Panel extends React.Component {
             id="switch-wikipedia"
             label="display wikipedia places on map"
             classes="is-small"
-            checked={appStore.config.displayWikis}
-            onChange={appStore.toggleDisplayWikis.bind(appStore)}
+            checked={store.config.displayWikis}
+            onChange={store.toggleDisplayWikis.bind(store)}
           />
           <div>
-            {this.store.wikis.map((wiki, wi) => {
+            {store.wikis.map((wiki, wi) => {
               return (
                 <p key={wi}>
                   <Button
@@ -523,7 +521,7 @@ class Panel extends React.Component {
           <Button
             label="save"
             icon="save"
-            onClick={this.store.saveRecord}
+            onClick={store.saveRecord}
             className="is-success is-small "
           />
         </div>

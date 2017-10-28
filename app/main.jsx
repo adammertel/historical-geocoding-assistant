@@ -16,11 +16,17 @@ window['basemaps'] = Base.requestConfigFile('basemaps.json', true);
 window['overlaymaps'] = Base.processOverlayData();
 window['config'] = Base.requestConfigFile('config.json', true);
 
-window['appStore'] = new AppStore();
-ReactDOM.render(<App />, document.body.appendChild(document.createElement('div')));
+window['store'] = new AppStore();
+ReactDOM.render(
+  <App />,
+  document.body.appendChild(document.createElement('div'))
+);
 
 if (location.hash === '') {
-  window['sheetId'] = prompt('Please enter id of your google sheet', '1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA');
+  window['sheetId'] = prompt(
+    'Please enter id of your google sheet',
+    '1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA'
+  );
   console.log('sheet will be initialised');
   location.hash = window['sheetId'];
 } else {
@@ -32,6 +38,6 @@ if (sheetId !== null) {
     // Sheet.readLine(1, (vals) => console.log(vals));
     // Sheet.readLine(2, (vals) => console.log(vals));
     // Sheet.updateLine(68, ['test'], (vals) => console.log(vals));
-    appStore.init();
+    store.init();
   });
 }
