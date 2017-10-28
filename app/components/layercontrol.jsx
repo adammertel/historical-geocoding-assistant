@@ -16,6 +16,7 @@ class LayerControl extends React.Component {
       bottom: 50,
       left: 30,
       opacity: 0.9,
+      fontSize: 12,
       padding: '15px 15px 0px 15px',
       backgroundColor: 'white',
       zIndex: 1100
@@ -53,9 +54,12 @@ class LayerControl extends React.Component {
   render() {
     return (
       <div className="layercontrol-wrapper" style={this.style()}>
-        <h4 className="title is-4" style={{ color: 'black', fontWeight: 600 }}>
+        <h5
+          className="title is-5"
+          style={{ color: 'black', fontWeight: 600, marginBottom: 10 }}
+        >
           Map control
-        </h4>
+        </h5>
         <Menu label="base layers" defaultOpen={true}>
           <div>
             <table className="table" style={{ fontSize: 11 }}>
@@ -121,9 +125,6 @@ class LayerControl extends React.Component {
         </Menu>
         <Menu label="overlay layers" defaultOpen={false}>
           <div>
-            {store.overlays.length ? (
-              <span style={{ marginLeft: 8 }}>Active Overlays</span>
-            ) : null}
             <table className="table" style={{ fontSize: 11 }}>
               <tbody>
                 {store.overlays.map(overlay => {

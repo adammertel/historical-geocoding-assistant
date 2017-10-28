@@ -34,7 +34,10 @@ export default class Menu extends React.Component {
 
   renderIcon() {
     return this.props.icon ? (
-      <span className="icon is-small" style={{ color: this.props.iconColor, paddingBottom: 8 }}>
+      <span
+        className="icon is-small"
+        style={{ color: this.props.iconColor, paddingBottom: 8 }}
+      >
         <i className={'fa fa-' + this.props.icon} />
       </span>
     ) : null;
@@ -55,13 +58,25 @@ export default class Menu extends React.Component {
   render() {
     return (
       <div className="menu-wrapper" style={this.style()}>
-        <div className="menu-header" style={this.headerStyle()} onClick={this.toggleOpen.bind(this)}>
-          <h4 className="menu-label" style={{ fontWeight: 800, color: 'black', marginTop: 0 }}>
+        <div
+          className="menu-header"
+          style={this.headerStyle()}
+          onClick={this.toggleOpen.bind(this)}
+        >
+          <h4
+            className="menu-label"
+            style={{ fontWeight: 800, color: 'black', marginTop: 0 }}
+          >
             {this.props.label}
           </h4>
           {this.renderIcon()}
           <span className="icon">
-            <i className={this.state.open ? 'fa fa-caret-down' : 'fa fa-caret-right'} style={{ marginBottom: 15 }} />
+            <i
+              className={
+                this.state.open ? 'fa fa-caret-down' : 'fa fa-caret-right'
+              }
+              style={{ marginBottom: 12 }}
+            />
           </span>
         </div>
         <div className="menu-content" style={this.styleContent()}>
