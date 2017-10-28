@@ -45,8 +45,8 @@ export default class AppStore extends React.Component {
   @action
   init() {
     this.noRecords = Sheet.noLines;
-    this.map1Id = Object.keys(window['basemaps'])[0];
-    this.map2Id = Object.keys(window['basemaps'])[4];
+    this.map1Id = config.defaultBasemaps[0];
+    this.map2Id = config.defaultBasemaps[1];
     this.firstRecordRow = 2;
     this.recordRow = this.firstRecordRow;
     this.shouldRenderApp = true;
@@ -405,7 +405,7 @@ export default class AppStore extends React.Component {
       this.recordBeforeChanges = Object.assign({}, data[this.recordRow]);
       this.updateSearch();
 
-      if (this.config.focusOnRecordChange === 1) {
+      if (this.config.focusOnRecordChange) {
         this.focusRecord();
       }
       next();
@@ -499,6 +499,13 @@ export default class AppStore extends React.Component {
   toggleDisplayOtherRecords = () => {
     const newConfig = {
       displayOtherRecords: !this.config.displayOtherRecords
+    };
+    this.saveSettings(newConfig);
+  };
+  @action
+  toggleFocusChange = () => {
+    const newConfig = {
+      focusOnRecordChange: !this.config.focusOnRecordChange
     };
     this.saveSettings(newConfig);
   };

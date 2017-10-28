@@ -170,6 +170,13 @@ class Panel extends React.Component {
               checked={store.config.displayOtherRecords}
               onChange={store.toggleDisplayOtherRecords.bind(store)}
             />
+            <Checkbox
+              id="switch-focus-onchange"
+              label="pan map on record change"
+              classes="is-small"
+              checked={store.config.focusOnRecordChange}
+              onChange={store.toggleFocusChange.bind(store)}
+            />
           </div>
 
           <div style={{ width: '100%', margin: 20 }}>
@@ -369,7 +376,7 @@ class Panel extends React.Component {
           <div>
             <Checkbox
               id="switch-geonames"
-              label="display places geonames on map"
+              label="display geonames on map"
               classes="is-small"
               checked={store.config.displayGeonames}
               onChange={store.toggleDisplayGeonames.bind(store)}
@@ -486,25 +493,6 @@ class Panel extends React.Component {
             />
           </div>
         </Menu>
-
-        <div
-          className="block is-pulled-right"
-          style={{ float: 'right', padding: 5, margin: 10 }}
-        >
-          <Button
-            label="restore"
-            icon="refresh"
-            onClick={this.handleRecordRevert.bind(this)}
-            className="is-danger is-small"
-          />
-          <span style={{ marginLeft: 5 }} />
-          <Button
-            label="save"
-            icon="save"
-            onClick={store.saveRecord}
-            className="is-success is-small "
-          />
-        </div>
       </div>
     );
   }

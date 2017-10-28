@@ -10,7 +10,6 @@ class Settings extends React.Component {
     const config = store.config;
     this.state = {
       focusZoom: config.focusZoom,
-      focusOnRecordChange: config.focusOnRecordChange,
       maxGeoExtent: config.maxGeoExtent,
       maxResults: config.maxResults,
       columns: {
@@ -25,8 +24,7 @@ class Settings extends React.Component {
 
     this.options = {
       maxResults: [1, 3, 5, 10, 15, 20],
-      focusZoom: [8, 9, 10, 11, 12, 13, 14, 15],
-      focusOnRecordChange: [1, 0]
+      focusZoom: [8, 9, 10, 11, 12, 13, 14, 15]
     };
   }
 
@@ -184,10 +182,6 @@ class Settings extends React.Component {
                 'max results of search (geonames, wikipedia)'
               )}
               {this.renderSelect('focusZoom', 'level of zoom on focus')}
-              {this.renderSelect(
-                'focusOnRecordChange',
-                'focus on record change? (1 = on)'
-              )}
 
               <tr>{this._renderLabel('')}</tr>
 
