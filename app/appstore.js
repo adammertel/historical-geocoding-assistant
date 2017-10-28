@@ -455,6 +455,7 @@ export default class AppStore extends React.Component {
   // save local values to sheet
   @action
   saveRecord = () => {
+    this.changeLoadingStatus('save');
     const cols = this.config.columns;
     this.recordData[cols.x] = parseFloat(this.recordData[cols.x]);
     this.recordData[cols.y] = parseFloat(this.recordData[cols.y]);

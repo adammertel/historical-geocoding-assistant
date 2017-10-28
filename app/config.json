@@ -13,7 +13,7 @@
     "signing": "application is signing in",
     "table": "loading google table",
     "record": "loading record data ",
-    "saving": "saving..."
+    "save": "saving..."
   },
   "messageLoadingTime": 1000,
   "map": {
