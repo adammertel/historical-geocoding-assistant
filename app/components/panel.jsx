@@ -226,12 +226,12 @@ class Panel extends React.Component {
                 </div>
               ) : null}
             <table
-              className="table"
+              className="table centered"
               style={{ fontSize: 12, marginBottom: '0.5rem' }}
             >
               <tbody>
                 <tr key="0">
-                  <td style={{ textAlign: 'right' }}>coordinate X</td>
+                  <td>coordinate X</td>
                   <td>
                     <Input
                       onChange={this.handleChangeInput.bind(
@@ -245,7 +245,7 @@ class Panel extends React.Component {
                 </tr>
 
                 <tr key="1">
-                  <td style={{ textAlign: 'right' }}>coordinate Y</td>
+                  <td>coordinate Y</td>
                   <td>
                     <Input
                       onChange={this.handleChangeInput.bind(
@@ -259,7 +259,7 @@ class Panel extends React.Component {
                 </tr>
 
                 <tr key="2">
-                  <td style={{ textAlign: 'right' }}>localisation</td>
+                  <td>localisation</td>
                   <td>
                     <Input
                       onChange={this.handleChangeInput.bind(
@@ -272,7 +272,7 @@ class Panel extends React.Component {
                 </tr>
 
                 <tr key="3">
-                  <td style={{ textAlign: 'right' }}>notes</td>
+                  <td>notes</td>
                   <td>
                     <Input
                       onChange={this.handleChangeInput.bind(
@@ -285,7 +285,7 @@ class Panel extends React.Component {
                 </tr>
 
                 <tr key="4">
-                  <td style={{ textAlign: 'right' }}>certainty level</td>
+                  <td>certainty level</td>
                   <td>
                     <div className="select" style={{ width: '100%' }}>
                       <select
@@ -354,7 +354,7 @@ class Panel extends React.Component {
 
         <Menu label="record data" defaultOpen={false}>
           <div>
-            <table className="table" style={{ fontSize: 12 }}>
+            <table className="table centered" style={{ fontSize: 12 }}>
               <tbody>
                 {Object.keys(store.recordData).map((column, ci) => {
                   const value = store.recordData[column];

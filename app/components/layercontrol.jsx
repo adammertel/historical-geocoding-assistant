@@ -62,7 +62,7 @@ class LayerControl extends React.Component {
         </h5>
         <Menu label="base layers" defaultOpen={true}>
           <div>
-            <table className="table" style={{ fontSize: 11 }}>
+            <table className="table centered" style={{ fontSize: 11 }}>
               <tbody>
                 <tr>
                   <td>top layer</td>
@@ -125,7 +125,7 @@ class LayerControl extends React.Component {
         </Menu>
         <Menu label="overlay layers" defaultOpen={false}>
           <div>
-            <table className="table" style={{ fontSize: 11 }}>
+            <table className="table centered" style={{ fontSize: 11 }}>
               <tbody>
                 {store.overlays.map(overlay => {
                   return (

@@ -8,6 +8,9 @@ $success: #707322;
 $danger: #bf0606;
 $tooltip-max-width: 200px;
 $checkbox-border: 0.1rem solid $primary;
+$table-cell-border-width: none;
+$table-cell-border: none;
+$table-head-cell-border-width: none;
 
 $family-serif: 'Acme', sans-serif;
 $family-primary: 'Lato', sans-serif;
@@ -20,9 +23,16 @@ $family-primary: 'Lato', sans-serif;
   }
 }
 
-.modal .table td,
+.table td,
 .table th {
-  border: 0px;
+  border: none !important;
+  vertical-align: middle !important;
+}
+
+.table.centered {
+  tr td:first-child {
+    text-align: right;
+  }
 }
 
 .hl-point {
@@ -51,11 +61,6 @@ $family-primary: 'Lato', sans-serif;
 html {
   overflow: hidden;
   color: black !important;
-}
-
-.table td,
-.table th {
-  vertical-align: middle;
 }
 
 .is-transition {
