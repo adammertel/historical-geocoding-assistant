@@ -69,3 +69,14 @@ html {
   -o-transition: 5s;
   transition: 5s;
 }
+
+// Markercluster styling
+.marker-cluster.marker-cluster-small,
+.marker-cluster.marker-cluster-medium,
+.marker-cluster.marker-cluster-large {
+  background: rgba(255, 255, 255, 0.8);
+  div {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+  }
+}
