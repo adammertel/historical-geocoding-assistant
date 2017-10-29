@@ -26,6 +26,7 @@
     "map": true,
     "overlaymaps": true,
     "sheetId": true,
+    "initSheet": true,
     "$": true
   },
   "rules": {

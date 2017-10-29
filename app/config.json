@@ -11,11 +11,13 @@
   "loadingMessages": {
     "loaded": "",
     "config": "loading config files",
+    "prompting table": "setting google table id...",
     "signing": "application is signing in",
     "table": "loading google table",
-    "record": "loading record data ",
+    "record": "loading record data",
     "save": "saving record data"
   },
+  "defaultSheetId": "",
   "messageLoadingTime": 1000,
   "map": {
     "max": 15,

@@ -10,6 +10,7 @@ export default class AppStore extends React.Component {
 
   @observable loadingStatus = '';
   @observable changingLoadingStatus = false;
+
   @observable openedSettings = false;
   @observable shouldRenderApp = false;
 
@@ -24,7 +25,7 @@ export default class AppStore extends React.Component {
   @observable map1Id = false;
   @observable map2Id = false;
 
-  @observable overlays;
+  @observable overlays = [];
 
   @observable hlPoint = false;
 
@@ -197,6 +198,11 @@ export default class AppStore extends React.Component {
   @computed
   get isLoaded() {
     return this.loadingStatus === 'loaded';
+  }
+
+  @computed
+  get tablePrompt() {
+    return this.loadingStatus === 'prompting table';
   }
 
   @computed

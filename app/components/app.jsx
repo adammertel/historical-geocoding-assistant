@@ -7,6 +7,7 @@ import LayerControl from './layercontrol';
 import Settings from './settings';
 import LoadingStatus from './loadingstatus';
 import AppHider from './apphider';
+import TablePrompt from './tableprompt';
 
 @observer
 class App extends React.Component {
@@ -36,6 +37,7 @@ class App extends React.Component {
         <div style={this.bodyStyle()}>
           {store.openedSettings && <Settings />}
           {!store.isLoaded && <LoadingStatus />}
+          {store.tablePrompt && <TablePrompt />}
           {!store.isLoaded && <AppHider />}
           {store.shouldRenderApp && <Panel />}
           {store.shouldRenderApp && <AppMap />}

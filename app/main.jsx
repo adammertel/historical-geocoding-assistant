@@ -27,30 +27,27 @@ if (TESTING) {
 }
 store.loadConfig();
 
-// getting table id
-if (location.hash === '') {
-  window['sheetId'] = prompt(
-    'Please enter id of your google sheet',
-    '1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA'
-  );
-  location.hash = window['sheetId'];
-} else {
-  window['sheetId'] = location.hash.substring(1);
-}
-
 // signing
-store.changeLoadingStatus('signing');
 
 ReactDOM.render(
   <App />,
   document.body.appendChild(document.createElement('div'))
 );
 
-if (sheetId !== null) {
+window['sheetId'] = location.hash.substring(1);
+
+window['initSheet'] = () => {
+  store.changeLoadingStatus('signing');
   Sheet.init(() => {
     // Sheet.readLine(1, (vals) => console.log(vals));
     // Sheet.readLine(2, (vals) => console.log(vals));
     // Sheet.updateLine(68, ['test'], (vals) => console.log(vals));
     store.init();
   });
+};
+
+if (sheetId) {
+  initSheet();
+} else {
+  store.changeLoadingStatus('prompting table');
 }

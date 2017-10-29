@@ -148,7 +148,7 @@ class LayerControl extends React.Component {
                         <Button
                           icon="arrow-up"
                           label=""
-                          className="is-inverted"
+                          classes="is-inverted"
                           onClick={this.handleMoveOverlayUp.bind(
                             this,
                             overlay.id
@@ -158,7 +158,7 @@ class LayerControl extends React.Component {
                         <Button
                           icon="arrow-down"
                           label=""
-                          className="is-inverted"
+                          classes="is-inverted"
                           onClick={this.handleMoveOverlayDown.bind(
                             this,
                             overlay.id
@@ -168,7 +168,7 @@ class LayerControl extends React.Component {
                         <Button
                           icon="trash-o"
                           label=""
-                          className="is-inverted"
+                          classes="is-inverted"
                           onClick={this.handleRemoveOverlay.bind(
                             this,
                             overlay.id
