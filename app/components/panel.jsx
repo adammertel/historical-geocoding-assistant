@@ -109,7 +109,7 @@ class Panel extends React.Component {
     return (
       <div className="panel-wrapper" style={this.style()}>
         <div>
-          <img src="assets/icon.png" alt="logo" />
+          <img src="assets/icon.png" alt="logo" style={{ padding: 20 }} />
         </div>
 
         <div>
@@ -172,7 +172,7 @@ class Panel extends React.Component {
             />
             <Checkbox
               id="switch-focus-onchange"
-              label="pan map on record change"
+              label="focus map on record change"
               classes="is-small"
               checked={store.config.focusOnRecordChange}
               onChange={store.toggleFocusChange.bind(store)}
