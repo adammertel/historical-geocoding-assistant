@@ -51,9 +51,9 @@ export default class AppStore extends React.Component {
     this.firstRecordRow = 2;
     this.recordRow = this.firstRecordRow;
     this.shouldRenderApp = true;
-    this.updateData(() => {
+    this.loadTable(() => {
       this.findDefaultColumnNames();
-      // this.loadApplication();
+      this.updateData();
     });
   }
 
@@ -416,6 +416,14 @@ export default class AppStore extends React.Component {
       }
       next();
       this.loadApplication();
+    });
+  };
+
+  @action
+  loadTable = next => {
+    Sheet.readAllLines(data => {
+      this.records = data;
+      next();
     });
   };
 
