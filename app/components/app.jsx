@@ -35,10 +35,10 @@ class App extends React.Component {
     return (
       <div className="wrapper" style={this.style()}>
         <div style={this.bodyStyle()}>
-          {store.openedSettings && <Settings />}
           {!store.isLoaded && <LoadingStatus />}
           {store.tablePrompt && <TablePrompt />}
           {!store.isLoaded && <AppHider />}
+          {store.openedSettings && store.shouldRenderApp && <Settings />}
           {store.shouldRenderApp && <Panel />}
           {store.shouldRenderApp && <AppMap />}
           {store.shouldRenderApp && <LayerControl />}

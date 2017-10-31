@@ -82,6 +82,20 @@ html {
   }
 }
 
+.modal {
+  .modal-card {
+    background-color: white;
+  }
+  .modal-card-head,
+  .modal-card-foot {
+    background-color: white;
+    border-width: 0px;
+    .modal-card-title {
+      text-align: center;
+    }
+  }
+}
+
 .loading-status .message-body {
   border: 0px;
 }

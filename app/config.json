@@ -8,6 +8,7 @@
   },
   "defaultOverlays": [{ "id": "COUNTRIES_MODERN", "opacity": 0.7 }],
   "defaultBasemaps": ["OSM_DE", "ESRIWORLD"],
+  "defaultSettingsOpen": true,
   "loadingMessages": {
     "loaded": "",
     "config": "loading config files",

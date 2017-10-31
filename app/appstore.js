@@ -48,12 +48,13 @@ export default class AppStore extends React.Component {
     this.noRecords = Sheet.noLines;
     this.map1Id = config.defaultBasemaps[0];
     this.map2Id = config.defaultBasemaps[1];
+    this.openedSettings = config.defaultSettingsOpen;
     this.firstRecordRow = 2;
     this.recordRow = this.firstRecordRow;
-    this.shouldRenderApp = true;
     this.loadTable(() => {
       this.findDefaultColumnNames();
       this.updateData();
+      this.shouldRenderApp = true;
     });
   }
 

@@ -31,10 +31,18 @@ class TablePrompt extends React.Component {
         header="Enter id of your google sheet"
         style={{ zIndex: 1500 }}
         body={
-          <Input
-            value={this.state.sheetId}
-            onChange={this.changeSheetId.bind(this)}
-          />
+          <div>
+            <Input
+              value={this.state.sheetId}
+              onChange={this.changeSheetId.bind(this)}
+            />
+            <a
+              href="https://developers.google.com/sheets/api/guides/concepts"
+              target="_blank"
+            >
+              what is that "google sheet id"?
+            </a>
+          </div>
         }
         footerStyle={{ textAlign: 'right', display: 'block' }}
         footer={
