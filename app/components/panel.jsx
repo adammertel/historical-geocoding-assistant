@@ -112,18 +112,9 @@ class Panel extends React.Component {
           <img src="assets/icon.png" alt="logo" style={{ padding: 20 }} />
         </div>
 
-        <div>
-          <Button
-            classes="is-inverted is-medium"
-            label="settings"
-            icon="wrench"
-            onClick={this.handleGlobalSettingOpen.bind(this)}
-          />
-          <div style={{ marginTop: 25 }} className="is-pulled-right">
-            displaying record {store.row - 1} / {store.noRecords - 1}
-          </div>
+        <div style={{ marginRight: 30, textAlign: 'right' }}>
+          record {store.row - 1} / {store.noRecords - 1}
         </div>
-
         <div className="is-inline">
           <Button
             classes="is-inverted"
@@ -132,7 +123,7 @@ class Panel extends React.Component {
             onClick={store.previousRecord}
           />
 
-          <div className="select" style={{ width: '295px' }}>
+          <div className="select" style={{ width: 300 }}>
             <select
               style={{ width: '100%' }}
               value={store.row}
@@ -162,66 +153,30 @@ class Panel extends React.Component {
             onClick={store.nextRecord}
             classes="is-inverted is-pulled-right"
           />
-          <div style={{ paddingTop: '20px', paddingLeft: '20px' }}>
-            <div className="checkboxes-line">
-              <Checkbox
-                id="switch-otherrecords"
-                label="display all records on map ("
-                classes="is-small"
-                checked={store.opts.displayOtherRecords}
-                onChange={store.toggleDisplayOtherRecords.bind(store)}
-              />
-              <Checkbox
-                id="switch-clusters"
-                label="clusters )"
-                classes="is-small"
-                checked={store.opts.mapClusters}
-                onChange={store.toggleMapClusters.bind(store)}
-              />
-            </div>
-            <div className="checkboxes-line">
-              <Checkbox
-                id="switch-focus-onchange"
-                label="focus map on record change ("
-                classes="is-small"
-                checked={store.opts.focusOnRecordChange}
-                onChange={store.toggleFocusChange.bind(store)}
-              />
-              <div style={{}} className="field">
-                <div style={{}} className="select">
-                  <select
-                    value={store.opts.focusZoom}
-                    onChange={store.handleChangeSelect.bind(store)}
-                  >
-                    {[8, 9, 10, 11, 12, 13, 14, 15].map((option, oi) => {
-                      return (
-                        <option key={oi} value={option}>
-                          {option}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-                <label> zoom level)</label>
-              </div>
-            </div>
-          </div>
+        </div>
 
-          <div style={{ width: '100%', margin: 20 }}>
-            <Button
-              label="restore"
-              icon="refresh"
-              onClick={this.handleRecordRevert.bind(this)}
-              classes="is-danger is-small"
-            />
-            <span style={{ marginLeft: 5 }} />
-            <Button
-              label="save"
-              icon="save"
-              onClick={store.saveRecord}
-              classes="is-success is-small "
-            />
-          </div>
+        <div
+          style={{
+            width: '100%',
+            paddingRight: 10,
+            textAlign: 'right',
+            marginTop: 10,
+            marginBottom: 10
+          }}
+        >
+          <Button
+            label="restore"
+            icon="refresh"
+            onClick={this.handleRecordRevert.bind(this)}
+            classes="is-danger is-small"
+          />
+          <span style={{ marginLeft: 5 }} />
+          <Button
+            label="save"
+            icon="save"
+            onClick={store.saveRecord}
+            classes="is-success is-small "
+          />
         </div>
 
         <Menu
@@ -520,6 +475,66 @@ class Panel extends React.Component {
               classes="is-inverted"
               onClick={this.handleOpenGMaps.bind(this)}
             />
+          </div>
+        </Menu>
+
+        <Menu
+          label="settings"
+          defaultOpen={true}
+          icon="wrench"
+          iconColor="#A64005"
+        >
+          <div>
+            <div className="checkboxes-line">
+              <Checkbox
+                id="switch-otherrecords"
+                label="display all records on map ("
+                classes="is-small"
+                checked={store.opts.displayOtherRecords}
+                onChange={store.toggleDisplayOtherRecords.bind(store)}
+              />
+              <Checkbox
+                id="switch-clusters"
+                label="clusters )"
+                classes="is-small"
+                checked={store.opts.mapClusters}
+                onChange={store.toggleMapClusters.bind(store)}
+              />
+            </div>
+            <div className="checkboxes-line">
+              <Checkbox
+                id="switch-focus-onchange"
+                label="focus map on record change ("
+                classes="is-small"
+                checked={store.opts.focusOnRecordChange}
+                onChange={store.toggleFocusChange.bind(store)}
+              />
+              <div style={{}} className="field">
+                <div style={{}} className="select">
+                  <select
+                    value={store.opts.focusZoom}
+                    onChange={store.handleChangeSelect.bind(store)}
+                  >
+                    {[8, 9, 10, 11, 12, 13, 14, 15].map((option, oi) => {
+                      return (
+                        <option key={oi} value={option}>
+                          {option}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <label> zoom level)</label>
+              </div>
+            </div>
+            <div>
+              <Button
+                classes=""
+                label="columns"
+                icon="columns"
+                onClick={this.handleGlobalSettingOpen.bind(this)}
+              />
+            </div>
           </div>
         </Menu>
       </div>
