@@ -179,13 +179,30 @@ class Panel extends React.Component {
                 onChange={store.toggleMapClusters.bind(store)}
               />
             </div>
-            <Checkbox
-              id="switch-focus-onchange"
-              label="focus map on record change"
-              classes="is-small"
-              checked={store.opts.focusOnRecordChange}
-              onChange={store.toggleFocusChange.bind(store)}
-            />
+            <div className="checkboxes-line">
+              <Checkbox
+                id="switch-focus-onchange"
+                label="focus map on record change ("
+                classes="is-small"
+                checked={store.opts.focusOnRecordChange}
+                onChange={store.toggleFocusChange.bind(store)}
+              />
+              <div style={{}} className="select">
+                <select
+                  value={store.opts.focusZoom}
+                  onChange={store.handleChangeSelect.bind(store)}
+                >
+                  {[8, 9, 10, 11, 12, 13, 14, 15].map((option, oi) => {
+                    return (
+                      <option key={oi} value={option}>
+                        {option}
+                      </option>
+                    );
+                  })}
+                </select>
+                <label> zoom level)</label>
+              </div>
+            </div>
           </div>
 
           <div style={{ width: '100%', margin: 20 }}>

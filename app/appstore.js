@@ -525,6 +525,14 @@ export default class AppStore extends React.Component {
     this.saveSettings(newConfig);
   };
   @action
+  handleChangeSelect = e => {
+    console.log(e.target.value);
+    const newConfig = {
+      focusZoom: parseInt(e.target.value, 10)
+    };
+    this.saveSettings(newConfig);
+  };
+  @action
   toggleFocusChange = () => {
     const newConfig = {
       focusOnRecordChange: !this.opts.focusOnRecordChange
