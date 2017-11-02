@@ -534,6 +534,13 @@ class Panel extends React.Component {
                 icon="columns"
                 onClick={this.handleGlobalSettingOpen.bind(this)}
               />
+              <span style={{ marginLeft: 5 }} />
+              <Button
+                classes=""
+                label="geo extent"
+                icon="globe"
+                onClick={this.handleGlobalSettingOpen.bind(this)}
+              />
             </div>
           </div>
         </Menu>
