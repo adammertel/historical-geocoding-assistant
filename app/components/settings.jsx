@@ -9,9 +9,7 @@ class Settings extends React.Component {
     super(props);
     const opts = store.opts;
     this.state = {
-      focusZoom: opts.focusZoom,
       maxGeoExtent: opts.maxGeoExtent,
-      maxResults: opts.maxResults,
       columns: {
         name: opts.columns.name,
         x: opts.columns.x,
@@ -20,11 +18,6 @@ class Settings extends React.Component {
         localisation: opts.columns.localisation,
         certainty: opts.columns.certainty
       }
-    };
-
-    this.options = {
-      maxResults: [1, 3, 5, 10, 15, 20],
-      focusZoom: [8, 9, 10, 11, 12, 13, 14, 15]
     };
   }
 
@@ -177,12 +170,6 @@ class Settings extends React.Component {
         body={
           <table className="table centered">
             <tbody>
-              {this.renderSelect(
-                'maxResults',
-                'max results of search (geonames, wikipedia)'
-              )}
-              {this.renderSelect('focusZoom', 'level of zoom on focus')}
-
               <tr>{this._renderLabel('')}</tr>
 
               {this.renderColumnSelect('name', 'name column')}

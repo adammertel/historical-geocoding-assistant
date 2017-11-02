@@ -16,7 +16,6 @@
 
     "defaultCenter": [45, 10],
     "maxGeoExtent": [[-180, -90], [180, 90]],
-    "maxResults": 10,
     "mapClusters": true,
     "columns": {
       "name": "",

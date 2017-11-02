@@ -187,19 +187,21 @@ class Panel extends React.Component {
                 checked={store.opts.focusOnRecordChange}
                 onChange={store.toggleFocusChange.bind(store)}
               />
-              <div style={{}} className="select">
-                <select
-                  value={store.opts.focusZoom}
-                  onChange={store.handleChangeSelect.bind(store)}
-                >
-                  {[8, 9, 10, 11, 12, 13, 14, 15].map((option, oi) => {
-                    return (
-                      <option key={oi} value={option}>
-                        {option}
-                      </option>
-                    );
-                  })}
-                </select>
+              <div style={{}} className="field">
+                <div style={{}} className="select">
+                  <select
+                    value={store.opts.focusZoom}
+                    onChange={store.handleChangeSelect.bind(store)}
+                  >
+                    {[8, 9, 10, 11, 12, 13, 14, 15].map((option, oi) => {
+                      return (
+                        <option key={oi} value={option}>
+                          {option}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
                 <label> zoom level)</label>
               </div>
             </div>
@@ -402,11 +404,12 @@ class Panel extends React.Component {
           <div>
             <Checkbox
               id="switch-geonames"
-              label="display geonames on map"
+              label="display on map"
               classes="is-small"
               checked={store.opts.displayGeonames}
               onChange={store.toggleDisplayGeonames.bind(store)}
             />
+
             {store.geonames.filter(g => g).map((geoname, gi) => {
               return (
                 <div key={gi}>
@@ -455,7 +458,7 @@ class Panel extends React.Component {
         >
           <Checkbox
             id="switch-wikipedia"
-            label="display wikipedia places on map"
+            label="display places on map"
             classes="is-small"
             checked={store.opts.displayWikis}
             onChange={store.toggleDisplayWikis.bind(store)}
