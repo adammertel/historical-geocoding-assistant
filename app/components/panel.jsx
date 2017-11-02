@@ -163,6 +163,7 @@ class Panel extends React.Component {
             marginTop: 10,
             marginBottom: 10
           }}
+          className="button-row"
         >
           <Button
             label="restore"
@@ -170,7 +171,6 @@ class Panel extends React.Component {
             onClick={this.handleRecordRevert.bind(this)}
             classes="is-danger is-small"
           />
-          <span style={{ marginLeft: 5 }} />
           <Button
             label="save"
             icon="save"
@@ -283,7 +283,7 @@ class Panel extends React.Component {
                 x: store.recordX,
                 y: store.recordY
               }) ? (
-                  <div>
+                  <div className="button-row">
                     <Button
                       onClick={this.handleCoordinatesHighlight.bind(this)}
                       tooltip="highlight location on map"
@@ -527,14 +527,13 @@ class Panel extends React.Component {
                 <label> zoom level)</label>
               </div>
             </div>
-            <div>
+            <div className="button-row">
               <Button
                 classes=""
                 label="columns"
                 icon="columns"
                 onClick={this.handleGlobalSettingOpen.bind(this)}
               />
-              <span style={{ marginLeft: 5 }} />
               <Button
                 classes=""
                 label="geo extent"
