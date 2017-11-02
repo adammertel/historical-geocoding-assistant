@@ -14,7 +14,6 @@ export default class AppStore extends React.Component {
   @observable openedSettings = false;
   @observable shouldRenderApp = false;
 
-  @observable recordRow = 4;
   @observable records = {};
   @observable recordBeforeChanges = {};
   @observable wikis = [];
@@ -34,8 +33,7 @@ export default class AppStore extends React.Component {
   init() {
     this.noRecords = Sheet.noLines;
     this.openedSettings = config.defaultSettingsOpen;
-    this.firstRecordRow = 2;
-    this.recordRow = this.firstRecordRow;
+    this.opts.recordRow = 2;
     this.loadTable(() => {
       this.findDefaultColumnNames();
       this.updateData();
@@ -110,9 +108,14 @@ export default class AppStore extends React.Component {
 
   @computed
   get recordData() {
-    return this.records[this.recordRow]
-      ? Object.assign(this.records[this.recordRow], {})
+    return this.records[this.row]
+      ? Object.assign(this.records[this.row], {})
       : {};
+  }
+
+  @computed
+  get row() {
+    return this.opts.recordRow;
   }
 
   @computed
@@ -352,25 +355,19 @@ export default class AppStore extends React.Component {
   // changing recordRow
   @action
   nextRecord = () => {
-    this.recordRow =
-      this.recordRow === this.noRecords
-        ? this.firstRecordRow
-        : this.recordRow + 1;
+    this.row = this.row === this.noRecords ? this.firstRecordRow : this.row + 1;
     this.updateData();
   };
 
   @action
   previousRecord = () => {
-    this.recordRow =
-      this.recordRow === this.firstRecordRow
-        ? this.noRecords
-        : this.recordRow - 1;
+    this.row = this.row === this.firstRecordRow ? this.noRecords : this.row - 1;
     this.updateData();
   };
 
   @action
   gotoRecord = recordRow => {
-    this.recordRow = parseInt(recordRow, 10);
+    this.row = parseInt(recordRow, 10);
     this.updateData();
   };
 
@@ -380,7 +377,7 @@ export default class AppStore extends React.Component {
     this.changeLoadingStatus('record');
     Sheet.readAllLines(data => {
       this.records = data;
-      this.recordBeforeChanges = Object.assign({}, data[this.recordRow]);
+      this.recordBeforeChanges = Object.assign({}, data[this.row]);
       this.updateSearch();
 
       if (this.opts.focusOnRecordChange) {
@@ -413,7 +410,7 @@ export default class AppStore extends React.Component {
 
   @action
   revertChangesRecord = () => {
-    this.records[this.recordRow] = Object.assign({}, this.recordBeforeChanges);
+    this.records[this.row] = Object.assign({}, this.recordBeforeChanges);
   };
 
   // locally store new values
@@ -423,7 +420,7 @@ export default class AppStore extends React.Component {
     if ((column === config.columns.x || column === config.columns.y) && value) {
       value = parseFloat(value);
     }
-    this.records[this.recordRow][column] = value;
+    this.records[this.row][column] = value;
 
     if (
       column === config.columns.name ||
@@ -446,7 +443,7 @@ export default class AppStore extends React.Component {
     this.recordData[cols.x] = parseFloat(this.recordData[cols.x]);
     this.recordData[cols.y] = parseFloat(this.recordData[cols.y]);
 
-    Sheet.updateLine(this.recordRow, Object.values(this.recordData), () =>
+    Sheet.updateLine(this.row, Object.values(this.recordData), () =>
       this.updateData()
     );
   };

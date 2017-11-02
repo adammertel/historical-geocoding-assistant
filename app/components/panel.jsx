@@ -120,7 +120,7 @@ class Panel extends React.Component {
             onClick={this.handleGlobalSettingOpen.bind(this)}
           />
           <div style={{ marginTop: 25 }} className="is-pulled-right">
-            displaying record {store.recordRow - 1} / {store.noRecords - 1}
+            displaying record {store.row - 1} / {store.noRecords - 1}
           </div>
         </div>
 
@@ -135,7 +135,7 @@ class Panel extends React.Component {
           <div className="select" style={{ width: '295px' }}>
             <select
               style={{ width: '100%' }}
-              value={store.recordRow}
+              value={store.row}
               onChange={this.handleSelectRecord.bind(this)}
             >
               {store.geoRecords.map(record => {
