@@ -1,3 +1,11 @@
 # Historical Geocoding Assistant
 
-![screenshot](https://github.com/adammertel/historical-geocoder-assistant/screen.png)
+## TODO
+ - dictionary
+ - "declustering" option
+ - formating of coordinates (' . ,)
+ - measuring distances
+ - table demo
+ - hashable options
+ - check performance of map sub-components
+ - documentation

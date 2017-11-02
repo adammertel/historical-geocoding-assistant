@@ -125,6 +125,7 @@ class AppMap extends React.Component {
   }
 
   renderOtherRecords() {
+    console.log('other records');
     return (
       <Pane style={{ zIndex: 600 }}>
         <MarkerClusterGroup
