@@ -7,7 +7,7 @@ import AppStore from './appstore.js';
 import Sheet from './sheet.js';
 import Base from './base.js';
 
-const TESTING = false;
+const TESTING = true;
 console.log('testing mode', TESTING);
 
 // global variables

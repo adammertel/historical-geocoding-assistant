@@ -99,3 +99,19 @@ html {
 .loading-status .message-body {
   border: 0px;
 }
+
+.checkboxes-line {
+  margin-bottom: 5px;
+  div {
+    display: inline;
+  }
+  div:first-child {
+    label {
+      padding-right: 0px;
+      margin-right: 0px;
+    }
+  }
+  div:last-child {
+    margin-left: 5px;
+  }
+}

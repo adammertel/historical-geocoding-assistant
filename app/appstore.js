@@ -518,6 +518,13 @@ export default class AppStore extends React.Component {
     this.saveSettings(newConfig);
   };
   @action
+  toggleMapClusters = () => {
+    const newConfig = {
+      mapClusters: !this.config.mapClusters
+    };
+    this.saveSettings(newConfig);
+  };
+  @action
   toggleFocusChange = () => {
     const newConfig = {
       focusOnRecordChange: !this.config.focusOnRecordChange

@@ -125,39 +125,43 @@ class AppMap extends React.Component {
   }
 
   renderOtherRecords() {
-    console.log('other records');
+    const records = store.geoRecords
+      .filter(Base.validGeo)
+      .filter(r => !Base.same(r.row, store.recordRow))
+      .map((record, ri) => {
+        return (
+          <Marker
+            key={ri}
+            position={[parseFloat(record.y), parseFloat(record.x)]}
+            icon={this.icon('fa fa-map-marker', 'color: black', [20, 20])}
+            onClick={this.handleClickMarker.bind(this, record.row)}
+          >
+            <Tooltip offset={[10, -10]} direction="right">
+              <h4>{record.name}</h4>
+            </Tooltip>
+          </Marker>
+        );
+      });
     return (
       <Pane style={{ zIndex: 600 }}>
-        <MarkerClusterGroup
-          options={{
-            showCoverageOnHover: false,
-            zoomToBoundsOnClick: true,
-            removeOutsideVisibleBounds: true,
-            elementsPlacementStrategy: 'clock-concentric',
-            animate: false,
-            singleMarkerMode: true,
-            spiderLegPolylineOptions: { weight: 0 },
-            clockHelpingCircleOptions: { weight: 0 }
-          }}
-        >
-          {store.geoRecords
-            .filter(Base.validGeo)
-            .filter(r => r.row.toString() !== store.recordRow.toString())
-            .map((record, ri) => {
-              return (
-                <Marker
-                  key={ri}
-                  position={[parseFloat(record.y), parseFloat(record.x)]}
-                  icon={this.icon('fa fa-map-marker', 'color: black', [20, 20])}
-                  onClick={this.handleClickMarker.bind(this, record.row)}
-                >
-                  <Tooltip offset={[10, -10]} direction="right">
-                    <h4>{record.name}</h4>
-                  </Tooltip>
-                </Marker>
-              );
-            })}
-        </MarkerClusterGroup>
+        {store.config.mapClusters ? (
+          <MarkerClusterGroup
+            options={{
+              showCoverageOnHover: false,
+              zoomToBoundsOnClick: true,
+              removeOutsideVisibleBounds: true,
+              elementsPlacementStrategy: 'clock-concentric',
+              animate: false,
+              singleMarkerMode: true,
+              spiderLegPolylineOptions: { weight: 0 },
+              clockHelpingCircleOptions: { weight: 0 }
+            }}
+          >
+            {records}
+          </MarkerClusterGroup>
+        ) : (
+          records
+        )}
       </Pane>
     );
   }

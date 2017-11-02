@@ -115,7 +115,6 @@ var Base = {
   },
 
   geonames(term, noResults, extent, next) {
-    console.log(term);
     const path =
       'http://api.geonames.org/searchJSON?' +
       'q=' +
@@ -166,6 +165,10 @@ var Base = {
         e[1][1] > geom[1]
       );
     }
+  },
+
+  same(value1, value2) {
+    return value1.toString() === value2.toString();
   },
 
   processOverlayData() {

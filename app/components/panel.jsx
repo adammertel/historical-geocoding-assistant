@@ -163,13 +163,22 @@ class Panel extends React.Component {
             classes="is-inverted is-pulled-right"
           />
           <div style={{ paddingTop: '20px', paddingLeft: '20px' }}>
-            <Checkbox
-              id="switch-otherrecords"
-              label="display all records on map"
-              classes="is-small"
-              checked={store.config.displayOtherRecords}
-              onChange={store.toggleDisplayOtherRecords.bind(store)}
-            />
+            <div className="checkboxes-line">
+              <Checkbox
+                id="switch-otherrecords"
+                label="display all records on map ("
+                classes="is-small"
+                checked={store.config.displayOtherRecords}
+                onChange={store.toggleDisplayOtherRecords.bind(store)}
+              />
+              <Checkbox
+                id="switch-clusters"
+                label="clusters )"
+                classes="is-small"
+                checked={store.config.mapClusters}
+                onChange={store.toggleMapClusters.bind(store)}
+              />
+            </div>
             <Checkbox
               id="switch-focus-onchange"
               label="focus map on record change"

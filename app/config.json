@@ -26,6 +26,7 @@
   },
   "storeConfig": {
     "focusZoom": 11,
+    "mapClusters": true,
     "defaultZoom": 6,
     "focusOnRecordChange": true,
 

@@ -2,7 +2,7 @@
 
 ## TODO
  - dictionary
- - "declustering" option
+ - language switcher
  - formating of coordinates (' . ,)
  - measuring distances
  - table demo
