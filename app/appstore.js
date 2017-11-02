@@ -21,7 +21,7 @@ export default class AppStore extends React.Component {
   @observable geonames = [];
 
   @observable map = {};
-  @observable mapOpacityRatio = 0.4;
+  @observable mapOpacityRatio = 0;
   @observable map1Id = false;
   @observable map2Id = false;
 
@@ -49,6 +49,7 @@ export default class AppStore extends React.Component {
     this.map1Id = config.defaultBasemaps[0];
     this.map2Id = config.defaultBasemaps[1];
     this.openedSettings = config.defaultSettingsOpen;
+    this.mapOpacityRatio = config.mapOpacityRatio;
     this.firstRecordRow = 2;
     this.recordRow = this.firstRecordRow;
     this.loadTable(() => {
