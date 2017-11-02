@@ -168,14 +168,14 @@ class Panel extends React.Component {
                 id="switch-otherrecords"
                 label="display all records on map ("
                 classes="is-small"
-                checked={store.config.displayOtherRecords}
+                checked={store.opts.displayOtherRecords}
                 onChange={store.toggleDisplayOtherRecords.bind(store)}
               />
               <Checkbox
                 id="switch-clusters"
                 label="clusters )"
                 classes="is-small"
-                checked={store.config.mapClusters}
+                checked={store.opts.mapClusters}
                 onChange={store.toggleMapClusters.bind(store)}
               />
             </div>
@@ -183,7 +183,7 @@ class Panel extends React.Component {
               id="switch-focus-onchange"
               label="focus map on record change"
               classes="is-small"
-              checked={store.config.focusOnRecordChange}
+              checked={store.opts.focusOnRecordChange}
               onChange={store.toggleFocusChange.bind(store)}
             />
           </div>
@@ -214,7 +214,7 @@ class Panel extends React.Component {
           <div>
             {!Base.inExtent(
               [store.recordY, store.recordX],
-              store.config.maxGeoExtent
+              store.opts.maxGeoExtent
             ) ? (
                 <div className="is-danger notification">
                   <i className="icon fa fa-exclamation" />The coordinates are
@@ -232,7 +232,7 @@ class Panel extends React.Component {
                     <Input
                       onChange={this.handleChangeInput.bind(
                         this,
-                        store.config.columns.x
+                        store.opts.columns.x
                       )}
                       type="number"
                       value={store.recordX}
@@ -246,7 +246,7 @@ class Panel extends React.Component {
                     <Input
                       onChange={this.handleChangeInput.bind(
                         this,
-                        store.config.columns.y
+                        store.opts.columns.y
                       )}
                       type="number"
                       value={store.recordY}
@@ -260,7 +260,7 @@ class Panel extends React.Component {
                     <Input
                       onChange={this.handleChangeInput.bind(
                         this,
-                        store.config.columns.localisation
+                        store.opts.columns.localisation
                       )}
                       value={store.recordLocalisation}
                     />
@@ -273,7 +273,7 @@ class Panel extends React.Component {
                     <Input
                       onChange={this.handleChangeInput.bind(
                         this,
-                        store.config.columns.note
+                        store.opts.columns.note
                       )}
                       value={store.recordNote}
                     />
@@ -387,7 +387,7 @@ class Panel extends React.Component {
               id="switch-geonames"
               label="display geonames on map"
               classes="is-small"
-              checked={store.config.displayGeonames}
+              checked={store.opts.displayGeonames}
               onChange={store.toggleDisplayGeonames.bind(store)}
             />
             {store.geonames.filter(g => g).map((geoname, gi) => {
@@ -440,7 +440,7 @@ class Panel extends React.Component {
             id="switch-wikipedia"
             label="display wikipedia places on map"
             classes="is-small"
-            checked={store.config.displayWikis}
+            checked={store.opts.displayWikis}
             onChange={store.toggleDisplayWikis.bind(store)}
           />
           <div>

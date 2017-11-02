@@ -24,7 +24,7 @@
     "max": 15,
     "min": 3
   },
-  "storeConfig": {
+  "storeOpts": {
     "focusZoom": 11,
     "mapClusters": true,
     "defaultZoom": 6,

@@ -7,18 +7,18 @@ import Modal from './../bulma/modal';
 class Settings extends React.Component {
   constructor(props) {
     super(props);
-    const config = store.config;
+    const opts = store.opts;
     this.state = {
-      focusZoom: config.focusZoom,
-      maxGeoExtent: config.maxGeoExtent,
-      maxResults: config.maxResults,
+      focusZoom: opts.focusZoom,
+      maxGeoExtent: opts.maxGeoExtent,
+      maxResults: opts.maxResults,
       columns: {
-        name: config.columns.name,
-        x: config.columns.x,
-        y: config.columns.y,
-        note: config.columns.note,
-        localisation: config.columns.localisation,
-        certainty: config.columns.certainty
+        name: opts.columns.name,
+        x: opts.columns.x,
+        y: opts.columns.y,
+        note: opts.columns.note,
+        localisation: opts.columns.localisation,
+        certainty: opts.columns.certainty
       }
     };
 

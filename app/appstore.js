@@ -6,7 +6,7 @@ import Sheet from './sheet.js';
 import React from 'react';
 
 export default class AppStore extends React.Component {
-  @observable config = {};
+  @observable opts = {};
 
   @observable loadingStatus = '';
   @observable changingLoadingStatus = false;
@@ -35,10 +35,10 @@ export default class AppStore extends React.Component {
 
   @action
   loadConfig() {
-    this.config = config.storeConfig;
+    this.opts = config.storeOpts;
     this.map = {
-      center: this.config.defaultCenter,
-      zoom: this.config.defaultZoom
+      center: this.opts.defaultCenter,
+      zoom: this.opts.defaultZoom
     };
     this.overlays = config.defaultOverlays;
   }
@@ -89,7 +89,7 @@ export default class AppStore extends React.Component {
         }
       });
 
-      this.config.columns[id] = bestMatch;
+      this.opts.columns[id] = bestMatch;
     });
   }
 
@@ -118,7 +118,7 @@ export default class AppStore extends React.Component {
 
   @computed
   get configMaxGeoExtent() {
-    const geoExtent = this.config.maxGeoExtent;
+    const geoExtent = this.opts.maxGeoExtent;
     return [
       [geoExtent[0][0], geoExtent[0][1]],
       [geoExtent[1][0], geoExtent[1][1]]
@@ -134,32 +134,32 @@ export default class AppStore extends React.Component {
 
   @computed
   get recordName() {
-    return this.recordData[this.config.columns.name];
+    return this.recordData[this.opts.columns.name];
   }
 
   @computed
   get recordCertainty() {
-    return this.recordData[this.config.columns.certainty];
+    return this.recordData[this.opts.columns.certainty];
   }
 
   @computed
   get recordLocalisation() {
-    return this.recordData[this.config.columns.localisation];
+    return this.recordData[this.opts.columns.localisation];
   }
 
   @computed
   get recordNote() {
-    return this.recordData[this.config.columns.note];
+    return this.recordData[this.opts.columns.note];
   }
 
   @computed
   get recordX() {
-    return this.recordData[this.config.columns.x];
+    return this.recordData[this.opts.columns.x];
   }
 
   @computed
   get recordY() {
-    return this.recordData[this.config.columns.y];
+    return this.recordData[this.opts.columns.y];
   }
 
   @computed
@@ -172,9 +172,9 @@ export default class AppStore extends React.Component {
     return Object.keys(this.records).map(rowNo => {
       const record = this.records[rowNo];
       return {
-        x: record[this.config.columns.x],
-        y: record[this.config.columns.y],
-        name: record[this.config.columns.name],
+        x: record[this.opts.columns.x],
+        y: record[this.opts.columns.y],
+        name: record[this.opts.columns.name],
         row: rowNo
       };
     });
@@ -190,7 +190,7 @@ export default class AppStore extends React.Component {
     return Object.keys(this.records).map(rowNo => {
       const record = this.records[rowNo];
       return {
-        name: record[this.config.columns.name],
+        name: record[this.opts.columns.name],
         row: rowNo
       };
     });
@@ -239,15 +239,15 @@ export default class AppStore extends React.Component {
 
   @action
   defaultMapState = () => {
-    this.map.zoom = this.config.defaultZoom;
-    this.map.center = this.config.defaultCenter;
+    this.map.zoom = this.opts.defaultZoom;
+    this.map.center = this.opts.defaultCenter;
   };
   // pan and zoom to active record
   @action
   focusRecord = () => {
     if (this.validRecordCoordinates) {
       this.map.center = this.recordGeo;
-      this.map.zoom = this.config.focusZoom;
+      this.map.zoom = this.opts.focusZoom;
     } else {
       this.defaultMapState();
     }
@@ -256,7 +256,7 @@ export default class AppStore extends React.Component {
   @action
   mapFocus = ll => {
     this.mapCenterChange(ll);
-    this.mapZoomChange(this.config.focusZoom);
+    this.mapZoomChange(this.opts.focusZoom);
   };
 
   @action
@@ -286,8 +286,8 @@ export default class AppStore extends React.Component {
 
   @action
   updateRecordLocation = (x, y) => {
-    this.updateRecordValue(this.config.columns.y, this.roundCoordinate(y));
-    this.updateRecordValue(this.config.columns.x, this.roundCoordinate(x));
+    this.updateRecordValue(this.opts.columns.y, this.roundCoordinate(y));
+    this.updateRecordValue(this.opts.columns.x, this.roundCoordinate(x));
   };
 
   // wiki
@@ -295,16 +295,16 @@ export default class AppStore extends React.Component {
   updateSearch = () => {
     Base.geonames(
       this.recordLocalisation,
-      this.config.maxResults,
-      this.config.maxGeoExtent,
+      this.opts.maxResults,
+      this.opts.maxGeoExtent,
       response => {
         this.geonames = response;
       }
     );
     Base.wiki(
       this.recordName,
-      this.config.maxResults,
-      this.config.maxGeoExtent,
+      this.opts.maxResults,
+      this.opts.maxGeoExtent,
       response => {
         this.wikis = response;
       }
@@ -412,7 +412,7 @@ export default class AppStore extends React.Component {
       this.recordBeforeChanges = Object.assign({}, data[this.recordRow]);
       this.updateSearch();
 
-      if (this.config.focusOnRecordChange) {
+      if (this.opts.focusOnRecordChange) {
         this.focusRecord();
       }
       next();
@@ -431,8 +431,8 @@ export default class AppStore extends React.Component {
   @action
   revertChangesCoordinates = () => {
     this.updateRecordLocation(
-      this.recordBeforeChanges[this.config.columns.x],
-      this.recordBeforeChanges[this.config.columns.y]
+      this.recordBeforeChanges[this.opts.columns.x],
+      this.recordBeforeChanges[this.opts.columns.y]
     );
   };
   @action
@@ -448,7 +448,7 @@ export default class AppStore extends React.Component {
   // locally store new values
   @action
   updateRecordValue = (column, value) => {
-    const config = this.config;
+    const config = this.opts;
     if ((column === config.columns.x || column === config.columns.y) && value) {
       value = parseFloat(value);
     }
@@ -464,14 +464,14 @@ export default class AppStore extends React.Component {
 
   @action
   changeCertainty = newCertaintyValue => {
-    this.updateRecordValue(this.config.columns.certainty, newCertaintyValue);
+    this.updateRecordValue(this.opts.columns.certainty, newCertaintyValue);
   };
 
   // save local values to sheet
   @action
   saveRecord = () => {
     this.changeLoadingStatus('save');
-    const cols = this.config.columns;
+    const cols = this.opts.columns;
     this.recordData[cols.x] = parseFloat(this.recordData[cols.x]);
     this.recordData[cols.y] = parseFloat(this.recordData[cols.y]);
 
@@ -492,42 +492,42 @@ export default class AppStore extends React.Component {
 
   @action
   saveSettings = settings => {
-    this.config = Object.assign(this.config, settings);
+    this.opts = Object.assign(this.opts, settings);
     this.updateSearch();
   };
 
   @action
   toggleDisplayGeonames = () => {
     const newConfig = {
-      displayGeonames: !this.config.displayGeonames
+      displayGeonames: !this.opts.displayGeonames
     };
     this.saveSettings(newConfig);
   };
   @action
   toggleDisplayWikis = () => {
     const newConfig = {
-      displayWikis: !this.config.displayWikis
+      displayWikis: !this.opts.displayWikis
     };
     this.saveSettings(newConfig);
   };
   @action
   toggleDisplayOtherRecords = () => {
     const newConfig = {
-      displayOtherRecords: !this.config.displayOtherRecords
+      displayOtherRecords: !this.opts.displayOtherRecords
     };
     this.saveSettings(newConfig);
   };
   @action
   toggleMapClusters = () => {
     const newConfig = {
-      mapClusters: !this.config.mapClusters
+      mapClusters: !this.opts.mapClusters
     };
     this.saveSettings(newConfig);
   };
   @action
   toggleFocusChange = () => {
     const newConfig = {
-      focusOnRecordChange: !this.config.focusOnRecordChange
+      focusOnRecordChange: !this.opts.focusOnRecordChange
     };
     this.saveSettings(newConfig);
   };

@@ -144,7 +144,7 @@ class AppMap extends React.Component {
       });
     return (
       <Pane style={{ zIndex: 600 }}>
-        {store.config.mapClusters ? (
+        {store.opts.mapClusters ? (
           <MarkerClusterGroup
             options={{
               showCoverageOnHover: false,
@@ -261,9 +261,9 @@ class AppMap extends React.Component {
 
           {store.validRecordCoordinates && this.renderThisCoordinate()}
 
-          {store.config.displayOtherRecords && this.renderOtherRecords()}
-          {store.config.displayGeonames && this.renderGeonames()}
-          {store.config.displayWikis && this.renderWikis()}
+          {store.opts.displayOtherRecords && this.renderOtherRecords()}
+          {store.opts.displayGeonames && this.renderGeonames()}
+          {store.opts.displayWikis && this.renderWikis()}
           {store.hlPoint && this.renderHighlighted()}
         </Map>
       </div>

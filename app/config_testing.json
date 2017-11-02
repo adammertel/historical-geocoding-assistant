@@ -5,7 +5,7 @@
   },
   "defaultSheetId": "1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA",
   "defaultSettingsOpen": false,
-  "storeConfig": {
+  "storeOpts": {
     "focusZoom": 11,
     "defaultZoom": 5,
     "focusOnRecordChange": 0,
