@@ -19,9 +19,6 @@ export default class AppStore extends React.Component {
   @observable recordBeforeChanges = {};
   @observable wikis = [];
   @observable geonames = [];
-
-  @observable map = {};
-
   @observable hlPoint = false;
 
   constructor() {
@@ -31,10 +28,6 @@ export default class AppStore extends React.Component {
   @action
   loadConfig() {
     this.opts = config.storeOpts;
-    this.map = {
-      center: this.opts.defaultCenter,
-      zoom: this.opts.defaultZoom
-    };
   }
 
   @action
@@ -91,11 +84,9 @@ export default class AppStore extends React.Component {
   // map
   @computed
   get mapPosition() {
-    return [this.map.center[0], this.map.center[1]];
-  }
-  @computed
-  get mapZoom() {
-    return this.map.zoom;
+    return this.opts.mapCenter
+      ? [this.opts.mapCenter[0], this.opts.mapCenter[1]]
+      : [0, 0];
   }
 
   @computed
@@ -223,25 +214,18 @@ export default class AppStore extends React.Component {
   // map
   @action
   mapMoved = change => {
-    this.map.center = change.center;
-    this.map.zoom = change.zoom;
+    this.opts.mapCenter = change.center;
+    this.opts.mapZoom = change.zoom;
   };
-  @action mapCenterChange = center => (this.map.center = center);
-  @action mapZoomChange = zoom => (this.map.zoom = zoom);
+  @action mapCenterChange = center => (this.opts.mapCenter = center);
+  @action mapZoomChange = zoom => (this.opts.mapZoom = zoom);
 
-  @action
-  defaultMapState = () => {
-    this.map.zoom = this.opts.defaultZoom;
-    this.map.center = this.opts.defaultCenter;
-  };
   // pan and zoom to active record
   @action
   focusRecord = () => {
     if (this.validRecordCoordinates) {
-      this.map.center = this.recordGeo;
-      this.map.zoom = this.opts.focusZoom;
-    } else {
-      this.defaultMapState();
+      this.opts.mapCenter = this.recordGeo;
+      this.opts.mapZoom = this.opts.focusZoom;
     }
   };
 

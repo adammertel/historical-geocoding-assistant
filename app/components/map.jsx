@@ -245,15 +245,15 @@ class AppMap extends React.Component {
       <div className="map-wrapped" style={this.style()}>
         <Map
           center={store.mapPosition}
-          zoom={store.mapZoom}
+          zoom={store.opts.mapZoom}
           onViewportChanged={store.mapMoved}
           useFlyTo={true}
           ref="map"
           onClick={this.handleMapClick.bind(this)}
           style={this.mapStyle()}
           attributionControl={false}
-          maxZoom={config.map.max}
-          minZoom={config.map.min}
+          maxZoom={config.map.zoomMax}
+          minZoom={config.map.zoomMin}
         >
           <ScaleControl position="topleft" imperial={false} />
           <AttributionControl position="bottomleft" />

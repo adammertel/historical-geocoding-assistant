@@ -20,22 +20,22 @@
   "messageLoadingTime": 1000,
   "mapOpacityRatio": 0.4,
   "map": {
-    "max": 15,
-    "min": 3
+    "zoomMax": 15,
+    "zoomMin": 3
   },
   "storeOpts": {
     "basemaps": { "map1": "OSM_DE", "map2": "ESRIWORLD", "opacity": 0.4 },
     "overlays": [{ "id": "COUNTRIES_MODERN", "opacity": 0.7 }],
     "focusZoom": 11,
     "mapClusters": true,
-    "defaultZoom": 6,
     "focusOnRecordChange": true,
 
     "displayGeonames": true,
     "displayWikis": true,
     "displayOtherRecords": false,
 
-    "defaultCenter": [45, 10],
+    "mapCenter": [45, 10],
+    "mapZoom": 6,
     "maxGeoExtent": [[-180, -90], [180, 90]],
     "columns": {
       "name": "",

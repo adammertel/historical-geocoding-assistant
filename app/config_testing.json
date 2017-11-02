@@ -1,7 +1,7 @@
 {
   "map": {
-    "max": 10,
-    "min": 3
+    "zoomMax": 15,
+    "zoomMin": 3
   },
   "defaultSheetId": "1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA",
   "defaultSettingsOpen": false,
@@ -9,14 +9,14 @@
     "basemaps": { "map1": "OSM_DE", "map2": "ESRIWORLD", "opacity": 0.4 },
     "overlays": [{ "id": "COUNTRIES_MODERN", "opacity": 0.7 }],
     "focusZoom": 11,
-    "defaultZoom": 5,
     "focusOnRecordChange": 0,
 
     "displayGeonames": true,
     "displayWikis": true,
     "displayOtherRecords": true,
 
-    "defaultCenter": [45, 10],
+    "mapCenter": [45, 10],
+    "mapZoom": 6,
     "maxGeoExtent": [[-180, -90], [180, 90]],
     "mapClusters": true,
     "columns": {
