@@ -21,10 +21,6 @@ export default class AppStore extends React.Component {
   @observable geonames = [];
 
   @observable map = {};
-  @observable mapOpacityRatio = 0;
-  @observable map1Id = false;
-  @observable map2Id = false;
-
   @observable overlays = [];
 
   @observable hlPoint = false;
@@ -46,10 +42,7 @@ export default class AppStore extends React.Component {
   @action
   init() {
     this.noRecords = Sheet.noLines;
-    this.map1Id = config.defaultBasemaps[0];
-    this.map2Id = config.defaultBasemaps[1];
     this.openedSettings = config.defaultSettingsOpen;
-    this.mapOpacityRatio = config.mapOpacityRatio;
     this.firstRecordRow = 2;
     this.recordRow = this.firstRecordRow;
     this.loadTable(() => {
@@ -109,12 +102,12 @@ export default class AppStore extends React.Component {
 
   @computed
   get basemap1() {
-    return this.basemapById(this.map1Id);
+    return this.basemapById(this.opts.basemaps.map1);
   }
 
   @computed
   get basemap2() {
-    return this.basemapById(this.map2Id);
+    return this.basemapById(this.opts.basemaps.map2);
   }
 
   @computed
@@ -315,17 +308,12 @@ export default class AppStore extends React.Component {
   // map tiles
   @action
   changeOpacityRatio = opacity => {
-    this.mapOpacityRatio = opacity;
-  };
-
-  @action
-  changeOpacityRatio = opacity => {
-    this.mapOpacityRatio = opacity;
+    this.opts.basemaps.opacity = opacity;
   };
 
   @action
   changeBaseMap = (mid, bmid) => {
-    this['map' + mid + 'Id'] = bmid;
+    this.opts.basemaps['map' + mid] = bmid;
   };
 
   // map overlayrow

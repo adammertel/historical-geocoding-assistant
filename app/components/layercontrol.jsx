@@ -69,7 +69,7 @@ class LayerControl extends React.Component {
                   <td>
                     <span className="select">
                       <select
-                        value={store.map1Id}
+                        value={store.opts.basemaps.map1}
                         onChange={this.handleMapSelect.bind(this, 1)}
                       >
                         {Object.keys(basemaps).map(basemapId => {
@@ -89,7 +89,7 @@ class LayerControl extends React.Component {
                   <td>opacity</td>
                   <td>
                     <Slider
-                      value={store.mapOpacityRatio * 100}
+                      value={store.opts.basemaps.opacity * 100}
                       onChange={this.handleOpacityRatio.bind(this)}
                       min="0"
                       max="100"
@@ -104,7 +104,7 @@ class LayerControl extends React.Component {
                   <td>
                     <span className="select">
                       <select
-                        value={store.map2Id}
+                        value={store.opts.basemaps.map2}
                         onChange={this.handleMapSelect.bind(this, 2)}
                       >
                         {Object.keys(basemaps).map(basemapId => {

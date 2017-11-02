@@ -6,6 +6,7 @@
   "defaultSheetId": "1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA",
   "defaultSettingsOpen": false,
   "storeOpts": {
+    "basemaps": { "map1": "OSM_DE", "map2": "ESRIWORLD", "opacity": 0.4 },
     "focusZoom": 11,
     "defaultZoom": 5,
     "focusOnRecordChange": 0,

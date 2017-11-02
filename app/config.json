@@ -7,7 +7,6 @@
     "4": "4 - not found"
   },
   "defaultOverlays": [{ "id": "COUNTRIES_MODERN", "opacity": 0.7 }],
-  "defaultBasemaps": ["OSM_DE", "ESRIWORLD"],
   "defaultSettingsOpen": true,
   "loadingMessages": {
     "loaded": "",
@@ -26,6 +25,7 @@
     "min": 3
   },
   "storeOpts": {
+    "basemaps": { "map1": "OSM_DE", "map2": "ESRIWORLD", "opacity": 0.4 },
     "focusZoom": 11,
     "mapClusters": true,
     "defaultZoom": 6,

@@ -57,7 +57,9 @@ class AppMap extends React.Component {
 
   renderBaseLayer(top) {
     const basemap = top ? store.basemap1 : store.basemap2;
-    const opacity = top ? 1 - store.mapOpacityRatio : store.mapOpacityRatio;
+    const opacity = top
+      ? 1 - store.opts.basemaps.opacity
+      : store.opts.basemaps.opacity;
 
     if (basemap.type === 'tile') {
       return <TileLayer key={top ? '1' : '2'} opacity={opacity} {...basemap} />;
