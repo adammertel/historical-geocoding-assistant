@@ -82,7 +82,7 @@ class AppMap extends React.Component {
   renderOverlays() {
     return (
       <div>
-        {store.overlays.map((o, oid) => {
+        {store.opts.overlays.map((o, oid) => {
           const overlay = overlaymaps[o.id];
           const zIndex = 400 - oid;
 
@@ -259,7 +259,7 @@ class AppMap extends React.Component {
           <AttributionControl position="bottomleft" />
 
           {this.renderBaseLayers()}
-          {store.overlays.length > 0 && this.renderOverlays()}
+          {store.opts.overlays.length > 0 && this.renderOverlays()}
 
           {store.validRecordCoordinates && this.renderThisCoordinate()}
 

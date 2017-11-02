@@ -21,7 +21,6 @@ export default class AppStore extends React.Component {
   @observable geonames = [];
 
   @observable map = {};
-  @observable overlays = [];
 
   @observable hlPoint = false;
 
@@ -36,7 +35,6 @@ export default class AppStore extends React.Component {
       center: this.opts.defaultCenter,
       zoom: this.opts.defaultZoom
     };
-    this.overlays = config.defaultOverlays;
   }
 
   @action
@@ -319,9 +317,9 @@ export default class AppStore extends React.Component {
   // map overlayrow
   @action
   addOverlay = overlayId => {
-    const foundOverlay = this.overlays.find(ov => ov.id === overlayId);
+    const foundOverlay = this.opts.overlays.find(ov => ov.id === overlayId);
     if (!foundOverlay) {
-      this.overlays.push({
+      this.opts.overlays.push({
         id: overlayId,
         opacity: 1
       });
@@ -330,7 +328,7 @@ export default class AppStore extends React.Component {
 
   @action
   overlayChangeOpacity = (overlayId, newOpacity) => {
-    const foundOverlay = this.overlays.find(ov => ov.id === overlayId);
+    const foundOverlay = this.opts.overlays.find(ov => ov.id === overlayId);
     if (foundOverlay) {
       foundOverlay.opacity = newOpacity;
     }
@@ -338,32 +336,32 @@ export default class AppStore extends React.Component {
 
   @action
   overlayRemove = overlayId => {
-    const clonedOverlays = this.overlays.slice();
+    const clonedOverlays = this.opts.overlays.slice();
     this.overlays = clonedOverlays.filter(ov => ov.id !== overlayId);
   };
 
   @action
   overlayMoveUp = overlayId => {
-    const clonedOverlays = this.overlays.slice();
+    const clonedOverlays = this.opts.overlays.slice();
 
     const fromIndex = clonedOverlays.findIndex(ov => ov.id === overlayId);
     const toIndex = fromIndex - 1;
 
     if (toIndex > -1) {
       clonedOverlays.splice(toIndex, 0, clonedOverlays.splice(fromIndex, 1)[0]);
-      this.overlays = clonedOverlays;
+      this.opts.overlays = clonedOverlays;
     }
   };
   @action
   overlayMoveDown = overlayId => {
-    const clonedOverlays = this.overlays.slice();
+    const clonedOverlays = this.opts.overlays.slice();
 
     const fromIndex = clonedOverlays.findIndex(ov => ov.id === overlayId);
     const toIndex = fromIndex + 1;
 
     if (toIndex < clonedOverlays.length) {
       clonedOverlays.splice(toIndex, 0, clonedOverlays.splice(fromIndex, 1)[0]);
-      this.overlays = clonedOverlays;
+      this.opts.overlays = clonedOverlays;
     }
   };
 

@@ -7,6 +7,7 @@
   "defaultSettingsOpen": false,
   "storeOpts": {
     "basemaps": { "map1": "OSM_DE", "map2": "ESRIWORLD", "opacity": 0.4 },
+    "overlays": [{ "id": "COUNTRIES_MODERN", "opacity": 0.7 }],
     "focusZoom": 11,
     "defaultZoom": 5,
     "focusOnRecordChange": 0,

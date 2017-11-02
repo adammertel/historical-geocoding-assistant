@@ -127,7 +127,7 @@ class LayerControl extends React.Component {
           <div>
             <table className="table centered" style={{ fontSize: 11 }}>
               <tbody>
-                {store.overlays.map(overlay => {
+                {store.opts.overlays.map(overlay => {
                   return (
                     <tr key={overlay.id}>
                       <td>{overlaymaps[overlay.id].name}</td>
