@@ -77,7 +77,7 @@ var Base = {
     );
   },
 
-  wiki(term, noResults, extent, next) {
+  wiki(term, noResults = 10, extent, next) {
     const path =
       'http://api.geonames.org/wikipediaSearchJSON?' +
       'q=' +
@@ -104,17 +104,17 @@ var Base = {
   parseWikis(wikis, e) {
     return wikis
       ? wikis
-        .map(w => {
-          w.ll = [w.lat, w.lng];
-          if (this.inExtent(w.ll, e)) {
-            return w;
-          }
-        })
-        .filter(w => w)
+          .map(w => {
+            w.ll = [w.lat, w.lng];
+            if (this.inExtent(w.ll, e)) {
+              return w;
+            }
+          })
+          .filter(w => w)
       : [];
   },
 
-  geonames(term, noResults, extent, next) {
+  geonames(term, noResults = 10, extent, next) {
     const path =
       'http://api.geonames.org/searchJSON?' +
       'q=' +
@@ -139,11 +139,11 @@ var Base = {
   parseGeonames(geonames) {
     return geonames
       ? geonames
-        .map(gn => {
-          gn.ll = [parseFloat(gn.lat), parseFloat(gn.lng)];
-          return gn;
-        })
-        .filter(g => g)
+          .map(gn => {
+            gn.ll = [parseFloat(gn.lat), parseFloat(gn.lng)];
+            return gn;
+          })
+          .filter(g => g)
       : [];
   },
 
