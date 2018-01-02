@@ -351,7 +351,7 @@ class Panel extends React.Component {
         </Menu>
 
         <Menu
-          label="geonames"
+          label={'geonames (' + store.geonames.length + ' found)'}
           defaultOpen={true}
           icon="map-marker"
           iconColor="#D9AE5F"
@@ -406,7 +406,7 @@ class Panel extends React.Component {
         </Menu>
 
         <Menu
-          label="wikipedia"
+          label={'wikipedia (' + store.wikis.length + ' found)'}
           defaultOpen={true}
           icon="map-marker"
           iconColor="#5f8ad9"

@@ -27,7 +27,6 @@ if (TESTING) {
 }
 const otherConfig = Base.requestConfigFile('config_api.json', true);
 window['config'] = Object.assign(config, otherConfig);
-console.log(config);
 store.loadConfig();
 
 // signing
