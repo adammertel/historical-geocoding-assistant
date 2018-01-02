@@ -1,18 +1,14 @@
-# Logs
-logs
+
 *.log
 npm-debug.log*
-pids
 *.pid
 *.seed
 *.pid.lock
-.npm
-.node_repl_history
 node_modules
 build
 .DS_Store
-lib
 .eslintcache
 .env
 .idea
 .vscode
+app/config_api.json

@@ -25,6 +25,9 @@ if (TESTING) {
   const testConfig = Base.requestConfigFile('config_testing.json', true);
   window['config'] = Object.assign(config, testConfig);
 }
+const otherConfig = Base.requestConfigFile('config_api.json', true);
+window['config'] = Object.assign(config, otherConfig);
+console.log(config);
 store.loadConfig();
 
 // signing
