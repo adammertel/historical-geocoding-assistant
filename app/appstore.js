@@ -33,8 +33,8 @@ export default class AppStore extends React.Component {
   init() {
     this.noRecords = Sheet.noLines;
     this.openedSettings = config.defaultSettingsOpen;
-    this.opts.recordRow = 2;
     this.loadTable(() => {
+      this.row = this.opts.defaultRow;
       this.findDefaultColumnNames();
       this.updateData();
       this.shouldRenderApp = true;
@@ -111,11 +111,6 @@ export default class AppStore extends React.Component {
     return this.records[this.row]
       ? Object.assign(this.records[this.row], {})
       : {};
-  }
-
-  @computed
-  get row() {
-    return this.opts.recordRow;
   }
 
   @computed
@@ -391,6 +386,7 @@ export default class AppStore extends React.Component {
   @action
   loadTable = next => {
     Sheet.readAllLines(data => {
+      console.log(data);
       this.records = data;
       next();
     });

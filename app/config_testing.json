@@ -3,22 +3,23 @@
     "zoomMax": 15,
     "zoomMin": 3
   },
-  "defaultSheetId": "1Lanj90Z1fWTXKF7CBnCF6SyrHSNOZRoEEkiN9blg4dA",
+  "defaultSheetId": "1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU",
   "defaultSettingsOpen": false,
   "storeOpts": {
     "basemaps": { "map1": "OSM_DE", "map2": "ESRIWORLD", "opacity": 0.4 },
     "overlays": [{ "id": "COUNTRIES_MODERN", "opacity": 0.7 }],
     "focusZoom": 11,
     "focusOnRecordChange": 0,
+    "defaultRow": 2,
 
-    "displayGeonames": true,
-    "displayWikis": true,
+    "displayGeonames": false,
+    "displayWikis": false,
     "displayOtherRecords": true,
 
     "mapCenter": [45, 10],
     "mapZoom": 6,
     "maxGeoExtent": [[-180, -90], [180, 90]],
-    "mapClusters": true,
+    "mapClusters": false,
     "columns": {
       "name": "",
       "localisation": "",

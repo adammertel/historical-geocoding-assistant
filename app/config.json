@@ -16,7 +16,7 @@
     "record": "loading record data",
     "save": "saving record data"
   },
-  "defaultSheetId": "",
+  "defaultSheetId": "1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU",
   "messageLoadingTime": 1000,
   "mapOpacityRatio": 0.4,
   "map": {
@@ -29,6 +29,7 @@
     "focusZoom": 11,
     "mapClusters": true,
     "focusOnRecordChange": true,
+    "defaultRow": 2,
 
     "displayGeonames": true,
     "displayWikis": true,
