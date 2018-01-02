@@ -138,12 +138,41 @@ class Settings extends React.Component {
     );
   }
 
-  render() {
+  renderColumns() {
+    return (
+      <tbody>
+        {this.renderColumnSelect('name', 'name column')}
+        {this.renderColumnSelect('localisation', 'localisation column')}
+        {this.renderColumnSelect('x', 'x coordinate column')}
+        {this.renderColumnSelect('y', 'y coordinate column')}
+        {this.renderColumnSelect('certainty', 'certainty column')}
+        {this.renderColumnSelect('note', 'localisation notes column')}
+      </tbody>
+    );
+  }
+
+  renderExtent() {
     const extent = this.state.maxGeoExtent;
     const bounds = [[extent[0][0], extent[0][1]], [extent[1][0], extent[1][1]]];
-
     const basemap = store.basemapById('OSM');
+    return (
+      <tbody>
+        <Map
+          zoomControl={false}
+          zoomSnap={0.1}
+          zoomDelta={0.05}
+          ref="refMap"
+          bounds={bounds}
+          onViewportChanged={this.handleGeoExtentChange.bind(this)}
+          style={{ width: '100%', height: 200 }}
+        >
+          <TileLayer {...basemap} />
+        </Map>
+      </tbody>
+    );
+  }
 
+  render() {
     return (
       <Modal
         style={this.style()}
@@ -169,34 +198,8 @@ class Settings extends React.Component {
         }
         body={
           <table className="table centered">
-            <tbody>
-              <tr>{this._renderLabel('')}</tr>
-
-              {this.renderColumnSelect('name', 'name column')}
-              {this.renderColumnSelect('localisation', 'localisation column')}
-              {this.renderColumnSelect('x', 'x coordinate column')}
-              {this.renderColumnSelect('y', 'y coordinate column')}
-              {this.renderColumnSelect('certainty', 'certainty column')}
-              {this.renderColumnSelect('note', 'localisation notes column')}
-
-              <tr>{this._renderLabel('')}</tr>
-              <tr>
-                {this._renderLabel('geographical extent')}
-                <td>
-                  <Map
-                    zoomControl={false}
-                    zoomSnap={0.1}
-                    zoomDelta={0.05}
-                    ref="refMap"
-                    bounds={bounds}
-                    onViewportChanged={this.handleGeoExtentChange.bind(this)}
-                    style={{ width: '100%', height: 200 }}
-                  >
-                    <TileLayer {...basemap} />
-                  </Map>
-                </td>
-              </tr>
-            </tbody>
+            {store.openedSettings === 'columns' && this.renderColumns()}
+            {store.openedSettings === 'extent' && this.renderExtent()}
           </table>
         }
       />

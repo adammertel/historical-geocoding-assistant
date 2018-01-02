@@ -98,8 +98,8 @@ class Panel extends React.Component {
     store.revertChangesRecord();
   }
 
-  handleGlobalSettingOpen() {
-    store.openSettings();
+  handleGlobalSettingOpen(mode) {
+    store.openSettings(mode);
   }
   handleChangeCertainty(e) {
     store.changeCertainty(e.target.value);
@@ -190,11 +190,11 @@ class Panel extends React.Component {
               [store.recordY, store.recordX],
               store.opts.maxGeoExtent
             ) ? (
-                <div className="is-danger notification">
-                  <i className="icon fa fa-exclamation" />The coordinates are
+              <div className="is-danger notification">
+                <i className="icon fa fa-exclamation" />The coordinates are
                 outside of the chosen geographical extent
-                </div>
-              ) : null}
+              </div>
+            ) : null}
             <table
               className="table centered"
               style={{ fontSize: 12, marginBottom: '0.5rem' }}
@@ -283,41 +283,41 @@ class Panel extends React.Component {
                 x: store.recordX,
                 y: store.recordY
               }) ? (
-                  <div className="button-row">
-                    <Button
-                      onClick={this.handleCoordinatesHighlight.bind(this)}
-                      tooltip="highlight location on map"
-                      icon="lightbulb-o"
-                      label="highlight"
-                      classes="is-inverted hint--top-right"
-                      style={this.styleSmallButton()}
-                    />
-                    <Button
-                      onClick={this.handleCoordinatesFocus.bind(this)}
-                      tooltip="pan map to the location"
-                      icon="compass"
-                      label="focus"
-                      classes="is-inverted hint--top-right"
-                      style={this.styleSmallButton()}
-                    />
-                    <Button
-                      onClick={this.handleCoordinatesRevert.bind(this)}
-                      tooltip="revert changes to record coordinates"
-                      icon="recycle"
-                      label="revert"
-                      classes="is-inverted hint--top-right"
-                      style={this.styleSmallButton()}
-                    />
-                    <Button
-                      onClick={this.handleCoordinatesRemove.bind(this)}
-                      tooltip="truncate coordinates"
-                      icon="trash"
-                      label="remove"
-                      classes="is-inverted hint--top-right"
-                      style={this.styleSmallButton()}
-                    />
-                  </div>
-                ) : null}
+                <div className="button-row">
+                  <Button
+                    onClick={this.handleCoordinatesHighlight.bind(this)}
+                    tooltip="highlight location on map"
+                    icon="lightbulb-o"
+                    label="highlight"
+                    classes="is-inverted hint--top-right"
+                    style={this.styleSmallButton()}
+                  />
+                  <Button
+                    onClick={this.handleCoordinatesFocus.bind(this)}
+                    tooltip="pan map to the location"
+                    icon="compass"
+                    label="focus"
+                    classes="is-inverted hint--top-right"
+                    style={this.styleSmallButton()}
+                  />
+                  <Button
+                    onClick={this.handleCoordinatesRevert.bind(this)}
+                    tooltip="revert changes to record coordinates"
+                    icon="recycle"
+                    label="revert"
+                    classes="is-inverted hint--top-right"
+                    style={this.styleSmallButton()}
+                  />
+                  <Button
+                    onClick={this.handleCoordinatesRemove.bind(this)}
+                    tooltip="truncate coordinates"
+                    icon="trash"
+                    label="remove"
+                    classes="is-inverted hint--top-right"
+                    style={this.styleSmallButton()}
+                  />
+                </div>
+              ) : null}
             </div>
           </div>
         </Menu>
@@ -532,13 +532,13 @@ class Panel extends React.Component {
                 classes=""
                 label="columns"
                 icon="columns"
-                onClick={this.handleGlobalSettingOpen.bind(this)}
+                onClick={this.handleGlobalSettingOpen.bind(this, 'columns')}
               />
               <Button
                 classes=""
                 label="geo extent"
                 icon="globe"
-                onClick={this.handleGlobalSettingOpen.bind(this)}
+                onClick={this.handleGlobalSettingOpen.bind(this, 'extent')}
               />
             </div>
           </div>

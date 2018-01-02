@@ -446,8 +446,8 @@ export default class AppStore extends React.Component {
 
   // settings
   @action
-  openSettings = () => {
-    this.openedSettings = true;
+  openSettings = mode => {
+    this.openedSettings = mode;
   };
   @action
   closeSettings = () => {
