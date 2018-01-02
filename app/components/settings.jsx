@@ -95,7 +95,7 @@ class Settings extends React.Component {
       <tr key={propName}>
         {this._renderLabel(propLabel)}
         <td className="control">
-          <div style={this.styleSelect()} className="select">
+          <span style={this.styleSelect()} className="select">
             <select
               value={this.state[propName]}
               onChange={this.handleChangeSelect.bind(this, propName)}
@@ -108,7 +108,7 @@ class Settings extends React.Component {
                 );
               })}
             </select>
-          </div>
+          </span>
         </td>
       </tr>
     );
@@ -119,7 +119,7 @@ class Settings extends React.Component {
       <tr key={columnId}>
         {this._renderLabel(columnLabel)}
         <td className="control">
-          <div style={this.styleSelect()} className="select">
+          <span style={this.styleSelect()} className="select">
             <select
               value={this.state.columns[columnId]}
               onChange={this.handleChangeColumn.bind(this, columnId)}
@@ -132,7 +132,7 @@ class Settings extends React.Component {
                 );
               })}
             </select>
-          </div>
+          </span>
         </td>
       </tr>
     );
@@ -140,14 +140,16 @@ class Settings extends React.Component {
 
   renderColumns() {
     return (
-      <tbody>
-        {this.renderColumnSelect('name', 'name column')}
-        {this.renderColumnSelect('localisation', 'localisation column')}
-        {this.renderColumnSelect('x', 'x coordinate column')}
-        {this.renderColumnSelect('y', 'y coordinate column')}
-        {this.renderColumnSelect('certainty', 'certainty column')}
-        {this.renderColumnSelect('note', 'localisation notes column')}
-      </tbody>
+      <table className="table centered">
+        <tbody>
+          {this.renderColumnSelect('name', 'name column')}
+          {this.renderColumnSelect('localisation', 'localisation column')}
+          {this.renderColumnSelect('x', 'x coordinate column')}
+          {this.renderColumnSelect('y', 'y coordinate column')}
+          {this.renderColumnSelect('certainty', 'certainty column')}
+          {this.renderColumnSelect('note', 'localisation notes column')}
+        </tbody>
+      </table>
     );
   }
 
@@ -156,19 +158,17 @@ class Settings extends React.Component {
     const bounds = [[extent[0][0], extent[0][1]], [extent[1][0], extent[1][1]]];
     const basemap = store.basemapById('OSM');
     return (
-      <tbody>
-        <Map
-          zoomControl={false}
-          zoomSnap={0.1}
-          zoomDelta={0.05}
-          ref="refMap"
-          bounds={bounds}
-          onViewportChanged={this.handleGeoExtentChange.bind(this)}
-          style={{ width: '100%', height: 200 }}
-        >
-          <TileLayer {...basemap} />
-        </Map>
-      </tbody>
+      <Map
+        zoomControl={false}
+        zoomSnap={0.1}
+        zoomDelta={0.05}
+        ref="refMap"
+        bounds={bounds}
+        onViewportChanged={this.handleGeoExtentChange.bind(this)}
+        style={{ width: '100%', height: 200 }}
+      >
+        <TileLayer {...basemap} />
+      </Map>
     );
   }
 
@@ -197,10 +197,10 @@ class Settings extends React.Component {
           </div>
         }
         body={
-          <table className="table centered">
+          <div>
             {store.openedSettings === 'columns' && this.renderColumns()}
             {store.openedSettings === 'extent' && this.renderExtent()}
-          </table>
+          </div>
         }
       />
     );
