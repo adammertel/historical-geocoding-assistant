@@ -13,43 +13,53 @@ console.log('testing mode', TESTING);
 // global variables
 window['map'] = false;
 window['Base'] = Base;
-window['basemaps'] = Base.requestConfigFile('basemaps.json', true);
-window['overlaymaps'] = Base.processOverlayData();
+
+// load map layers
+Base.requestConfigFile('basemaps.json', data => (window['basemaps'] = data));
+Base.requestConfigFile('mapoverlays.json', overlays => {
+  window['overlaymaps'] = overlays;
+  Object.keys(overlaymaps).map(okey => {
+    const overlay = overlaymaps[okey];
+    if (overlaymaps[okey].type === 'geojson') {
+      Base.doRequest(
+        './assets/' + overlay.file,
+        ovd => (overlaymaps[okey].data = ovd)
+      );
+    }
+  });
+});
+
 window['store'] = new AppStore();
 
 // assigning config. If TESTING === true, config will be extended with config_testing.json
-
-window['config'] = Base.requestConfigFile('config.json', true);
-store.changeLoadingStatus('config');
-if (TESTING) {
-  const testConfig = Base.requestConfigFile('config_testing.json', true);
-  window['config'] = Object.assign(config, testConfig);
-}
-const otherConfig = Base.requestConfigFile('config_api.json', true);
-window['config'] = Object.assign(config, otherConfig);
-store.loadConfig();
-
-// signing
-
-ReactDOM.render(
-  <App />,
-  document.body.appendChild(document.createElement('div'))
-);
-
-window['sheetId'] = location.hash.substring(1);
-
-window['initSheet'] = () => {
-  store.changeLoadingStatus('signing');
-  Sheet.init(() => {
-    // Sheet.readLine(1, (vals) => console.log(vals));
-    // Sheet.readLine(2, (vals) => console.log(vals));
-    // Sheet.updateLine(68, ['test'], (vals) => console.log(vals));
-    store.init();
+const loadConfig = next => {
+  store.changeLoadingStatus('config');
+  const configPath = TESTING ? 'config.json' : 'config_testing.json';
+  Base.requestConfigFile(configPath, configData => {
+    Base.requestConfigFile('config_api.json', otherConfigData => {
+      next(Object.assign(configData, otherConfigData));
+    });
   });
 };
 
-if (sheetId) {
-  initSheet();
-} else {
-  store.changeLoadingStatus('prompting table');
-}
+loadConfig(config => {
+  window.config = config;
+  store.loadConfig(config);
+
+  ReactDOM.render(
+    <App />,
+    document.body.appendChild(document.createElement('div'))
+  );
+
+  window['sheetId'] = location.hash.substring(1);
+  window['initSheet'] = () => {
+    store.changeLoadingStatus('signing');
+    Sheet.init(() => store.init());
+  };
+
+  if (sheetId) {
+    initSheet();
+  } else {
+    store.changeLoadingStatus('prompting table');
+  }
+});

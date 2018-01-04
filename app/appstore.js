@@ -25,14 +25,14 @@ export default class AppStore extends React.Component {
   }
 
   @action
-  loadConfig() {
+  loadConfig(config) {
     this.opts = config.storeOpts;
   }
 
   @action
   init() {
     this.noRecords = Sheet.noLines;
-    this.openedSettings = config.defaultSettingsOpen;
+    this.openedSettings = config.defaultSettingsOpen ? false : 'columns';
     this.loadTable(() => {
       this.row = this.opts.defaultRow;
       this.findDefaultColumnNames();

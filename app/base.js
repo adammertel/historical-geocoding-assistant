@@ -1,16 +1,21 @@
 var Base = {
-  doRequestSync(url) {
-    let xhr = new XMLHttpRequest();
-    xhr.withCredentials = false;
-    xhr.open('GET', url, false);
-    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-    xhr.send();
+  doRequest(url, next) {
+    const req = new XMLHttpRequest();
+    req.open('GET', url, true); // `false` makes the request synchronous
+    req.withCredentials = false;
+    req.send();
 
-    if (xhr.status === 200) {
-      return xhr.responseText;
-    } else {
-      return {};
-    }
+    const success = out => {
+      next(JSON.parse(out.responseText));
+    };
+    const error = status => {
+      next(false);
+    };
+    req.onreadystatechange = function() {
+      if (req.readyState == 4) {
+        return req.status === 200 ? success(req) : error(req.status);
+      }
+    };
   },
 
   validGeo(feat) {
@@ -23,41 +28,9 @@ var Base = {
     );
   },
 
-  doRequestAsync(url) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    //xhr.withCredentials = true;
-    xhr.setRequestHeader('Access-Control-Allow-Origin', 'http://adam:8080');
-
-    xhr.setRequestHeader('X-PINGOTHER', 'pingpong');
-    xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET');
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-
-    xhr.onload = () => {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          return xhr.responseText;
-        } else {
-          //console.log(xhr.statusText);
-          return {};
-        }
-      } else {
-        return {};
-      }
-    };
-
-    xhr.send();
-  },
-
-  requestConfigFile(configName, sync, next = false) {
+  requestConfigFile(configName, next) {
     const configPath = './' + configName;
-    if (sync) {
-      return JSON.parse(this.doRequestSync(configPath));
-    } else {
-      this.doRequest(configPath, response => {
-        next(JSON.parse(response));
-      });
-    }
+    this.doRequest(configPath, data => next(data));
   },
 
   openTab(path) {
@@ -169,19 +142,6 @@ var Base = {
 
   same(value1, value2) {
     return value1.toString() === value2.toString();
-  },
-
-  processOverlayData() {
-    const overlays = this.requestConfigFile('mapoverlays.json', true);
-    Object.keys(overlays).map(okey => {
-      const overlay = overlays[okey];
-      if (overlay.type === 'geojson') {
-        overlay.data = JSON.parse(
-          this.doRequestSync('./assets/' + overlay.file)
-        );
-      }
-    });
-    return overlays;
   }
 };
 
