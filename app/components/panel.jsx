@@ -30,8 +30,12 @@ class Panel extends React.Component {
   styleTag() {
     return {
       margin: '0px 5px',
-      fontSize: 9,
-      verticalAlign: 'top'
+      fontSize: 8.5,
+      verticalAlign: 'top',
+      padding: '4px',
+      border: '1px solid black',
+      marginRight: 0,
+      cursor: 'default'
     };
   }
 
@@ -390,7 +394,7 @@ class Panel extends React.Component {
                     style={this.styleSmallButton()}
                   />
                   <span
-                    className="tag is-dark tooltip"
+                    className="tag is-white tooltip"
                     data-tooltip={geoname.countryName}
                     style={this.styleTag()}
                   >
