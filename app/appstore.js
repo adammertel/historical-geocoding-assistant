@@ -45,7 +45,7 @@ export default class AppStore extends React.Component {
   findDefaultColumnNames() {
     const keywordsDictionary = {
       name: ['name'],
-      localisation: ['localisation'],
+      placeName: ['place name', 'localisation'],
       x: ['coordinate', 'geo', 'x'],
       y: ['coordinate', 'geo', 'y'],
       certainty: ['certainty'],
@@ -124,8 +124,8 @@ export default class AppStore extends React.Component {
   }
 
   @computed
-  get recordLocalisation() {
-    return this.recordData[this.opts.columns.localisation];
+  get recordPlaceName() {
+    return this.recordData[this.opts.columns.placeName];
   }
 
   @computed
@@ -268,7 +268,7 @@ export default class AppStore extends React.Component {
   @action
   updateSearch = () => {
     Base.geonames(
-      this.recordLocalisation,
+      this.recordPlaceName,
       this.opts.maxResults,
       this.opts.maxGeoExtent,
       response => {
@@ -418,10 +418,7 @@ export default class AppStore extends React.Component {
     }
     this.records[this.row][column] = value;
 
-    if (
-      column === config.columns.name ||
-      column === config.columns.localisation
-    ) {
+    if (column === config.columns.name || column === config.columns.placeName) {
       this.updateSearch();
     }
   };

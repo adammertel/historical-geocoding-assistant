@@ -66,7 +66,7 @@ class Panel extends React.Component {
   }
 
   handleOpenGMaps() {
-    Base.openTab('www.google.cz/maps/search/' + store.recordLocalisation);
+    Base.openTab('www.google.cz/maps/search/' + store.recordPlaceName);
   }
 
   handleOpenGSearch() {
@@ -184,7 +184,7 @@ class Panel extends React.Component {
         </div>
 
         <Menu
-          label="coordinates"
+          label="localisation"
           defaultOpen={true}
           icon="map-marker"
           iconColor="#A64005"
@@ -233,14 +233,14 @@ class Panel extends React.Component {
                 </tr>
 
                 <tr key="2">
-                  <td>localisation</td>
+                  <td>place name</td>
                   <td>
                     <Input
                       onChange={this.handleChangeInput.bind(
                         this,
-                        store.opts.columns.localisation
+                        store.opts.columns.placeName
                       )}
-                      value={store.recordLocalisation}
+                      value={store.recordPlaceName}
                     />
                   </td>
                 </tr>

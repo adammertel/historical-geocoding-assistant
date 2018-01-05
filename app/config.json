@@ -31,17 +31,15 @@
     "focusOnRecordChange": true,
     "defaultRow": 2,
     "maxResults": 10,
-
     "displayGeonames": true,
     "displayWikis": true,
     "displayOtherRecords": false,
-
     "mapCenter": [45, 10],
     "mapZoom": 6,
     "maxGeoExtent": [[-180, -90], [180, 90]],
     "columns": {
       "name": "",
-      "localisation": "",
+      "placeName": "",
       "note": "",
       "x": "",
       "y": "",
