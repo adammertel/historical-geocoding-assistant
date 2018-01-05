@@ -3,6 +3,7 @@
 
 import { observable, action, computed } from 'mobx';
 import Sheet from './sheet.js';
+import mobx from 'mobx';
 import React from 'react';
 
 export default class AppStore extends React.Component {
@@ -318,8 +319,8 @@ export default class AppStore extends React.Component {
 
   @action
   overlayRemove = overlayId => {
-    const clonedOverlays = this.opts.overlays.slice();
-    this.overlays = clonedOverlays.filter(ov => ov.id !== overlayId);
+    const clonedOverlays = mobx.toJS(this.opts.overlays);
+    this.opts.overlays = clonedOverlays.filter(ov => ov.id !== overlayId);
   };
 
   @action
