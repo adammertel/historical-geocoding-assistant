@@ -268,22 +268,12 @@ export default class AppStore extends React.Component {
   // wiki
   @action
   updateSearch = () => {
-    Base.geonames(
-      this.recordPlaceName,
-      this.opts.maxResults,
-      this.opts.maxGeoExtent,
-      response => {
-        this.geonames = response;
-      }
-    );
-    Base.wiki(
-      this.recordName,
-      this.opts.maxResults,
-      this.opts.maxGeoExtent,
-      response => {
-        this.wikis = response;
-      }
-    );
+    Base.geonames(this.recordPlaceName, this.opts.maxGeoExtent, response => {
+      this.geonames = response;
+    });
+    Base.wiki(this.recordName, this.opts.maxGeoExtent, response => {
+      this.wikis = response;
+    });
   };
 
   // map tiles

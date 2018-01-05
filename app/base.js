@@ -50,7 +50,7 @@ var Base = {
     );
   },
 
-  wiki(term, noResults = 10, extent, next) {
+  wiki(term, extent, next) {
     const path =
       'http://api.geonames.org/wikipediaSearchJSON?' +
       'q=' +
@@ -64,38 +64,19 @@ var Base = {
       async: false,
       processData: false,
       success: res => {
-        if (res.geonames) {
-          next(this.parseWikis(res.geonames, extent));
-        } else {
-          next([]);
-        }
+        next(res.geonames ? this.parseGeonames(res.geonames, extent) : []);
       },
       fail: () => next([])
     });
   },
 
-  parseWikis(wikis, e) {
-    return wikis
-      ? wikis
-          .map(w => {
-            w.ll = [w.lat, w.lng];
-            if (this.inExtent(w.ll, e)) {
-              return w;
-            }
-          })
-          .filter(w => w)
-      : [];
-  },
-
-  geonames(term, noResults = 10, extent, next) {
+  geonames(term, extent, next) {
     const path =
       'http://api.geonames.org/searchJSON?' +
       'q=' +
       encodeURIComponent(term) +
-      '&maxRows=' +
-      noResults +
-      '&username=adammertel&' +
-      this.extentToUrl(extent);
+      '&maxRows=10' +
+      '&username=adammertel';
 
     $.ajax({
       dataType: 'json',
@@ -103,21 +84,19 @@ var Base = {
       url: path,
       async: false,
       success: res => {
-        next(this.parseGeonames(res.geonames, extent));
+        next(res.geonames ? this.parseGeonames(res.geonames, extent) : []);
       },
       fail: () => next([])
     });
   },
 
-  parseGeonames(geonames) {
+  parseGeonames(geonames, e) {
     return geonames
-      ? geonames
-          .map(gn => {
-            gn.ll = [parseFloat(gn.lat), parseFloat(gn.lng)];
-            return gn;
-          })
-          .filter(g => g)
-      : [];
+      .map(gn => {
+        gn.ll = [parseFloat(gn.lat), parseFloat(gn.lng)];
+        return this.inExtent(gn.ll, e) ? gn : false;
+      })
+      .filter(g => g);
   },
 
   inExtent(geom, e) {

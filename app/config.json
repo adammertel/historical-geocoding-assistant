@@ -30,7 +30,6 @@
     "mapClusters": true,
     "focusOnRecordChange": true,
     "defaultRow": 2,
-    "maxResults": 10,
     "displayGeonames": true,
     "displayWikis": true,
     "displayOtherRecords": false,

@@ -33,7 +33,6 @@
     "displayWikis": false,
     "displayOtherRecords": true,
     "mapClusters": true,
-    "maxResults": 10,
     "mapCenter": [45, 10],
     "mapZoom": 6,
     "maxGeoExtent": [[-180, -90], [180, 90]],
