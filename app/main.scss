@@ -27,13 +27,32 @@ table.table td,
 table.table th {
   border: none !important;
   vertical-align: middle !important;
-  padding: 5px;
+  padding: 2px 4px;
 }
 
 table.table.centered {
   tr td:first-child {
     text-align: right;
   }
+}
+
+.wrapper {
+  .select:not(.is-multiple)::after {
+    right: 10px;
+  }
+  div.select {
+    height: auto;
+    line-height: 1.5;
+    select {
+      font-family: 'FontAwesome', 'sans-serif';
+      border-color: $primary;
+    }
+  }
+}
+.panel-wrapper table.table tr td:first-child {
+  width: 25%;
+  font-size: 10px;
+  margin-bottom: 0.5rem;
 }
 
 .hl-point {
@@ -53,11 +72,6 @@ table.table.centered {
 
 // Import other libraries
 @import '~react-leaflet-markercluster/dist/styles.min.css';
-
-.select select {
-  font-family: 'FontAwesome', 'sans-serif';
-  border-color: $primary;
-}
 
 html {
   overflow: hidden;

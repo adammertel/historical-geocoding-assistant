@@ -199,10 +199,7 @@ class Panel extends React.Component {
                 outside of the chosen geographical extent
               </div>
             ) : null}
-            <table
-              className="table centered"
-              style={{ fontSize: 12, marginBottom: '0.5rem' }}
-            >
+            <table className="table centered">
               <tbody>
                 <tr key="0">
                   <td>coordinate X</td>
@@ -328,20 +325,19 @@ class Panel extends React.Component {
 
         <Menu label="record data" defaultOpen={false}>
           <div>
-            <table className="table centered" style={{ fontSize: 12 }}>
+            <table className="table centered">
               <tbody>
                 {Object.keys(store.recordData).map((column, ci) => {
                   const value = store.recordData[column];
 
                   const shortenColumn =
-                    column.length > 15 ? column.substr(0, 14) + '...' : column;
+                    column.length > 13 ? column.substr(0, 12) + '...' : column;
 
                   return (
                     <tr key={ci}>
-                      <td> {shortenColumn} </td>
+                      <td title={column}> {shortenColumn} </td>
                       <td>
                         <Input
-                          info={true}
                           value={value}
                           onChange={this.handleChangeInput.bind(this, column)}
                         />
