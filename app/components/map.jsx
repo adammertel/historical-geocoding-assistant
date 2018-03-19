@@ -21,6 +21,11 @@ require('leaflet.markercluster.placementstrategies');
 class AppMap extends React.Component {
   constructor(props) {
     super(props);
+    this.markerSize = [25, 25];
+  }
+
+  markerOffset() {
+    return [this.markerSize[0] / 2, -1 * this.markerSize[1] / 2];
   }
 
   style() {
@@ -46,8 +51,6 @@ class AppMap extends React.Component {
 
   handleClickGeoname(geoname, e) {
     store.useGeoname(geoname);
-    console.log(e);
-    console.log(e.target);
     map.closeTooltip(e.target._tooltip);
   }
 
@@ -117,7 +120,9 @@ class AppMap extends React.Component {
         '<span style="' +
         style +
         '; vertical-align: bottom"' +
-        ' class="icon"><i class="' +
+        ' class="icon"><i style="font-size:' +
+        size[0] +
+        'px" class="' +
         classes +
         '"></i></span>',
       className: 'map-sort-icon',
@@ -135,10 +140,14 @@ class AppMap extends React.Component {
           <Marker
             key={ri}
             position={[parseFloat(record.y), parseFloat(record.x)]}
-            icon={this.icon('fa fa-map-marker', 'color: black', [20, 20])}
+            icon={this.icon(
+              'fa fa-map-marker',
+              'color: black',
+              this.markerSize
+            )}
             onClick={this.handleClickMarker.bind(this, record.row)}
           >
-            <Tooltip offset={[10, -10]} direction="right">
+            <Tooltip offset={this.markerOffset()} direction="right">
               <h4>{record.name}</h4>
             </Tooltip>
           </Marker>
@@ -174,9 +183,13 @@ class AppMap extends React.Component {
         <Marker
           key={0}
           position={[parseFloat(store.recordY), parseFloat(store.recordX)]}
-          icon={this.icon('fa fa-map-marker', 'color: #a64005', [20, 20])}
+          icon={this.icon(
+            'fa fa-map-marker',
+            'color: #a64005',
+            this.markerSize
+          )}
         >
-          <Tooltip offset={[10, -10]} direction="right">
+          <Tooltip offset={this.markerOffset()} direction="right">
             <h4>{store.recordName}</h4>
           </Tooltip>
         </Marker>
@@ -193,10 +206,14 @@ class AppMap extends React.Component {
               key={gi}
               className="geoname-point"
               position={[geoname.ll[0], geoname.ll[1]]}
-              icon={this.icon('fa fa-map-marker', 'color: #D9AE5F', [20, 20])}
+              icon={this.icon(
+                'fa fa-map-marker',
+                'color: #D9AE5F',
+                this.markerSize
+              )}
               onClick={this.handleClickGeoname.bind(this, geoname)}
             >
-              <Tooltip offset={[10, -10]} direction="right">
+              <Tooltip offset={this.markerOffset()} direction="right">
                 <h4>{'geoname: ' + geoname.toponymName}</h4>
               </Tooltip>
             </Marker>
@@ -215,10 +232,14 @@ class AppMap extends React.Component {
               key={gi}
               className="wiki-point"
               position={[wiki.ll[0], wiki.ll[1]]}
-              icon={this.icon('fa fa-map-marker', 'color: #5f8ad9', [20, 20])}
+              icon={this.icon(
+                'fa fa-map-marker',
+                'color: #5f8ad9',
+                this.markerSize
+              )}
               onClick={this.handleClickGeoname.bind(this, wiki)}
             >
-              <Tooltip offset={[10, -10]} direction="right">
+              <Tooltip offset={this.markerOffset()} direction="right">
                 <h4>{'wikipedia: ' + wiki.title}</h4>
               </Tooltip>
             </Marker>
