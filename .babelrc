@@ -1,11 +1,15 @@
 {
-  "presets": ["es2015", "stage-0", "react"],
-  "plugins": [
-    "transform-decorators-legacy", "transform-class-properties"
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": ["last 3 versions", "ie >= 9"]
+        },
+        "useBuiltIns": true
+      }
+    ],
+    "react"
   ],
-  "env": {
-    "build": {
-      "optional": ["optimisation", "minification"]
-    }
-  }
+  "plugins": ["transform-decorators-legacy", "transform-class-properties"]
 }

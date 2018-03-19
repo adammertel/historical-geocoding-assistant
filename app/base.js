@@ -1,7 +1,9 @@
+import $ from 'jquery';
+
 var Base = {
   doRequest(url, next) {
     const req = new XMLHttpRequest();
-    req.open('GET', url, true); // `false` makes the request synchronous
+    req.open('GET', 'app/' + url, true); // `false` makes the request synchronous
     req.withCredentials = false;
     req.send();
 
@@ -28,9 +30,8 @@ var Base = {
     );
   },
 
-  requestConfigFile(configName, next) {
-    const configPath = './' + configName;
-    this.doRequest(configPath, data => next(data));
+  requestConfigFile(configPath, next) {
+    this.doRequest('configs/' + configPath, data => next(data));
   },
 
   openTab(path) {

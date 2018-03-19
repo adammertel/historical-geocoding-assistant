@@ -178,7 +178,7 @@ class Settings extends React.Component {
         style={this.style()}
         active={true}
         classes=""
-        header="Global Settings"
+        header="Settings"
         closeIcon={false}
         footer={
           <div className="container has-text-right">

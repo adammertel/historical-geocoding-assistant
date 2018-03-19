@@ -1,13 +1,13 @@
 import ReactDOM from 'react-dom';
-
 import React from 'react';
+
 import App from './components/app';
 import './main.scss';
 import AppStore from './appstore.js';
 import Sheet from './sheet.js';
 import Base from './base.js';
 
-const TESTING = true;
+const TESTING = false;
 console.log('testing mode', TESTING);
 
 window['version'] = '1.0.0';
