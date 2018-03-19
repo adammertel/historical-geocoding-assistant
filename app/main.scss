@@ -23,16 +23,21 @@ $family-primary: 'Lato', sans-serif;
   }
 }
 
-table.table td,
-table.table th {
-  border: none !important;
-  vertical-align: middle !important;
-  padding: 2px 4px;
+#version {
+  position: absolute;
+  right: 40px;
 }
 
 table.table.centered {
+  margin-bottom: 0.5rem;
   tr td:first-child {
     text-align: right;
+  }
+  td,
+  th {
+    border: none !important;
+    vertical-align: middle !important;
+    padding: 2px 4px;
   }
 }
 

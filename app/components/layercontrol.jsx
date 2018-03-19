@@ -67,7 +67,7 @@ class LayerControl extends React.Component {
                 <tr>
                   <td>top layer</td>
                   <td>
-                    <span className="select">
+                    <div className="select">
                       <select
                         value={store.opts.basemaps.map1}
                         onChange={this.handleMapSelect.bind(this, 1)}
@@ -81,7 +81,7 @@ class LayerControl extends React.Component {
                           );
                         })}
                       </select>
-                    </span>
+                    </div>
                   </td>
                 </tr>
 
@@ -102,7 +102,7 @@ class LayerControl extends React.Component {
                 <tr>
                   <td>bottom layer</td>
                   <td>
-                    <span className="select">
+                    <div className="select">
                       <select
                         value={store.opts.basemaps.map2}
                         onChange={this.handleMapSelect.bind(this, 2)}
@@ -116,7 +116,7 @@ class LayerControl extends React.Component {
                           );
                         })}
                       </select>
-                    </span>
+                    </div>
                   </td>
                 </tr>
               </tbody>

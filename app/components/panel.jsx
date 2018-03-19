@@ -112,6 +112,7 @@ class Panel extends React.Component {
   render() {
     return (
       <div className="panel-wrapper" style={this.style()}>
+        <div id="version">{'version ' + version}</div>
         <div>
           <img src="assets/icon.png" alt="logo" style={{ padding: 20 }} />
         </div>
