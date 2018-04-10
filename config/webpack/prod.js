@@ -14,8 +14,8 @@ module.exports = merge(commonConfig, {
   },
   plugins: [
     new CopyWebpackPlugin([
-      { from: 'configs', to: 'app/configs' },
-      { from: 'assets', to: 'app/assets' }
+      { from: 'configs', to: 'configs' },
+      { from: 'assets', to: 'assets' }
     ])
   ]
 });
