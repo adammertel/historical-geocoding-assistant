@@ -1,3 +1,4 @@
+// @flow
 import $ from 'jquery';
 
 var Base = {
@@ -62,7 +63,7 @@ var Base = {
     $.ajax({
       dataType: 'json',
       url: path,
-      async: false,
+      async: true,
       processData: false,
       success: res => {
         next(res.geonames ? this.parseGeonames(res.geonames, extent) : []);
@@ -83,7 +84,7 @@ var Base = {
       dataType: 'json',
       processData: false,
       url: path,
-      async: false,
+      async: true,
       success: res => {
         next(res.geonames ? this.parseGeonames(res.geonames, extent) : []);
       },

@@ -157,16 +157,14 @@ class AppMap extends React.Component {
       <Pane style={{ zIndex: 600 }}>
         {store.opts.mapClusters ? (
           <MarkerClusterGroup
-            options={{
-              showCoverageOnHover: false,
-              zoomToBoundsOnClick: true,
-              removeOutsideVisibleBounds: true,
-              elementsPlacementStrategy: 'clock-concentric',
-              animate: false,
-              singleMarkerMode: true,
-              spiderLegPolylineOptions: { weight: 0 },
-              clockHelpingCircleOptions: { weight: 0 }
-            }}
+            showCoverageOnHover={false}
+            zoomToBoundsOnClick={true}
+            removeOutsideVisibleBounds={true}
+            elementsPlacementStrategy="clock-concentric"
+            animate={false}
+            singleMarkerMode={true}
+            spiderLegPolylineOptions={{ weight: 0 }}
+            clockHelpingCircleOptions={{ weight: 0 }}
           >
             {records}
           </MarkerClusterGroup>

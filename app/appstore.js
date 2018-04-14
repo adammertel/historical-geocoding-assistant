@@ -18,6 +18,7 @@ export default class AppStore extends React.Component {
   @observable records = {};
   @observable recordBeforeChanges = {};
   @observable wikis = [];
+  @observable peripleos = [];
   @observable geonames = [];
   @observable hlPoint = false;
 

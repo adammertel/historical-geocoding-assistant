@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { observer } from 'mobx-react';
 
@@ -9,7 +11,6 @@ import LoadingStatus from './loadingstatus';
 import AppHider from './apphider';
 import TablePrompt from './tableprompt';
 
-@observer
 class App extends React.Component {
   constructor(props) {
     super(props);
