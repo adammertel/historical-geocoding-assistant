@@ -4,7 +4,7 @@ import $ from 'jquery';
 var Base = {
   doRequest(url, next) {
     const req = new XMLHttpRequest();
-    req.open('GET', 'app/' + url, true); // `false` makes the request synchronous
+    req.open('GET', url, true); // `false` makes the request synchronous
     req.withCredentials = false;
     req.send();
 
@@ -12,6 +12,7 @@ var Base = {
       next(JSON.parse(out.responseText));
     };
     const error = status => {
+      console.log('err', status);
       next(false);
     };
     req.onreadystatechange = function() {
@@ -29,6 +30,10 @@ var Base = {
       (isFinite(feat.x) || isFinite(feat[0])) &&
       (isFinite(feat.y) || isFinite(feat[1]))
     );
+  },
+
+  requestConfigFile(configPath, next) {
+    this.doRequest('/configs/' + configPath, data => next(data));
   },
 
   openTab(path) {

@@ -1,5 +1,6 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   resolve: {
@@ -36,30 +37,15 @@ module.exports = {
           'sass-loader'
         ]
       },
-      { test: /\.(eot|ttf|svg|woff|woff2|ico)$/, loader: 'file-loader' },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+        test: /\.(jpe?g|png|gif|svg|eot|ttf|svg|woff|woff2|ico)$/i,
         use: [
           {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: './assets/media/',
-              publicPath: './assets/media/'
-            }
-          }
-        ]
-      },
-      {
-        test: /\.geojson$/,
-        use: [
-          {
-            loader: 'html-loader',
-            options: {
-              minimize: true,
-              name: '[name].[ext]',
-              outputPath: './assets/data/',
-              publicPath: './assets/data/'
+              outputPath: './assets/',
+              publicPath: './assets/'
             }
           }
         ]
@@ -74,6 +60,10 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css'
-    })
+    }),
+    new CopyWebpackPlugin(
+      [{ from: './data', to: 'data' }, { from: './configs', to: 'configs' }],
+      {}
+    )
   ]
 };
