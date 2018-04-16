@@ -78,6 +78,10 @@ table.table.centered {
 // Import other libraries
 @import '~react-leaflet-markercluster/dist/styles.min.css';
 
+@import '~leaflet/dist/leaflet.css';
+@import '~font-awesome/css/font-awesome.css';
+@import '~hint.css/hint.css';
+
 html {
   overflow: hidden;
   color: black !important;

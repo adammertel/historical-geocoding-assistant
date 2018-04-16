@@ -1,6 +1,5 @@
 // @flow
 import $ from 'jquery';
-import fetchJsonp from 'fetch-jsonp';
 
 var Base = {
   doRequest(url, next) {
