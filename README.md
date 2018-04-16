@@ -1,8 +1,12 @@
 # Historical Geocoding Assistant
 
-[manual](https://github.com/adammertel/historical-geocoder-assistant/tree/master/manual)
+![alt text](https://github.com/adammertel/historical-geocoder-assistant/blob/master/app/icon.png 'Historical Geocoding Assistant Logo')
 
 Tool for assisted geocoding of historical datasets (something between a manual table editing and automated geocoding script)
+
+## Manual
+
+[manual](https://github.com/adammertel/historical-geocoder-assistant/tree/master/manual)
 
 ## Description
 
@@ -17,6 +21,8 @@ At this moment, there are several other tools and methods that could help to geo
 * multiple base layers support (satellite, osm, historical base layers...)
 * ...
 
+![alt text](https://github.com/adammertel/historical-geocoder-assistant/blob/master/screen.png 'Historical Geocoding Assistant Screen')
+
 ## Technologies
 
 A client side web application, built with javascript (webpack, leaflet...) that could access and edit a google drive spreadsheet table.
@@ -27,8 +33,6 @@ It is needed to be signed into google drive and type the id of the table at the 
 
 ## TODO
 
-* dictionary
-* language switcher
-* formating of coordinates (' . ,)
+* dictionary and language switcher
 * measuring distances
 * documentation
