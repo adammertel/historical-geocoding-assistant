@@ -1,5 +1,6 @@
 // @flow
 import $ from 'jquery';
+import fetchJsonp from 'fetch-jsonp';
 
 var Base = {
   doRequest(url, next) {
@@ -36,20 +37,22 @@ var Base = {
   },
 
   openTab(path) {
-    window.open('https://' + path, '_blank', 'width=800,height=900');
+    window.open('http://' + path, '_blank', 'width=800,height=900');
   },
 
-  extentToUrl(e) {
-    return (
-      'south=' +
-      e[0][1] +
-      '&north=' +
-      e[1][1] +
-      '&west=' +
-      e[0][0] +
-      '&east=' +
-      e[1][0]
-    );
+  extentToUrl(e, type = 'wiki') {
+    if (type === 'wiki') {
+      return (
+        'south=' +
+        e[0][1] +
+        '&north=' +
+        e[1][1] +
+        '&west=' +
+        e[0][0] +
+        '&east=' +
+        e[1][0]
+      );
+    }
   },
 
   wiki(term, extent, next) {

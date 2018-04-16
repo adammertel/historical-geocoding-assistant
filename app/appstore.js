@@ -18,7 +18,6 @@ export default class AppStore extends React.Component {
   @observable records = {};
   @observable recordBeforeChanges = {};
   @observable wikis = [];
-  @observable peripleos = [];
   @observable geonames = [];
   @observable hlPoint = false;
 
@@ -266,7 +265,6 @@ export default class AppStore extends React.Component {
     this.updateRecordValue(this.opts.columns.x, this.roundCoordinate(x));
   };
 
-  // wiki
   @action
   updateSearch = () => {
     Base.geonames(this.recordPlaceName, this.opts.maxGeoExtent, response => {

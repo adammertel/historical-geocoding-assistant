@@ -5,7 +5,7 @@ npm-debug.log*
 *.seed
 *.pid.lock
 node_modules
-build
+dist
 .DS_Store
 .eslintcache
 .env

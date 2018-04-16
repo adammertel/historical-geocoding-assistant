@@ -72,6 +72,9 @@ class Panel extends React.Component {
   handleOpenGSearch() {
     Base.openTab('www.google.com/search?q=' + store.recordName);
   }
+  handleOpenPeripleo() {
+    Base.openTab('www.peripleo.pelagios.org/ui#q=' + store.recordName);
+  }
 
   handleLocateGeocodedPlaceClick(geoname) {
     store.locateGeoname(geoname);
@@ -355,7 +358,7 @@ class Panel extends React.Component {
           label={'geonames (' + store.geonames.length + ' found)'}
           defaultOpen={true}
           icon="map-marker"
-          iconColor="#D9AE5F"
+          iconColor="#5fd9ae"
         >
           <div>
             <Checkbox
@@ -475,6 +478,14 @@ class Panel extends React.Component {
               icon="map"
               classes="is-inverted"
               onClick={this.handleOpenGMaps.bind(this)}
+            />
+          </div>
+          <div>
+            <Button
+              label="open peripleo"
+              icon="map"
+              classes="is-inverted"
+              onClick={this.handleOpenPeripleo.bind(this)}
             />
           </div>
         </Menu>
