@@ -183,7 +183,7 @@ class AppMap extends React.Component {
           position={[parseFloat(store.recordY), parseFloat(store.recordX)]}
           icon={this.icon(
             'fa fa-map-marker',
-            'color: #a64005',
+            'color: ' + config.colors.main,
             this.markerSize
           )}
         >
@@ -206,7 +206,7 @@ class AppMap extends React.Component {
               position={[geoname.ll[0], geoname.ll[1]]}
               icon={this.icon(
                 'fa fa-map-marker',
-                'color: #D9AE5F',
+                'color: ' + config.colors.geonames,
                 this.markerSize
               )}
               onClick={this.handleClickGeoname.bind(this, geoname)}
@@ -232,7 +232,7 @@ class AppMap extends React.Component {
               position={[wiki.ll[0], wiki.ll[1]]}
               icon={this.icon(
                 'fa fa-map-marker',
-                'color: #5f8ad9',
+                'color: ' + config.colors.wikipedia,
                 this.markerSize
               )}
               onClick={this.handleClickGeoname.bind(this, wiki)}

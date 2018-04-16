@@ -10,7 +10,7 @@ import Base from './base.js';
 const TESTING = false;
 console.log('testing mode', TESTING);
 
-window['version'] = '1.0.0';
+window['version'] = '1.1.0';
 
 // global variables
 window['map'] = false;

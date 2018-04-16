@@ -113,6 +113,7 @@ class Panel extends React.Component {
   }
 
   render() {
+    const recordGeo = [store.recordY, store.recordX];
     return (
       <div className="panel-wrapper" style={this.style()}>
         <div id="version">{'version ' + window['version']}</div>
@@ -191,13 +192,10 @@ class Panel extends React.Component {
           label="localisation"
           defaultOpen={true}
           icon="map-marker"
-          iconColor="#A64005"
+          iconColor={config.colors.main}
         >
           <div>
-            {!Base.inExtent(
-              [store.recordY, store.recordX],
-              store.opts.maxGeoExtent
-            ) ? (
+            {!Base.inExtent(recordGeo, store.opts.maxGeoExtent) ? (
               <div className="is-danger notification">
                 <i className="icon fa fa-exclamation" />The coordinates are
                 outside of the chosen geographical extent
@@ -355,7 +353,7 @@ class Panel extends React.Component {
           label={'geonames (' + store.geonames.length + ' found)'}
           defaultOpen={true}
           icon="map-marker"
-          iconColor="#5fd9ae"
+          iconColor={config.colors.geonames}
         >
           <div>
             <Checkbox
@@ -410,7 +408,7 @@ class Panel extends React.Component {
           label={'wikipedia (' + store.wikis.length + ' found)'}
           defaultOpen={true}
           icon="map-marker"
-          iconColor="#5f8ad9"
+          iconColor={config.colors.wikipedia}
         >
           <Checkbox
             id="switch-wikipedia"
@@ -491,7 +489,7 @@ class Panel extends React.Component {
           label="settings"
           defaultOpen={true}
           icon="wrench"
-          iconColor="#A64005"
+          iconColor={config.colors.main}
         >
           <div>
             <div className="checkboxes-line">
