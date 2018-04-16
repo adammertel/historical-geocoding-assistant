@@ -22,14 +22,13 @@ var Base = {
     };
   },
 
-  validGeo(feat) {
-    return !!(
-      feat &&
-      (feat.x || feat[0]) &&
-      (feat.y || feat[1]) &&
-      (isFinite(feat.x) || isFinite(feat[0])) &&
-      (isFinite(feat.y) || isFinite(feat[1]))
-    );
+  validGeo(f) {
+    if (f && (f[0] || f[0] === 0) && (f[1] || f[1] === 0)) {
+      if (isFinite(f[0]) && isFinite(f[1])) {
+        return true;
+      }
+    }
+    return false;
   },
 
   requestConfigFile(configPath, next) {

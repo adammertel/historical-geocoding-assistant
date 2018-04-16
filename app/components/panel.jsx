@@ -99,7 +99,7 @@ class Panel extends React.Component {
     store.revertChangesCoordinates();
   }
   handleCoordinatesRemove() {
-    store.removetChangesCoordinates();
+    store.removeChangesCoordinates();
   }
   handleRecordRevert() {
     store.revertChangesRecord();
@@ -138,7 +138,7 @@ class Panel extends React.Component {
               onChange={this.handleSelectRecord.bind(this)}
             >
               {store.geoRecords.map(record => {
-                if (Base.validGeo(record)) {
+                if (Base.validGeo([record['x'], record['y']])) {
                   return (
                     <option key={record.row} value={record.row}>
                       {record.name}
@@ -147,7 +147,7 @@ class Panel extends React.Component {
                 } else {
                   return (
                     <option key={record.row} value={record.row}>
-                      {record.name} (no coordinates)
+                      {record.name + '(no coordinates)'}
                     </option>
                   );
                 }
@@ -284,10 +284,7 @@ class Panel extends React.Component {
             </table>
 
             <div>
-              {Base.validGeo({
-                x: store.recordX,
-                y: store.recordY
-              }) ? (
+              {Base.validGeo([store.recordX, store.recordY]) ? (
                 <div className="button-row">
                   <Button
                     onClick={this.handleCoordinatesHighlight.bind(this)}

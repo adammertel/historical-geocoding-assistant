@@ -390,8 +390,8 @@ export default class AppStore extends React.Component {
     );
   };
   @action
-  removetChangesCoordinates = () => {
-    this.updateRecordLocation('', '');
+  removeChangesCoordinates = () => {
+    this.updateRecordLocation(0, 0);
   };
 
   @action
@@ -403,14 +403,21 @@ export default class AppStore extends React.Component {
   @action
   updateRecordValue = (column, value) => {
     const config = this.opts;
-    if ((column === config.columns.x || column === config.columns.y) && value) {
-      value = parseFloat(value);
+    console.log('new value', value);
+
+    if (column === config.columns.x || column === config.columns.y) {
+      if (value || value === 0) {
+        value = parseFloat(value);
+      }
+    } else {
+      if (
+        column === config.columns.name ||
+        column === config.columns.placeName
+      ) {
+        this.updateSearch();
+      }
     }
     this.records[this.row][column] = value;
-
-    if (column === config.columns.name || column === config.columns.placeName) {
-      this.updateSearch();
-    }
   };
 
   @action
