@@ -31,10 +31,6 @@ var Base = {
     );
   },
 
-  requestConfigFile(configPath, next) {
-    this.doRequest('configs/' + configPath, data => next(data));
-  },
-
   openTab(path) {
     window.open('http://' + path, '_blank', 'width=800,height=900');
   },

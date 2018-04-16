@@ -10,58 +10,44 @@ import Base from './base.js';
 const TESTING = false;
 console.log('testing mode', TESTING);
 
-window['version'] = '1.0.0';
+window['version'] = '1.1.0';
 
 // global variables
 window['map'] = false;
 window['Base'] = Base;
 
 // load map layers
-Base.requestConfigFile('basemaps.json', data => (window['basemaps'] = data));
-Base.requestConfigFile('mapoverlays.json', overlays => {
-  window['overlaymaps'] = overlays;
-  Object.keys(overlaymaps).map(okey => {
-    const overlay = overlaymaps[okey];
-    if (overlaymaps[okey].type === 'geojson') {
-      Base.doRequest(
-        './assets/' + overlay.file,
-        ovd => (overlaymaps[okey].data = ovd)
-      );
-    }
+window['basemaps'] = require('./configs/basemaps.json');
+window['overlaymaps'] = require('./configs/mapoverlays.json');
+Object.keys(overlaymaps)
+  .filter(o => overlaymaps[o].type === 'geojson')
+  .map(okey => {
+    const geojsonData = require('./assets/' + overlaymaps[okey].file);
+    overlaymaps[okey].data = JSON.parse(geojsonData);
   });
-});
 
 window['store'] = new AppStore();
 
 // assigning config. If TESTING === true, config will be extended with config_testing.json
-const loadConfig = next => {
-  store.changeLoadingStatus('config');
-  const configPath = TESTING ? 'config.json' : 'config_testing.json';
-  Base.requestConfigFile(configPath, configData => {
-    Base.requestConfigFile('config_api.json', otherConfigData => {
-      next(Object.assign(configData, otherConfigData));
-    });
-  });
+const configPath = TESTING ? 'config.json' : 'config_testing.json';
+const configData = require('./configs/' + configPath);
+const configApi = require('./configs/config_api.json');
+window['config'] = Object.assign(configData, configApi);
+store.loadConfig(config);
+
+ReactDOM.render(
+  <App />,
+  document.body.appendChild(document.createElement('div'))
+);
+
+window['sheetId'] = location.hash.substring(1);
+window['initSheet'] = () => {
+  store.changeLoadingStatus('signing');
+  Sheet.init(() => store.init());
 };
 
-loadConfig(config => {
-  window.config = config;
-  store.loadConfig(config);
-
-  ReactDOM.render(
-    <App />,
-    document.body.appendChild(document.createElement('div'))
-  );
-
-  window['sheetId'] = location.hash.substring(1);
-  window['initSheet'] = () => {
-    store.changeLoadingStatus('signing');
-    Sheet.init(() => store.init());
-  };
-
-  if (sheetId) {
-    initSheet();
-  } else {
-    store.changeLoadingStatus('prompting table');
-  }
-});
+if (sheetId) {
+  initSheet();
+} else {
+  store.changeLoadingStatus('prompting table');
+}
