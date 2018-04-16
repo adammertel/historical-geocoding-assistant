@@ -133,7 +133,7 @@ class AppMap extends React.Component {
 
   renderOtherRecords() {
     const records = store.geoRecords
-      .filter(Base.validGeo)
+      .filter(r => Base.validGeo([r.x, r.y]))
       .filter(r => !Base.same(r.row, store.row))
       .map((record, ri) => {
         return (
