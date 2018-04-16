@@ -1,9 +1,8 @@
 
 *.log
-npm-debug.log*
+*.lock
 *.pid
 *.seed
-*.pid.lock
 node_modules
 dist
 .DS_Store
@@ -11,4 +10,4 @@ dist
 .env
 .idea
 .vscode
-app/config_api.json
+app/configs/config_api.json

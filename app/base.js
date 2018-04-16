@@ -32,7 +32,11 @@ var Base = {
   },
 
   requestConfigFile(configPath, next) {
-    this.doRequest('/configs/' + configPath, data => next(data));
+    this.doRequest('./configs/' + configPath, data => next(data));
+  },
+
+  requestDataFile(configPath, next) {
+    this.doRequest('./data/' + configPath, data => next(data));
   },
 
   openTab(path) {

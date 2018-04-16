@@ -23,10 +23,7 @@ Base.requestConfigFile('mapoverlays.json', overlays => {
   Object.keys(overlaymaps).map(okey => {
     const overlay = overlaymaps[okey];
     if (overlaymaps[okey].type === 'geojson') {
-      Base.doRequest(
-        './data/' + overlay.file,
-        ovd => (overlaymaps[okey].data = ovd)
-      );
+      Base.requestDataFile(overlay.file, ovd => (overlaymaps[okey].data = ovd));
     }
   });
 });
