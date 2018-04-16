@@ -9,8 +9,9 @@ class TablePrompt extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sheetId: config.defaultSheetId || location.hash.substring(1)
+      sheetId: ''
     };
+    this.exampleSheetId = '1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU';
   }
 
   changeSheetId(e) {
@@ -23,25 +24,72 @@ class TablePrompt extends React.Component {
     initSheet();
   }
 
+  acceptExampleSheetId() {
+    console.log(this.exampleSheetId);
+    sheetId = this.exampleSheetId;
+    location.hash = sheetId;
+    initSheet();
+  }
+
   render() {
     return (
       <Modal
         active={true}
         classes="is-primary"
-        header="Enter id of your google sheet"
         style={{ zIndex: 1500 }}
         body={
-          <div>
-            <Input
-              value={this.state.sheetId}
-              onChange={this.changeSheetId.bind(this)}
+          <div
+            style={{
+              fontSize: 15,
+              marginTop: -30,
+              marginBottom: -10
+            }}
+          >
+            <img
+              src="app/assets/icon.png"
+              alt="logo"
+              style={{
+                width: '70%',
+                margin: 'auto',
+                left: '10%',
+                padding: 10,
+                position: 'relative'
+              }}
             />
-            <a
-              href="https://developers.google.com/sheets/api/guides/concepts"
-              target="_blank"
-            >
-              what is that "google sheet id"?
-            </a>
+            <div style={{ padding: 30 }}>
+              Enter id of your google sheet (
+              <a
+                href="https://developers.google.com/sheets/api/guides/concepts"
+                target="_blank"
+              >
+                what is that "google sheet id"?
+              </a>{' '}
+              ):
+              <Input
+                value={this.state.sheetId}
+                onChange={this.changeSheetId.bind(this)}
+              />
+              Or use the{' '}
+              <a
+                target="_blank"
+                href="https://docs.google.com/spreadsheets/d/1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU"
+              >
+                example sheet
+              </a>{' '}
+              id : <br />{' '}
+              <Button
+                onClick={this.acceptExampleSheetId.bind(this)}
+                label={'example sheet'}
+              />
+              <br />
+              <br />
+              <br />
+              Other links:
+              <br />
+              <a href="https://github.com/adammertel/historical-geocoder-assistant/tree/master/manual">
+                Github documentation
+              </a>
+            </div>
           </div>
         }
         footerStyle={{ textAlign: 'right', display: 'block' }}
