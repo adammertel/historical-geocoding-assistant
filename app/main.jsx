@@ -36,7 +36,7 @@ window['store'] = new AppStore();
 // assigning config. If TESTING === true, config will be extended with config_testing.json
 const loadConfig = next => {
   store.changeLoadingStatus('config');
-  const configPath = TESTING ? 'config.json' : 'config_testing.json';
+  const configPath = TESTING ? 'config_testing.json' : 'config.json';
   Base.requestConfigFile(configPath, configData => {
     Base.requestConfigFile('config_api.json', otherConfigData => {
       next(Object.assign(configData, otherConfigData));

@@ -64,7 +64,9 @@
     "webpack-merge": "^4.1.2"
   },
   "devDependencies": {},
-  "keywords": [""],
+  "keywords": [
+    ""
+  ],
   "author": "Adam Mertel",
   "license": "MIT"
 }

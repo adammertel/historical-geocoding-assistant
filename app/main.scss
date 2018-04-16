@@ -28,6 +28,17 @@ $family-primary: 'Lato', sans-serif;
   right: 40px;
 }
 
+.icon {
+  i.fa-caret-down,
+  i.fa-caret-right {
+    margin-left: -10px;
+  }
+}
+
+.title.is-5 {
+  font-size: 1rem;
+}
+
 table.table.centered {
   margin-bottom: 0.5rem;
   tr td:first-child {
