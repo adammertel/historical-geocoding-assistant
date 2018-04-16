@@ -480,7 +480,7 @@ class Panel extends React.Component {
           <div>
             <Button
               label="open peripleo"
-              icon="map"
+              icon="map-signs"
               classes="is-inverted"
               onClick={this.handleOpenPeripleo.bind(this)}
             />
