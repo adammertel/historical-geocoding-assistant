@@ -3,6 +3,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
+import ErrorBoundary from './errorboundary';
 import AppMap from './map';
 import Panel from './panel';
 import LayerControl from './layercontrol';
@@ -35,15 +36,17 @@ class App extends React.Component {
   render() {
     return (
       <div className="wrapper" style={this.style()}>
-        <div style={this.bodyStyle()}>
-          {!store.isLoaded && <LoadingStatus />}
-          {store.tablePrompt && <TablePrompt />}
-          {!store.isLoaded && <AppHider />}
-          {store.openedSettings && store.shouldRenderApp && <Settings />}
-          {store.shouldRenderApp && <Panel />}
-          {store.shouldRenderApp && <AppMap />}
-          {store.shouldRenderApp && <LayerControl />}
-        </div>
+        <ErrorBoundary>
+          <div style={this.bodyStyle()}>
+            {!store.isLoaded && <LoadingStatus />}
+            {store.tablePrompt && <TablePrompt />}
+            {!store.isLoaded && <AppHider />}
+            {store.openedSettings && store.shouldRenderApp && <Settings />}
+            {store.shouldRenderApp && <Panel />}
+            {store.shouldRenderApp && <AppMap />}
+            {store.shouldRenderApp && <LayerControl />}
+          </div>
+        </ErrorBoundary>
       </div>
     );
   }
