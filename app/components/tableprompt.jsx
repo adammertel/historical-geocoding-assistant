@@ -4,6 +4,8 @@ import Modal from './../bulma/modal';
 import Input from './../bulma/input';
 import Button from './../bulma/button';
 
+const logoPath = require('./../assets/logo.png');
+
 @observer
 class TablePrompt extends React.Component {
   constructor(props) {
@@ -46,7 +48,7 @@ class TablePrompt extends React.Component {
             }}
           >
             <img
-              src="app/assets/icon.png"
+              src={logoPath}
               alt="logo"
               style={{
                 width: '70%',

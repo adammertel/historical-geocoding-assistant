@@ -6,6 +6,8 @@ import Button from './../bulma/button';
 import Checkbox from './../bulma/checkbox';
 import Input from './../bulma/input';
 
+const logoPath = require('./../assets/logo.png');
+
 class Panel extends React.Component {
   constructor(props) {
     super(props);
@@ -118,7 +120,7 @@ class Panel extends React.Component {
       <div className="panel-wrapper" style={this.style()}>
         <div id="version">{'version ' + window['version']}</div>
         <div>
-          <img src="app/assets/icon.png" alt="logo" style={{ padding: 20 }} />
+          <img src={logoPath} alt="logo" style={{ padding: 20 }} />
         </div>
 
         <div style={{ marginRight: 30, textAlign: 'right' }}>
