@@ -460,7 +460,7 @@ class Panel extends React.Component {
             })}
           </div>
         </Menu>
-        <Menu label="google" defaultOpen={true}>
+        <Menu label="search" defaultOpen={true}>
           <div>
             <Button
               label="open google search"
