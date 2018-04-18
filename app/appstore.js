@@ -1,7 +1,7 @@
 /* eslint no-undef: 0 */
 /* eslint no-unused-vars: 0 */
 
-import { observable, action, computed } from 'mobx';
+import { observable, action, computed, toJS } from 'mobx';
 import Sheet from './sheet.js';
 import mobx from 'mobx';
 import React from 'react';
@@ -308,7 +308,7 @@ export default class AppStore extends React.Component {
 
   @action
   overlayRemove = overlayId => {
-    const clonedOverlays = mobx.toJS(this.opts.overlays);
+    const clonedOverlays = toJS(this.opts.overlays);
     this.opts.overlays = clonedOverlays.filter(ov => ov.id !== overlayId);
   };
 

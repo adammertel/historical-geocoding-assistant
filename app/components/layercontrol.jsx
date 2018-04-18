@@ -28,7 +28,9 @@ class LayerControl extends React.Component {
   }
 
   handleOverlaySelect(select, e) {
-    store.addOverlay(e.target.value);
+    if (e.target.value) {
+      store.addOverlay(e.target.value);
+    }
   }
 
   handleOpacityRatio(e) {
@@ -181,14 +183,14 @@ class LayerControl extends React.Component {
                 })}
                 <tr>
                   <td>
-                    <b>select overlay to add</b>
-                  </td>
-                  <td>
                     <span className="select">
                       <select
                         value="default"
                         onChange={this.handleOverlaySelect.bind(this, 1)}
                       >
+                        <option value={false} key={0}>
+                          select overlay to add
+                        </option>
                         {Object.keys(overlaymaps).map(overlayId => {
                           const overlay = overlaymaps[overlayId];
                           return (
