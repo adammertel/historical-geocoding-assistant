@@ -142,7 +142,7 @@ class AppMap extends React.Component {
             position={[parseFloat(record.y), parseFloat(record.x)]}
             icon={this.icon(
               'fa fa-map-marker',
-              'color: black',
+              'color: ' + config.colors.otherRecords,
               this.markerSize
             )}
             onClick={this.handleClickMarker.bind(this, record.row)}

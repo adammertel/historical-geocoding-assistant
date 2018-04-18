@@ -497,11 +497,18 @@ class Panel extends React.Component {
             <div className="checkboxes-line">
               <Checkbox
                 id="switch-otherrecords"
-                label="display all records on map ("
+                label="display all records on map"
                 classes="is-small"
                 checked={store.opts.displayOtherRecords}
                 onChange={store.toggleDisplayOtherRecords.bind(store)}
               />
+              <span
+                className="icon is-small"
+                style={{ color: config.colors.otherRecords, paddingBottom: 8 }}
+              >
+                <i className={'fa fa-map-marker'} />
+              </span>{' '}
+              (
               <Checkbox
                 id="switch-clusters"
                 label="clusters )"

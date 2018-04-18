@@ -25,6 +25,7 @@
   },
   "colors": {
     "main": "#a64005",
+    "otherRecords": "black",
     "geonames": "#056ba6",
     "wikipedia": "#05a640"
   },
