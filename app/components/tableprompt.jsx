@@ -88,8 +88,12 @@ class TablePrompt extends React.Component {
               <br />
               Other links:
               <br />
+              <a href="https://github.com/adammertel/historical-geocoder-assistant">
+                Github
+              </a>
+              <br />
               <a href="https://github.com/adammertel/historical-geocoder-assistant/tree/master/manual">
-                Github documentation
+                Documentation
               </a>
             </div>
           </div>

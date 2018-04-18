@@ -17,6 +17,7 @@ var Sheet = {
           this._preRead(next);
         } else {
           alert('table was not ititialized, wrong id');
+          location.reload();
         }
       });
     });
