@@ -14,6 +14,7 @@ import {
 } from 'react-leaflet';
 
 import { divIcon } from 'leaflet';
+require('leaflet.measure');
 import { observer } from 'mobx-react';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 require('leaflet.markercluster.placementstrategies');
@@ -34,6 +35,33 @@ class AppMap extends React.Component {
 
   componentDidMount() {
     window['map'] = this.refs.map.leafletElement;
+    const measureCircleStyle = {
+      fillColor: 'black',
+      weight: 0,
+      fillOpacity: 1,
+      radius: 3
+    };
+    window['measureControl'] = L.control
+      .polylineMeasure({
+        measureControlTitleOn: 'Measure',
+        measureControlTitleOff: 'Stop measuring',
+        clearControlTitle: 'Clear Measurements',
+        clearControlLabel: '&times',
+        measureControlLabel: '&#128207;',
+        tempLine: {
+          color: 'black', // Dashed line color
+          weight: 2 // Dashed line weight
+        },
+        fixedLine: {
+          color: 'black', // Solid line color
+          weight: 2 // Solid line weight
+        },
+        startCircle: measureCircleStyle,
+        intermedCircle: measureCircleStyle,
+        currentCircle: measureCircleStyle,
+        endCircle: measureCircleStyle
+      })
+      .addTo(map);
   }
 
   mapStyle() {
@@ -45,17 +73,25 @@ class AppMap extends React.Component {
     };
   }
 
+  isMeasuring() {
+    return window['measureControl']._measuring;
+  }
+
   handleClickMarker(rowId) {
-    store.gotoRecord(rowId);
+    this.isMeasuring() ? false : store.gotoRecord(rowId);
   }
 
   handleClickGeoname(geoname, e) {
-    store.useGeoname(geoname);
-    map.closeTooltip(e.target._tooltip);
+    if (!this.isMeasuring()) {
+      store.useGeoname(geoname);
+      map.closeTooltip(e.target._tooltip);
+    }
   }
 
   handleMapClick(e) {
-    store.updateRecordLocation(e.latlng.lng, e.latlng.lat);
+    this.isMeasuring()
+      ? false
+      : store.updateRecordLocation(e.latlng.lng, e.latlng.lat);
   }
 
   renderBaseLayer(top) {

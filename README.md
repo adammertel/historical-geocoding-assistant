@@ -32,9 +32,3 @@ It is needed to be signed into google drive and type the id of the table at the 
 ## Manual
 
 [manual](https://github.com/adammertel/historical-geocoder-assistant/tree/master/manual)
-
-## TODO
-
-* dictionary and language switcher
-* measuring distances
-* documentation
