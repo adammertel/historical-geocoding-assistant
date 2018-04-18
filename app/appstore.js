@@ -391,7 +391,7 @@ export default class AppStore extends React.Component {
   };
   @action
   removeChangesCoordinates = () => {
-    this.updateRecordLocation(0, 0);
+    this.updateRecordLocation(false, false);
   };
 
   @action
