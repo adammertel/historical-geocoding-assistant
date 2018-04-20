@@ -1,34 +1,34 @@
 # MANUAL
 
-## Description
+## 1 Description
 
 Historical Geocoding Assistant is a tool for assisted geocoding of historical datasets (something between a manual table editing and automated geocoding script)
 
-## Table input
+## 2 Table input
 
 The HGA application works with tables stored in google drive as a spreadsheet. An working example of such table is located [here](https://docs.google.com/spreadsheets/d/1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU).
 
-### Functional columns
+### 2.1 Localisation columns
 
-Table should consist of some functional columns (names of columns are advised but not neccesary to follow):
+Table should consist of some localisation columns (names of columns are advised but not neccesary to follow, see [11](#11-"Settings"-sections)):
 
-#### name
+#### 2.1.1 name
 
 id or unique key that represents the record
 
-#### location name
+#### 2.1.2 location name
 
 name of the location (could be the same column as "name"); for better search results it is recommened to specify the location name as much as possible (eg, adding a modern country name - Abou Ouda, Egypt).
 
-#### x coordinate
+#### 2.1.3 x coordinate
 
 longitude coordinate
 
-#### y coordinate
+#### 2.1.4 y coordinate
 
 lattitude coordinate
 
-#### certainty level
+#### 2.1.5 certainty level
 
 level of location certainty:
 
@@ -37,33 +37,66 @@ level of location certainty:
 * 3 - coordinates are possible but not certain
 * 4 - localisation is not possible (or unwanted)
 
-#### localisation note
+#### 2.1.6 localisation note
 
 optional note concerning the own localisation process
 
-## Table Prompt
+## 3 Table Prompt
+
+Table prompt window asks for your table id, see [2](# 2-table-input)
 
 ![prompt image](./imgs/wekcome.png)
 
-## Application layout
+## 4 Application layout
 
-## Record Selection
+![app layout](./imgs/layout.png)
+
+The own application layout consists of:
+
+* map
+* right panel
+* map control panel
+
+## 5 Map
+
+Most of the screen space is covered by the own map. In the top-left corner, there are small map buttons:
+
+* zoom buttons
+* measure tool - allows measuring distances
+
+It is possible to interact with map (zooming, panning) and indirectly manipulate with the layers(see [7](#7-map-control)). Map shows up four types of colored pins - current location, all other locations, geonames suggestions and wikipedia suggestions (see [6.5](#6.5-geocoding-suggestions)).
+When the map is clicked, the location of current record is moved into this coordinates and the column values are reassigned.
+
+## 6 Panel
+
+Panel covers the right-most part of screen and is used to select and edit record data and assign global settings. Panel constists of more sections.
+
+### 6.1 Selection
+
+Record selection menu is located under the application logo. Subsections:
+
+* number of all records and position of the selected one
+* select to choose record to edit and arrows to move to the next (previous) record
+* restore (cancel all edits) and save (store edits to the table) buttons
 
 ![records image](./imgs/records.png)
 
-## Functional columns
+## Data
 
-![columns image](./imgs/columns.png)
+Section to handle and edit values of the record. There are two subsections:
 
-## "Localisation" section
+* localisation - to handle "localisation columns" described in [2.1](#2.1-localisation-columns), underneath are 4 buttons:
 
-![localisation image](./imgs/localisation.png)
+  * highlight - highlight actual position on map(without panning)
+  * focus - pan and zoom to the position of the record
+  * revert - use original values
+  * remove - remove actual coordinates
+    ![localisation image](./imgs/localisation.png)
 
-## "Record data" section
+* record data - all columns taken from the input table
+  ![data image](./imgs/data.png)
 
-![data image](./imgs/data.png)
-
-## Geocoding suggestions (geonames, wikipedia)
+## Geocoding suggestions
 
 ![geocoding image](./imgs/geocoding.png)
 
@@ -71,12 +104,13 @@ optional note concerning the own localisation process
 
 ![search image](./imgs/search.png)
 
-## "Settings" sections
+## Settings
 
+![columns image](./imgs/columns.png)
 ![settings image](./imgs/settings.png)
 
-## "Map control" panel
+## Map control
 
 ![mapcontrol image](./imgs/mapcontrol.png)
 
-## config file
+## 13 config file
