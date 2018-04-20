@@ -88,20 +88,20 @@ class TablePrompt extends React.Component {
               <br />
               <b>Notes:</b>
               <br />
-              Application was tested in chrome browser
+              - Application was tested in the chrome browser
               <br />
-              Application will need to be signed into a google account (you need
+              - Application has to be signed into a google account (you may need
               to allow pop-ups)
               <br />
               <br />
               <b>Other links:</b>
               <br />
               <a href="https://github.com/adammertel/historical-geocoder-assistant">
-                Github
+                - Github
               </a>
               <br />
               <a href="https://github.com/adammertel/historical-geocoder-assistant/tree/master/manual">
-                Documentation
+                - Documentation
               </a>
             </div>
           </div>
