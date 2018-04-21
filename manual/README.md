@@ -45,7 +45,7 @@ optional note concerning the own localisation process
 
 Table prompt window asks for your table id, see [2](# 2-table-input)
 
-![prompt image](./imgs/wekcome.png)
+![prompt image](./imgs/welcome.png)
 
 ## 4 Application layout
 
@@ -91,16 +91,33 @@ Section to handle and edit values of the record. There are two subsections:
   * focus - pan and zoom to the position of the record
   * revert - use original values
   * remove - remove actual coordinates
-    ![localisation image](./imgs/localisation.png)
+
+![localisation image](./imgs/localisation.png)
 
 * record data - all columns taken from the input table
-  ![data image](./imgs/data.png)
+
+![data image](./imgs/data.png)
 
 ## Geocoding suggestions
+
+At this moment, two geocoding services are implemented:
+
+* [geonames](http://www.geonames.org/) - suggestions made based on the value of column "location name" (see 2.1.2)
+* [wikipedia](wikipedia.org) - suggestions made based on the value of column "name" (see 2.1.1)
+
+Each suggestion has a button to focus the location and to save the suggested coordinates. Wikipedia suggestions have a button to open a new tab with the original wikipedia post.
 
 ![geocoding image](./imgs/geocoding.png)
 
 ## Auxiliary search engines
+
+In case the suggestions did not provide a correct answer, the user can try auxiliary search engine:
+
+* google search
+* google maps search
+* [peripleo](http://peripleo.pelagios.org/) search engine
+
+Clicking the auxiliary search icon will open a new tab of browser with the url of the value of column "name" ("location name" in case of google search)
 
 ![search image](./imgs/search.png)
 
