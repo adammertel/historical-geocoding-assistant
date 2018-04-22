@@ -57,6 +57,7 @@
     "react-leaflet": "^1.9.1",
     "react-leaflet-markercluster": "^1.1.8",
     "sass-loader": "^6.0.7",
+    "string-similarity": "^1.2.0",
     "style-loader": "^0.20.3",
     "url-loader": "^1.0.1",
     "webpack": "^4.5.0",

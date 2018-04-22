@@ -5,6 +5,7 @@ import { observable, action, computed, toJS } from 'mobx';
 import Sheet from './sheet.js';
 import mobx from 'mobx';
 import React from 'react';
+import stringSimilarity from 'string-similarity';
 
 export default class AppStore extends React.Component {
   @observable opts = {};
@@ -44,37 +45,49 @@ export default class AppStore extends React.Component {
 
   @action
   findDefaultColumnNames() {
+    const columns = Object.keys(this.recordData).map(c => {
+      return {
+        sanitized: c
+          .toLowerCase()
+          .trim()
+          .replace(/_/g, '')
+          .replace(/-/g, ''),
+        original: c
+      };
+    });
     const keywordsDictionary = {
-      name: ['name'],
-      placeName: ['place name', 'localisation'],
-      x: ['coordinate', 'geo', 'x'],
-      y: ['coordinate', 'geo', 'y'],
+      name: ['name', 'naming', 'label'],
+      placeName: ['name', 'placename', 'localisation', 'locality'],
+      x: ['xcoordinate', 'xgeo', 'x', 'longitude'],
+      y: ['ycoordinate', 'ygeo', 'y', 'latitude'],
       certainty: ['certainty'],
-      note: ['note', 'notes']
+      note: ['placenote', 'localisationnotes', 'note']
     };
 
     Object.keys(keywordsDictionary).map(id => {
       const keywords = keywordsDictionary[id];
 
-      let bestMatch = '';
-      let bestMatchOccurences = 0;
-      Object.keys(this.recordData).map(column => {
-        const columnLowerCase = column.toLowerCase();
+      let bestMatch = false;
+      let bestMatchOccurences = -1;
+      columns.map(column => {
         let occurences = 0;
         keywords.map(keyword => {
-          if (columnLowerCase.includes(keyword)) {
-            occurences += 1;
-          }
+          occurences += stringSimilarity.compareTwoStrings(
+            column.sanitized,
+            keyword
+          );
         });
 
         if (occurences > bestMatchOccurences) {
           bestMatchOccurences = occurences;
-          bestMatch = column;
+          bestMatch = column.original;
         }
       });
 
       this.opts.columns[id] = bestMatch;
     });
+
+    console.log(this.opts.columns);
   }
 
   /*

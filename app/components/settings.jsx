@@ -124,6 +124,9 @@ class Settings extends React.Component {
               value={this.state.columns[columnId]}
               onChange={this.handleChangeColumn.bind(this, columnId)}
             >
+              <option key={0} value={''}>
+                !!nothing selected !!
+              </option>
               {Object.keys(store.recordData).map((column, ci) => {
                 return (
                   <option key={ci} value={column}>

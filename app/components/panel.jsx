@@ -115,6 +115,7 @@ class Panel extends React.Component {
   }
 
   render() {
+    console.log(store.opts.columns.placeName);
     const recordGeo = [store.recordY, store.recordX];
     return (
       <div className="panel-wrapper" style={this.style()}>
