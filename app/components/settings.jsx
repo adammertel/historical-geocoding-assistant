@@ -89,31 +89,6 @@ class Settings extends React.Component {
     );
   }
 
-  renderSelect(propName, propLabel) {
-    console.log(propName);
-    return (
-      <tr key={propName}>
-        {this._renderLabel(propLabel)}
-        <td className="control">
-          <span style={this.styleSelect()} className="select">
-            <select
-              value={this.state[propName]}
-              onChange={this.handleChangeSelect.bind(this, propName)}
-            >
-              {this.options[propName].map((option, oi) => {
-                return (
-                  <option key={oi} value={option}>
-                    {option}
-                  </option>
-                );
-              })}
-            </select>
-          </span>
-        </td>
-      </tr>
-    );
-  }
-
   renderColumnSelect(columnId, columnLabel) {
     return (
       <tr key={columnId}>
@@ -124,9 +99,6 @@ class Settings extends React.Component {
               value={this.state.columns[columnId]}
               onChange={this.handleChangeColumn.bind(this, columnId)}
             >
-              <option key={0} value={''}>
-                !!nothing selected !!
-              </option>
               {Object.keys(store.recordData).map((column, ci) => {
                 return (
                   <option key={ci} value={column}>
@@ -146,7 +118,7 @@ class Settings extends React.Component {
       <table className="table centered">
         <tbody>
           {this.renderColumnSelect('name', 'name column')}
-          {this.renderColumnSelect('place name', 'place name column')}
+          {this.renderColumnSelect('placeName', 'place name column')}
           {this.renderColumnSelect('x', 'x coordinate column')}
           {this.renderColumnSelect('y', 'y coordinate column')}
           {this.renderColumnSelect('certainty', 'certainty column')}
@@ -181,7 +153,11 @@ class Settings extends React.Component {
         style={this.style()}
         active={true}
         classes=""
-        header="Settings"
+        header={
+          store.openedSettings === 'columns'
+            ? 'Column settings'
+            : 'Geo extent settings'
+        }
         closeIcon={false}
         footer={
           <div className="container has-text-right">
