@@ -10,15 +10,11 @@ The HGA application works with tables stored in google drive as a spreadsheet. A
 
 ### 2.1 Localisation columns
 
-Table should consist of some localisation columns (names of columns are advised but not neccesary to follow, see [11](#11-"Settings"-sections)):
+Table should consist of some localisation columns (names of columns are advised but not neccesary to follow, see **11**:
 
-#### 2.1.1 name
+#### 2.1.1 location name
 
-id or unique key that represents the record
-
-#### 2.1.2 location name
-
-name of the location (could be the same column as "name"); for better search results it is recommened to specify the location name as much as possible (eg, adding a modern country name - Abou Ouda, Egypt).
+location name for the record. This value is used for all search engines (see **6.3** and **6.4**)
 
 #### 2.1.3 x coordinate
 
@@ -43,7 +39,7 @@ optional note concerning the own localisation process
 
 ## 3 Table Prompt
 
-Table prompt window asks for your table id, see [2](# 2-table-input)
+Table prompt window asks for your table id, see **2**
 
 ![prompt image](./imgs/welcome.png)
 
@@ -81,11 +77,11 @@ Record selection menu is located under the application logo. Subsections:
 
 ![records image](./imgs/records.png)
 
-## Data
+## 6.2 Data
 
 Section to handle and edit values of the record. There are two subsections:
 
-* localisation - to handle "localisation columns" described in [2.1](#2.1-localisation-columns), underneath are 4 buttons:
+* localisation - to handle "localisation columns" described in **2.1**, underneath are 4 buttons:
 
   * highlight - highlight actual position on map(without panning)
   * focus - pan and zoom to the position of the record
@@ -98,18 +94,18 @@ Section to handle and edit values of the record. There are two subsections:
 
 ![data image](./imgs/data.png)
 
-## Geocoding suggestions
+## 6.3 Geocoding suggestions
 
 At this moment, two geocoding services are implemented:
 
-* [geonames](http://www.geonames.org/) - suggestions made based on the value of column "location name" (see 2.1.2)
-* [wikipedia](wikipedia.org) - suggestions made based on the value of column "name" (see 2.1.1)
+* [geonames](http://www.geonames.org/) - suggestions made based on the value of column "location name" (see **2.1.2**)
+* [wikipedia](wikipedia.org) - suggestions made based on the value of column "name" (see **2.1.1**)
 
 Each suggestion has a button to focus the location and to save the suggested coordinates. Wikipedia suggestions have a button to open a new tab with the original wikipedia post.
 
 ![geocoding image](./imgs/geocoding.png)
 
-## Auxiliary search engines
+## 6.4 Auxiliary search engines
 
 In case the suggestions did not provide a correct answer, the user can try auxiliary search engine:
 
@@ -121,13 +117,13 @@ Clicking the auxiliary search icon will open a new tab of browser with the url o
 
 ![search image](./imgs/search.png)
 
-## Settings
+## 6.5 Settings
 
 ![columns image](./imgs/columns.png)
 ![settings image](./imgs/settings.png)
 
-## Map control
+## 7 Map control
 
 ![mapcontrol image](./imgs/mapcontrol.png)
 
-## 13 config file
+## 8 config file

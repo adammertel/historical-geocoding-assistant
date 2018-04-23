@@ -150,7 +150,7 @@ class Panel extends React.Component {
                 } else {
                   return (
                     <option key={record.row} value={record.row}>
-                      {record.name + '(no coordinates)'}
+                      {record.name + ' (no coordinates)'}
                     </option>
                   );
                 }
@@ -312,7 +312,7 @@ class Panel extends React.Component {
                   />
                   <Button
                     onClick={this.handleCoordinatesRemove.bind(this)}
-                    tooltip="truncate coordinates"
+                    tooltip="remove coordinates"
                     icon="trash"
                     label="remove"
                     classes="is-inverted hint--top-right"

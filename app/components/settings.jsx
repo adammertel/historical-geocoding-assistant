@@ -132,8 +132,8 @@ class Settings extends React.Component {
     const basemap = store.basemapById('OSM');
     return (
       <Map
-        zoomControl={false}
-        zoomSnap={0.1}
+        zoomControl={true}
+        zoomSnap={0.05}
         zoomDelta={0.05}
         ref="refMap"
         bounds={bounds}
