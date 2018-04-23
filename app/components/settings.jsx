@@ -15,7 +15,6 @@ class Settings extends React.Component {
         x: opts.columns.x,
         y: opts.columns.y,
         note: opts.columns.note,
-        placeName: opts.columns.placeName,
         certainty: opts.columns.certainty
       }
     };
@@ -118,7 +117,6 @@ class Settings extends React.Component {
       <table className="table centered">
         <tbody>
           {this.renderColumnSelect('name', 'name column')}
-          {this.renderColumnSelect('placeName', 'place name column')}
           {this.renderColumnSelect('x', 'x coordinate column')}
           {this.renderColumnSelect('y', 'y coordinate column')}
           {this.renderColumnSelect('certainty', 'certainty column')}

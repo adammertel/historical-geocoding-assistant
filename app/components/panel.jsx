@@ -68,7 +68,7 @@ class Panel extends React.Component {
   }
 
   handleOpenGMaps() {
-    Base.openTab('www.google.cz/maps/search/' + store.recordPlaceName);
+    Base.openTab('www.google.cz/maps/search/' + store.recordName);
   }
 
   handleOpenGSearch() {
@@ -239,9 +239,9 @@ class Panel extends React.Component {
                     <Input
                       onChange={this.handleChangeInput.bind(
                         this,
-                        store.opts.columns.placeName
+                        store.recordName
                       )}
-                      value={store.recordPlaceName}
+                      value={store.recordName}
                     />
                   </td>
                 </tr>

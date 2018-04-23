@@ -56,10 +56,16 @@ export default class AppStore extends React.Component {
       };
     });
     const keywordsDictionary = {
-      name: ['name', 'naming', 'label'],
-      placeName: ['name', 'placename', 'localisation', 'locality'],
-      x: ['xcoordinate', 'xgeo', 'x', 'longitude'],
-      y: ['ycoordinate', 'ygeo', 'y', 'latitude'],
+      name: [
+        'name',
+        'naming',
+        'label',
+        'placename',
+        'locality',
+        'localisation'
+      ],
+      x: ['xcoordinate', 'xgeo', 'x', 'longitude', 'lng'],
+      y: ['ycoordinate', 'ygeo', 'y', 'latitude', 'lat'],
       certainty: ['certainty'],
       note: ['placenote', 'localisationnotes', 'note']
     };
@@ -135,11 +141,6 @@ export default class AppStore extends React.Component {
   @computed
   get recordCertainty() {
     return this.recordData[this.opts.columns.certainty];
-  }
-
-  @computed
-  get recordPlaceName() {
-    return this.recordData[this.opts.columns.placeName];
   }
 
   @computed
@@ -280,7 +281,7 @@ export default class AppStore extends React.Component {
 
   @action
   updateSearch = () => {
-    Base.geonames(this.recordPlaceName, this.opts.maxGeoExtent, response => {
+    Base.geonames(this.recordName, this.opts.maxGeoExtent, response => {
       this.geonames = response;
     });
     Base.wiki(this.recordName, this.opts.maxGeoExtent, response => {
