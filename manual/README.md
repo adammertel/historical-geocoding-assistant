@@ -60,7 +60,7 @@ Most of the screen space is covered by the own map. In the top-left corner, ther
 * zoom buttons
 * measure tool - allows measuring distances
 
-It is possible to interact with map (zooming, panning) and indirectly manipulate with the layers(see [7](#7-map-control)). Map shows up four types of colored pins - current location, all other locations, geonames suggestions and wikipedia suggestions (see [6.5](#6.5-geocoding-suggestions)).
+It is possible to interact with map (zooming, panning) and indirectly manipulate with the layers(see [7](#7-map-control)). Map shows up four types of colored pins - current location, all other locations, geonames suggestions and wikipedia suggestions (see **6.5**).
 When the map is clicked, the location of current record is moved into this coordinates and the column values are reassigned.
 
 ## 6 Panel
@@ -96,10 +96,10 @@ Section to handle and edit values of the record. There are two subsections:
 
 ## 6.3 Geocoding suggestions
 
-At this moment, two geocoding services are implemented:
+Suggestions are made based on the value of column "name" (see **2.1.1**). At this moment, two geocoding services are implemented:
 
-* [geonames](http://www.geonames.org/) - suggestions made based on the value of column "location name" (see **2.1.2**)
-* [wikipedia](wikipedia.org) - suggestions made based on the value of column "name" (see **2.1.1**)
+* [geonames](http://www.geonames.org/)
+* [wikipedia](wikipedia.org)
 
 Each suggestion has a button to focus the location and to save the suggested coordinates. Wikipedia suggestions have a button to open a new tab with the original wikipedia post.
 
@@ -119,11 +119,27 @@ Clicking the auxiliary search icon will open a new tab of browser with the url o
 
 ## 6.5 Settings
 
-![columns image](./imgs/columns.png)
+Setting section is used to set additional options and rules, how the hga works.
 ![settings image](./imgs/settings.png)
 
+* display all records on map - will show all previously geocoded places in map (black pins)
+  * clusters - will display pins in a form of clusters (instead of a mesh of accumulated pins)
+* focus map on record change - should the map be refocussed, when a new record is selected
+  * zoom level - ...at what zoom level?
+* columns - opens up a menu with the possibility to reassign column names for Localisation columns (see **2.1**)
+* geo extent - opens up a menu to set a geographical bounding box for geocoding (see **6.3**)
+
+![columns image](./imgs/columns.png)
+
 ## 7 Map control
+
+Map control menu is located in the bottom-left part of the map and has two subsections:
+
+* base layers - two overlayed base maps and the opacity of the top one
+* oberlay layers - auxiliary overlay layers (in various formats - geojson, wms, ...), their order and opacity
 
 ![mapcontrol image](./imgs/mapcontrol.png)
 
 ## 8 config file
+
+The config file is a json formatted text that could be used to reassign various options used within the application.
