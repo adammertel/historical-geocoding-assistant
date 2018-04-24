@@ -6,27 +6,27 @@ Historical Geocoding Assistant is a tool for assisted geocoding of historical da
 
 ## 2 Table input
 
-The HGA application works with tables stored in google drive as a spreadsheet. An working example of such table is located [here](https://docs.google.com/spreadsheets/d/1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU).
+The HGA application works with tables stored in google drive in a spreadsheet form. An working example of such table is located [here](https://docs.google.com/spreadsheets/d/1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU).
 
 ### 2.1 Localisation columns
 
-Table should consist of some localisation columns (names of columns are advised but not neccesary to follow, see **11**:
+Table should consist of some localisation columns (names of columns are advised but not neccesary to follow, see **6.5**:
 
 #### 2.1.1 location name
 
-location name for the record. This value is used for all search engines (see **6.3** and **6.4**)
+Location name of the record - this value is used for all search engines (see **6.3** and **6.4**).
 
 #### 2.1.3 x coordinate
 
-longitude coordinate
+Longitude coordinate.
 
 #### 2.1.4 y coordinate
 
-lattitude coordinate
+Lattitude coordinate.
 
 #### 2.1.5 certainty level
 
-level of location certainty:
+Level of assigned location certainty:
 
 * 1 - coordinates are precise (at the level of given granularity)
 * 2 - localisation is not precise (eg, centroid of region was used...)
@@ -35,7 +35,7 @@ level of location certainty:
 
 #### 2.1.6 localisation note
 
-optional note concerning the own localisation process
+Optional note concerning the own localisation process
 
 ## 3 Table Prompt
 

@@ -1,5 +1,6 @@
 // @flow
 import $ from 'jquery';
+import { divIcon } from 'leaflet';
 
 var Base = {
   doRequest(url, next) {
@@ -29,6 +30,23 @@ var Base = {
       }
     }
     return false;
+  },
+
+  icon(classes, style, size) {
+    return divIcon({
+      html:
+        '<span style="' +
+        style +
+        '; vertical-align: bottom"' +
+        ' class="icon"><i style="font-size:' +
+        size[0] +
+        'px" class="' +
+        classes +
+        '"></i></span>',
+      className: 'map-sort-icon',
+      iconAnchor: [size[0] / 2, size[1]],
+      iconSize: size
+    });
   },
 
   requestConfigFile(configPath, next) {

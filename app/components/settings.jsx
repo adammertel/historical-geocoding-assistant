@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Map, TileLayer } from 'react-leaflet';
+import { Map, TileLayer, Rectangle, Marker } from 'react-leaflet';
 import Button from './../bulma/button';
 import Modal from './../bulma/modal';
 
@@ -8,8 +8,17 @@ class Settings extends React.Component {
   constructor(props) {
     super(props);
     const opts = store.opts;
+
+    const lls = store.configMaxGeoExtent;
+    const ll1 = L.latLng(lls[0][0], lls[0][1]);
+    const ll2 = L.latLng(lls[1][0], lls[1][1]);
+    const extent = new L.latLngBounds(ll1, ll2);
+
     this.state = {
-      maxGeoExtent: opts.maxGeoExtent,
+      mapBounds: [[-90, -180], [90, 180]],
+      maxGeoExtent: extent,
+      extentCorner1: ll1,
+      extentCorner2: ll2,
       columns: {
         name: opts.columns.name,
         x: opts.columns.x,
@@ -46,7 +55,18 @@ class Settings extends React.Component {
   }
 
   handleSave() {
-    store.saveSettings(this.state);
+    const extent = new L.latLngBounds(
+      this.state.extentCorner1,
+      this.state.extentCorner2
+    );
+
+    const stateObj = Object.assign(this.state, {});
+    stateObj.maxGeoExtent = [
+      [extent.getSouth(), extent.getWest()],
+      [extent.getNorth(), extent.getEast()]
+    ];
+
+    store.saveSettings(stateObj);
     store.closeSettings();
   }
 
@@ -54,14 +74,14 @@ class Settings extends React.Component {
     store.closeSettings();
   }
 
-  handleGeoExtentChange() {
+  handleMapViewport() {
     if (this.refs.refMap) {
       const bounds = this.refs.refMap.leafletElement.getBounds();
 
       const sw = bounds.getSouthWest();
       const ne = bounds.getNorthEast();
       this.setState({
-        maxGeoExtent: [[sw.lat, sw.lng], [ne.lat, ne.lng]]
+        mapBounds: [[sw.lat, sw.lng], [ne.lat, ne.lng]]
       });
     }
   }
@@ -76,6 +96,40 @@ class Settings extends React.Component {
     const newState = Object.assign(this.state, {});
     newState.columns[columnName] = e.target.value;
     this.setState(newState);
+  }
+
+  handleDragRectangle(e) {
+    const ll = e.latlng;
+    const oll = e.oldLatLng;
+    const lat = (ll.lat - oll.lat) / 10;
+    const lng = (ll.lng - oll.lng) / 10;
+
+    const marker1 = this.refs.marker1.leafletElement;
+    const marker2 = this.refs.marker2.leafletElement;
+    const ll1 = marker1.getLatLng();
+    const ll2 = marker2.getLatLng();
+
+    ll1.lat += lat;
+    ll2.lat += lat;
+    ll1.lng += lng;
+    ll2.lng += lng;
+    this.setState({
+      extentCorner1: ll1,
+      extentCorner2: ll2
+    });
+  }
+  handleDragBound() {
+    if (this.refs.marker1 && this.refs.marker2) {
+      const marker1 = this.refs.marker1.leafletElement;
+      const marker2 = this.refs.marker2.leafletElement;
+      const ll1 = marker1.getLatLng();
+      const ll2 = marker2.getLatLng();
+
+      this.setState({
+        extentCorner1: ll1,
+        extentCorner2: ll2
+      });
+    }
   }
 
   _renderLabel(label) {
@@ -127,19 +181,38 @@ class Settings extends React.Component {
   }
 
   renderExtent() {
-    const extent = this.state.maxGeoExtent;
-    const bounds = [[extent[0][0], extent[0][1]], [extent[1][0], extent[1][1]]];
+    const extent = L.latLngBounds(
+      this.state.extentCorner1,
+      this.state.extentCorner2
+    );
+
     const basemap = store.basemapById('OSM');
+
     return (
       <Map
         zoomControl={true}
         zoomSnap={0.05}
         zoomDelta={0.05}
         ref="refMap"
-        bounds={bounds}
-        onViewportChanged={this.handleGeoExtentChange.bind(this)}
+        bounds={this.state.mapBounds}
+        onViewportChanged={this.handleMapViewport.bind(this)}
         style={{ width: '100%', height: 200 }}
       >
+        <Marker
+          key={'corner1'}
+          position={this.state.extentCorner1}
+          onDrag={this.handleDragBound.bind(this)}
+          draggable={true}
+          ref="marker1"
+        />
+        <Marker
+          key={'corner2'}
+          position={this.state.extentCorner2}
+          onDrag={this.handleDragBound.bind(this)}
+          draggable={true}
+          ref="marker2"
+        />
+        <Rectangle bounds={extent} />
         <TileLayer {...basemap} />
       </Map>
     );

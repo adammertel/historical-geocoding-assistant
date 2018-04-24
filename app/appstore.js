@@ -34,7 +34,7 @@ export default class AppStore extends React.Component {
   @action
   init() {
     this.noRecords = Sheet.noLines;
-    this.openedSettings = config.defaultSettingsOpen ? false : 'columns';
+    this.openedSettings = config.defaultSettingsOpen;
     this.loadTable(() => {
       this.row = this.opts.defaultRow;
       this.findDefaultColumnNames();
@@ -417,7 +417,6 @@ export default class AppStore extends React.Component {
   @action
   updateRecordValue = (column, value) => {
     const config = this.opts;
-    console.log('new value', value);
 
     if (column === config.columns.x || column === config.columns.y) {
       if (value || value === 0) {

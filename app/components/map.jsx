@@ -13,7 +13,6 @@ import {
   Pane
 } from 'react-leaflet';
 
-import { divIcon } from 'leaflet';
 require('leaflet.measure');
 import { observer } from 'mobx-react';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
@@ -150,23 +149,6 @@ class AppMap extends React.Component {
     );
   }
 
-  icon(classes, style, size) {
-    return divIcon({
-      html:
-        '<span style="' +
-        style +
-        '; vertical-align: bottom"' +
-        ' class="icon"><i style="font-size:' +
-        size[0] +
-        'px" class="' +
-        classes +
-        '"></i></span>',
-      className: 'map-sort-icon',
-      iconAnchor: [size[0] / 2, size[1]],
-      iconSize: size
-    });
-  }
-
   renderOtherRecords() {
     const records = store.geoRecords
       .filter(r => Base.validGeo([r.x, r.y]))
@@ -176,7 +158,7 @@ class AppMap extends React.Component {
           <Marker
             key={ri}
             position={[parseFloat(record.y), parseFloat(record.x)]}
-            icon={this.icon(
+            icon={Base.icon(
               'fa fa-map-marker',
               'color: ' + config.colors.otherRecords,
               this.markerSize
@@ -217,7 +199,7 @@ class AppMap extends React.Component {
         <Marker
           key={0}
           position={[parseFloat(store.recordY), parseFloat(store.recordX)]}
-          icon={this.icon(
+          icon={Base.icon(
             'fa fa-map-marker',
             'color: ' + config.colors.main,
             this.markerSize
@@ -240,7 +222,7 @@ class AppMap extends React.Component {
               key={gi}
               className="geoname-point"
               position={[geoname.ll[0], geoname.ll[1]]}
-              icon={this.icon(
+              icon={Base.icon(
                 'fa fa-map-marker',
                 'color: ' + config.colors.geonames,
                 this.markerSize
@@ -266,7 +248,7 @@ class AppMap extends React.Component {
               key={gi}
               className="wiki-point"
               position={[wiki.ll[0], wiki.ll[1]]}
-              icon={this.icon(
+              icon={Base.icon(
                 'fa fa-map-marker',
                 'color: ' + config.colors.wikipedia,
                 this.markerSize
