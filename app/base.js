@@ -32,7 +32,7 @@ var Base = {
     return false;
   },
 
-  icon(classes, style, size) {
+  icon(classes, style, size, anchor = false) {
     return divIcon({
       html:
         '<span style="' +
@@ -44,7 +44,7 @@ var Base = {
         classes +
         '"></i></span>',
       className: 'map-sort-icon',
-      iconAnchor: [size[0] / 2, size[1]],
+      iconAnchor: anchor ? anchor : [size[0] / 2, size[1]],
       iconSize: size
     });
   },

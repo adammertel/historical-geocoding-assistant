@@ -9,6 +9,18 @@ class Settings extends React.Component {
     super(props);
     const opts = store.opts;
 
+    this.cornerIcon = Base.icon(
+      'fa fa-circle',
+      'color: black',
+      [12, 12],
+      [12, 12]
+    );
+    this.centerIcon = Base.icon(
+      'fa fa-arrows',
+      'color: black',
+      [12, 12],
+      [12, 12]
+    );
     const lls = store.configMaxGeoExtent;
     const ll1 = L.latLng(lls[0][0], lls[0][1]);
     const ll2 = L.latLng(lls[1][0], lls[1][1]);
@@ -19,6 +31,8 @@ class Settings extends React.Component {
       maxGeoExtent: extent,
       extentCorner1: ll1,
       extentCorner2: ll2,
+      draggingCenter: false,
+      draggingCenterOrigin: false,
       columns: {
         name: opts.columns.name,
         x: opts.columns.x,
@@ -27,6 +41,17 @@ class Settings extends React.Component {
         certainty: opts.columns.certainty
       }
     };
+  }
+
+  componentDidMount() {
+    this.afterRender();
+  }
+  componentDidUpdate() {
+    this.afterRender();
+  }
+
+  afterRender() {
+    console.log('after render');
   }
 
   style() {
@@ -98,27 +123,40 @@ class Settings extends React.Component {
     this.setState(newState);
   }
 
+  handleDragRectangleStart(e) {
+    console.log('dragging start');
+  }
+  handleDragRectangleEnd(e) {
+    this.lastCenterOrigin = false;
+  }
   handleDragRectangle(e) {
     const ll = e.latlng;
-    const oll = e.oldLatLng;
-    const lat = (ll.lat - oll.lat) / 10;
-    const lng = (ll.lng - oll.lng) / 10;
 
-    const marker1 = this.refs.marker1.leafletElement;
-    const marker2 = this.refs.marker2.leafletElement;
-    const ll1 = marker1.getLatLng();
-    const ll2 = marker2.getLatLng();
+    if (this.lastCenterOrigin) {
+      const oll = this.lastCenterOrigin;
+      const lat = ll.lat - oll.lat;
+      const lng = ll.lng - oll.lng;
 
-    ll1.lat += lat;
-    ll2.lat += lat;
-    ll1.lng += lng;
-    ll2.lng += lng;
-    this.setState({
-      extentCorner1: ll1,
-      extentCorner2: ll2
-    });
+      const marker1 = this.refs.marker1.leafletElement;
+      const marker2 = this.refs.marker2.leafletElement;
+      const ll1 = marker1.getLatLng();
+      const ll2 = marker2.getLatLng();
+
+      ll1.lat += lat;
+      ll2.lat += lat;
+      ll1.lng += lng;
+      ll2.lng += lng;
+
+      this.setState({
+        extentCorner1: ll1,
+        extentCorner2: ll2
+      });
+    }
+
+    this.lastCenterOrigin = ll;
   }
   handleDragBound() {
+    console.log('dragging');
     if (this.refs.marker1 && this.refs.marker2) {
       const marker1 = this.refs.marker1.leafletElement;
       const marker2 = this.refs.marker2.leafletElement;
@@ -196,21 +234,39 @@ class Settings extends React.Component {
         ref="refMap"
         bounds={this.state.mapBounds}
         onViewportChanged={this.handleMapViewport.bind(this)}
-        style={{ width: '100%', height: 200 }}
+        style={{ width: '100%', height: 400 }}
       >
         <Marker
           key={'corner1'}
-          position={this.state.extentCorner1}
+          position={[
+            this.state.extentCorner1.lat,
+            this.state.extentCorner1.lng
+          ]}
           onDrag={this.handleDragBound.bind(this)}
           draggable={true}
           ref="marker1"
+          icon={this.cornerIcon}
         />
         <Marker
           key={'corner2'}
-          position={this.state.extentCorner2}
+          position={[
+            this.state.extentCorner2.lat,
+            this.state.extentCorner2.lng
+          ]}
           onDrag={this.handleDragBound.bind(this)}
           draggable={true}
           ref="marker2"
+          icon={this.cornerIcon}
+        />
+        <Marker
+          key={'corner-center'}
+          position={extent.getCenter()}
+          onDrag={this.handleDragRectangle.bind(this)}
+          onDragEnd={this.handleDragRectangleEnd.bind(this)}
+          onDragStart={this.handleDragRectangleStart.bind(this)}
+          draggable={true}
+          ref="marker-center"
+          icon={this.centerIcon}
         />
         <Rectangle bounds={extent} />
         <TileLayer {...basemap} />
