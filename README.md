@@ -4,7 +4,7 @@ Try it [here](http://hde.geogr.muni.cz/hga/)
 
 Tool for assisted geocoding of historical datasets (something between a manual table editing and automated geocoding script)
 
-![alt text](https://github.com/adammertel/historical-geocoder-assistant/blob/master/app/assets/icon.png 'Historical Geocoding Assistant Logo')
+![Historical Geocoding Assistant Logo](https://github.com/adammertel/historical-geocoder-assistant/blob/master/app/assets/logo.png 'Historical Geocoding Assistant Logo')
 
 ## Description
 
