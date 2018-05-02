@@ -2,15 +2,15 @@
 
 ## 1 Description
 
-Historical Geocoding Assistant is a tool for assisted geocoding of historical datasets (something between a manual table editing and automated geocoding script)
+Historical Geocoding Assistant is a tool for assisted geocoding of historical datasets (something between a manual table editing and automated geocoding script).
 
 ## 2 Table input
 
-The HGA application works with tables stored in google drive in a spreadsheet form. An working example of such table is located [here](https://docs.google.com/spreadsheets/d/1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU).
+The HGA application works with tables stored in google drive in a spreadsheet form. A working example of such table is located [here](https://docs.google.com/spreadsheets/d/1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU).
 
 ### 2.1 Localisation columns
 
-Table should consist of some localisation columns (names of columns are advised but not neccesary to follow, see **6.5**:
+Table should consist of some localisation columns (column names are advised but not necessary to follow, see **6.5**:
 
 #### 2.1.1 location name
 
@@ -29,9 +29,9 @@ Lattitude coordinate.
 Level of assigned location certainty:
 
 * 1 - coordinates are precise (at the level of given granularity)
-* 2 - localisation is not precise (eg, centroid of region was used...)
-* 3 - coordinates are possible but not certain
-* 4 - localisation is not possible (or unwanted)
+* 2 - localisation is not precise (eg centroid of the region was used...)
+* 3 - coordinates are likely but not certain
+* 4 - localisation is not possible
 
 #### 2.1.6 localisation note
 
@@ -140,6 +140,11 @@ Map control menu is located in the bottom-left part of the map and has two subse
 
 ![mapcontrol image](./imgs/mapcontrol.png)
 
-## 8 config file
+## 8 config files
 
-The config file is a json formatted text that could be used to reassign various options used within the application.
+When deploying your own version of HGA, you can use config files (json formatted) to customise the content and rules of the application. There are 4 config files:
+
+* config.json - various customisation like colors, default options...
+* config_api.json - google api id and key (note that this file has to be created, it is not in repository!)
+* basemaps.json - a list of base layers (wms or tile service)
+* mapoverlays.json - other auxiliary layers in a format of geojson or wms (modern countries...)
