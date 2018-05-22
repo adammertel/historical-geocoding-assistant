@@ -19,6 +19,7 @@
   "defaultSheetId": "1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU",
   "messageLoadingTime": 1000,
   "mapOpacityRatio": 0.4,
+  "mapMeasureUnits": "metres",
   "map": {
     "zoomMax": 15,
     "zoomMin": 3
