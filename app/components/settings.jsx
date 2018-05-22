@@ -208,7 +208,7 @@ class Settings extends React.Component {
     return (
       <table className="table centered">
         <tbody>
-          {this.renderColumnSelect('name', 'name column')}
+          {this.renderColumnSelect('name', 'place name column')}
           {this.renderColumnSelect('x', 'x coordinate column')}
           {this.renderColumnSelect('y', 'y coordinate column')}
           {this.renderColumnSelect('certainty', 'certainty column')}

@@ -246,19 +246,6 @@ class Panel extends React.Component {
                   </td>
                 </tr>
 
-                <tr key="3">
-                  <td>notes</td>
-                  <td>
-                    <Input
-                      onChange={this.handleChangeInput.bind(
-                        this,
-                        store.opts.columns.note
-                      )}
-                      value={store.recordNote}
-                    />
-                  </td>
-                </tr>
-
                 <tr key="4">
                   <td>certainty level</td>
                   <td>
@@ -278,6 +265,19 @@ class Panel extends React.Component {
                         })}
                       </select>
                     </div>
+                  </td>
+                </tr>
+
+                <tr key="3">
+                  <td>notes</td>
+                  <td>
+                    <Input
+                      onChange={this.handleChangeInput.bind(
+                        this,
+                        store.opts.columns.note
+                      )}
+                      value={store.recordNote}
+                    />
                   </td>
                 </tr>
               </tbody>

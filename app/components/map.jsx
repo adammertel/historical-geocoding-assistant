@@ -42,6 +42,7 @@ class AppMap extends React.Component {
     };
     window['measureControl'] = L.control
       .polylineMeasure({
+        unit: config.mapMeasureUnits,
         measureControlTitleOn: 'Measure',
         measureControlTitleOff: 'Stop measuring',
         clearControlTitle: 'Clear Measurements',
@@ -292,7 +293,7 @@ class AppMap extends React.Component {
           maxZoom={config.map.zoomMax}
           minZoom={config.map.zoomMin}
         >
-          <ScaleControl position="topleft" imperial={false} />
+          <ScaleControl position="topleft" imperial={true} />
           <AttributionControl position="bottomleft" />
 
           {this.renderBaseLayers()}
