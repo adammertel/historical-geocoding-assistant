@@ -10,9 +10,9 @@
   "loadingMessages": {
     "loaded": "",
     "config": "loading config files",
-    "prompting table": "setting google table id...",
-    "signing": "application is signing in",
-    "table": "loading google table",
+    "prompting table": "setting the Google Sheet id...",
+    "signing": "the application is signing in",
+    "table": "loading the Google Sheet",
     "record": "loading record data",
     "save": "saving record data"
   },

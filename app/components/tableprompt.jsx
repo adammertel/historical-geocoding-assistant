@@ -59,12 +59,12 @@ class TablePrompt extends React.Component {
               }}
             />
             <div style={{ padding: 30 }}>
-              Enter id of your google sheet (
+              Enter the ID number of your Google Sheet (
               <a
                 href="https://developers.google.com/sheets/api/guides/concepts"
                 target="_blank"
               >
-                what is that "google sheet id"?
+                what is a Google Sheet ID?
               </a>{' '}
               ):
               <Input
@@ -88,16 +88,14 @@ class TablePrompt extends React.Component {
               <br />
               <b>Notes:</b>
               <br />
-              - Application was tested in the chrome browser
-              <br />
-              - Application has to be signed into a google account (you may need
-              to allow pop-ups)
+              - The application has to be signed into a Google Account (you may
+              need to allow pop-ups)
               <br />
               <br />
               <b>Other links:</b>
               <br />
               <a href="https://github.com/adammertel/historical-geocoder-assistant">
-                - Github
+                - Code at Github
               </a>
               <br />
               <a href="https://github.com/adammertel/historical-geocoder-assistant/tree/master/manual">

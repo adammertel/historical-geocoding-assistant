@@ -24,6 +24,7 @@ export default class AppStore extends React.Component {
 
   constructor() {
     super();
+    console.log(this.openedSettings);
   }
 
   @action
