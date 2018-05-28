@@ -140,7 +140,9 @@ var Sheet = {
     const records = {};
     response.result.values.map((row, i) => {
       const rowColumns = {};
-      row.map((value, vi) => (rowColumns[this.header[vi]] = value));
+      this.header.forEach(
+        (columnName, ci) => (rowColumns[columnName] = row[ci])
+      );
       records[i + 2] = rowColumns;
     });
 

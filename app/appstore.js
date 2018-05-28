@@ -151,12 +151,13 @@ export default class AppStore extends React.Component {
 
   @computed
   get recordX() {
-    return this.recordData[this.opts.columns.x];
+    console.log(this.opts.columns.x);
+    return this.recordData[this.opts.columns.x] || '';
   }
 
   @computed
   get recordY() {
-    return this.recordData[this.opts.columns.y];
+    return this.recordData[this.opts.columns.y] || '';
   }
 
   @computed
@@ -391,7 +392,6 @@ export default class AppStore extends React.Component {
   @action
   loadTable = next => {
     Sheet.readAllLines(data => {
-      console.log(data);
       this.records = data;
       next();
     });
