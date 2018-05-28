@@ -239,7 +239,7 @@ class Panel extends React.Component {
                     <Input
                       onChange={this.handleChangeInput.bind(
                         this,
-                        store.recordName
+                        store.opts.columns.name
                       )}
                       value={store.recordName}
                     />
