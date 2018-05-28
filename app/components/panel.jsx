@@ -328,24 +328,28 @@ class Panel extends React.Component {
           <div>
             <table className="table centered">
               <tbody>
-                {Object.keys(store.recordData).map((column, ci) => {
-                  const value = store.recordData[column];
+                {Object.keys(store.recordData)
+                  .filter(c => !store.recordMandatoryColumns.includes(c))
+                  .map((column, ci) => {
+                    const value = store.recordData[column];
 
-                  const shortenColumn =
-                    column.length > 13 ? column.substr(0, 12) + '...' : column;
+                    const shortenColumn =
+                      column.length > 13
+                        ? column.substr(0, 12) + '...'
+                        : column;
 
-                  return (
-                    <tr key={ci}>
-                      <td title={column}> {shortenColumn} </td>
-                      <td>
-                        <Input
-                          value={value}
-                          onChange={this.handleChangeInput.bind(this, column)}
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
+                    return (
+                      <tr key={ci}>
+                        <td title={column}> {shortenColumn} </td>
+                        <td>
+                          <Input
+                            value={value}
+                            onChange={this.handleChangeInput.bind(this, column)}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>

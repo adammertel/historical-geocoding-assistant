@@ -135,18 +135,23 @@ export default class AppStore extends React.Component {
   }
 
   @computed
+  get recordMandatoryColumns() {
+    return Object.values(this.opts.columns);
+  }
+
+  @computed
   get recordName() {
     return this.recordData[this.opts.columns.name];
   }
 
   @computed
   get recordCertainty() {
-    return this.recordData[this.opts.columns.certainty];
+    return this.recordData[this.opts.columns.certainty] || '';
   }
 
   @computed
   get recordNote() {
-    return this.recordData[this.opts.columns.note];
+    return this.recordData[this.opts.columns.note] || '';
   }
 
   @computed
