@@ -135,6 +135,11 @@ export default class AppStore extends React.Component {
   }
 
   @computed
+  get firstRecordRow() {
+    return 2;
+  }
+
+  @computed
   get recordMandatoryColumns() {
     return Object.values(this.opts.columns);
   }
