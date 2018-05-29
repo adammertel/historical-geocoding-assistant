@@ -324,7 +324,7 @@ class Panel extends React.Component {
           </div>
         </Menu>
 
-        <Menu label="record data" defaultOpen={false}>
+        <Menu label="record data" defaultOpen={true}>
           <div>
             <table className="table centered">
               <tbody>

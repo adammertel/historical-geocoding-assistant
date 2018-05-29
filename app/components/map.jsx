@@ -17,6 +17,7 @@ require('leaflet.measure');
 import { observer } from 'mobx-react';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 require('leaflet.markercluster.placementstrategies');
+require('./../../node_modules/leaflet-geonames/L.Control.Geonames.js');
 
 class AppMap extends React.Component {
   constructor(props) {
@@ -60,6 +61,26 @@ class AppMap extends React.Component {
         intermedCircle: measureCircleStyle,
         currentCircle: measureCircleStyle,
         endCircle: measureCircleStyle
+      })
+      .addTo(map);
+
+    window['geonamesControl'] = L.control
+      .geonames({
+        //position: 'topcenter',  // in addition to standard 4 corner Leaflet control layout, this will position and size from top center
+        geonamesURL: '//api.geonames.org/searchJSON', // override this if using a proxy to get connection to geonames
+        username: 'adammertel', // Geonames account username.  Must be provided
+        zoomLevel: null, // Max zoom level to zoom to for location.  If null, will use the map's max zoom level.
+        maxresults: 5, // Maximum number of results to display per search
+        className: 'leaflet-geonames-icon', //class for icon
+        workingClass: 'leaflet-geonames-icon-working', //class for search underway
+        featureClasses: ['A', 'H', 'L', 'P', 'R', 'T', 'U', 'V'], // feature classes to search against.  See: http://www.geonames.org/export/codes.html
+        baseQuery: 'isNameRequired=true', // The core query sent to GeoNames, later combined with other parameters above
+        position: 'topleft',
+        showMarker: false, //Show a marker at the location the selected location
+        showPopup: true, //Show a tooltip at the selected location
+
+        lang: 'en',
+        alwaysOpen: false
       })
       .addTo(map);
   }
