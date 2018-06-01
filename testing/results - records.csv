@@ -1,26 +1,21 @@
 Id,Place_name_modern,Place_name_full_precisely_transcribed_from_Ristow,State_modern,x_coordinates,y_coordinates,Certainty
+21,Faras,"Faras {Nubien}, Kathedrale (Bau des Paulos); Phase: 2",Egypt,31.467,22.200,1
+59,Wādi aṣ Ṣubūa,"Wādi aṣ Ṣubūa (Wadi el(s)-Sebua/Ouadi es-Sebua) {Nubien}, in einem pharaonischen Tempel",Egypt,32.545,22.793,1
+62,Degum Sellasie,Degum Sellasie (100 km südöstl. Aksum) {Tigray},Ethiopia,39.537,13.852,2
 75,Djemila,"Djemila (Cuicul), Kathedrale (N-Kirche der Kirchenfamilie)",Algeria,5.737,36.321,1
+95,Tipaza,"Tipaza (Tipasa), Kirche I (Kathedrale - grande basilique - Kirchenkomplex)",Algeria,2.417,36.583,1
+97,Etschmiadzin,"Etschmiadzin (Vagharshapat/Wagarschapat) - Zvarthnotz (Zwarthnotz), Palastkirche/Gregorkirche",Armenia,44.286,40.160,1
+99,Bare,"Bare (b. Konjic), Crkvisce",Bosnia-Herzegovina,17.937,43.636,1
+125,Hissar,"Hissar (Chissar/Diocletianopolis/Diospolis/Hisarja) [Хисаря], Kirche Nr. 2",Bulgaria,24.705,42.505,1
 146,Palenberg,"Palenberg {Nordrhein-Westfalen}, Karlskapelle",Germany,6.083,50.917,1
 153,Zula,"Zula (Adulis), O-Kirche",Eritrea,39.669,15.246,1
+263,Achladeri,Lesbos - Achladeri (Ahladeri) [Λέσβος - 'Αχλαδερή],Greece,26.28,39.15,1
+312,Khirbet Keratiya,Khirbet Keratiya (Khirbet Keratiyeh/b. Revaha/12 km östl. Askalon) {Palaestina I},Israel,34.726,31.644,1
 432,Verona,"Verona {Veneto}, S. Giovanni in Fonte",Italy,10.984,45.430,1
 441,Madaba,"Madaba (Madeba) {Arabia}, Kathedrale; Phase: 1",Jordan,35.794,31.716,1
 496,Sabrātah,"Sabrātah (Sabratha), Kirche I (römische Basilika am Forum); Phase: 1",Libya,12.488,32.793,1
 818,Angers,"Angers {Maine-et-Loire}, Kathedrale St-Maurille",France,-0.550,47.467,1
 837,Saint-Rémy-de-Provence,"Saint-Rémy-de-Provence {Bouches-Rhône}, Notre-Dame-dans-la Tour/Pénitents Noirs/St-Pierre",France,4.832,43.789,1
-95,Tipaza,"Tipaza (Tipasa), Kirche I (Kathedrale - grande basilique - Kirchenkomplex)",Algeria,2.417,36.583,1
-97,Etschmiadzin,"Etschmiadzin (Vagharshapat/Wagarschapat) - Zvarthnotz (Zwarthnotz), Palastkirche/Gregorkirche",Armenia,44.286,40.160,1
-125,Hissar,"Hissar (Chissar/Diocletianopolis/Diospolis/Hisarja) [Хисаря], Kirche Nr. 2",Bulgaria,24.705,42.505,1
-263,Achladeri,Lesbos - Achladeri (Ahladeri) [Λέσβος - 'Αχλαδερή],Greece,26.28,39.15,1
-1011,Ṭulmaythah,Ṭulmaythah (Tolmeta/Ptolemais),Libya,20.942,32.704,1
-99,Bare,"Bare (b. Konjic), Crkvisce",Bosnia-Herzegovina,17.937,43.636,1
-21,Faras,"Faras {Nubien}, Kathedrale (Bau des Paulos); Phase: 2",Egypt,31.467,22.200,1
-59,Wādi aṣ Ṣubūa,"Wādi aṣ Ṣubūa (Wadi el(s)-Sebua/Ouadi es-Sebua) {Nubien}, in einem pharaonischen Tempel",Egypt,32.545,22.793,1
-62,Degum Sellasie,Degum Sellasie (100 km südöstl. Aksum) {Tigray},Ethiopia,38.729,14.121,2
-312,Khirbet Keratiya,Khirbet Keratiya (Khirbet Keratiyeh/b. Revaha/12 km östl. Askalon) {Palaestina I},Israel,34.726,31.644,1
+884,Betika,"Betika (Betica) {Istrien}, Sv. Andreja",Croatia,13.624,45.059,1
 948,Tiddis,Tiddis (El Kheneg/Ksantina el Kedima/Castellum Tidditanorum),Algeria,6.484,36.463,1
-884,Betika,"Betika (Betica) {Istrien}, Sv. Andreja",Croatia,15.609,43.837,3
-982,Thasos,"Thasos - Thasos {Kavalla} [Θάσοϛ - Θάσοϛ], kreuzförmige Basilika",Greece,24.661,40.694,1
-351,Egnazia,"Egnazia {Puglia}, N-Kirche; Phase: 2",Italy,17.391,40.888,1
-340,Castelseprio,"Castelseprio (Sibrium/Castell Sibrium) {Lombardia}, S. Giovanni Evangelista; Phase: 2",Italy,8.862,45.714,1
-518,Duel,Duel {Kärnten},Austria,14.017,46.583,1
-68,Lin,"Lin (Westufer des Ohrid-sees) {Pogradec} [Лин], Polygon-Kirche",Albania,20.639,41.066,1
+1011,Ṭulmaythah,Ṭulmaythah (Tolmeta/Ptolemais),Libya,20.942,32.704,1
