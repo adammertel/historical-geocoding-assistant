@@ -29,6 +29,7 @@ fs
           parseFloat(data.x_coordinates),
           parseFloat(data.y_coordinates)
         ]);
+
         records.push(data);
       })
       .on('end', () => {
@@ -41,8 +42,10 @@ fs
           .on('end', () => {
             // own code
 
-            coded.map(code => {
+            coded.filter(c => c).map(code => {
               const record = records.find(r => r.Id === code.Id);
+
+              console.log(code.Id);
 
               const codedPoint = turf.point([
                 parseFloat(code.x_coordinates),
@@ -78,9 +81,11 @@ fs
             });
 
             records.map(r => {
-              r.Time_HGA = r.Time_HGA / 3;
-              r.Time_Manual = r.Time_Manual / 3;
-              r.Time_All = r.Time_All / 6;
+              r.Time_HGA = r.Time_HGA / 4;
+              r.Time_Manual = r.Time_Manual / 4;
+              r.Precision_HGA = r.Precision_HGA / 4;
+              r.Precision_Manual = r.Precision_Manual / 4;
+              r.Time_All = r.Time_All / 8;
             });
 
             const timeThresholds = [130, 200];
