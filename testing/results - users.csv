@@ -1,13 +1,13 @@
 ID,Name,Group,Geocoding,Topic
-1,Tomáš Hampejs,A,1,3
-2,Aleša Chalupa,A,4,4
-3,Dalibor Papoušek,A,1,4
-4,Jan Škvrňák,A,4,3
+1,Tomáš Hampejs,A,1,2
+2,Aleša Chalupa,A,2,3
+3,Dalibor Papoušek,A,1,3
+4,Jan Škvrňák,A,2,2
 5,Jakub Filip,A,1,1
-6,David Zbíral,B,3,5
-7,Tereza Menšíková,B,1,3
-8,Tomáš Glomb,B,3,3
+6,David Zbíral,B,2,3
+7,Tereza Menšíková,B,1,2
+8,Tomáš Glomb,B,2,2
 9,Jan Trtílek,B,1,1
-10,Jan Reichstäter,B,1,3
-11,Veronika Konecna,A,1,2
-12,Kateřina Vidličková,B,1,2
+10,Jan Reichstäter,B,1,2
+11,Veronika Konecna,A,1,1
+12,Kateřina Vidličková,B,1,1
