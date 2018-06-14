@@ -22,6 +22,9 @@ fs.createReadStream("results - coded.csv")
         data.Time_HGA = 0;
         data.Time_Manual = 0;
         data.Time_All = 0;
+        data.errors_Manual = 0;
+        data.errors_HGA = 0;
+        data.errors_All = 0;
 
         data.geo = turf.point([
           parseFloat(data.x_coordinates),
@@ -79,6 +82,13 @@ fs.createReadStream("results - coded.csv")
                 } else {
                   record.Time_Manual += time;
                 }
+              } else {
+                record.errors_All += 1;
+                if (HGA) {
+                  record.errors_HGA += 1;
+                } else {
+                  record.errors_Manual += 1;
+                }
               }
             });
 
@@ -88,12 +98,9 @@ fs.createReadStream("results - coded.csv")
               r.Time_All = r.Time_All / (r.Precision_Manual + r.Precision_HGA);
             });
 
-            const timeThresholds = [130, 250];
+            const timeThresholds = [150];
             records.map(r => {
-              let timeCategory = 3;
-              if (r.Time_All < timeThresholds[1]) {
-                timeCategory = 2;
-              }
+              let timeCategory = 2;
               if (r.Time_All < timeThresholds[0]) {
                 timeCategory = 1;
               }
