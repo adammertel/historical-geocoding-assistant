@@ -22,9 +22,9 @@ fs.createReadStream("results - coded.csv")
         data.Time_HGA = 0;
         data.Time_Manual = 0;
         data.Time_All = 0;
-        data.errors_Manual = 0;
-        data.errors_HGA = 0;
-        data.errors_All = 0;
+        data.Correct_Manual = 0;
+        data.Correct_HGA = 0;
+        data.Correct_All = 0;
 
         data.geo = turf.point([
           parseFloat(data.x_coordinates),
@@ -77,25 +77,26 @@ fs.createReadStream("results - coded.csv")
               if (ok) {
                 const time = parseInt(code["Time [s]"], 10);
                 record.Time_All += time;
+                record.Correct_All += 1;
                 if (HGA) {
                   record.Time_HGA += time;
+                  record.Correct_HGA += 1;
                 } else {
                   record.Time_Manual += time;
-                }
-              } else {
-                record.errors_All += 1;
-                if (HGA) {
-                  record.errors_HGA += 1;
-                } else {
-                  record.errors_Manual += 1;
+                  record.Correct_Manual += 1;
                 }
               }
             });
 
             records.map(r => {
-              r.Time_HGA = r.Time_HGA / r.Precision_HGA;
-              r.Time_Manual = r.Time_Manual / r.Precision_Manual;
-              r.Time_All = r.Time_All / (r.Precision_Manual + r.Precision_HGA);
+              r.Time_HGA = r.Time_HGA / r.Correct_HGA;
+              r.Time_Manual = r.Time_Manual / r.Correct_Manual;
+              r.Time_All = r.Time_All / r.Correct_All;
+            });
+
+            records.map(r => {
+              r.Precision_HGA = r.Precision_HGA / 6;
+              r.Precision_Manual = r.Precision_Manual / 6;
             });
 
             const timeThresholds = [150];
@@ -109,8 +110,8 @@ fs.createReadStream("results - coded.csv")
 
             const json2csvParser = new Json2csvParser(Object.keys(records));
             const out = json2csvParser.parse(records);
-            fs.writeFile("out.csv", out, () => {
-              console.log("outfile saved");
+            fs.writeFile("difficulty.csv", out, () => {
+              console.log("diffuculty output saved");
             });
           });
       });
