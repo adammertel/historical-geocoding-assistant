@@ -1,0 +1,147 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title></title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vega/3.3.1/vega.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-lite/2.5.2/vega-lite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-embed/3.15.0/vega-embed.min.js"></script>
+    <script src="./records.js"></script>
+    <script>  
+        document.addEventListener('DOMContentLoaded', function () {
+            var vlSpec = {
+                "width": 200,
+                "height": 600,
+                "data": data,
+                "layer": [
+                    {
+                        "mark": {
+                            "type": "circle",
+                            "color": "red",
+                            "xOffset": 20
+                        },
+                        "encoding": {
+                            "y": {
+                                "field": "Time_HGA",
+                                "type": "quantitative"
+                            }
+                        },
+                    },
+                    {
+                        "mark": {
+                            "type": "circle",
+                            "color": "blue",
+                            "xOffset": -20
+                        },
+                        "encoding": {
+                            "y": {
+                                "field": "Time_Manual",
+                                "type": "quantitative"
+                            }
+                        },
+                        "color": { "value": "red" }
+                    },
+
+                    {
+
+                        "mark": {
+                            "type": "circle",
+                            "color": "blue",
+                            "xOffset": -20
+                        },
+                        "encoding": {
+                            "y": {
+                                "aggregate": "median",
+                                "field": "Time_HGA",
+                                "type": "quantitative"
+                            },
+                            "color": { "value": "black" },
+                            "fill": { "value": "black" },
+                            "size": { "value": "100" },
+                        }
+                    },
+                    {
+                        "mark": {
+                            "type": "text",
+                            "align": "left",
+                            "baseline": "middle",
+                            "dy": -20,
+                            "dx": -30
+                        },
+                        "encoding": {
+
+                            "y": {
+                                "aggregate": "median",
+                                "field": "Time_HGA",
+                                "type": "quantitative"
+                            },
+                            "text": {
+                                "aggregate": "median",
+                                "field": "Time_HGA",
+                                "type": "quantitative"
+                            }
+                        }
+
+                    },
+
+                    {
+
+                        "mark": {
+                            "type": "circle",
+                            "color": "blue",
+                            "xOffset": 20
+                        },
+                        "encoding": {
+                            "y": {
+                                "aggregate": "median",
+                                "field": "Time_Manual",
+                                "type": "quantitative"
+                            },
+                            "color": { "value": "black" },
+                            "fill": { "value": "black" },
+                            "size": { "value": "100" },
+                        }
+                    },
+                    {
+                        "mark": {
+                            "type": "text",
+                            "align": "left",
+                            "baseline": "middle",
+                            "dy": -20,
+                            "dx": 30
+                        },
+                        "encoding": {
+
+                            "y": {
+                                "aggregate": "median",
+                                "field": "Time_Manual",
+                                "type": "quantitative"
+                            },
+                            "text": {
+                                "aggregate": "median",
+                                "field": "Time_Manual",
+                                "type": "quantitative"
+                            }
+                        }
+
+                    },
+                ],
+            };
+            vegaEmbed('#vis', vlSpec, { mode: "vega-lite" });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="vis"></div>
+</body>
+
+</html>
