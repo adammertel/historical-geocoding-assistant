@@ -17,123 +17,243 @@
     <script src="./records.js"></script>
     <script>  
         document.addEventListener('DOMContentLoaded', function () {
+            var markersSchema = function (attr, offset, axisTitle, color) {
+                return {
+                    "mark": {
+                        "type": "circle",
+                        "color": color,
+                        "xOffset": offset
+                    },
+                    "encoding": {
+                        "y": {
+                            "field": attr,
+                            "type": "quantitative",
+                            "axis": { "title": axisTitle }
+                        }
+                    },
+                }
+            }
+
             var vlSpec = {
-                "width": 200,
-                "height": 600,
                 "data": data,
-                "layer": [
+                "hconcat": [
                     {
-                        "mark": {
-                            "type": "circle",
-                            "color": "red",
-                            "xOffset": 20
-                        },
-                        "encoding": {
-                            "y": {
-                                "field": "Time_HGA",
-                                "type": "quantitative"
-                            }
-                        },
-                    },
-                    {
-                        "mark": {
-                            "type": "circle",
-                            "color": "blue",
-                            "xOffset": -20
-                        },
-                        "encoding": {
-                            "y": {
-                                "field": "Time_Manual",
-                                "type": "quantitative"
-                            }
-                        },
-                        "color": { "value": "red" }
-                    },
-
-                    {
-
-                        "mark": {
-                            "type": "circle",
-                            "color": "blue",
-                            "xOffset": -20
-                        },
-                        "encoding": {
-                            "y": {
-                                "aggregate": "median",
-                                "field": "Time_HGA",
-                                "type": "quantitative"
+                        "width": 200,
+                        "height": 400,
+                        "layer": [
+                            markersSchema('Time_HGA', 20, 'time', 'red'),
+                            {
+                                "mark": {
+                                    "type": "circle",
+                                    "color": "red",
+                                    "xOffset": 20
+                                },
+                                "encoding": {
+                                    "y": {
+                                        "aggregate": "median",
+                                        "field": "Time_HGA",
+                                        "type": "quantitative"
+                                    },
+                                    "color": { "value": "black" },
+                                    "fill": { "value": "black" },
+                                    "size": { "value": "100" },
+                                }
                             },
-                            "color": { "value": "black" },
-                            "fill": { "value": "black" },
-                            "size": { "value": "100" },
-                        }
+                            {
+                                "mark": {
+                                    "type": "text",
+                                    "align": "left",
+                                    "dy": -10,
+                                    "dx": 30
+                                },
+                                "encoding": {
+
+                                    "y": {
+                                        "aggregate": "median",
+                                        "field": "Time_HGA",
+                                        "type": "quantitative"
+                                    },
+                                    "text": {
+                                        "aggregate": "median",
+                                        "field": "Time_HGA",
+                                        "type": "quantitative"
+                                    }
+                                }
+
+                            },
+                            {
+                                "mark": {
+                                    "type": "circle",
+                                    "color": "blue",
+                                    "xOffset": -20
+                                },
+                                "encoding": {
+                                    "y": {
+                                        "field": "Time_Manual",
+                                        "type": "quantitative"
+                                    }
+                                },
+                                "color": { "value": "red" }
+                            },
+
+                            {
+
+                                "mark": {
+                                    "type": "circle",
+                                    "color": "blue",
+                                    "xOffset": -20,
+                                },
+                                "encoding": {
+                                    "y": {
+                                        "aggregate": "median",
+                                        "field": "Time_Manual",
+                                        "type": "quantitative"
+                                    },
+                                    "color": { "value": "black" },
+                                    "fill": { "value": "black" },
+                                    "size": { "value": "100" },
+                                }
+                            },
+                            {
+                                "mark": {
+                                    "type": "text",
+                                    "align": "left",
+                                    "dy": -10,
+                                    "dx": -60,
+                                },
+                                "encoding": {
+                                    "y": {
+                                        "aggregate": "median",
+                                        "field": "Time_Manual",
+                                        "type": "quantitative"
+                                    },
+                                    "text": {
+                                        "aggregate": "median",
+                                        "field": "Time_Manual",
+                                        "type": "quantitative"
+                                    }
+                                }
+
+                            },
+                        ],
                     },
                     {
-                        "mark": {
-                            "type": "text",
-                            "align": "left",
-                            "baseline": "middle",
-                            "dy": -20,
-                            "dx": -30
-                        },
-                        "encoding": {
-
-                            "y": {
-                                "aggregate": "median",
-                                "field": "Time_HGA",
-                                "type": "quantitative"
+                        "width": 200,
+                        "height": 400,
+                        "layer": [
+                            {
+                                "mark": {
+                                    "type": "circle",
+                                    "color": "red",
+                                    "xOffset": 20
+                                },
+                                "encoding": {
+                                    "y": {
+                                        "field": "Precision_HGA",
+                                        "type": "quantitative",
+                                        "axis": { "title": "precision" }
+                                    }
+                                },
                             },
-                            "text": {
-                                "aggregate": "median",
-                                "field": "Time_HGA",
-                                "type": "quantitative"
-                            }
-                        }
-
-                    },
-
-                    {
-
-                        "mark": {
-                            "type": "circle",
-                            "color": "blue",
-                            "xOffset": 20
-                        },
-                        "encoding": {
-                            "y": {
-                                "aggregate": "median",
-                                "field": "Time_Manual",
-                                "type": "quantitative"
+                            {
+                                "mark": {
+                                    "type": "circle",
+                                    "color": "red",
+                                    "xOffset": 20
+                                },
+                                "encoding": {
+                                    "y": {
+                                        "aggregate": "median",
+                                        "field": "Precision_HGA",
+                                        "type": "quantitative"
+                                    },
+                                    "color": { "value": "black" },
+                                    "fill": { "value": "black" },
+                                    "size": { "value": "100" },
+                                }
                             },
-                            "color": { "value": "black" },
-                            "fill": { "value": "black" },
-                            "size": { "value": "100" },
-                        }
-                    },
-                    {
-                        "mark": {
-                            "type": "text",
-                            "align": "left",
-                            "baseline": "middle",
-                            "dy": -20,
-                            "dx": 30
-                        },
-                        "encoding": {
+                            {
+                                "mark": {
+                                    "type": "text",
+                                    "align": "left",
+                                    "dy": -10,
+                                    "dx": 30
+                                },
+                                "encoding": {
 
-                            "y": {
-                                "aggregate": "median",
-                                "field": "Time_Manual",
-                                "type": "quantitative"
+                                    "y": {
+                                        "aggregate": "median",
+                                        "field": "Precision_HGA",
+                                        "type": "quantitative"
+                                    },
+                                    "text": {
+                                        "aggregate": "median",
+                                        "field": "Precision_HGA",
+                                        "type": "quantitative"
+                                    }
+                                }
+
                             },
-                            "text": {
-                                "aggregate": "median",
-                                "field": "Time_Manual",
-                                "type": "quantitative"
-                            }
-                        }
+                            {
+                                "mark": {
+                                    "type": "circle",
+                                    "color": "blue",
+                                    "xOffset": -20
+                                },
+                                "encoding": {
+                                    "y": {
+                                        "field": "Precision_Manual",
+                                        "type": "quantitative"
+                                    }
+                                },
+                                "color": { "value": "red" }
+                            },
 
-                    },
+                            {
+
+                                "mark": {
+                                    "type": "circle",
+                                    "color": "blue",
+                                    "xOffset": -20,
+                                },
+                                "encoding": {
+                                    "y": {
+                                        "aggregate": "median",
+                                        "field": "Precision_Manual",
+                                        "type": "quantitative"
+                                    },
+                                    "color": { "value": "black" },
+                                    "fill": { "value": "black" },
+                                    "size": { "value": "100" },
+                                }
+                            },
+                            {
+                                "mark": {
+                                    "type": "text",
+                                    "align": "left",
+                                    "dy": -10,
+                                    "dx": -60,
+                                },
+                                "encoding": {
+                                    "y": {
+                                        "aggregate": "median",
+                                        "field": "Precision_Manual",
+                                        "type": "quantitative"
+                                    },
+                                    "text": {
+                                        "aggregate": "median",
+                                        "field": "Precision_Manual",
+                                        "type": "quantitative"
+                                    }
+                                }
+
+                            },
+                        ],
+                    }
                 ],
+                config: {
+                    numberFormat: ".5"
+                }
             };
             vegaEmbed('#vis', vlSpec, { mode: "vega-lite" });
         });
