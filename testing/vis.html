@@ -17,65 +17,75 @@
     <script src="./records.js"></script>
     <script>  
         document.addEventListener('DOMContentLoaded', function () {
-            colorHGA = 'red'
-            colorManual = 'blue'
 
-            const markers = function (attr, offset, axisTitle) {
-                const color = attr.includes('HGA') ? colorHGA : colorManual;
+            colors = {
+                hga: ['#fb9a99', '#e31a1c'],
+                manual: ['#b2df8a', '#33a02c']
+            }
+
+            const markers = function (attr, offset, axisTitle, domain) {
+                const color = attr.includes('HGA') ? colors.hga[1] : colors.manual[1];
 
                 return {
                     "mark": {
                         "type": "circle",
-                        "color": color,
+                        "fill": color,
+                        "stroke": "black",
+                        "strokeWidth": 0,
+                        "fillOpacity": 0.3,
+                        "size": 40,
                         "xOffset": offset
                     },
                     "encoding": {
                         "y": {
                             "field": attr,
                             "type": "quantitative",
-                            "axis": { "title": axisTitle }
+                            "axis": { "title": axisTitle },
+                            "scale": { "domain": domain }
                         }
                     },
                 }
             }
 
-            const averageMarker = function (attr, offset, aggregator) {
+            const averageMarker = function (attr, offset, aggregator, domain) {
+                const color = attr.includes('HGA') ? colors.hga[1] : colors.manual[1];
                 return {
 
                     "mark": {
-                        "type": "circle",
-                        "xOffset": offset
+                        "type": "rule"
                     },
                     "encoding": {
                         "y": {
-                            "aggregate": aggregator,
+                            "aggregate": 'mean',
                             "field": attr,
-                            "type": "quantitative"
+                            "type": "quantitative",
+                            "scale": { "domain": domain }
                         },
-                        "color": { "value": "black" },
-                        "fill": { "value": "black" },
-                        "size": { "value": "100" },
+                        "color": { "value": color },
+                        "size": { "value": 2 },
                     }
 
                 }
             }
             const averageText = function (attr, offsetX, offsetY, aggregator) {
+                const color = attr.includes('HGA') ? colors.hga[1] : colors.manual[1];
                 return {
                     "mark": {
                         "type": "text",
                         "align": "left",
-                        "dy": offsetY,
+                        "dy": offsetY - 5,
                         "dx": offsetX
                     },
                     "encoding": {
+                        "color": { "value": color },
 
                         "y": {
-                            "aggregate": aggregator,
+                            "aggregate": 'mean',
                             "field": attr,
                             "type": "quantitative"
                         },
                         "text": {
-                            "aggregate": aggregator,
+                            "aggregate": 'mean',
                             "field": attr,
                             "type": "quantitative"
                         }
@@ -84,9 +94,37 @@
                 }
             }
 
+
             const cols = [-20, 20]
             const h = 400
+            const h2 = 300
             const w = 130
+            const timeThreshold = 150
+
+            const domainTimeAll = [0, 500]
+            const domainPrecisionAll = [0.2, 1]
+            const domainPrecisionSimple = [0.6, 1]
+            const domainPrecisionDifficult = [0.2, 1]
+
+            const config = {
+                numberFormat: ".3",
+                style: {
+                    cell: {
+                        stroke: false
+                    },
+                    font: "monospace",
+                },
+                axis: {
+                    tickWidth: 1.5,
+                    tickColor: "black",
+                    domainWidth: 1.5,
+                    domainColor: "black",
+                    labelColor: "black",
+                    labelFontSize: 12,
+
+                },
+                title: {}
+            }
 
             var specTime = {
                 "data": data,
@@ -98,91 +136,101 @@
                         "width": w,
                         "height": h,
                         "layer": [
-                            markers('Time_Manual', cols[0], 'time [s]'),
-                            averageMarker('Time_Manual', cols[0], 'median'),
-                            averageText('Time_Manual', cols[0] - 30, 0, 'median'),
-                            markers('Time_HGA', cols[1], 'time [s]'),
-                            averageMarker('Time_HGA', cols[1], 'median'),
+                            markers('Time_Manual', cols[0], 'time [s]', domainTimeAll),
+                            averageMarker('Time_Manual', cols[0], 'median', domainTimeAll),
+                            averageText('Time_Manual', cols[0] - 30, 20, 'median'),
+                            markers('Time_HGA', cols[1], 'time [s]', domainTimeAll),
+                            averageMarker('Time_HGA', cols[1], 'median', domainTimeAll),
                             averageText('Time_HGA', cols[1] + 10, 0, 'median'),
                         ],
                     },
                     {
+                        "title": {
+                            "text": 'simple localities'
+                        },
                         "width": w,
                         "height": h,
-                        "transform": [{ "filter": { "field": "Time_All", "lte": "150" } }],
+                        "transform": [{ "filter": { "field": "Simple", "equal": "TRUE" } }],
                         "layer": [
                             markers('Time_Manual', cols[0], ''),
                             averageMarker('Time_Manual', cols[0], 'median'),
-                            averageText('Time_Manual', cols[0] - 30, 0, 'median'),
+                            averageText('Time_Manual', cols[0] - 30, 20, 'median'),
                             markers('Time_HGA', cols[1], ''),
                             averageMarker('Time_HGA', cols[1], 'median'),
                             averageText('Time_HGA', cols[1] + 10, 0, 'median')
                         ],
                     },
                     {
+                        "title": {
+                            "text": 'diffucult localities'
+                        },
                         "width": w,
                         "height": h,
-                        "transform": [{ "filter": { "field": "Time_All", "gte": "150" } }],
+                        "transform": [{ "filter": { "field": "Simple", "equal": "FALSE" } }],
                         "layer": [
                             markers('Time_Manual', cols[0], ''),
                             averageMarker('Time_Manual', cols[0], 'median'),
-                            averageText('Time_Manual', cols[0] - 30, 0, 'median'),
+                            averageText('Time_Manual', cols[0] - 30, 20, 'median'),
                             markers('Time_HGA', cols[1], ''),
                             averageMarker('Time_HGA', cols[1], 'median'),
                             averageText('Time_HGA', cols[1] + 10, 0, 'median')
                         ],
                     },
                 ],
-                config: {
-                    numberFormat: ".3",
-                    title: {}
-                }
+                config: config
             };
             var specAccuracy = {
                 "data": data,
                 "hconcat": [
                     {
+                        "title": {
+                            "text": 'all localities'
+                        },
                         "width": w,
-                        "height": h,
+                        "height": h2,
                         "layer": [
-                            markers('Precision_Manual', -20, 'precision'),
-                            averageMarker('Precision_Manual', -20, 'median'),
-                            averageText('Precision_Manual', -60, 0, 'median'),
-                            markers('Precision_HGA', 20, 'precision'),
-                            averageMarker('Precision_HGA', 20, 'median'),
-                            averageText('Precision_HGA', 30, 0, 'median'),
-                        ],
-                    },
-                    {
-                        "width": w,
-                        "height": h,
-                        "transform": [{ "filter": { "field": "Time_All", "lte": "150" } }],
-                        "layer": [
-                            markers('Precision_Manual', -20, ''),
-                            averageMarker('Precision_Manual', -20, 'average'),
-                            averageText('Precision_Manual', -60, 0, 'average'),
-                            markers('Precision_HGA', 20, ''),
-                            averageMarker('Precision_HGA', 20, 'average'),
+                            markers('Precision_Manual', -20, 'accuracy', domainPrecisionAll),
+                            averageMarker('Precision_Manual', -20, 'average', domainPrecisionAll),
+                            averageText('Precision_Manual', cols[0] - 40, 20, 'average'),
+                            markers('Precision_HGA', 20, 'accuracy', domainPrecisionAll),
+                            averageMarker('Precision_HGA', 20, 'average', domainPrecisionAll),
                             averageText('Precision_HGA', 30, 0, 'average'),
                         ],
                     },
                     {
+                        "title": {
+                            "text": 'simple localities'
+                        },
                         "width": w,
-                        "height": h,
-                        "transform": [{ "filter": { "field": "Time_All", "gte": "150" } }],
+                        "height": h2,
+                        "transform": [{ "filter": { "field": "Simple", "equal": "TRUE" } }],
                         "layer": [
-                            markers('Precision_Manual', -20, ''),
-                            averageMarker('Precision_Manual', -20, 'average'),
-                            averageText('Precision_Manual', -60, 0, 'average'),
-                            markers('Precision_HGA', 20, ''),
-                            averageMarker('Precision_HGA', 20, 'average'),
+                            markers('Precision_Manual', -20, '', domainPrecisionSimple),
+                            averageMarker('Precision_Manual', -20, 'average', domainPrecisionSimple),
+                            averageText('Precision_Manual', cols[0] - 40, 20, 'average'),
+                            markers('Precision_HGA', 20, '', domainPrecisionSimple),
+                            averageMarker('Precision_HGA', 20, 'average', domainPrecisionSimple),
+                            averageText('Precision_HGA', 30, 0, 'average'),
+                        ],
+                    },
+                    {
+                        "title": {
+                            "text": 'difficult localities '
+                        },
+                        "width": w,
+                        "height": h2,
+                        "transform": [{ "filter": { "field": "Simple", "equal": "FALSE" } }],
+                        "layer": [
+                            markers('Precision_Manual', -20, '', domainPrecisionDifficult),
+                            averageMarker('Precision_Manual', -20, 'average', domainPrecisionDifficult),
+                            averageText('Precision_Manual', cols[0] - 40, 20, 'average'),
+                            markers('Precision_HGA', 20, '', domainPrecisionDifficult),
+                            averageMarker('Precision_HGA', 20, 'average', domainPrecisionDifficult),
                             averageText('Precision_HGA', 30, 0, 'average'),
                         ],
                     },
                 ],
-                config: {
-                    numberFormat: ".3"
-                }
+                config: config
             };
             vegaEmbed('#vis-time', specTime, { actions: false });
             vegaEmbed('#vis-accuracy', specAccuracy, { actions: false });
@@ -192,6 +240,7 @@
 
 <body>
     <div id="vis-time"></div>
+    <hr />
     <div id="vis-accuracy"></div>
 </body>
 

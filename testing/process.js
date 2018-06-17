@@ -15,23 +15,26 @@ fs.createReadStream("results - coded.csv")
   .on("end", () => {
     fs.createReadStream("results - records.csv")
       .pipe(csv())
-      .on("data", data => {
-        data.Precision_HGA = 0;
-        data.Precision_Manual = 0;
+      .on("data", record => {
+        record.Precision_HGA = 0;
+        record.Precision_Manual = 0;
 
-        data.Time_HGA = 0;
-        data.Time_Manual = 0;
-        data.Time_All = 0;
-        data.Correct_Manual = 0;
-        data.Correct_HGA = 0;
-        data.Correct_All = 0;
+        record.Time_HGA = 0;
+        record.Time_Manual = 0;
+        record.Time_All = 0;
+        record.Correct_Manual = 0;
+        record.Correct_HGA = 0;
+        record.Correct_All = 0;
+        record.Distances_HGA = [];
+        record.Distances_Manual = [];
+        record.Distances_All = [];
 
-        data.geo = turf.point([
-          parseFloat(data.x_coordinates),
-          parseFloat(data.y_coordinates)
+        record.geo = turf.point([
+          parseFloat(record.x_coordinates),
+          parseFloat(record.y_coordinates)
         ]);
 
-        records.push(data);
+        records.push(record);
       })
 
       .on("end", () => {
@@ -71,22 +74,38 @@ fs.createReadStream("results - coded.csv")
                 turf.distance(record.geo, codedPoint),
                 10
               );
+              record.Distances_All.push(distance);
 
               // wrong geolocalisation
-              const maxDistance = code.Certainty === "1" ? 15 : 50;
-              const precisionPoints = code.Certainty === "1" ? 1 : 0.5;
+              const distanceThresholds = [5, 15, 30, 60];
 
-              const ok = distance < maxDistance;
+              let precisionPoints = 0;
+              if (code.Certainty === "1") {
+                if (distance < distanceThresholds[0]) {
+                  precisionPoints = 1;
+                } else if (distance < distanceThresholds[1]) {
+                  precisionPoints = 0.75;
+                }
+              } else {
+                if (distance < distanceThresholds[2]) {
+                  precisionPoints = 0.5;
+                } else if (distance < distanceThresholds[3]) {
+                  precisionPoints = 0.25;
+                }
+              }
+
               code.Distance = distance;
 
-              if (ok) {
+              if (precisionPoints) {
                 code.Accurate = precisionPoints;
                 if (HGA) {
                   record.Precision_HGA += precisionPoints;
                   user.Precision_HGA += precisionPoints;
+                  record.Distances_HGA.push(distance);
                 } else {
                   record.Precision_Manual += precisionPoints;
                   user.Precision_Manual += precisionPoints;
+                  record.Distances_Manual.push(distance);
                 }
               } else {
                 code.Accurate = 0;
@@ -94,7 +113,7 @@ fs.createReadStream("results - coded.csv")
               }
 
               // add time
-              if (ok) {
+              if (precisionPoints) {
                 const time = code.Time;
                 record.Time_All += time;
                 record.Correct_All += 1;
@@ -143,13 +162,19 @@ fs.createReadStream("results - coded.csv")
               c.Record_Difficulty = record.Time_All > 150 ? 1 : 0;
             });
 
-            const timeThresholds = [150];
+            const timeThresholds = 180;
+            const precisionThresholds = 0.6;
             records.map(r => {
-              let timeCategory = 2;
-              if (r.Time_All < timeThresholds[0]) {
-                timeCategory = 1;
+              let simple = "FALSE";
+              if (
+                r.Time_HGA < timeThresholds &&
+                r.Time_Manual < timeThresholds &&
+                r.Precision_HGA > precisionThresholds &&
+                r.Precision_Manual > precisionThresholds
+              ) {
+                simple = "TRUE";
               }
-              r.Time_Category = timeCategory;
+              r.Simple = simple;
             });
 
             const parserRecords = new Json2csvParser(Object.keys(records));
