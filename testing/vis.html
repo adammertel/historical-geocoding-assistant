@@ -17,7 +17,12 @@
     <script src="./records.js"></script>
     <script>  
         document.addEventListener('DOMContentLoaded', function () {
-            var markersSchema = function (attr, offset, axisTitle, color) {
+            colorHGA = 'red'
+            colorManual = 'blue'
+
+            const markers = function (attr, offset, axisTitle) {
+                const color = attr.includes('HGA') ? colorHGA : colorManual;
+
                 return {
                     "mark": {
                         "type": "circle",
@@ -34,234 +39,160 @@
                 }
             }
 
-            var vlSpec = {
+            const averageMarker = function (attr, offset, aggregator) {
+                return {
+
+                    "mark": {
+                        "type": "circle",
+                        "xOffset": offset
+                    },
+                    "encoding": {
+                        "y": {
+                            "aggregate": aggregator,
+                            "field": attr,
+                            "type": "quantitative"
+                        },
+                        "color": { "value": "black" },
+                        "fill": { "value": "black" },
+                        "size": { "value": "100" },
+                    }
+
+                }
+            }
+            const averageText = function (attr, offsetX, offsetY, aggregator) {
+                return {
+                    "mark": {
+                        "type": "text",
+                        "align": "left",
+                        "dy": offsetY,
+                        "dx": offsetX
+                    },
+                    "encoding": {
+
+                        "y": {
+                            "aggregate": aggregator,
+                            "field": attr,
+                            "type": "quantitative"
+                        },
+                        "text": {
+                            "aggregate": aggregator,
+                            "field": attr,
+                            "type": "quantitative"
+                        }
+                    }
+
+                }
+            }
+
+            const cols = [-20, 20]
+            const h = 400
+            const w = 130
+
+            var specTime = {
                 "data": data,
                 "hconcat": [
                     {
-                        "width": 200,
-                        "height": 400,
+                        "title": {
+                            "text": 'all localities'
+                        },
+                        "width": w,
+                        "height": h,
                         "layer": [
-                            markersSchema('Time_HGA', 20, 'time', 'red'),
-                            {
-                                "mark": {
-                                    "type": "circle",
-                                    "color": "red",
-                                    "xOffset": 20
-                                },
-                                "encoding": {
-                                    "y": {
-                                        "aggregate": "median",
-                                        "field": "Time_HGA",
-                                        "type": "quantitative"
-                                    },
-                                    "color": { "value": "black" },
-                                    "fill": { "value": "black" },
-                                    "size": { "value": "100" },
-                                }
-                            },
-                            {
-                                "mark": {
-                                    "type": "text",
-                                    "align": "left",
-                                    "dy": -10,
-                                    "dx": 30
-                                },
-                                "encoding": {
-
-                                    "y": {
-                                        "aggregate": "median",
-                                        "field": "Time_HGA",
-                                        "type": "quantitative"
-                                    },
-                                    "text": {
-                                        "aggregate": "median",
-                                        "field": "Time_HGA",
-                                        "type": "quantitative"
-                                    }
-                                }
-
-                            },
-                            {
-                                "mark": {
-                                    "type": "circle",
-                                    "color": "blue",
-                                    "xOffset": -20
-                                },
-                                "encoding": {
-                                    "y": {
-                                        "field": "Time_Manual",
-                                        "type": "quantitative"
-                                    }
-                                },
-                                "color": { "value": "red" }
-                            },
-
-                            {
-
-                                "mark": {
-                                    "type": "circle",
-                                    "color": "blue",
-                                    "xOffset": -20,
-                                },
-                                "encoding": {
-                                    "y": {
-                                        "aggregate": "median",
-                                        "field": "Time_Manual",
-                                        "type": "quantitative"
-                                    },
-                                    "color": { "value": "black" },
-                                    "fill": { "value": "black" },
-                                    "size": { "value": "100" },
-                                }
-                            },
-                            {
-                                "mark": {
-                                    "type": "text",
-                                    "align": "left",
-                                    "dy": -10,
-                                    "dx": -60,
-                                },
-                                "encoding": {
-                                    "y": {
-                                        "aggregate": "median",
-                                        "field": "Time_Manual",
-                                        "type": "quantitative"
-                                    },
-                                    "text": {
-                                        "aggregate": "median",
-                                        "field": "Time_Manual",
-                                        "type": "quantitative"
-                                    }
-                                }
-
-                            },
+                            markers('Time_Manual', cols[0], 'time [s]'),
+                            averageMarker('Time_Manual', cols[0], 'median'),
+                            averageText('Time_Manual', cols[0] - 30, 0, 'median'),
+                            markers('Time_HGA', cols[1], 'time [s]'),
+                            averageMarker('Time_HGA', cols[1], 'median'),
+                            averageText('Time_HGA', cols[1] + 10, 0, 'median'),
                         ],
                     },
                     {
-                        "width": 200,
-                        "height": 400,
+                        "width": w,
+                        "height": h,
+                        "transform": [{ "filter": { "field": "Time_All", "lte": "150" } }],
                         "layer": [
-                            {
-                                "mark": {
-                                    "type": "circle",
-                                    "color": "red",
-                                    "xOffset": 20
-                                },
-                                "encoding": {
-                                    "y": {
-                                        "field": "Precision_HGA",
-                                        "type": "quantitative",
-                                        "axis": { "title": "precision" }
-                                    }
-                                },
-                            },
-                            {
-                                "mark": {
-                                    "type": "circle",
-                                    "color": "red",
-                                    "xOffset": 20
-                                },
-                                "encoding": {
-                                    "y": {
-                                        "aggregate": "median",
-                                        "field": "Precision_HGA",
-                                        "type": "quantitative"
-                                    },
-                                    "color": { "value": "black" },
-                                    "fill": { "value": "black" },
-                                    "size": { "value": "100" },
-                                }
-                            },
-                            {
-                                "mark": {
-                                    "type": "text",
-                                    "align": "left",
-                                    "dy": -10,
-                                    "dx": 30
-                                },
-                                "encoding": {
-
-                                    "y": {
-                                        "aggregate": "median",
-                                        "field": "Precision_HGA",
-                                        "type": "quantitative"
-                                    },
-                                    "text": {
-                                        "aggregate": "median",
-                                        "field": "Precision_HGA",
-                                        "type": "quantitative"
-                                    }
-                                }
-
-                            },
-                            {
-                                "mark": {
-                                    "type": "circle",
-                                    "color": "blue",
-                                    "xOffset": -20
-                                },
-                                "encoding": {
-                                    "y": {
-                                        "field": "Precision_Manual",
-                                        "type": "quantitative"
-                                    }
-                                },
-                                "color": { "value": "red" }
-                            },
-
-                            {
-
-                                "mark": {
-                                    "type": "circle",
-                                    "color": "blue",
-                                    "xOffset": -20,
-                                },
-                                "encoding": {
-                                    "y": {
-                                        "aggregate": "median",
-                                        "field": "Precision_Manual",
-                                        "type": "quantitative"
-                                    },
-                                    "color": { "value": "black" },
-                                    "fill": { "value": "black" },
-                                    "size": { "value": "100" },
-                                }
-                            },
-                            {
-                                "mark": {
-                                    "type": "text",
-                                    "align": "left",
-                                    "dy": -10,
-                                    "dx": -60,
-                                },
-                                "encoding": {
-                                    "y": {
-                                        "aggregate": "median",
-                                        "field": "Precision_Manual",
-                                        "type": "quantitative"
-                                    },
-                                    "text": {
-                                        "aggregate": "median",
-                                        "field": "Precision_Manual",
-                                        "type": "quantitative"
-                                    }
-                                }
-
-                            },
+                            markers('Time_Manual', cols[0], ''),
+                            averageMarker('Time_Manual', cols[0], 'median'),
+                            averageText('Time_Manual', cols[0] - 30, 0, 'median'),
+                            markers('Time_HGA', cols[1], ''),
+                            averageMarker('Time_HGA', cols[1], 'median'),
+                            averageText('Time_HGA', cols[1] + 10, 0, 'median')
                         ],
-                    }
+                    },
+                    {
+                        "width": w,
+                        "height": h,
+                        "transform": [{ "filter": { "field": "Time_All", "gte": "150" } }],
+                        "layer": [
+                            markers('Time_Manual', cols[0], ''),
+                            averageMarker('Time_Manual', cols[0], 'median'),
+                            averageText('Time_Manual', cols[0] - 30, 0, 'median'),
+                            markers('Time_HGA', cols[1], ''),
+                            averageMarker('Time_HGA', cols[1], 'median'),
+                            averageText('Time_HGA', cols[1] + 10, 0, 'median')
+                        ],
+                    },
                 ],
                 config: {
-                    numberFormat: ".5"
+                    numberFormat: ".3",
+                    title: {}
                 }
             };
-            vegaEmbed('#vis', vlSpec, { mode: "vega-lite" });
+            var specAccuracy = {
+                "data": data,
+                "hconcat": [
+                    {
+                        "width": w,
+                        "height": h,
+                        "layer": [
+                            markers('Precision_Manual', -20, 'precision'),
+                            averageMarker('Precision_Manual', -20, 'median'),
+                            averageText('Precision_Manual', -60, 0, 'median'),
+                            markers('Precision_HGA', 20, 'precision'),
+                            averageMarker('Precision_HGA', 20, 'median'),
+                            averageText('Precision_HGA', 30, 0, 'median'),
+                        ],
+                    },
+                    {
+                        "width": w,
+                        "height": h,
+                        "transform": [{ "filter": { "field": "Time_All", "lte": "150" } }],
+                        "layer": [
+                            markers('Precision_Manual', -20, ''),
+                            averageMarker('Precision_Manual', -20, 'average'),
+                            averageText('Precision_Manual', -60, 0, 'average'),
+                            markers('Precision_HGA', 20, ''),
+                            averageMarker('Precision_HGA', 20, 'average'),
+                            averageText('Precision_HGA', 30, 0, 'average'),
+                        ],
+                    },
+                    {
+                        "width": w,
+                        "height": h,
+                        "transform": [{ "filter": { "field": "Time_All", "gte": "150" } }],
+                        "layer": [
+                            markers('Precision_Manual', -20, ''),
+                            averageMarker('Precision_Manual', -20, 'average'),
+                            averageText('Precision_Manual', -60, 0, 'average'),
+                            markers('Precision_HGA', 20, ''),
+                            averageMarker('Precision_HGA', 20, 'average'),
+                            averageText('Precision_HGA', 30, 0, 'average'),
+                        ],
+                    },
+                ],
+                config: {
+                    numberFormat: ".3"
+                }
+            };
+            vegaEmbed('#vis-time', specTime, { actions: false });
+            vegaEmbed('#vis-accuracy', specAccuracy, { actions: false });
         });
     </script>
 </head>
 
 <body>
-    <div id="vis"></div>
+    <div id="vis-time"></div>
+    <div id="vis-accuracy"></div>
 </body>
 
 </html>
