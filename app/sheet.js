@@ -1,9 +1,9 @@
 var Sheet = {
-  scope: 'https://www.googleapis.com/auth/spreadsheets', //'https://www.googleapis.com/auth/spreadsheets',
+  scope: "https://www.googleapis.com/auth/spreadsheets", //'https://www.googleapis.com/auth/spreadsheets',
   header: [],
 
   noLines: 999999,
-  noColumns: 'ZZ',
+  noColumns: "ZZ",
 
   auth: false,
 
@@ -14,9 +14,17 @@ var Sheet = {
     this._authentificate(() => {
       this._pingTable(pinged => {
         if (pinged) {
+          window["username"] = gapi.auth2
+            .getAuthInstance()
+            .currentUser.get()
+            .getBasicProfile()
+            .getName();
+
+          console.log(username);
+
           this._preRead(next);
         } else {
-          alert('table was not ititialized, wrong id');
+          alert("table was not ititialized, wrong id");
           location.reload();
         }
       });
@@ -24,8 +32,8 @@ var Sheet = {
   },
 
   _authentificate(next) {
-    gapi.load('client:auth2', () => {
-      store.changeLoadingStatus('table');
+    gapi.load("client:auth2", () => {
+      store.changeLoadingStatus("table");
       //gapi.client.setApiKey(this.apiKey);
 
       gapi.auth2
@@ -36,15 +44,17 @@ var Sheet = {
         .then(() => {
           this.auth = gapi.auth2.getAuthInstance();
 
+          console.log;
+
           if (this.auth.isSignedIn.get()) {
             next();
           } else {
             alert(
-              'Application needs to be signed in - please enable pop-ups and log in'
+              "Application needs to be signed in - please enable pop-ups and log in"
             );
 
             const signedStateChanged = () => {
-              console.log('should be signed in now');
+              console.log("should be signed in now");
               next();
             };
             this.auth.isSignedIn.listen(signedStateChanged);
@@ -85,11 +95,11 @@ var Sheet = {
       if (headerData) {
         try {
           this.noColumns = headerData.result.range
-            .split('!')[1]
-            .split(':')[1]
-            .split('1')[0];
+            .split("!")[1]
+            .split(":")[1]
+            .split("1")[0];
         } catch (e) {
-          console.log('error reading columns', e);
+          console.log("error reading columns", e);
         }
       }
       next();
@@ -102,7 +112,7 @@ var Sheet = {
         try {
           this.noLines = Math.max(...Object.keys(rowsData));
         } catch (e) {
-          console.log('error reading rows', e);
+          console.log("error reading rows", e);
         }
       }
       next();
@@ -150,38 +160,38 @@ var Sheet = {
   },
 
   _readLineUrl(lineNo) {
-    const range = 'A' + lineNo + ':' + this.noColumns + lineNo;
+    const range = "A" + lineNo + ":" + this.noColumns + lineNo;
     return (
-      'https://sheets.googleapis.com/v4/spreadsheets/' +
+      "https://sheets.googleapis.com/v4/spreadsheets/" +
       this.sId +
-      '/values/' +
+      "/values/" +
       range +
-      '?key=' +
+      "?key=" +
       this.apiKey
     );
   },
 
   _updateLineUrl(lineNo) {
-    const range = 'A' + lineNo + ':' + this.noColumns + lineNo;
+    const range = "A" + lineNo + ":" + this.noColumns + lineNo;
     return (
-      'https://sheets.googleapis.com/v4/spreadsheets/' +
+      "https://sheets.googleapis.com/v4/spreadsheets/" +
       this.sId +
-      '/values/' +
+      "/values/" +
       range +
-      '?key=' +
+      "?key=" +
       this.apiKey +
-      '&valueInputOption=RAW'
+      "&valueInputOption=RAW"
     );
   },
 
   _readAll() {
-    const range = 'A2:' + this.noColumns + this.noLines;
+    const range = "A2:" + this.noColumns + this.noLines;
     return (
-      'https://sheets.googleapis.com/v4/spreadsheets/' +
+      "https://sheets.googleapis.com/v4/spreadsheets/" +
       this.sId +
-      '/values/' +
+      "/values/" +
       range +
-      '?key=' +
+      "?key=" +
       this.apiKey
     );
   },
@@ -197,7 +207,7 @@ var Sheet = {
       gapi.client
         .request({
           path: this._readLineUrl(lineNo),
-          method: 'GET'
+          method: "GET"
         })
         .then(
           response => next(this._parseRow(response, withoutParsing)),
@@ -214,7 +224,7 @@ var Sheet = {
       gapi.client
         .request({
           path: this._readAll(),
-          method: 'GET'
+          method: "GET"
         })
         .then(
           response => {
@@ -233,7 +243,7 @@ var Sheet = {
       gapi.client
         .request({
           path: this._updateLineUrl(lineNo),
-          method: 'PUT',
+          method: "PUT",
           body: this._updateBody(data)
         })
         .then(
@@ -247,9 +257,9 @@ var Sheet = {
   },
 
   _reportError(errResponse) {
-    console.log('ERR');
+    console.log("ERR");
     console.log(errResponse);
-    console.log('ERR');
+    console.log("ERR");
   }
 };
 

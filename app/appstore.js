@@ -1,16 +1,16 @@
 /* eslint no-undef: 0 */
 /* eslint no-unused-vars: 0 */
 
-import { observable, action, computed, toJS } from 'mobx';
-import Sheet from './sheet.js';
-import mobx from 'mobx';
-import React from 'react';
-import stringSimilarity from 'string-similarity';
+import { observable, action, computed, toJS } from "mobx";
+import Sheet from "./sheet.js";
+import mobx from "mobx";
+import React from "react";
+import stringSimilarity from "string-similarity";
 
 export default class AppStore extends React.Component {
   @observable opts = {};
 
-  @observable loadingStatus = '';
+  @observable loadingStatus = "";
   @observable changingLoadingStatus = false;
 
   @observable openedSettings = false;
@@ -24,7 +24,6 @@ export default class AppStore extends React.Component {
 
   constructor() {
     super();
-    console.log(this.openedSettings);
   }
 
   @action
@@ -51,24 +50,24 @@ export default class AppStore extends React.Component {
         sanitized: c
           .toLowerCase()
           .trim()
-          .replace(/_/g, '')
-          .replace(/-/g, ''),
+          .replace(/_/g, "")
+          .replace(/-/g, ""),
         original: c
       };
     });
     const keywordsDictionary = {
       name: [
-        'name',
-        'naming',
-        'label',
-        'placename',
-        'locality',
-        'localisation'
+        "name",
+        "naming",
+        "label",
+        "placename",
+        "locality",
+        "localisation"
       ],
-      x: ['xcoordinate', 'xgeo', 'x', 'longitude', 'lng'],
-      y: ['ycoordinate', 'ygeo', 'y', 'latitude', 'lat'],
-      certainty: ['certainty'],
-      note: ['placenote', 'localisationnotes', 'note']
+      x: ["xcoordinate", "xgeo", "x", "longitude", "lng"],
+      y: ["ycoordinate", "ygeo", "y", "latitude", "lat"],
+      certainty: ["certainty"],
+      note: ["placenote", "localisationnotes", "note"]
     };
 
     Object.keys(keywordsDictionary).map(id => {
@@ -93,8 +92,6 @@ export default class AppStore extends React.Component {
 
       this.opts.columns[id] = bestMatch;
     });
-
-    console.log(this.opts.columns);
   }
 
   /*
@@ -151,23 +148,22 @@ export default class AppStore extends React.Component {
 
   @computed
   get recordCertainty() {
-    return this.recordData[this.opts.columns.certainty] || '';
+    return this.recordData[this.opts.columns.certainty] || "";
   }
 
   @computed
   get recordNote() {
-    return this.recordData[this.opts.columns.note] || '';
+    return this.recordData[this.opts.columns.note] || "";
   }
 
   @computed
   get recordX() {
-    console.log(this.opts.columns.x);
-    return this.recordData[this.opts.columns.x] || '';
+    return this.recordData[this.opts.columns.x] || "";
   }
 
   @computed
   get recordY() {
-    return this.recordData[this.opts.columns.y] || '';
+    return this.recordData[this.opts.columns.y] || "";
   }
 
   @computed
@@ -206,12 +202,12 @@ export default class AppStore extends React.Component {
 
   @computed
   get isLoaded() {
-    return this.loadingStatus === 'loaded';
+    return this.loadingStatus === "loaded";
   }
 
   @computed
   get tablePrompt() {
-    return this.loadingStatus === 'prompting table';
+    return this.loadingStatus === "prompting table";
   }
 
   @computed
@@ -232,7 +228,7 @@ export default class AppStore extends React.Component {
   loadApplication = () => {
     this.changingLoadingStatus = true;
     setTimeout(() => {
-      this.changeLoadingStatus('loaded');
+      this.changeLoadingStatus("loaded");
     }, config.messageLoadingTime);
   };
 
@@ -309,7 +305,7 @@ export default class AppStore extends React.Component {
 
   @action
   changeBaseMap = (mid, bmid) => {
-    this.opts.basemaps['map' + mid] = bmid;
+    this.opts.basemaps["map" + mid] = bmid;
   };
 
   // map overlayrow
@@ -385,7 +381,7 @@ export default class AppStore extends React.Component {
   // new data are loaded
   @action
   updateData = (next = function() {}) => {
-    this.changeLoadingStatus('record');
+    this.changeLoadingStatus("record");
     Sheet.readAllLines(data => {
       this.records = data;
       this.recordBeforeChanges = Object.assign({}, data[this.row]);
@@ -452,10 +448,14 @@ export default class AppStore extends React.Component {
   // save local values to sheet
   @action
   saveRecord = () => {
-    this.changeLoadingStatus('save');
+    this.changeLoadingStatus("save");
     const cols = this.opts.columns;
     this.recordData[cols.x] = parseFloat(this.recordData[cols.x]);
     this.recordData[cols.y] = parseFloat(this.recordData[cols.y]);
+
+    if (Object.keys(this.recordData).includes("Editor")) {
+      this.recordData["Editor"] = window["username"];
+    }
 
     Sheet.updateLine(this.row, Object.values(this.recordData), () =>
       this.updateData()
@@ -508,7 +508,6 @@ export default class AppStore extends React.Component {
   };
   @action
   handleChangeSelect = e => {
-    console.log(e.target.value);
     const newConfig = {
       focusZoom: parseInt(e.target.value, 10)
     };
@@ -526,7 +525,7 @@ export default class AppStore extends React.Component {
         METHODS
     */
   basemapById(basemapId) {
-    return window['basemaps'][basemapId];
+    return window["basemaps"][basemapId];
   }
 
   roundCoordinate(coord) {
