@@ -384,7 +384,14 @@ export default class AppStore extends React.Component {
     this.changeLoadingStatus("record");
     Sheet.readAllLines(data => {
       this.records = data;
+
       this.recordBeforeChanges = Object.assign({}, data[this.row]);
+      Object.keys(this.recordBeforeChanges).forEach(recordKey => {
+        if (this.recordBeforeChanges[recordKey] === undefined) {
+          console.log("undefined", recordKey);
+          this.records[this.row][recordKey] = "";
+        }
+      });
       this.updateSearch();
 
       if (this.opts.focusOnRecordChange) {
