@@ -28,6 +28,18 @@
     "attribution": "awmc",
     "type": "wms"
   },
+  "MMS-III": {
+    "id": "MMS-III",
+    "name": "second military mapping",
+    "info": "second military mapping survey of Austrian Empire",
+    "url":
+      "http://geoportal.gov.cz/ArcGIS/services/CENIA/cenia_rt_III_vojenske_mapovani/MapServer/WMSServer?",
+    "layers": "0",
+    "version": "1.3.0",
+    "format": "image/jpeg",
+    "attribution": "geoportal.gov.cz",
+    "type": "wms"
+  },
   "ROME_PROVINCES": {
     "id": "rome_provinces",
     "name": "Roman Provinces",

@@ -1,19 +1,19 @@
-import React from 'react';
-import { observer } from 'mobx-react';
-import Modal from './../bulma/modal';
-import Input from './../bulma/input';
-import Button from './../bulma/button';
+import React from "react";
+import { observer } from "mobx-react";
+import Modal from "./../bulma/modal";
+import Input from "./../bulma/input";
+import Button from "./../bulma/button";
 
-const logoPath = require('./../assets/logo.png');
+const logoPath = require("./../assets/logo.png");
 
 @observer
 class TablePrompt extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sheetId: ''
+      sheetId: ""
     };
-    this.exampleSheetId = '1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU';
+    this.exampleSheetId = "1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU";
   }
 
   changeSheetId(e) {
@@ -51,11 +51,11 @@ class TablePrompt extends React.Component {
               src={logoPath}
               alt="logo"
               style={{
-                width: '70%',
-                margin: 'auto',
-                left: '10%',
+                width: "70%",
+                margin: "auto",
+                left: "10%",
                 padding: 10,
-                position: 'relative'
+                position: "relative"
               }}
             />
             <div style={{ padding: 30 }}>
@@ -65,23 +65,23 @@ class TablePrompt extends React.Component {
                 target="_blank"
               >
                 what is a Google Sheet ID?
-              </a>{' '}
+              </a>{" "}
               ):
               <Input
                 value={this.state.sheetId}
                 onChange={this.changeSheetId.bind(this)}
               />
-              Or use the{' '}
+              Or use the{" "}
               <a
                 target="_blank"
                 href="https://docs.google.com/spreadsheets/d/1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU"
               >
                 example sheet
-              </a>{' '}
-              id : <br />{' '}
+              </a>{" "}
+              id : <br />{" "}
               <Button
                 onClick={this.acceptExampleSheetId.bind(this)}
-                label={'example sheet'}
+                label={"example sheet"}
               />
               <br />
               <br />
@@ -90,6 +90,9 @@ class TablePrompt extends React.Component {
               <br />
               - The application has to be signed into a Google Account (you may
               need to allow pop-ups)
+              <br />
+              - You can use the testing google account <br />(username:{" "}
+              <b>historicalgeocodingassistant</b>, pass: <b>hga54321</b>)
               <br />
               <br />
               <b>Other links:</b>
@@ -104,12 +107,12 @@ class TablePrompt extends React.Component {
             </div>
           </div>
         }
-        footerStyle={{ textAlign: 'right', display: 'block' }}
+        footerStyle={{ textAlign: "right", display: "block" }}
         footer={
           <Button
             medium={true}
             onClick={this.acceptSheetId.bind(this)}
-            label={'continue'}
+            label={"continue"}
           />
         }
       />
