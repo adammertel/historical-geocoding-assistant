@@ -291,7 +291,7 @@ class Settings extends React.Component {
             <Button
               classes="is-danger"
               icon="times-circle"
-              label="close without save"
+              label="close without saving"
               onClick={this.handleClose.bind(this)}
             />
             <Button
