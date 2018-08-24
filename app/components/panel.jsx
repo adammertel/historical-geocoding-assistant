@@ -206,7 +206,7 @@ class Panel extends React.Component {
             <table className="table centered">
               <tbody>
                 <tr key="0">
-                  <td>coordinate X</td>
+                  <td>x coordinate</td>
                   <td>
                     <Input
                       onChange={this.handleChangeInput.bind(
@@ -220,7 +220,7 @@ class Panel extends React.Component {
                 </tr>
 
                 <tr key="1">
-                  <td>coordinate Y</td>
+                  <td>y coordinate</td>
                   <td>
                     <Input
                       onChange={this.handleChangeInput.bind(
@@ -247,7 +247,7 @@ class Panel extends React.Component {
                 </tr>
 
                 <tr key="4">
-                  <td>certainty level</td>
+                  <td>certainty</td>
                   <td>
                     <div className="select" style={{ width: '100%' }}>
                       <select
@@ -269,7 +269,7 @@ class Panel extends React.Component {
                 </tr>
 
                 <tr key="3">
-                  <td>notes</td>
+                  <td>localisation notes</td>
                   <td>
                     <Input
                       onChange={this.handleChangeInput.bind(

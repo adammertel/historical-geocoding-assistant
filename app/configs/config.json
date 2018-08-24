@@ -39,7 +39,7 @@
     "defaultRow": 2,
     "displayGeonames": true,
     "displayWikis": true,
-    "displayOtherRecords": false,
+    "displayOtherRecords": true,
     "mapCenter": [45, 10],
     "mapZoom": 6,
     "maxGeoExtent": [[-70, -180], [70, 180]],
