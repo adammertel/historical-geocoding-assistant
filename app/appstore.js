@@ -539,7 +539,7 @@ export default class AppStore extends React.Component {
     if (!coord) {
       return coord;
     } else {
-      const floatCoef = 1000;
+      const floatCoef = config.coordinatesPrecision;
       return Math.round(coord * floatCoef) / floatCoef;
     }
   }
