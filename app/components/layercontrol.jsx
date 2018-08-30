@@ -1,16 +1,16 @@
-import React from 'react';
-import { observer } from 'mobx-react';
+import React from 'react'
+import { observer } from 'mobx-react'
 
-import Menu from './../bulma/menu';
-import Button from './../bulma/button';
-import Slider from './../bulma/slider';
+import Menu from './../bulma/menu'
+import Button from './../bulma/button'
+import Slider from './../bulma/slider'
 
 class LayerControl extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
   }
 
-  style() {
+  style () {
     return {
       position: 'absolute',
       bottom: 50,
@@ -20,67 +20,67 @@ class LayerControl extends React.Component {
       padding: '15px 15px 0px 15px',
       backgroundColor: 'white',
       zIndex: 1100
-    };
-  }
-
-  handleMapSelect(id, e) {
-    store.changeBaseMap(id, e.target.value);
-  }
-
-  handleOverlaySelect(select, e) {
-    if (e.target.value) {
-      store.addOverlay(e.target.value);
     }
   }
 
-  handleOpacityRatio(e) {
-    store.changeOpacityRatio(e.target.value / 100);
+  handleMapSelect (id, e) {
+    store.changeBaseMap(id, e.target.value)
   }
 
-  handleOverlayOpacity(oid, e) {
-    store.overlayChangeOpacity(oid, e.target.value / 100);
+  handleOverlaySelect (select, e) {
+    if (e.target.value) {
+      store.addOverlay(e.target.value)
+    }
   }
 
-  handleRemoveOverlay(oid) {
-    store.overlayRemove(oid);
+  handleOpacityRatio (e) {
+    store.changeOpacityRatio(e.target.value / 100)
   }
 
-  handleMoveOverlayUp(oid) {
-    store.overlayMoveUp(oid);
+  handleOverlayOpacity (oid, e) {
+    store.overlayChangeOpacity(oid, e.target.value / 100)
   }
 
-  handleMoveOverlayDown(oid) {
-    store.overlayMoveDown(oid);
+  handleRemoveOverlay (oid) {
+    store.overlayRemove(oid)
   }
 
-  render() {
+  handleMoveOverlayUp (oid) {
+    store.overlayMoveUp(oid)
+  }
+
+  handleMoveOverlayDown (oid) {
+    store.overlayMoveDown(oid)
+  }
+
+  render () {
     return (
-      <div className="layercontrol-wrapper" style={this.style()}>
+      <div className='layercontrol-wrapper' style={this.style()}>
         <h5
-          className="title is-5"
+          className='title is-5'
           style={{ color: 'black', fontWeight: 600, marginBottom: 10 }}
         >
           Map control
         </h5>
-        <Menu label="base layers" defaultOpen={true}>
+        <Menu label='base layers' defaultOpen={false}>
           <div>
-            <table className="table centered" style={{ fontSize: 11 }}>
+            <table className='table centered' style={{ fontSize: 11 }}>
               <tbody>
                 <tr>
                   <td>top layer</td>
                   <td>
-                    <div className="select">
+                    <div className='select'>
                       <select
                         value={store.opts.basemaps.map1}
                         onChange={this.handleMapSelect.bind(this, 1)}
                       >
                         {Object.keys(basemaps).map(basemapId => {
-                          const basemap = basemaps[basemapId];
+                          const basemap = basemaps[basemapId]
                           return (
                             <option value={basemapId} key={basemapId}>
                               {basemap.name}
                             </option>
-                          );
+                          )
                         })}
                       </select>
                     </div>
@@ -93,10 +93,10 @@ class LayerControl extends React.Component {
                     <Slider
                       value={store.opts.basemaps.opacity * 100}
                       onChange={this.handleOpacityRatio.bind(this)}
-                      min="0"
-                      max="100"
-                      step="1"
-                      classes=""
+                      min='0'
+                      max='100'
+                      step='1'
+                      classes=''
                     />
                   </td>
                 </tr>
@@ -104,18 +104,18 @@ class LayerControl extends React.Component {
                 <tr>
                   <td>bottom layer</td>
                   <td>
-                    <div className="select">
+                    <div className='select'>
                       <select
                         value={store.opts.basemaps.map2}
                         onChange={this.handleMapSelect.bind(this, 2)}
                       >
                         {Object.keys(basemaps).map(basemapId => {
-                          const basemap = basemaps[basemapId];
+                          const basemap = basemaps[basemapId]
                           return (
                             <option value={basemapId} key={basemapId}>
                               {basemap.name}
                             </option>
-                          );
+                          )
                         })}
                       </select>
                     </div>
@@ -125,9 +125,9 @@ class LayerControl extends React.Component {
             </table>
           </div>
         </Menu>
-        <Menu label="overlay layers" defaultOpen={false}>
+        <Menu label='overlay layers' defaultOpen={false}>
           <div>
-            <table className="table centered" style={{ fontSize: 11 }}>
+            <table className='table centered' style={{ fontSize: 11 }}>
               <tbody>
                 {store.opts.overlays.map(overlay => {
                   return (
@@ -136,68 +136,56 @@ class LayerControl extends React.Component {
                       <td>
                         <Slider
                           value={overlay.opacity * 100}
-                          onChange={this.handleOverlayOpacity.bind(
-                            this,
-                            overlay.id
-                          )}
-                          min="0"
-                          max="100"
-                          step="1"
-                          classes=""
+                          onChange={this.handleOverlayOpacity.bind(this, overlay.id)}
+                          min='0'
+                          max='100'
+                          step='1'
+                          classes=''
                         />
                       </td>
                       <td>
                         <Button
-                          icon="arrow-up"
-                          label=""
-                          classes="is-inverted"
-                          onClick={this.handleMoveOverlayUp.bind(
-                            this,
-                            overlay.id
-                          )}
+                          icon='arrow-up'
+                          label=''
+                          classes='is-inverted'
+                          onClick={this.handleMoveOverlayUp.bind(this, overlay.id)}
                           style={{ marginTop: -3 }}
                         />
                         <Button
-                          icon="arrow-down"
-                          label=""
-                          classes="is-inverted"
-                          onClick={this.handleMoveOverlayDown.bind(
-                            this,
-                            overlay.id
-                          )}
+                          icon='arrow-down'
+                          label=''
+                          classes='is-inverted'
+                          onClick={this.handleMoveOverlayDown.bind(this, overlay.id)}
                           style={{ marginTop: -3 }}
                         />
                         <Button
-                          icon="trash-o"
-                          label=""
-                          classes="is-inverted"
-                          onClick={this.handleRemoveOverlay.bind(
-                            this,
-                            overlay.id
-                          )}
+                          icon='trash-o'
+                          label=''
+                          classes='is-inverted'
+                          onClick={this.handleRemoveOverlay.bind(this, overlay.id)}
                           style={{ marginTop: -3 }}
                         />
                       </td>
                     </tr>
-                  );
+                  )
                 })}
                 <tr>
                   <td>
-                    <span className="select">
+                    <span className='select'>
                       <select
-                        value="default"
+                        value='default'
                         onChange={this.handleOverlaySelect.bind(this, 1)}
                       >
                         <option value={false} key={0}>
                           select overlay to add
                         </option>
                         {Object.keys(overlaymaps).map(overlayId => {
-                          const overlay = overlaymaps[overlayId];
+                          const overlay = overlaymaps[overlayId]
                           return (
                             <option value={overlayId} key={overlayId}>
                               {overlay.name}
                             </option>
-                          );
+                          )
                         })}
                       </select>
                     </span>
@@ -208,8 +196,8 @@ class LayerControl extends React.Component {
           </div>
         </Menu>
       </div>
-    );
+    )
   }
 }
 
-export default observer(LayerControl);
+export default observer(LayerControl)

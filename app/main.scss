@@ -83,6 +83,10 @@ table.table.centered {
   width: 1000%;
 }
 
+.layercontrol-wrapper .menu-wrapper:empty(:not) {
+  padding: 15px 15px 0px;
+}
+
 // Import the rest of Bulma
 @import '../node_modules/bulma/bulma';
 @import './bulma/tooltip.sass';
