@@ -18,7 +18,7 @@ var Sheet = {
             'username'
           ] = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getName()
 
-          console.log(username)
+          console.log('username', username)
 
           this._preRead(next)
         } else {
