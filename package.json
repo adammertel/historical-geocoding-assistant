@@ -7,6 +7,8 @@
     "test": "npm run lint",
     "start": "webpack-dev-server --mode development --open",
     "build": "npm run clean-dist && webpack --mode production",
+    "deploy": "rsync -avz dist/ hde@hde.geogr.muni.cz:/var/www/virthtml/hde/hga",
+    "build-deploy": "npm run build && npm run deploy",
     "clean-dist": "rm -f -r -d dist"
   },
   "dependencies": {
