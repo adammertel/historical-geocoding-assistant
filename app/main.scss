@@ -1,5 +1,12 @@
 // Import the initial variables
-@import '../node_modules/bulma/sass/utilities/initial-variables';
+@import "../node_modules/bulma/sass/utilities/initial-variables";
+
+// Import other libraries
+@import "~react-leaflet-markercluster/dist/styles.min.css";
+
+@import "~leaflet-geonames/L.Control.Geonames.css";
+@import "~font-awesome/css/font-awesome.css";
+@import "~hint.css/hint.css";
 
 $info: #d9ae5f;
 $warning: #5f8ad9;
@@ -12,8 +19,8 @@ $table-cell-border-width: none;
 $table-cell-border: none;
 $table-head-cell-border-width: none;
 
-$family-serif: 'Acme', sans-serif;
-$family-primary: 'Lato', sans-serif;
+$family-serif: "Acme", sans-serif;
+$family-primary: "Lato", sans-serif;
 
 @keyframes blink {
   from {
@@ -60,7 +67,7 @@ table.table.centered {
     height: auto;
     line-height: 1.5;
     select {
-      font-family: 'FontAwesome', 'sans-serif';
+      font-family: "FontAwesome", "sans-serif";
       border-color: $primary;
     }
   }
@@ -88,19 +95,11 @@ table.table.centered {
 }
 
 // Import the rest of Bulma
-@import '../node_modules/bulma/bulma';
-@import './bulma/tooltip.sass';
-@import './bulma/slider.sass';
-@import './bulma/checkbox.sass';
-@import './bulma/switch.sass';
-
-// Import other libraries
-@import '~react-leaflet-markercluster/dist/styles.min.css';
-
-@import '~leaflet/dist/leaflet.css';
-@import '~leaflet-geonames/L.Control.Geonames.css';
-@import '~font-awesome/css/font-awesome.css';
-@import '~hint.css/hint.css';
+@import "../node_modules/bulma/bulma";
+@import "./bulma/tooltip.sass";
+@import "./bulma/slider.sass";
+@import "./bulma/checkbox.sass";
+@import "./bulma/switch.sass";
 
 html {
   overflow: hidden;
