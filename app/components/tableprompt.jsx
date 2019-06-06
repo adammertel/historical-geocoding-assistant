@@ -27,10 +27,7 @@ class TablePrompt extends React.Component {
   }
 
   acceptExampleSheetId() {
-    console.log(this.exampleSheetId);
-    sheetId = this.exampleSheetId;
-    location.hash = sheetId;
-    initSheet();
+    this.setState({ sheetId: this.exampleSheetId });
   }
 
   render() {
@@ -82,7 +79,7 @@ class TablePrompt extends React.Component {
               id : <br />{" "}
               <Button
                 onClick={this.acceptExampleSheetId.bind(this)}
-                label={"example sheet"}
+                label={"copy example sheet id"}
               />
               <br />
               <br />
