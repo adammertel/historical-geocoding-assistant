@@ -47,6 +47,7 @@ class TablePrompt extends React.Component {
               marginBottom: -10
             }}
           >
+            <div id="version">{"version " + window["version"]}</div>
             <img
               src={logoPath}
               alt="logo"

@@ -7,10 +7,12 @@ import AppStore from "./appstore.js";
 import Sheet from "./sheet.js";
 import Base from "./base.js";
 
+const pcg = require("./../package.json");
+
 const TESTING = false;
 console.log("testing mode", TESTING);
 
-window["version"] = "1.2.3";
+window["version"] = pcg.version;
 
 // global variables
 window["map"] = false;
