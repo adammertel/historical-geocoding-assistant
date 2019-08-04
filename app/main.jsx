@@ -66,3 +66,5 @@ loadConfig(config => {
     store.changeLoadingStatus("prompting table");
   }
 });
+
+module.hot.accept();

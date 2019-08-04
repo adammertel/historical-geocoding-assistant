@@ -72,10 +72,73 @@ table.table.centered {
     }
   }
 }
-.panel-wrapper table.table tr td:first-child {
-  width: 25%;
-  font-size: 10px;
-  margin-bottom: 0.5rem;
+
+.panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  width: 400px;
+  background-color: white;
+  height: 100%;
+  padding: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  font-size: 12px;
+}
+
+.panel,
+.layercontrol-wrapper {
+  .menu {
+    margin-bottom: 10px;
+    font-size: 12px;
+
+    .menu-header {
+      font-size: 14px;
+      cursor: pointer;
+      display: inline;
+      line-height: 1;
+
+      .menu-label {
+        font-weight: 800;
+        color: black;
+        display: inline;
+      }
+
+      .menu-hider,
+      .menu-icon {
+        height: 1rem;
+      }
+    }
+
+    .field {
+      margin-bottom: 0.2rem;
+      label::before,
+      label::after {
+        margin-top: 2px;
+      }
+    }
+
+    &.open {
+      .menu-content {
+        width: 1000%;
+        padding-top: 0.2rem;
+        margin-bottom: 1rem;
+        padding-left: 0.5rem;
+        border-left: 1px solid black;
+
+        .list {
+          margin-top: 0.5rem;
+        }
+      }
+    }
+  }
+
+  table.table tr td:first-child {
+    width: 25%;
+    font-size: 10px;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .hl-point {
@@ -84,10 +147,6 @@ table.table.centered {
   animation: blink 0.5s infinite ease-out;
   fill-opacity: 1;
   stroke-width: 0;
-}
-
-.menu-wrapper .menu-content {
-  width: 1000%;
 }
 
 .layercontrol-wrapper .menu-wrapper:empty(:not) {

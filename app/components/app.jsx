@@ -1,16 +1,16 @@
 // @flow
 
-import React from 'react';
-import { observer } from 'mobx-react';
+import React from "react";
+import { observer } from "mobx-react";
 
-import ErrorBoundary from './errorboundary';
-import AppMap from './map';
-import Panel from './panel';
-import LayerControl from './layercontrol';
-import Settings from './settings';
-import LoadingStatus from './loadingstatus';
-import AppHider from './apphider';
-import TablePrompt from './tableprompt';
+import ErrorBoundary from "./errorboundary";
+import AppMap from "./map";
+import Panel from "./panel";
+import LayerControl from "./layercontrol";
+import Settings from "./settings";
+import LoadingStatus from "./loadingstatus";
+import AppHider from "./apphider";
+import TablePrompt from "./tableprompt";
 
 class App extends React.Component {
   constructor(props) {
@@ -19,17 +19,17 @@ class App extends React.Component {
 
   style() {
     return {
-      width: '100%',
-      height: '100%'
+      width: "100%",
+      height: "100%"
     };
   }
 
   bodyStyle() {
     return {
       top: 0,
-      position: 'absolute',
+      position: "absolute",
       bottom: 0,
-      width: '100%'
+      width: "100%"
     };
   }
 
