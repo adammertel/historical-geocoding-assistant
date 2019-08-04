@@ -31,6 +31,21 @@
     "geonames": "#056ba6",
     "wikipedia": "#05a640"
   },
+  "columnNames": {
+    "name": [
+      "placename",
+      "locationname",
+      "location",
+      "locality",
+      "localisation",
+      "place",
+      "label"
+    ],
+    "x": ["xcoordinate", "xgeo", "x", "longitude", "lng"],
+    "y": ["ycoordinate", "ygeo", "y", "latitude", "lat"],
+    "certainty": ["certainty"],
+    "note": ["placenote", "localisationnotes", "note"]
+  },
   "storeOpts": {
     "basemaps": { "map1": "OSM_DE", "map2": "ESRIWORLD", "opacity": 0.4 },
     "overlays": [{ "id": "COUNTRIES_MODERN", "opacity": 0.7 }],
