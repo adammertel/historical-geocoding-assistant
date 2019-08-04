@@ -21,7 +21,7 @@
   "mapOpacityRatio": 0.4,
   "mapMeasureUnits": "metres",
   "map": {
-    "zoomMax": 15,
+    "zoomMax": 18,
     "zoomMin": 3
   },
   "coordinatesPrecision": 10000,
