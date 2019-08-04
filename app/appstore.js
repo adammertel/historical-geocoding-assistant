@@ -5,7 +5,6 @@ import { observable, action, computed, toJS } from "mobx";
 import Sheet from "./sheet.js";
 import mobx from "mobx";
 import React from "react";
-import stringSimilarity from "string-similarity";
 
 export default class AppStore extends React.Component {
   @observable opts = {};
@@ -46,51 +45,34 @@ export default class AppStore extends React.Component {
     looks for the best columns that fits most the mandatory columns based on the set keywords
   */
   @action findDefaultColumnNames(inputColumns = Object.keys(this.recordData)) {
-    const columns = inputColumns.map(c => {
-      return {
-        sanitized: c
-          .toLowerCase()
-          .trim()
-          .replace(/_/g, "")
-          .replace(/-/g, ""),
-        original: c
-      };
-    });
+    const columns = inputColumns.map(c => ({
+      sanitized: Base.sanitizeWord(c),
+      original: c
+    }));
 
-    console.log(columns);
-
-    const mandatoryColumnKeywords = config.columnNames;
-
-    const columnToMandatoryColumnsScore = (column, keywords) => {
-      let bestScore = 0;
-      keywords.forEach((keyword, ki) => {
-        const score =
-          stringSimilarity.compareTwoStrings(column.sanitized, keyword) *
-          (1 - ki / keywords.length);
-
-        bestScore = score > bestScore ? score : bestScore;
-      });
-      return bestScore;
-    };
+    const columnKeywords = config.columnNames;
 
     const findBestColumn = mandatoryColumnKey => {
-      const keywords = mandatoryColumnKeywords[mandatoryColumnKey];
+      const keywords = columnKeywords[mandatoryColumnKey];
 
       let bestScore = -1;
       let bestColumn = false;
 
       columns.forEach(column => {
-        const score = columnToMandatoryColumnsScore(column, keywords);
+        const score = Base.simScoreMax(column.sanitized, keywords);
 
         bestColumn = score > bestScore ? column.original : bestColumn;
         bestScore = score > bestScore ? score : bestScore;
       });
 
-      this.opts.columns[mandatoryColumnKey] = bestColumn;
-      console.log("mandatoryC:", mandatoryColumnKey, "column:", bestColumn);
+      return bestColumn;
     };
 
-    Object.keys(mandatoryColumnKeywords).forEach(key => findBestColumn(key));
+    Object.keys(columnKeywords).forEach(key => {
+      const bestColumn = findBestColumn(key);
+      this.opts.columns[key] = bestColumn;
+      console.log(key, "->", bestColumn);
+    });
   }
 
   /*

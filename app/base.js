@@ -1,11 +1,12 @@
 // @flow
-import $ from 'jquery';
-import { divIcon } from 'leaflet';
+import $ from "jquery";
+import { divIcon } from "leaflet";
+import stringSimilarity from "string-similarity";
 
 var Base = {
   doRequest(url, next) {
     const req = new XMLHttpRequest();
-    req.open('GET', url, true); // `false` makes the request synchronous
+    req.open("GET", url, true); // `false` makes the request synchronous
     req.withCredentials = false;
     req.send();
 
@@ -13,7 +14,7 @@ var Base = {
       next(JSON.parse(out.responseText));
     };
     const error = status => {
-      console.log('err', status);
+      console.log("err", status);
       next(false);
     };
     req.onreadystatechange = function() {
@@ -43,34 +44,34 @@ var Base = {
         'px" class="' +
         classes +
         '"></i></span>',
-      className: 'map-sort-icon',
+      className: "map-sort-icon",
       iconAnchor: anchor ? anchor : [size[0] / 2, size[1]],
       iconSize: size
     });
   },
 
   requestConfigFile(configPath, next) {
-    this.doRequest('./configs/' + configPath, data => next(data));
+    this.doRequest("./configs/" + configPath, data => next(data));
   },
 
   requestDataFile(configPath, next) {
-    this.doRequest('./data/' + configPath, data => next(data));
+    this.doRequest("./data/" + configPath, data => next(data));
   },
 
   openTab(path) {
-    window.open('http://' + path, '_blank', 'width=800,height=900');
+    window.open("http://" + path, "_blank", "width=800,height=900");
   },
 
-  extentToUrl(e, type = 'wiki') {
-    if (type === 'wiki') {
+  extentToUrl(e, type = "wiki") {
+    if (type === "wiki") {
       return (
-        'south=' +
+        "south=" +
         e[0][1] +
-        '&north=' +
+        "&north=" +
         e[1][1] +
-        '&west=' +
+        "&west=" +
         e[0][0] +
-        '&east=' +
+        "&east=" +
         e[1][0]
       );
     }
@@ -78,14 +79,14 @@ var Base = {
 
   wiki(term, extent, next) {
     const path =
-      'http://api.geonames.org/wikipediaSearchJSON?' +
-      'q=' +
+      "http://api.geonames.org/wikipediaSearchJSON?" +
+      "q=" +
       encodeURIComponent(term) +
-      '&maxRows=10&username=adammertel&' +
+      "&maxRows=10&username=adammertel&" +
       this.extentToUrl(extent);
 
     $.ajax({
-      dataType: 'json',
+      dataType: "json",
       url: path,
       async: true,
       processData: false,
@@ -98,14 +99,14 @@ var Base = {
 
   geonames(term, extent, next) {
     const path =
-      'http://api.geonames.org/searchJSON?' +
-      'q=' +
+      "http://api.geonames.org/searchJSON?" +
+      "q=" +
       encodeURIComponent(term) +
-      '&maxRows=10' +
-      '&username=adammertel';
+      "&maxRows=10" +
+      "&username=adammertel";
 
     $.ajax({
-      dataType: 'json',
+      dataType: "json",
       processData: false,
       url: path,
       async: true,
@@ -147,6 +148,25 @@ var Base = {
 
   same(value1, value2) {
     return value1.toString() === value2.toString();
+  },
+
+  /* 
+    ling similarity
+  */
+  simScore(w1, w2) {
+    return stringSimilarity.compareTwoStrings(w1, w2);
+  },
+
+  simScoreMax(w1, ws) {
+    return Math.max(...ws.map(o => this.simScore(w1, o)));
+  },
+
+  sanitizeWord(w) {
+    return w
+      .toLowerCase()
+      .trim()
+      .replace(/_/g, "")
+      .replace(/-/g, "");
   }
 };
 
