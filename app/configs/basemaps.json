@@ -1,8 +1,7 @@
 {
   "OSM_DE": {
     "url": "https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png",
-    "attribution":
-      "&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>",
+    "attribution": "&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>",
     "name": "OSM.DE",
     "info": "http://openstreetmap.org",
     "type": "tile"
@@ -17,10 +16,8 @@
   },
 
   "CartoDB_Positron": {
-    "url":
-      "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
-    "attribution":
-      "&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> &copy; <a href='http://cartodb.com/attributions'>CartoDB</a>",
+    "url": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+    "attribution": "&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> &copy; <a href='http://cartodb.com/attributions'>CartoDB</a>",
     "subdomains": "abcd",
     "name": "CartoDB",
     "maxZoom": 19,
@@ -29,18 +26,23 @@
 
   "OSM": {
     "url": "http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png",
-    "attribution":
-      "<a href='http://openstreetmap.org'>OpenStreetMap</a> contributors, <a href='http://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>",
+    "attribution": "<a href='http://openstreetmap.org'>OpenStreetMap</a> contributors, <a href='http://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>",
     "name": "Open Street Maps",
     "info": "http://openstreetmap.org",
     "type": "tile"
   },
 
+  "TOPO": {
+    "url": "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+    "name": "Open Topo Map",
+    "attribution": "Map data: &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors, <a href='http://viewfinderpanoramas.org'>SRTM</a> | Map style: &copy; <a href='https://opentopomap.org'>OpenTopoMap</a> (<a href='https://creativecommons.org/licenses/by-sa/3.0/'>CC-BY-SA</a>)",
+    "maxZoom": 17,
+    "type": "tile"
+  },
+
   "ESRIWORLD": {
-    "url":
-      "http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    "attribution":
-      "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
+    "url": "http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "attribution": "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
     "name": "WorldImagery ESRI",
     "info": "WorldImagery ESRI ArcGIS Online WMS",
     "type": "tile"
@@ -48,8 +50,7 @@
 
   "IMPERIUM": {
     "url": "http://pelagios.org/tilesets/imperium/{z}/{x}/{y}.png",
-    "attribution":
-      "<a href='http://dare.ht.lu.se/'>Digital Atlas of the Roman Empire (DARE)</a>",
+    "attribution": "<a href='http://dare.ht.lu.se/'>Digital Atlas of the Roman Empire (DARE)</a>",
     "name": "Imperium",
     "info": "http://dare.ht.lu.se/",
     "type": "tile"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Map,
   TileLayer,
@@ -11,13 +11,13 @@ import {
   LayerGroup,
   GeoJSON,
   Pane
-} from 'react-leaflet';
+} from "react-leaflet";
 
-require('leaflet.measure');
-import { observer } from 'mobx-react';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
-require('leaflet.markercluster.placementstrategies');
-require('./../../node_modules/leaflet-geonames/L.Control.Geonames.js');
+require("leaflet.measure");
+import { observer } from "mobx-react";
+import MarkerClusterGroup from "react-leaflet-markercluster";
+require("leaflet.markercluster.placementstrategies");
+require("./../../node_modules/leaflet-geonames/L.Control.Geonames.js");
 
 class AppMap extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class AppMap extends React.Component {
   }
 
   markerOffset() {
-    return [this.markerSize[0] / 2, -1 * this.markerSize[1] / 2];
+    return [this.markerSize[0] / 2, (-1 * this.markerSize[1]) / 2];
   }
 
   style() {
@@ -34,27 +34,27 @@ class AppMap extends React.Component {
   }
 
   componentDidMount() {
-    window['map'] = this.refs.map.leafletElement;
+    window["map"] = this.refs.map.leafletElement;
     const measureCircleStyle = {
-      fillColor: 'black',
+      fillColor: "black",
       weight: 0,
       fillOpacity: 1,
       radius: 3
     };
-    window['measureControl'] = L.control
+    window["measureControl"] = L.control
       .polylineMeasure({
         unit: config.mapMeasureUnits,
-        measureControlTitleOn: 'Measure',
-        measureControlTitleOff: 'Stop measuring',
-        clearControlTitle: 'Clear Measurements',
-        clearControlLabel: '&times',
-        measureControlLabel: '&#128207;',
+        measureControlTitleOn: "Measure",
+        measureControlTitleOff: "Stop measuring",
+        clearControlTitle: "Clear Measurements",
+        clearControlLabel: "&times",
+        measureControlLabel: "&#128207;",
         tempLine: {
-          color: 'black', // Dashed line color
+          color: "black", // Dashed line color
           weight: 2 // Dashed line weight
         },
         fixedLine: {
-          color: 'black', // Solid line color
+          color: "black", // Solid line color
           weight: 2 // Solid line weight
         },
         startCircle: measureCircleStyle,
@@ -64,22 +64,22 @@ class AppMap extends React.Component {
       })
       .addTo(map);
 
-    window['geonamesControl'] = L.control
+    window["geonamesControl"] = L.control
       .geonames({
         //position: 'topcenter',  // in addition to standard 4 corner Leaflet control layout, this will position and size from top center
-        geonamesURL: '//api.geonames.org/searchJSON', // override this if using a proxy to get connection to geonames
-        username: 'adammertel', // Geonames account username.  Must be provided
+        geonamesURL: "//api.geonames.org/searchJSON", // override this if using a proxy to get connection to geonames
+        username: "adammertel", // Geonames account username.  Must be provided
         zoomLevel: null, // Max zoom level to zoom to for location.  If null, will use the map's max zoom level.
         maxresults: 5, // Maximum number of results to display per search
-        className: 'leaflet-geonames-icon', //class for icon
-        workingClass: 'leaflet-geonames-icon-working', //class for search underway
-        featureClasses: ['A', 'H', 'L', 'P', 'R', 'T', 'U', 'V'], // feature classes to search against.  See: http://www.geonames.org/export/codes.html
-        baseQuery: 'isNameRequired=true', // The core query sent to GeoNames, later combined with other parameters above
-        position: 'topleft',
+        className: "leaflet-geonames-icon", //class for icon
+        workingClass: "leaflet-geonames-icon-working", //class for search underway
+        featureClasses: ["A", "H", "L", "P", "R", "T", "U", "V"], // feature classes to search against.  See: http://www.geonames.org/export/codes.html
+        baseQuery: "isNameRequired=true", // The core query sent to GeoNames, later combined with other parameters above
+        position: "topleft",
         showMarker: false, //Show a marker at the location the selected location
         showPopup: true, //Show a tooltip at the selected location
 
-        lang: 'en',
+        lang: "en",
         alwaysOpen: false
       })
       .addTo(map);
@@ -87,15 +87,15 @@ class AppMap extends React.Component {
 
   mapStyle() {
     return {
-      position: 'absolute',
-      left: '0',
-      right: '400px',
-      height: '100%'
+      position: "absolute",
+      left: "0",
+      right: "400px",
+      height: "100%"
     };
   }
 
   isMeasuring() {
-    return window['measureControl']._measuring;
+    return window["measureControl"]._measuring;
   }
 
   handleClickMarker(rowId) {
@@ -121,11 +121,11 @@ class AppMap extends React.Component {
       ? 1 - store.opts.basemaps.opacity
       : store.opts.basemaps.opacity;
 
-    if (basemap.type === 'tile') {
-      return <TileLayer key={top ? '1' : '2'} opacity={opacity} {...basemap} />;
-    } else if (basemap.type === 'wms') {
+    if (basemap.type === "tile") {
+      return <TileLayer key={top ? "1" : "2"} opacity={opacity} {...basemap} />;
+    } else if (basemap.type === "wms") {
       return (
-        <WMSTileLayer key={top ? '1' : '2'} opacity={opacity} {...basemap} />
+        <WMSTileLayer key={top ? "1" : "2"} opacity={opacity} {...basemap} />
       );
     }
   }
@@ -146,7 +146,7 @@ class AppMap extends React.Component {
           const overlay = overlaymaps[o.id];
           const zIndex = 400 - oid;
 
-          if (overlay.type === 'wms') {
+          if (overlay.type === "wms") {
             return (
               <WMSTileLayer
                 key={o.id}
@@ -155,7 +155,7 @@ class AppMap extends React.Component {
                 opacity={o.opacity}
               />
             );
-          } else if (overlay.type === 'geojson') {
+          } else if (overlay.type === "geojson") {
             return (
               <Pane style={{ zIndex: zIndex }} key={o.id} name={overlay.id}>
                 <GeoJSON
@@ -181,8 +181,8 @@ class AppMap extends React.Component {
             key={ri}
             position={[parseFloat(record.y), parseFloat(record.x)]}
             icon={Base.icon(
-              'fa fa-map-marker',
-              'color: ' + config.colors.otherRecords,
+              "fa fa-map-marker",
+              "color: " + config.colors.otherRecords,
               this.markerSize
             )}
             onClick={this.handleClickMarker.bind(this, record.row)}
@@ -222,8 +222,8 @@ class AppMap extends React.Component {
           key={0}
           position={[parseFloat(store.recordY), parseFloat(store.recordX)]}
           icon={Base.icon(
-            'fa fa-map-marker',
-            'color: ' + config.colors.main,
+            "fa fa-map-marker",
+            "color: " + config.colors.main,
             this.markerSize
           )}
         >
@@ -238,25 +238,27 @@ class AppMap extends React.Component {
   renderGeonames() {
     return (
       <Pane style={{ zIndex: 500 }}>
-        {store.geonames.filter(g => g && g.ll).map((geoname, gi) => {
-          return (
-            <Marker
-              key={gi}
-              className="geoname-point"
-              position={[geoname.ll[0], geoname.ll[1]]}
-              icon={Base.icon(
-                'fa fa-map-marker',
-                'color: ' + config.colors.geonames,
-                this.markerSize
-              )}
-              onClick={this.handleClickGeoname.bind(this, geoname)}
-            >
-              <Tooltip offset={this.markerOffset()} direction="right">
-                <h4>{'geoname: ' + geoname.toponymName}</h4>
-              </Tooltip>
-            </Marker>
-          );
-        })}
+        {store.geonames
+          .filter(g => g && g.ll)
+          .map((geoname, gi) => {
+            return (
+              <Marker
+                key={gi}
+                className="geoname-point"
+                position={[geoname.ll[0], geoname.ll[1]]}
+                icon={Base.icon(
+                  "fa fa-map-marker",
+                  "color: " + config.colors.geonames,
+                  this.markerSize
+                )}
+                onClick={this.handleClickGeoname.bind(this, geoname)}
+              >
+                <Tooltip offset={this.markerOffset()} direction="right">
+                  <h4>{"geoname: " + geoname.toponymName}</h4>
+                </Tooltip>
+              </Marker>
+            );
+          })}
       </Pane>
     );
   }
@@ -264,25 +266,27 @@ class AppMap extends React.Component {
   renderWikis() {
     return (
       <Pane style={{ zIndex: 500 }}>
-        {store.wikis.filter(g => g && g.ll).map((wiki, gi) => {
-          return (
-            <Marker
-              key={gi}
-              className="wiki-point"
-              position={[wiki.ll[0], wiki.ll[1]]}
-              icon={Base.icon(
-                'fa fa-map-marker',
-                'color: ' + config.colors.wikipedia,
-                this.markerSize
-              )}
-              onClick={this.handleClickGeoname.bind(this, wiki)}
-            >
-              <Tooltip offset={this.markerOffset()} direction="right">
-                <h4>{'wikipedia: ' + wiki.title}</h4>
-              </Tooltip>
-            </Marker>
-          );
-        })}
+        {store.wikis
+          .filter(g => g && g.ll)
+          .map((wiki, gi) => {
+            return (
+              <Marker
+                key={gi}
+                className="wiki-point"
+                position={[wiki.ll[0], wiki.ll[1]]}
+                icon={Base.icon(
+                  "fa fa-map-marker",
+                  "color: " + config.colors.wikipedia,
+                  this.markerSize
+                )}
+                onClick={this.handleClickGeoname.bind(this, wiki)}
+              >
+                <Tooltip offset={this.markerOffset()} direction="right">
+                  <h4>{"wikipedia: " + wiki.title}</h4>
+                </Tooltip>
+              </Marker>
+            );
+          })}
       </Pane>
     );
   }
