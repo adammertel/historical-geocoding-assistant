@@ -20,6 +20,19 @@ window["Base"] = Base;
 
 window["username"] = "";
 
+/* testing simscores
+
+const simScoreTests = [
+  { reference: "coordinatex", p: ["coordinatex", "x"], n: ["y", "coordinatey"] }
+];
+
+simScoreTests.forEach(t => {
+  const score = Base.simScoreBi(t.reference, t.p, t.n);
+  console.log(t.reference, ";", t.p, t.n, ";", score);
+});
+
+*/
+
 // load map layers
 Base.requestConfigFile("basemaps.json", data => (window["basemaps"] = data));
 Base.requestConfigFile("mapoverlays.json", overlays => {

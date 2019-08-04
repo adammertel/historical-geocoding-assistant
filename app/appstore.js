@@ -59,8 +59,11 @@ export default class AppStore extends React.Component {
       let bestColumn = false;
 
       columns.forEach(column => {
-        const score = Base.simScoreMax(column.sanitized, keywords);
-
+        const score = Base.simScoreBi(
+          column.sanitized,
+          keywords.include,
+          keywords.exclude
+        );
         bestColumn = score > bestScore ? column.original : bestColumn;
         bestScore = score > bestScore ? score : bestScore;
       });

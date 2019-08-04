@@ -158,7 +158,13 @@ var Base = {
   },
 
   simScoreMax(w1, ws) {
-    return Math.max(...ws.map(o => this.simScore(w1, o)));
+    return ws.length ? Math.max(...ws.map(o => this.simScore(w1, o))) : 0;
+  },
+
+  simScoreBi(w1, positives, negatives) {
+    const scorePositive = Base.simScoreMax(w1, positives);
+    const scoreNegative = Base.simScoreMax(w1, negatives);
+    return scorePositive - scoreNegative;
   },
 
   sanitizeWord(w) {
