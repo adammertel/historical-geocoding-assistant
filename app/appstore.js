@@ -370,17 +370,15 @@ export default class AppStore extends React.Component {
     const config = this.opts;
 
     if (column === config.columns.x || column === config.columns.y) {
-      if (value || value === 0) {
+      if (value && value != 0) {
         value = parseFloat(value);
       }
-    } else {
-      if (
-        column === config.columns.name ||
-        column === config.columns.placeName
-      ) {
-        this.updateSearch();
-      }
     }
+
+    if (column === config.columns.name || column === config.columns.placeName) {
+      this.updateSearch();
+    }
+
     this.records[this.row][column] = value;
   };
 
