@@ -3,7 +3,87 @@ import $ from "jquery";
 import { divIcon } from "leaflet";
 import stringSimilarity from "string-similarity";
 
+var suggestionSources = [
+  {
+    id: "geoname",
+    url: (term, extent) =>
+      "http://api.geonames.org/searchJSON?" +
+      "q=" +
+      encodeURIComponent(term) +
+      "&maxRows=10" +
+      "&username=adammertel",
+    getRecords: res => res.geonames,
+    parse: {
+      ll: r => [parseFloat(r.lat), parseFloat(r.lng)],
+      country: r => r.countryCode,
+      rank: r => 100,
+      name: r => r.name,
+      url: r => "",
+      type: r => r.fcodeName,
+      info: r => ""
+    }
+  },
+  {
+    id: "wiki",
+    url: (term, extent) =>
+      "http://api.geonames.org/wikipediaSearchJSON?" +
+      "q=" +
+      encodeURIComponent(term) +
+      "&maxRows=10" +
+      "&username=adammertel&" +
+      Base.extentToUrl(extent),
+    getRecords: res => res.geonames,
+    parse: {
+      ll: r => [parseFloat(r.lat), parseFloat(r.lng)],
+      country: r => r.countryCode,
+      rank: r => r.rank,
+      name: r => r.title,
+      url: r => r.wikipediaUrl,
+      type: r => "",
+      info: r => r.summary
+    }
+  }
+];
+
 var Base = {
+  getSuggestions(recordName, extent, next) {
+    let processed = 0;
+    const needed = suggestionSources.length;
+
+    const allSuggestions = {};
+
+    const checkEnd = () => {
+      processed++;
+      if (processed === needed) {
+        next(allSuggestions);
+      }
+    };
+
+    suggestionSources.forEach(source => {
+      $.ajax({
+        url: source.url(recordName, extent),
+        async: true,
+        dataType: "json",
+        processData: false,
+        success: res => {
+          const parsedRecords = source.getRecords(res).map(rec => {
+            const suggestion = {};
+            Object.keys(source.parse).forEach(key => {
+              suggestion[key] = source.parse[key](rec);
+            });
+            return suggestion;
+          });
+
+          allSuggestions[source.id] = parsedRecords;
+          checkEnd();
+        },
+        fail: () => {
+          checkEnd();
+        }
+      });
+    });
+  },
+
   doRequest(url, next) {
     const req = new XMLHttpRequest();
     req.open("GET", url, true); // `false` makes the request synchronous
@@ -75,55 +155,6 @@ var Base = {
         e[1][0]
       );
     }
-  },
-
-  wiki(term, extent, next) {
-    const path =
-      "http://api.geonames.org/wikipediaSearchJSON?" +
-      "q=" +
-      encodeURIComponent(term) +
-      "&maxRows=10&username=adammertel&" +
-      this.extentToUrl(extent);
-
-    $.ajax({
-      dataType: "json",
-      url: path,
-      async: true,
-      processData: false,
-      success: res => {
-        next(res.geonames ? this.parseGeonames(res.geonames, extent) : []);
-      },
-      fail: () => next([])
-    });
-  },
-
-  geonames(term, extent, next) {
-    const path =
-      "http://api.geonames.org/searchJSON?" +
-      "q=" +
-      encodeURIComponent(term) +
-      "&maxRows=10" +
-      "&username=adammertel";
-
-    $.ajax({
-      dataType: "json",
-      processData: false,
-      url: path,
-      async: true,
-      success: res => {
-        next(res.geonames ? this.parseGeonames(res.geonames, extent) : []);
-      },
-      fail: () => next([])
-    });
-  },
-
-  parseGeonames(geonames, e) {
-    return geonames
-      .map(gn => {
-        gn.ll = [parseFloat(gn.lat), parseFloat(gn.lng)];
-        return this.inExtent(gn.ll, e) ? gn : false;
-      })
-      .filter(g => g);
   },
 
   inExtent(geom, e) {

@@ -35,12 +35,14 @@ class AppMap extends React.Component {
 
   componentDidMount() {
     window["map"] = this.refs.map.leafletElement;
+
     const measureCircleStyle = {
       fillColor: "black",
       weight: 0,
       fillOpacity: 1,
       radius: 3
     };
+
     window["measureControl"] = L.control
       .polylineMeasure({
         unit: config.mapMeasureUnits,
@@ -235,54 +237,26 @@ class AppMap extends React.Component {
     );
   }
 
-  renderGeonames() {
+  renderSuggestions(id, points, color) {
     return (
-      <Pane style={{ zIndex: 500 }}>
-        {store.geonames
+      <Pane style={{ zIndex: 500 }} className={"pane-" + id} key={"pane-" + id}>
+        {points
           .filter(g => g && g.ll)
-          .map((geoname, gi) => {
+          .map((p, pi) => {
             return (
               <Marker
-                key={gi}
-                className="geoname-point"
-                position={[geoname.ll[0], geoname.ll[1]]}
+                key={pi}
+                className={id + "-point"}
+                position={[p.ll[0], p.ll[1]]}
                 icon={Base.icon(
                   "fa fa-map-marker",
-                  "color: " + config.colors.geonames,
+                  "color: " + color,
                   this.markerSize
                 )}
-                onClick={this.handleClickGeoname.bind(this, geoname)}
+                onClick={this.handleClickGeoname.bind(this, p)}
               >
                 <Tooltip offset={this.markerOffset()} direction="right">
-                  <h4>{"geoname: " + geoname.toponymName}</h4>
-                </Tooltip>
-              </Marker>
-            );
-          })}
-      </Pane>
-    );
-  }
-
-  renderWikis() {
-    return (
-      <Pane style={{ zIndex: 500 }}>
-        {store.wikis
-          .filter(g => g && g.ll)
-          .map((wiki, gi) => {
-            return (
-              <Marker
-                key={gi}
-                className="wiki-point"
-                position={[wiki.ll[0], wiki.ll[1]]}
-                icon={Base.icon(
-                  "fa fa-map-marker",
-                  "color: " + config.colors.wikipedia,
-                  this.markerSize
-                )}
-                onClick={this.handleClickGeoname.bind(this, wiki)}
-              >
-                <Tooltip offset={this.markerOffset()} direction="right">
-                  <h4>{"wikipedia: " + wiki.title}</h4>
+                  <h4>{id + ": " + p.title}</h4>
                 </Tooltip>
               </Marker>
             );
@@ -320,16 +294,23 @@ class AppMap extends React.Component {
         >
           <ScaleControl position="topleft" imperial={true} />
           <AttributionControl position="bottomleft" />
-
           {this.renderBaseLayers()}
           {store.opts.overlays.length > 0 && this.renderOverlays()}
-
           {store.validRecordCoordinates && this.renderThisCoordinate()}
-
           {store.opts.displayOtherRecords && this.renderOtherRecords()}
-          {store.opts.displayGeonames && this.renderGeonames()}
-          {store.opts.displayWikis && this.renderWikis()}
-          {store.hlPoint && this.renderHighlighted()}
+          {store.opts.displayGeonames &&
+            this.renderSuggestions(
+              "geoname",
+              store.suggestions.geoname,
+              config.colors.geonames
+            )}
+          {store.opts.displayWikis &&
+            this.renderSuggestions(
+              "wiki",
+              store.suggestions.wiki,
+              config.colors.wiki
+            )}
+          }{store.hlPoint && this.renderHighlighted()}
         </Map>
       </div>
     );

@@ -340,7 +340,7 @@ class Panel extends React.Component {
         </Menu>
 
         <Menu
-          label={"geonames (" + store.geonames.length + " found)"}
+          label={"geonames (" + store.suggestions.geoname.length + " found)"}
           defaultOpen
           icon="map-marker"
           iconColor={config.colors.geonames}
@@ -354,7 +354,7 @@ class Panel extends React.Component {
               onChange={store.toggleDisplayGeonames.bind(store)}
             />
             <div className="list">
-              {store.geonames
+              {store.suggestions.geoname
                 .filter(g => g)
                 .map((geoname, gi) => {
                   return (
@@ -382,11 +382,11 @@ class Panel extends React.Component {
                       />
                       <span
                         className="tag is-white tooltip"
-                        data-tooltip={geoname.countryName}
+                        data-tooltip={geoname.country}
                         style={this.styleTag()}
                       >
                         {
-                          geoname.countryCode // + ' - ' + geoname.fcodeName
+                          geoname.country // + ' - ' + geoname.fcodeName
                         }
                       </span>
                       <div style={this.styleLabel()}>{geoname.name || ""}</div>
@@ -398,10 +398,10 @@ class Panel extends React.Component {
         </Menu>
 
         <Menu
-          label={"wikipedia (" + store.wikis.length + " found)"}
+          label={"wikipedia (" + store.suggestions.wiki.length + " found)"}
           defaultOpen
           icon="map-marker"
-          iconColor={config.colors.wikipedia}
+          iconColor={config.colors.wiki}
         >
           <Checkbox
             id="switch-wikipedia"
@@ -411,7 +411,7 @@ class Panel extends React.Component {
             onChange={store.toggleDisplayWikis.bind(store)}
           />
           <div className="list">
-            {store.wikis.map((wiki, wi) => {
+            {store.suggestions.wiki.map((wiki, wi) => {
               return (
                 <p key={wi}>
                   <Button
@@ -441,17 +441,17 @@ class Panel extends React.Component {
                   />
                   <span
                     className="tooltip is-tooltip-multiline"
-                    data-tooltip={wiki.summary}
+                    data-tooltip={wiki.info}
                     style={this.styleLabel()}
                   >
-                    {wiki.title || ""}
+                    {wiki.name || ""}
                   </span>
                 </p>
               );
             })}
           </div>
         </Menu>
-        <Menu label="search" defaultOpen>
+        <Menu label="external search" defaultOpen>
           <div>
             <Button
               label="open google search"

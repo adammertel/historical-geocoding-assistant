@@ -3,7 +3,6 @@
 
 import { observable, action, computed, toJS } from "mobx";
 import Sheet from "./sheet.js";
-import mobx from "mobx";
 import React from "react";
 
 export default class AppStore extends React.Component {
@@ -19,6 +18,9 @@ export default class AppStore extends React.Component {
   @observable recordBeforeChanges = {};
   @observable wikis = [];
   @observable geonames = [];
+
+  @observable _suggestions = new Map();
+
   @observable hlPoint = false;
 
   constructor() {
@@ -30,6 +32,10 @@ export default class AppStore extends React.Component {
   }
 
   @action init() {
+    this._suggestions.replace({
+      wiki: [],
+      geoname: []
+    });
     this.noRecords = Sheet.noLines;
     this.openedSettings = config.defaultSettingsOpen;
     this.loadTable(() => {
@@ -178,6 +184,10 @@ export default class AppStore extends React.Component {
     return config.loadingMessages[this.loadingStatus];
   }
 
+  @computed get suggestions() {
+    return toJS(this._suggestions);
+  }
+
   /* ACTIONS */
 
   // loading status
@@ -242,12 +252,14 @@ export default class AppStore extends React.Component {
   };
 
   @action updateSearch = () => {
-    Base.geonames(this.recordName, this.opts.maxGeoExtent, response => {
-      this.geonames = response;
-    });
-    Base.wiki(this.recordName, this.opts.maxGeoExtent, response => {
-      this.wikis = response;
-    });
+    Base.getSuggestions(
+      this.recordName,
+      this.opts.maxGeoExtent,
+      newSuggestions => {
+        this._suggestions.replace(newSuggestions);
+        console.log(this.suggestions);
+      }
+    );
   };
 
   // map tiles
@@ -293,6 +305,7 @@ export default class AppStore extends React.Component {
       this.opts.overlays = clonedOverlays;
     }
   };
+
   @action overlayMoveDown = overlayId => {
     const clonedOverlays = this.opts.overlays.slice();
 
@@ -407,6 +420,7 @@ export default class AppStore extends React.Component {
   @action openSettings = mode => {
     this.openedSettings = mode;
   };
+
   @action closeSettings = () => {
     this.openedSettings = false;
   };
@@ -422,30 +436,35 @@ export default class AppStore extends React.Component {
     };
     this.saveSettings(newConfig);
   };
+
   @action toggleDisplayWikis = () => {
     const newConfig = {
       displayWikis: !this.opts.displayWikis
     };
     this.saveSettings(newConfig);
   };
+
   @action toggleDisplayOtherRecords = () => {
     const newConfig = {
       displayOtherRecords: !this.opts.displayOtherRecords
     };
     this.saveSettings(newConfig);
   };
+
   @action toggleMapClusters = () => {
     const newConfig = {
       mapClusters: !this.opts.mapClusters
     };
     this.saveSettings(newConfig);
   };
+
   @action handleChangeSelect = e => {
     const newConfig = {
       focusZoom: parseInt(e.target.value, 10)
     };
     this.saveSettings(newConfig);
   };
+
   @action toggleFocusChange = () => {
     const newConfig = {
       focusOnRecordChange: !this.opts.focusOnRecordChange
@@ -454,8 +473,8 @@ export default class AppStore extends React.Component {
   };
 
   /*
-        METHODS
-    */
+    METHODS
+  */
   basemapById(basemapId) {
     return window["basemaps"][basemapId];
   }
