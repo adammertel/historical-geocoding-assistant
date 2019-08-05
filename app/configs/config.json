@@ -32,19 +32,35 @@
     "wikipedia": "#05a640"
   },
   "columnNames": {
-    "name": [
-      "placename",
-      "locationname",
-      "location",
-      "locality",
-      "localisation",
-      "place",
-      "label"
-    ],
-    "x": ["xcoordinate", "xgeo", "x", "longitude", "lng"],
-    "y": ["ycoordinate", "ygeo", "y", "latitude", "lat"],
-    "certainty": ["certainty"],
-    "note": ["placenote", "localisationnotes", "note"]
+    "name": {
+      "include": [
+        "placename",
+        "locationname",
+        "location",
+        "locality",
+        "localisation",
+        "place",
+        "label",
+        "settlement"
+      ],
+      "exclude": ["certainty", "certain", "note"]
+    },
+    "x": {
+      "include": ["xcoordinate", "xgeo", "x", "longitude", "lng"],
+      "exclude": ["y", "latitude", "lat"]
+    },
+    "y": {
+      "include": ["ycoordinate", "ygeo", "y", "latitude", "lat"],
+      "exclude": ["x", "longitude", "lng"]
+    },
+    "certainty": {
+      "include": ["certainty", "certain"],
+      "exclude": ["name"]
+    },
+    "note": {
+      "include": ["placenote", "localisationnotes", "note"],
+      "exclude": []
+    }
   },
   "storeOpts": {
     "basemaps": { "map1": "OSM_DE", "map2": "ESRIWORLD", "opacity": 0.4 },
