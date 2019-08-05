@@ -3,52 +3,10 @@ import $ from "jquery";
 import { divIcon } from "leaflet";
 import stringSimilarity from "string-similarity";
 
-var suggestionSources = [
-  {
-    id: "geoname",
-    url: (term, extent) =>
-      "http://api.geonames.org/searchJSON?" +
-      "q=" +
-      encodeURIComponent(term) +
-      "&maxRows=10" +
-      "&username=adammertel",
-    getRecords: res => res.geonames,
-    parse: {
-      ll: r => [parseFloat(r.lat), parseFloat(r.lng)],
-      country: r => r.countryCode,
-      rank: r => 100,
-      name: r => r.name,
-      url: r => "",
-      type: r => r.fcodeName,
-      info: r => ""
-    }
-  },
-  {
-    id: "wiki",
-    url: (term, extent) =>
-      "http://api.geonames.org/wikipediaSearchJSON?" +
-      "q=" +
-      encodeURIComponent(term) +
-      "&maxRows=10" +
-      "&username=adammertel&" +
-      Base.extentToUrl(extent),
-    getRecords: res => res.geonames,
-    parse: {
-      ll: r => [parseFloat(r.lat), parseFloat(r.lng)],
-      country: r => r.countryCode,
-      rank: r => r.rank,
-      name: r => r.title,
-      url: r => r.wikipediaUrl,
-      type: r => "",
-      info: r => r.summary
-    }
-  }
-];
-
 var Base = {
   getSuggestions(recordName, extent, next) {
     let processed = 0;
-    const needed = suggestionSources.length;
+    const needed = SuggestionSources.length;
 
     const allSuggestions = {};
 
@@ -59,7 +17,7 @@ var Base = {
       }
     };
 
-    suggestionSources.forEach(source => {
+    SuggestionSources.forEach(source => {
       $.ajax({
         url: source.url(recordName, extent),
         async: true,

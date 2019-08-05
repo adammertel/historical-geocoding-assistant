@@ -16,10 +16,9 @@ export default class AppStore extends React.Component {
 
   @observable records = {};
   @observable recordBeforeChanges = {};
-  @observable wikis = [];
-  @observable geonames = [];
 
   @observable _suggestions = new Map();
+  @observable _displaySuggestions = new Map();
 
   @observable hlPoint = false;
 
@@ -32,10 +31,11 @@ export default class AppStore extends React.Component {
   }
 
   @action init() {
-    this._suggestions.replace({
-      wiki: [],
-      geoname: []
+    SuggestionSources.forEach(suggestionSource => {
+      this._suggestions.set(suggestionSource.id, []);
+      this._displaySuggestions.set(suggestionSource.id, true);
     });
+
     this.noRecords = Sheet.noLines;
     this.openedSettings = config.defaultSettingsOpen;
     this.loadTable(() => {
@@ -186,6 +186,9 @@ export default class AppStore extends React.Component {
 
   @computed get suggestions() {
     return toJS(this._suggestions);
+  }
+  @computed get displaySuggestions() {
+    return toJS(this._displaySuggestions);
   }
 
   /* ACTIONS */
@@ -430,18 +433,12 @@ export default class AppStore extends React.Component {
     this.updateSearch();
   };
 
-  @action toggleDisplayGeonames = () => {
-    const newConfig = {
-      displayGeonames: !this.opts.displayGeonames
-    };
-    this.saveSettings(newConfig);
-  };
-
-  @action toggleDisplayWikis = () => {
-    const newConfig = {
-      displayWikis: !this.opts.displayWikis
-    };
-    this.saveSettings(newConfig);
+  @action toggleDisplaySuggestion = suggestionId => {
+    this._displaySuggestions.set(
+      suggestionId,
+      !this._displaySuggestions.get(suggestionId)
+    );
+    this.updateSearch();
   };
 
   @action toggleDisplayOtherRecords = () => {

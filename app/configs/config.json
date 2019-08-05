@@ -69,8 +69,6 @@
     "mapClusters": true,
     "focusOnRecordChange": true,
     "defaultRow": 2,
-    "displayGeonames": true,
-    "displayWikis": true,
     "displayOtherRecords": true,
     "mapCenter": [45, 10],
     "mapZoom": 6,

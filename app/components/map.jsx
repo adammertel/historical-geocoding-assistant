@@ -298,13 +298,13 @@ class AppMap extends React.Component {
           {store.opts.overlays.length > 0 && this.renderOverlays()}
           {store.validRecordCoordinates && this.renderThisCoordinate()}
           {store.opts.displayOtherRecords && this.renderOtherRecords()}
-          {store.opts.displayGeonames &&
+          {store.displaySuggestions.geoname &&
             this.renderSuggestions(
               "geoname",
               store.suggestions.geoname,
               config.colors.geonames
             )}
-          {store.opts.displayWikis &&
+          {store.displaySuggestions.wiki &&
             this.renderSuggestions(
               "wiki",
               store.suggestions.wiki,

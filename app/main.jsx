@@ -6,6 +6,7 @@ import "./main.scss";
 import AppStore from "./appstore.js";
 import Sheet from "./sheet.js";
 import Base from "./base.js";
+import SuggestionSources from "./suggestions.js";
 
 const pcg = require("./../package.json");
 
@@ -17,6 +18,7 @@ window["version"] = pcg.version;
 // global variables
 window["map"] = false;
 window["Base"] = Base;
+window["SuggestionSources"] = SuggestionSources;
 
 window["username"] = "";
 

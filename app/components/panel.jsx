@@ -350,8 +350,8 @@ class Panel extends React.Component {
               id="switch-geonames"
               label="display on map"
               classes="is-small"
-              checked={store.opts.displayGeonames}
-              onChange={store.toggleDisplayGeonames.bind(store)}
+              checked={store.displaySuggestions["geoname"]}
+              onChange={store.toggleDisplaySuggestion.bind(store, "geoname")}
             />
             <div className="list">
               {store.suggestions.geoname
@@ -407,8 +407,8 @@ class Panel extends React.Component {
             id="switch-wikipedia"
             label="display places on map"
             classes="is-small"
-            checked={store.opts.displayWikis}
-            onChange={store.toggleDisplayWikis.bind(store)}
+            checked={store.displaySuggestions["wiki"]}
+            onChange={store.toggleDisplaySuggestion.bind(store, "wiki")}
           />
           <div className="list">
             {store.suggestions.wiki.map((wiki, wi) => {
