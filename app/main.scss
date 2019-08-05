@@ -22,6 +22,23 @@ $table-head-cell-border-width: none;
 $family-serif: "Acme", sans-serif;
 $family-primary: "Lato", sans-serif;
 
+.leaflet-control-container {
+  .leaflet-bar {
+    border: 1px solid $primary;
+  }
+
+  .leaflet-geonames-search {
+    height: 2rem;
+
+    &.active {
+      height: auto;
+    }
+    form input {
+      border-radius: 4px;
+    }
+  }
+}
+
 @keyframes blink {
   from {
     opacity: 0.2;
