@@ -21,27 +21,6 @@ var SuggestionSources = [
     }
   },
   {
-    id: "tgaz",
-    url: (term, extent) =>
-      "http://maps.cga.harvard.edu/tgaz/placename?" +
-      "n=" +
-      encodeURIComponent(term) +
-      "&fmt=json",
-    getRecords: res => res.placenames,
-    parse: {
-      ll: r => {
-        const coords = r["xy coordinates"].split(", ");
-        return [parseFloat(coords[0]), parseFloat(coords[1])];
-      },
-      country: r => r.countryCode,
-      rank: r => 100,
-      name: r => r.transcription,
-      url: r => r.uri,
-      type: r => r["feature type"],
-      info: r => ""
-    }
-  },
-  {
     id: "wiki",
     url: (term, extent) =>
       "http://api.geonames.org/wikipediaSearchJSON?" +
@@ -59,6 +38,27 @@ var SuggestionSources = [
       url: r => r.wikipediaUrl,
       type: r => "",
       info: r => r.summary
+    }
+  },
+  {
+    id: "tgaz",
+    url: (term, extent) =>
+      "http://maps.cga.harvard.edu/tgaz/placename?" +
+      "n=" +
+      encodeURIComponent(term) +
+      "&fmt=json",
+    getRecords: res => res.placenames,
+    parse: {
+      ll: r => {
+        const coords = r["xy coordinates"].split(", ");
+        return [parseFloat(coords[1]), parseFloat(coords[0])];
+      },
+      country: r => r.countryCode,
+      rank: r => 100,
+      name: r => r.transcription,
+      url: r => r.uri,
+      type: r => r["feature type"],
+      info: r => ""
     }
   }
 ];

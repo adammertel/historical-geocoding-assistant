@@ -256,7 +256,7 @@ class AppMap extends React.Component {
                 onClick={this.handleClickGeoname.bind(this, p)}
               >
                 <Tooltip offset={this.markerOffset()} direction="right">
-                  <h4>{id + ": " + p.title}</h4>
+                  <h4>{id + ": " + p.name}</h4>
                 </Tooltip>
               </Marker>
             );
@@ -304,13 +304,22 @@ class AppMap extends React.Component {
               store.suggestions.geoname,
               config.colors.geonames
             )}
+
           {store.displaySuggestions.wiki &&
             this.renderSuggestions(
               "wiki",
               store.suggestions.wiki,
               config.colors.wiki
             )}
-          }{store.hlPoint && this.renderHighlighted()}
+
+          {store.displaySuggestions.tgaz &&
+            this.renderSuggestions(
+              "tgaz",
+              store.suggestions.tgaz,
+              config.colors.tgaz
+            )}
+
+          {store.hlPoint && this.renderHighlighted()}
         </Map>
       </div>
     );

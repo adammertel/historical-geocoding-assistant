@@ -451,6 +451,60 @@ class Panel extends React.Component {
             })}
           </div>
         </Menu>
+
+        {/* China Historical GIS */}
+        <Menu
+          label={
+            "China Historical GIS (" + store.suggestions.tgaz.length + " found)"
+          }
+          defaultOpen
+          icon="map-marker"
+          iconColor={config.colors.tgaz}
+        >
+          <div>
+            <Checkbox
+              id="switch-tgaz"
+              label="display on map"
+              classes="is-small"
+              checked={store.displaySuggestions["tgaz"]}
+              onChange={store.toggleDisplaySuggestion.bind(store, "tgaz")}
+            />
+            <div className="list">
+              {store.suggestions.tgaz
+                .filter(g => g)
+                .map((tgaz, gi) => {
+                  return (
+                    <div key={gi}>
+                      <Button
+                        tooltip="show on map"
+                        icon="compass"
+                        label=""
+                        onClick={this.handleLocateGeocodedPlaceClick.bind(
+                          this,
+                          tgaz
+                        )}
+                        classes="is-inverted hint--top-right"
+                        style={this.styleSmallButton()}
+                      />
+                      <Button
+                        icon="floppy-o"
+                        label=""
+                        classes="is-inverted"
+                        onClick={this.handleUseGeocodedPlaceClick.bind(
+                          this,
+                          tgaz
+                        )}
+                        style={this.styleSmallButton()}
+                      />
+                      <div style={this.styleLabel()}>{tgaz.name || ""}</div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </Menu>
+
+        {/* External search */}
         <Menu label="external search" defaultOpen>
           <div>
             <Button
