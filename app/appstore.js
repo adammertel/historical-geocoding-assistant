@@ -35,7 +35,6 @@ export default class AppStore extends React.Component {
     this.loadTable(() => {
       this.row = this.opts.defaultRow;
       this.findDefaultColumnNames();
-      console.log(this.opts.columns);
       this.updateData();
       this.shouldRenderApp = true;
     });
@@ -74,7 +73,6 @@ export default class AppStore extends React.Component {
     Object.keys(columnKeywords).forEach(key => {
       const bestColumn = findBestColumn(key);
       this.opts.columns[key] = bestColumn;
-      console.log(key, "->", bestColumn);
     });
   }
 
@@ -394,8 +392,9 @@ export default class AppStore extends React.Component {
   @action saveRecord = () => {
     this.changeLoadingStatus("save");
     const cols = this.opts.columns;
-    this.recordData[cols.x] = parseFloat(this.recordData[cols.x]);
-    this.recordData[cols.y] = parseFloat(this.recordData[cols.y]);
+
+    this.recordData[cols.x] = parseFloat(this.recordData[cols.x]) || "";
+    this.recordData[cols.y] = parseFloat(this.recordData[cols.y]) || "";
 
     if (Object.keys(this.recordData).includes("Editor")) {
       this.recordData["Editor"] = window["username"];
