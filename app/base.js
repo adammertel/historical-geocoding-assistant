@@ -21,21 +21,22 @@ var Base = {
       $.ajax({
         url: source.url(recordName, extent),
         async: true,
-        dataType: "json",
         processData: false,
-        success: res => {
-          const parsedRecords = source.getRecords(res).map(rec => {
-            const suggestion = {};
-            Object.keys(source.parse).forEach(key => {
-              suggestion[key] = source.parse[key](rec);
+        success: data => {
+          source.getRecords(data, res => {
+            const parsedRecords = res.map(rec => {
+              const suggestion = {};
+              Object.keys(source.parse).forEach(key => {
+                suggestion[key] = source.parse[key](rec);
+              });
+              return suggestion;
             });
-            return suggestion;
+            allSuggestions[source.id] = parsedRecords;
+            checkEnd();
           });
-
-          allSuggestions[source.id] = parsedRecords;
-          checkEnd();
         },
-        fail: () => {
+        fail: e => {
+          console.log("failing suggestions", e);
           checkEnd();
         }
       });
