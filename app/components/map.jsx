@@ -23,10 +23,14 @@ class AppMap extends React.Component {
   constructor(props) {
     super(props);
     this.markerSize = [25, 25];
+    this.circleSize = 5;
   }
 
   markerOffset() {
     return [this.markerSize[0] / 2, (-1 * this.markerSize[1]) / 2];
+  }
+  suggestionOffset() {
+    return [0, this.circleSize];
   }
 
   style() {
@@ -244,21 +248,21 @@ class AppMap extends React.Component {
           .filter(g => g && g.ll)
           .map((p, pi) => {
             return (
-              <Marker
+              <CircleMarker
                 key={pi}
                 className={id + "-point"}
-                position={[p.ll[0], p.ll[1]]}
-                icon={Base.icon(
-                  "fa fa-map-marker",
-                  "color: " + color,
-                  this.markerSize
-                )}
+                radius={this.circleSize}
+                center={[p.ll[0], p.ll[1]]}
+                fillColor={color}
+                fillOpacity="1"
+                color="white"
+                weight="1"
                 onClick={this.handleClickGeoname.bind(this, p)}
               >
-                <Tooltip offset={this.markerOffset()} direction="right">
+                <Tooltip direction="bottom" offset={this.suggestionOffset()}>
                   <h4>{id + ": " + p.name}</h4>
                 </Tooltip>
-              </Marker>
+              </CircleMarker>
             );
           })}
       </Pane>
