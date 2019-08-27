@@ -106,7 +106,9 @@ var SuggestionSources = [
         }
       };
 
-      results.map(result => {
+      checkNext();
+
+      results.forEach(result => {
         //console.log("http://vocab.getty.edu/tgn/" + id);
         $.get("http://vocab.getty.edu/tgn/" + result.id + "-geometry").then(
           res => {
@@ -133,9 +135,9 @@ var SuggestionSources = [
                 lng = $(spans[si + 1]).text();
               }
               result.ll = [parseFloat(lat), parseFloat(lng)];
-              processed++;
-              checkNext();
             });
+            processed++;
+            checkNext();
           }
         );
       });
