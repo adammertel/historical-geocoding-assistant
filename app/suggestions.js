@@ -3,7 +3,7 @@ import $ from "jquery";
 
 var SuggestionSources = [
   {
-    id: "geoname",
+    id: "geonames",
     label: "GeoNames",
     url: (term, extent) =>
       "http://api.geonames.org/searchJSON?" +

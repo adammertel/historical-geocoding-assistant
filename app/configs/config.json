@@ -29,7 +29,9 @@
     "main": "#a64005",
     "otherRecords": "black",
     "geonames": "#056ba6",
-    "wiki": "#05a640"
+    "wiki": "#05a640",
+    "tgaz": "#a69105",
+    "getty": "#a60569"
   },
   "columnNames": {
     "name": {
