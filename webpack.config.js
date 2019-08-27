@@ -1,3 +1,5 @@
+const webpack = require("webpack");
+
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -7,6 +9,7 @@ module.exports = {
     extensions: [".js", ".jsx"]
   },
 
+  watch: true,
   entry: "./app/main.jsx",
   module: {
     rules: [
@@ -71,6 +74,11 @@ module.exports = {
         { from: "./app/configs", to: "configs" }
       ],
       {}
-    )
-  ]
+    ),
+    new webpack.HotModuleReplacementPlugin()
+  ],
+  devServer: {
+    contentBase: "./dist",
+    hot: true
+  }
 };

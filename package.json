@@ -5,7 +5,7 @@
   "main": "app/main.jsx",
   "scripts": {
     "test": "npm run lint",
-    "start": "webpack-dev-server --mode development --open",
+    "start": "webpack-dev-server --mode development --open --hot",
     "build": "npm run clean-dist && webpack --mode production",
     "deploy": "rsync -avz dist/ hde@hde.geogr.muni.cz:/var/www/virthtml/hde/hga",
     "build-deploy": "npm run build && npm run deploy",

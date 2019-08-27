@@ -13,5 +13,9 @@
     "react"
   ],
   "retainLines": true,
-  "plugins": ["transform-decorators-legacy", "transform-class-properties"]
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties",
+    "react-hot-loader/babel"
+  ]
 }
