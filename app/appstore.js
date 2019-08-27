@@ -256,6 +256,7 @@ export default class AppStore extends React.Component {
 
   @action updateSearch = () => {
     Base.getSuggestions(
+      this.displaySuggestions,
       this.recordName,
       this.opts.maxGeoExtent,
       newSuggestions => {

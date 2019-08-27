@@ -4,7 +4,7 @@ import { divIcon } from "leaflet";
 import stringSimilarity from "string-similarity";
 
 var Base = {
-  getSuggestions(recordName, extent, next) {
+  getSuggestions(displaySuggestions, recordName, extent, next) {
     let processed = 0;
     const needed = SuggestionSources.length;
 
@@ -18,28 +18,33 @@ var Base = {
     };
 
     SuggestionSources.forEach(source => {
-      $.ajax({
-        url: source.url(recordName, extent),
-        async: true,
-        processData: false,
-        success: data => {
-          source.getRecords(data, res => {
-            const parsedRecords = res.map(rec => {
-              const suggestion = {};
-              Object.keys(source.parse).forEach(key => {
-                suggestion[key] = source.parse[key](rec);
+      if (displaySuggestions[source.id]) {
+        $.ajax({
+          url: source.url(recordName, extent),
+          async: true,
+          processData: false,
+          success: data => {
+            source.getRecords(data, res => {
+              const parsedRecords = res.map(rec => {
+                const suggestion = {};
+                Object.keys(source.parse).forEach(key => {
+                  suggestion[key] = source.parse[key](rec);
+                });
+                return suggestion;
               });
-              return suggestion;
+              allSuggestions[source.id] = parsedRecords;
+              checkEnd();
             });
-            allSuggestions[source.id] = parsedRecords;
+          },
+          fail: e => {
+            console.log("failing suggestions", e);
             checkEnd();
-          });
-        },
-        fail: e => {
-          console.log("failing suggestions", e);
-          checkEnd();
-        }
-      });
+          }
+        });
+      } else {
+        allSuggestions[source.id] = [];
+        checkEnd();
+      }
     });
   },
 
@@ -98,8 +103,8 @@ var Base = {
   },
 
   openTab(path) {
-    const url = path.includes("http://" ? path : "http://" + path);
-    window.open(path, "_blank", "width=800,height=900");
+    const url = path.includes("http://") ? path : "http://" + path;
+    window.open(url, "_blank", "width=800,height=900");
   },
 
   extentToUrl(e, type = "wiki") {
