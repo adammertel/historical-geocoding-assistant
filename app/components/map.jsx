@@ -319,6 +319,13 @@ class AppMap extends React.Component {
               config.colors.tgaz
             )}
 
+          {store.displaySuggestions.getty &&
+            this.renderSuggestions(
+              "getty",
+              store.suggestions.getty,
+              config.colors.getty
+            )}
+
           {store.hlPoint && this.renderHighlighted()}
         </Map>
       </div>

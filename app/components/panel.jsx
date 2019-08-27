@@ -504,6 +504,56 @@ class Panel extends React.Component {
           </div>
         </Menu>
 
+        {/* GETTY suggestions */}
+        <Menu
+          label={"Getty TGN (" + store.suggestions.getty.length + " found)"}
+          defaultOpen
+          icon="map-marker"
+          iconColor={config.colors.getty}
+        >
+          <div>
+            <Checkbox
+              id="switch-getty"
+              label="display on map"
+              classes="is-small"
+              checked={store.displaySuggestions["getty"]}
+              onChange={store.toggleDisplaySuggestion.bind(store, "getty")}
+            />
+            <div className="list">
+              {store.suggestions.getty
+                .filter(g => g)
+                .map((getty, gi) => {
+                  return (
+                    <div key={gi}>
+                      <Button
+                        tooltip="show on map"
+                        icon="compass"
+                        label=""
+                        onClick={this.handleLocateGeocodedPlaceClick.bind(
+                          this,
+                          getty
+                        )}
+                        classes="is-inverted hint--top-right"
+                        style={this.styleSmallButton()}
+                      />
+                      <Button
+                        icon="floppy-o"
+                        label=""
+                        classes="is-inverted"
+                        onClick={this.handleUseGeocodedPlaceClick.bind(
+                          this,
+                          getty
+                        )}
+                        style={this.styleSmallButton()}
+                      />
+                      <div style={this.styleLabel()}>{getty.name || ""}</div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </Menu>
+
         {/* External search */}
         <Menu label="external search" defaultOpen>
           <div>
