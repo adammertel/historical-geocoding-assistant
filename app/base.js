@@ -98,7 +98,8 @@ var Base = {
   },
 
   openTab(path) {
-    window.open("http://" + path, "_blank", "width=800,height=900");
+    const url = path.includes("http://" ? path : "http://" + path);
+    window.open(path, "_blank", "width=800,height=900");
   },
 
   extentToUrl(e, type = "wiki") {
