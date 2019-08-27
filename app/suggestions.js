@@ -78,7 +78,7 @@ var SuggestionSources = [
         .find("#results table tbody tr")
         .toArray();
 
-      const results = resultNodes.map(result => {
+      let results = resultNodes.map(result => {
         const tds = $(result)
           .find("td")
           .toArray();
@@ -95,6 +95,9 @@ var SuggestionSources = [
       });
       //console.log(ids);
 
+      if (results.length > 10) {
+        results = results.slice(0, 10);
+      }
       const allResults = results.length;
       let processed = 0;
       const checkNext = () => {
