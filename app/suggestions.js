@@ -4,6 +4,7 @@ import $ from "jquery";
 var SuggestionSources = [
   {
     id: "geoname",
+    label: "GeoNames",
     url: (term, extent) =>
       "http://api.geonames.org/searchJSON?" +
       "q=" +
@@ -25,6 +26,7 @@ var SuggestionSources = [
   },
   {
     id: "wiki",
+    label: "Wikipedia",
     url: (term, extent) =>
       "http://api.geonames.org/wikipediaSearchJSON?" +
       "q=" +
@@ -43,30 +45,9 @@ var SuggestionSources = [
       info: r => r.summary
     }
   },
-
-  {
-    id: "tgaz",
-    url: (term, extent) =>
-      "http://maps.cga.harvard.edu/tgaz/placename?" +
-      "n=" +
-      encodeURIComponent(term) +
-      "&fmt=json",
-    getRecords: (res, next) => next(res.placenames),
-    parse: {
-      ll: r => {
-        const coords = r["xy coordinates"].split(", ");
-        return [parseFloat(coords[1]), parseFloat(coords[0])];
-      },
-      country: r => "",
-      rank: r => 100,
-      name: r => r.transcription,
-      url: r => r.uri,
-      type: r => r["feature type"],
-      info: r => ""
-    }
-  },
   {
     id: "getty",
+    label: "Getty TGN",
     url: (term, extent) =>
       "http://vocab.getty.edu/resource/getty/search?q=" +
       encodeURIComponent(term) +
@@ -150,6 +131,29 @@ var SuggestionSources = [
       url: r => r.url,
       type: r => r.type,
       info: r => r.info
+    }
+  },
+
+  {
+    id: "tgaz",
+    label: "China Historical GIS",
+    url: (term, extent) =>
+      "http://maps.cga.harvard.edu/tgaz/placename?" +
+      "n=" +
+      encodeURIComponent(term) +
+      "&fmt=json",
+    getRecords: (res, next) => next(res.placenames),
+    parse: {
+      ll: r => {
+        const coords = r["xy coordinates"].split(", ");
+        return [parseFloat(coords[1]), parseFloat(coords[0])];
+      },
+      country: r => "",
+      rank: r => 100,
+      name: r => r.transcription,
+      url: r => r.uri,
+      type: r => r["feature type"],
+      info: r => ""
     }
   }
 ];

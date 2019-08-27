@@ -47,7 +47,7 @@ class Panel extends React.Component {
     store.updateRecordValue(column, value);
   }
 
-  handleOpenWiki(url) {
+  handleOpenUrl(url) {
     Base.openTab(url);
   }
 
@@ -339,219 +339,98 @@ class Panel extends React.Component {
           </div>
         </Menu>
 
-        <Menu
-          label={"geonames (" + store.suggestions.geoname.length + " found)"}
-          defaultOpen
-          icon="map-marker"
-          iconColor={config.colors.geonames}
-        >
-          <div>
-            <Checkbox
-              id="switch-geonames"
-              label="display on map"
-              classes="is-small"
-              checked={store.displaySuggestions["geoname"]}
-              onChange={store.toggleDisplaySuggestion.bind(store, "geoname")}
-            />
-            <div className="list">
-              {store.suggestions.geoname
-                .filter(g => g)
-                .map((geoname, gi) => {
-                  return (
-                    <div key={gi}>
-                      <Button
-                        tooltip="show on map"
-                        icon="compass"
-                        label=""
-                        onClick={this.handleLocateGeocodedPlaceClick.bind(
-                          this,
-                          geoname
-                        )}
-                        classes="is-inverted hint--top-right"
-                        style={this.styleSmallButton()}
-                      />
-                      <Button
-                        icon="floppy-o"
-                        label=""
-                        classes="is-inverted"
-                        onClick={this.handleUseGeocodedPlaceClick.bind(
-                          this,
-                          geoname
-                        )}
-                        style={this.styleSmallButton()}
-                      />
-                      <span
-                        className="tag is-white tooltip"
-                        data-tooltip={geoname.country}
-                        style={this.styleTag()}
-                      >
-                        {
-                          geoname.country // + ' - ' + geoname.fcodeName
-                        }
-                      </span>
-                      <div style={this.styleLabel()}>{geoname.name || ""}</div>
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        </Menu>
-
-        <Menu
-          label={"wikipedia (" + store.suggestions.wiki.length + " found)"}
-          defaultOpen
-          icon="map-marker"
-          iconColor={config.colors.wiki}
-        >
-          <Checkbox
-            id="switch-wikipedia"
-            label="display places on map"
-            classes="is-small"
-            checked={store.displaySuggestions["wiki"]}
-            onChange={store.toggleDisplaySuggestion.bind(store, "wiki")}
-          />
-          <div className="list">
-            {store.suggestions.wiki.map((wiki, wi) => {
-              return (
-                <p key={wi}>
-                  <Button
-                    tooltip="show on map"
-                    icon="compass"
-                    label=""
-                    onClick={this.handleLocateGeocodedPlaceClick.bind(
-                      this,
-                      wiki
-                    )}
-                    classes="is-inverted hint--top-right"
-                    style={this.styleSmallButton()}
-                  />
-                  <Button
-                    icon="floppy-o"
-                    label=""
-                    classes="is-inverted"
-                    onClick={this.handleUseGeocodedPlaceClick.bind(this, wiki)}
-                    style={this.styleSmallButton()}
-                  />
-                  <Button
-                    icon="wikipedia-w"
-                    label=""
-                    classes="is-inverted"
-                    onClick={this.handleOpenWiki.bind(this, wiki.wikipediaUrl)}
-                    style={this.styleSmallButton()}
-                  />
-                  <span
-                    className="tooltip is-tooltip-multiline"
-                    data-tooltip={wiki.info}
-                    style={this.styleLabel()}
-                  >
-                    {wiki.name || ""}
-                  </span>
-                </p>
-              );
-            })}
-          </div>
-        </Menu>
-
-        {/* China Historical GIS */}
-        <Menu
-          label={
-            "China Historical GIS (" + store.suggestions.tgaz.length + " found)"
-          }
-          defaultOpen
-          icon="map-marker"
-          iconColor={config.colors.tgaz}
-        >
-          <div>
-            <Checkbox
-              id="switch-tgaz"
-              label="display on map"
-              classes="is-small"
-              checked={store.displaySuggestions["tgaz"]}
-              onChange={store.toggleDisplaySuggestion.bind(store, "tgaz")}
-            />
-            <div className="list">
-              {store.suggestions.tgaz
-                .filter(g => g)
-                .map((tgaz, gi) => {
-                  return (
-                    <div key={gi}>
-                      <Button
-                        tooltip="show on map"
-                        icon="compass"
-                        label=""
-                        onClick={this.handleLocateGeocodedPlaceClick.bind(
-                          this,
-                          tgaz
-                        )}
-                        classes="is-inverted hint--top-right"
-                        style={this.styleSmallButton()}
-                      />
-                      <Button
-                        icon="floppy-o"
-                        label=""
-                        classes="is-inverted"
-                        onClick={this.handleUseGeocodedPlaceClick.bind(
-                          this,
-                          tgaz
-                        )}
-                        style={this.styleSmallButton()}
-                      />
-                      <div style={this.styleLabel()}>{tgaz.name || ""}</div>
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        </Menu>
-
-        {/* GETTY suggestions */}
-        <Menu
-          label={"Getty TGN (" + store.suggestions.getty.length + " found)"}
-          defaultOpen
-          icon="map-marker"
-          iconColor={config.colors.getty}
-        >
-          <div>
-            <Checkbox
-              id="switch-getty"
-              label="display on map"
-              classes="is-small"
-              checked={store.displaySuggestions["getty"]}
-              onChange={store.toggleDisplaySuggestion.bind(store, "getty")}
-            />
-            <div className="list">
-              {store.suggestions.getty
-                .filter(g => g)
-                .map((getty, gi) => {
-                  return (
-                    <div key={gi}>
-                      <Button
-                        tooltip="show on map"
-                        icon="compass"
-                        label=""
-                        onClick={this.handleLocateGeocodedPlaceClick.bind(
-                          this,
-                          getty
-                        )}
-                        classes="is-inverted hint--top-right"
-                        style={this.styleSmallButton()}
-                      />
-                      <Button
-                        icon="floppy-o"
-                        label=""
-                        classes="is-inverted"
-                        onClick={this.handleUseGeocodedPlaceClick.bind(
-                          this,
-                          getty
-                        )}
-                        style={this.styleSmallButton()}
-                      />
-                      <div style={this.styleLabel()}>{getty.name || ""}</div>
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
+        {/*suggestions */}
+        <Menu label="suggestions" defaultOpen key="suggestions">
+          {SuggestionSources.map(source => {
+            return (
+              <div
+                className="suggestion-section"
+                key={"suggestion-section-" + source.id}
+              >
+                <div style={{ display: "table" }}>
+                  <div style={{ display: "table-cell" }}>
+                    <Button
+                      icon="circle"
+                      label=""
+                      classes="is-inverted"
+                      style={{
+                        color: config.colors[source.id],
+                        verticalAlign: "middle",
+                        fontSize: "80%"
+                      }}
+                    />
+                  </div>
+                  <div style={{ display: "table-cell" }}>
+                    <Checkbox
+                      id={"switch-" + source.id}
+                      label={source.label}
+                      classes="is-small"
+                      checked={store.displaySuggestions[source.id]}
+                      onChange={store.toggleDisplaySuggestion.bind(
+                        store,
+                        source.id
+                      )}
+                    />
+                  </div>
+                </div>
+                <div className="list">
+                  {store.suggestions[source.id]
+                    .filter(g => g)
+                    .map((suggestion, gi) => {
+                      return (
+                        <div key={gi}>
+                          <Button
+                            tooltip="show on map"
+                            icon="compass"
+                            label=""
+                            onClick={this.handleLocateGeocodedPlaceClick.bind(
+                              this,
+                              suggestion
+                            )}
+                            classes="is-inverted hint--top-right"
+                            style={this.styleSmallButton()}
+                          />
+                          <Button
+                            icon="floppy-o"
+                            label=""
+                            classes="is-inverted"
+                            onClick={this.handleUseGeocodedPlaceClick.bind(
+                              this,
+                              suggestion
+                            )}
+                            style={this.styleSmallButton()}
+                          />
+                          {suggestion.url && (
+                            <Button
+                              icon="external-link"
+                              label=""
+                              classes="is-inverted"
+                              onClick={this.handleOpenUrl.bind(
+                                this,
+                                suggestion.url
+                              )}
+                              style={this.styleSmallButton()}
+                            />
+                          )}
+                          <div style={this.styleLabel()}>
+                            {suggestion.name || ""}
+                            {suggestion.country && (
+                              <span
+                                className="tag is-white tooltip"
+                                data-tooltip={suggestion.country}
+                                style={this.styleTag()}
+                              >
+                                {suggestion.country}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+            );
+          })}
         </Menu>
 
         {/* External search */}
