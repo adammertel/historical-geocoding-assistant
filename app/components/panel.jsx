@@ -354,12 +354,17 @@ class Panel extends React.Component {
                       label=""
                       classes="is-inverted"
                       style={{
-                        color: config.colors[source.id],
+                        color:
+                          !store.loadingSuggestions &&
+                          store.displaySuggestions[source.id]
+                            ? config.colors[source.id]
+                            : "white",
                         verticalAlign: "middle",
                         fontSize: "80%"
                       }}
                     />
                   </div>
+
                   <div style={{ display: "table-cell" }}>
                     <Checkbox
                       id={"switch-" + source.id}
@@ -372,62 +377,81 @@ class Panel extends React.Component {
                       )}
                     />
                   </div>
+
+                  <div style={{ display: "table-cell" }}>
+                    <Button
+                      icon="cog"
+                      label=""
+                      classes="is-inverted fa-spin"
+                      style={{
+                        verticalAlign: "middle",
+                        fontSize: "120%",
+                        color:
+                          store.loadingSuggestions &&
+                          store.displaySuggestions[source.id]
+                            ? "brown"
+                            : "white"
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="list">
-                  {store.suggestions[source.id]
-                    .filter(g => g)
-                    .map((suggestion, gi) => {
-                      return (
-                        <div key={gi}>
-                          <Button
-                            tooltip="show on map"
-                            icon="compass"
-                            label=""
-                            onClick={this.handleLocateGeocodedPlaceClick.bind(
-                              this,
-                              suggestion
-                            )}
-                            classes="is-inverted hint--top-right"
-                            style={this.styleSmallButton()}
-                          />
-                          <Button
-                            icon="floppy-o"
-                            label=""
-                            classes="is-inverted"
-                            onClick={this.handleUseGeocodedPlaceClick.bind(
-                              this,
-                              suggestion
-                            )}
-                            style={this.styleSmallButton()}
-                          />
-                          {suggestion.url && (
+                {!store.loadingSuggestions && (
+                  <div className="list">
+                    {store.suggestions[source.id]
+                      .filter(g => g)
+                      .map((suggestion, gi) => {
+                        return (
+                          <div key={gi}>
                             <Button
-                              icon="external-link"
+                              tooltip="show on map"
+                              icon="compass"
+                              label=""
+                              onClick={this.handleLocateGeocodedPlaceClick.bind(
+                                this,
+                                suggestion
+                              )}
+                              classes="is-inverted hint--top-right"
+                              style={this.styleSmallButton()}
+                            />
+                            <Button
+                              icon="floppy-o"
                               label=""
                               classes="is-inverted"
-                              onClick={this.handleOpenUrl.bind(
+                              onClick={this.handleUseGeocodedPlaceClick.bind(
                                 this,
-                                suggestion.url
+                                suggestion
                               )}
                               style={this.styleSmallButton()}
                             />
-                          )}
-                          <div style={this.styleLabel()}>
-                            {suggestion.name || ""}
-                            {suggestion.country && (
-                              <span
-                                className="tag is-white tooltip"
-                                data-tooltip={suggestion.country}
-                                style={this.styleTag()}
-                              >
-                                {suggestion.country}
-                              </span>
+                            {suggestion.url && (
+                              <Button
+                                icon="external-link"
+                                label=""
+                                classes="is-inverted"
+                                onClick={this.handleOpenUrl.bind(
+                                  this,
+                                  suggestion.url
+                                )}
+                                style={this.styleSmallButton()}
+                              />
                             )}
+                            <div style={this.styleLabel()}>
+                              {suggestion.name || ""}
+                              {suggestion.country && (
+                                <span
+                                  className="tag is-white tooltip"
+                                  data-tooltip={suggestion.country}
+                                  style={this.styleTag()}
+                                >
+                                  {suggestion.country}
+                                </span>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
-                </div>
+                        );
+                      })}
+                  </div>
+                )}
               </div>
             );
           })}

@@ -133,6 +133,12 @@ table.table.centered {
 
     .suggestion-section {
       margin-bottom: 1rem;
+      .field {
+        label {
+          padding-right: 0;
+          margin-right: 0.3rem;
+        }
+      }
     }
 
     .field {

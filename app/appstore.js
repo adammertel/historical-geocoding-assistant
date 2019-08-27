@@ -14,6 +14,8 @@ export default class AppStore extends React.Component {
   @observable openedSettings = false;
   @observable shouldRenderApp = false;
 
+  @observable loadingSuggestions = false;
+
   @observable records = {};
   @observable recordBeforeChanges = {};
 
@@ -254,7 +256,9 @@ export default class AppStore extends React.Component {
     this.updateRecordValue(this.opts.columns.x, this.roundCoordinate(x));
   };
 
-  @action updateSearch = () => {
+  @action updateSuggestions = () => {
+    this.loadingSuggestions = true;
+
     Base.getSuggestions(
       this.displaySuggestions,
       this.recordName,
@@ -262,6 +266,7 @@ export default class AppStore extends React.Component {
       newSuggestions => {
         this._suggestions.replace(newSuggestions);
         console.log(this.suggestions);
+        this.loadingSuggestions = false;
       }
     );
   };
@@ -351,7 +356,7 @@ export default class AppStore extends React.Component {
           this.records[this.row][recordKey] = "";
         }
       });
-      this.updateSearch();
+      this.updateSuggestions();
 
       if (this.opts.focusOnRecordChange) {
         this.focusRecord();
@@ -393,7 +398,7 @@ export default class AppStore extends React.Component {
     }
 
     if (column === config.columns.name || column === config.columns.placeName) {
-      this.updateSearch();
+      this.updateSuggestions();
     }
 
     this.records[this.row][column] = value;
@@ -431,7 +436,7 @@ export default class AppStore extends React.Component {
 
   @action saveSettings = settings => {
     this.opts = Object.assign(this.opts, settings);
-    this.updateSearch();
+    this.updateSuggestions();
   };
 
   @action toggleDisplaySuggestion = suggestionId => {
@@ -439,7 +444,7 @@ export default class AppStore extends React.Component {
       suggestionId,
       !this._displaySuggestions.get(suggestionId)
     );
-    this.updateSearch();
+    this.updateSuggestions();
   };
 
   @action toggleDisplayOtherRecords = () => {
