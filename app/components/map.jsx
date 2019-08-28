@@ -303,13 +303,15 @@ class AppMap extends React.Component {
           {store.validRecordCoordinates && this.renderThisCoordinate()}
           {store.opts.displayOtherRecords && this.renderOtherRecords()}
 
-          {SuggestionSources.filter(s => store.displaySuggestions[s.id]).map(
-            source =>
-              this.renderSuggestions(
-                source.id,
-                store.suggestions[source.id],
-                config.colors[source.id]
-              )
+          {SuggestionSources.filter(
+            s =>
+              !store.loadingSuggestions[s.id] && store.displaySuggestions[s.id]
+          ).map(source =>
+            this.renderSuggestions(
+              source.id,
+              store.suggestions[source.id],
+              config.colors[source.id]
+            )
           )}
 
           {store.hlPoint && this.renderHighlighted()}

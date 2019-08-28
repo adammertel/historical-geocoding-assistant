@@ -269,9 +269,8 @@ export default class AppStore extends React.Component {
   @action updateSuggestionSource(sourceId) {
     const source = SuggestionSources.find(s => s.id === sourceId);
     if (source) {
-      if (this.displaySuggestions[source.id]) {
+      if (this.displaySuggestions[source.id] && this.recordName) {
         this._loadingSuggestions.set(source.id, true);
-        console.log("recordName", this.recordName);
 
         Base.getSuggestions(
           source,
@@ -414,11 +413,10 @@ export default class AppStore extends React.Component {
       }
     }
 
+    this.records[this.row][column] = value;
     if (column === config.columns.name || column === config.columns.placeName) {
       this.updateAllSuggestionSources();
     }
-
-    this.records[this.row][column] = value;
   };
 
   @action changeCertainty = newCertaintyValue => {
