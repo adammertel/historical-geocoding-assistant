@@ -233,9 +233,9 @@ export default class AppStore extends React.Component {
     this.mapZoomChange(this.opts.focusZoom);
   };
 
-  @action locateGeoname = geoname => {
-    this.mapFocus(geoname.ll);
-    this.hlLocality(geoname.ll);
+  @action locateSuggestion = suggestion => {
+    this.mapFocus(suggestion.ll);
+    this.hlLocality(suggestion.ll);
   };
 
   @action hlLocality = ll => {
@@ -248,7 +248,7 @@ export default class AppStore extends React.Component {
     }, 2000);
   };
 
-  @action useGeoname = geoname => {
+  @action useSuggestion = geoname => {
     this.updateRecordLocation(geoname.ll[1], geoname.ll[0]);
     if (!map.getBounds().contains(L.latLng(geoname.ll[0], geoname.ll[1]))) {
       this.mapCenterChange(geoname.ll);
@@ -271,6 +271,7 @@ export default class AppStore extends React.Component {
     if (source) {
       if (this.displaySuggestions[source.id]) {
         this._loadingSuggestions.set(source.id, true);
+        console.log("recordName", this.recordName);
 
         Base.getSuggestions(
           source,

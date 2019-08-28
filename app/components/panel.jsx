@@ -62,12 +62,12 @@ class Panel extends React.Component {
     Base.openTab("www.peripleo.pelagios.org/ui#q=" + store.recordName);
   }
 
-  handleLocateGeocodedPlaceClick(geoname) {
-    store.locateGeoname(geoname);
+  handleLocateGeocodedPlaceClick(suggestion) {
+    store.locateSuggestion(suggestion);
   }
 
-  handleUseGeocodedPlaceClick(geoname) {
-    store.useGeoname(geoname);
+  handleUseGeocodedPlaceClick(suggestion) {
+    store.useSuggestion(suggestion);
   }
 
   handleSelectRecord(e) {

@@ -108,9 +108,9 @@ class AppMap extends React.Component {
     this.isMeasuring() ? false : store.gotoRecord(rowId);
   }
 
-  handleClickGeoname(geoname, e) {
+  handleClickGeoname(suggestion, e) {
     if (!this.isMeasuring()) {
-      store.useGeoname(geoname);
+      store.useSuggestion(geoname);
       map.closeTooltip(e.target._tooltip);
     }
   }
