@@ -89,10 +89,6 @@ class TablePrompt extends React.Component {
               - The application has to be signed into a Google Account (you may
               need to allow pop-ups) and the browser needs to allow cookies.
               <br />
-              - You can use the testing google account <br />
-              (username: <b>historicalgeocodingassistant</b>, password:{" "}
-              <b>hga54321</b>)
-              <br />
               <br />
               <b>Other links:</b>
               <br />
