@@ -14,7 +14,7 @@ export default class AppStore extends React.Component {
   @observable openedSettings = false;
   @observable shouldRenderApp = false;
 
-  @observable loadingSuggestions = false;
+  @observable _loadingSuggestions = new Map();
 
   @observable records = {};
   @observable recordBeforeChanges = {};
@@ -36,6 +36,7 @@ export default class AppStore extends React.Component {
     SuggestionSources.forEach(suggestionSource => {
       this._suggestions.set(suggestionSource.id, []);
       this._displaySuggestions.set(suggestionSource.id, true);
+      this._loadingSuggestions.set(suggestionSource.id, false);
     });
 
     this.noRecords = Sheet.noLines;
@@ -192,6 +193,9 @@ export default class AppStore extends React.Component {
   @computed get displaySuggestions() {
     return toJS(this._displaySuggestions);
   }
+  @computed get loadingSuggestions() {
+    return toJS(this._loadingSuggestions);
+  }
 
   /* ACTIONS */
 
@@ -256,20 +260,32 @@ export default class AppStore extends React.Component {
     this.updateRecordValue(this.opts.columns.x, this.roundCoordinate(x));
   };
 
-  @action updateSuggestions = () => {
-    this.loadingSuggestions = true;
-
-    Base.getSuggestions(
-      this.displaySuggestions,
-      this.recordName,
-      this.opts.maxGeoExtent,
-      newSuggestions => {
-        this._suggestions.replace(newSuggestions);
-        console.log(this.suggestions);
-        this.loadingSuggestions = false;
-      }
-    );
+  @action updateAllSuggestionSources = () => {
+    SuggestionSources.forEach(source => {
+      this.updateSuggestionSource(source.id);
+    });
   };
+
+  @action updateSuggestionSource(sourceId) {
+    const source = SuggestionSources.find(s => s.id === sourceId);
+    if (source) {
+      if (this.displaySuggestions[source.id]) {
+        this._loadingSuggestions.set(source.id, true);
+
+        Base.getSuggestions(
+          source,
+          this.recordName,
+          this.opts.maxGeoExtent,
+          suggestions => {
+            this._suggestions.set(source.id, suggestions);
+            this._loadingSuggestions.set(source.id, false);
+          }
+        );
+      } else {
+        this._suggestions.set(source.id, []);
+      }
+    }
+  }
 
   // map tiles
   @action changeOpacityRatio = opacity => {
@@ -356,7 +372,7 @@ export default class AppStore extends React.Component {
           this.records[this.row][recordKey] = "";
         }
       });
-      this.updateSuggestions();
+      this.updateAllSuggestionSources();
 
       if (this.opts.focusOnRecordChange) {
         this.focusRecord();
@@ -398,7 +414,7 @@ export default class AppStore extends React.Component {
     }
 
     if (column === config.columns.name || column === config.columns.placeName) {
-      this.updateSuggestions();
+      this.updateAllSuggestionSources();
     }
 
     this.records[this.row][column] = value;
@@ -436,7 +452,7 @@ export default class AppStore extends React.Component {
 
   @action saveSettings = settings => {
     this.opts = Object.assign(this.opts, settings);
-    this.updateSuggestions();
+    this.updateAllSuggestionSources();
   };
 
   @action toggleDisplaySuggestion = suggestionId => {
@@ -444,7 +460,7 @@ export default class AppStore extends React.Component {
       suggestionId,
       !this._displaySuggestions.get(suggestionId)
     );
-    this.updateSuggestions();
+    this.updateSuggestionSource(suggestionId);
   };
 
   @action toggleDisplayOtherRecords = () => {

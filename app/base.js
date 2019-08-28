@@ -4,46 +4,25 @@ import { divIcon } from "leaflet";
 import stringSimilarity from "string-similarity";
 
 var Base = {
-  getSuggestions(displaySuggestions, recordName, extent, next) {
-    let processed = 0;
-    const needed = SuggestionSources.length;
-
-    const allSuggestions = {};
-
-    const checkEnd = () => {
-      processed++;
-      if (processed === needed) {
-        next(allSuggestions);
-      }
-    };
-
-    SuggestionSources.forEach(source => {
-      if (displaySuggestions[source.id]) {
-        $.ajax({
-          url: source.url(recordName, extent),
-          async: true,
-          processData: false,
-          success: data => {
-            source.getRecords(data, res => {
-              const parsedRecords = res.map(rec => {
-                const suggestion = {};
-                Object.keys(source.parse).forEach(key => {
-                  suggestion[key] = source.parse[key](rec);
-                });
-                return suggestion;
-              });
-              allSuggestions[source.id] = parsedRecords;
-              checkEnd();
+  getSuggestions(source, recordName, extent, next) {
+    $.ajax({
+      url: source.url(recordName, extent),
+      async: true,
+      processData: false,
+      success: data => {
+        source.getRecords(data, res => {
+          const parsedRecords = res.map(rec => {
+            const suggestion = {};
+            Object.keys(source.parse).forEach(key => {
+              suggestion[key] = source.parse[key](rec);
             });
-          },
-          fail: e => {
-            console.log("failing suggestions", e);
-            checkEnd();
-          }
+            return suggestion;
+          });
+          next(parsedRecords);
         });
-      } else {
-        allSuggestions[source.id] = [];
-        checkEnd();
+      },
+      fail: e => {
+        next([]);
       }
     });
   },

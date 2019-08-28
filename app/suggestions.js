@@ -142,7 +142,13 @@ var SuggestionSources = [
       "n=" +
       encodeURIComponent(term) +
       "&fmt=json",
-    getRecords: (res, next) => next(res.placenames),
+    getRecords: (res, next) => {
+      let suggestions = res.placenames;
+      if (suggestions.length > 10) {
+        suggestions = suggestions.slice(0, 10);
+      }
+      next(suggestions);
+    },
     parse: {
       ll: r => {
         const coords = r["xy coordinates"].split(", ");

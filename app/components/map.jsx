@@ -302,33 +302,15 @@ class AppMap extends React.Component {
           {store.opts.overlays.length > 0 && this.renderOverlays()}
           {store.validRecordCoordinates && this.renderThisCoordinate()}
           {store.opts.displayOtherRecords && this.renderOtherRecords()}
-          {store.displaySuggestions.geoname &&
-            this.renderSuggestions(
-              "geoname",
-              store.suggestions.geoname,
-              config.colors.geonames
-            )}
 
-          {store.displaySuggestions.wiki &&
-            this.renderSuggestions(
-              "wiki",
-              store.suggestions.wiki,
-              config.colors.wiki
-            )}
-
-          {store.displaySuggestions.tgaz &&
-            this.renderSuggestions(
-              "tgaz",
-              store.suggestions.tgaz,
-              config.colors.tgaz
-            )}
-
-          {store.displaySuggestions.getty &&
-            this.renderSuggestions(
-              "getty",
-              store.suggestions.getty,
-              config.colors.getty
-            )}
+          {SuggestionSources.filter(s => store.displaySuggestions[s.id]).map(
+            source =>
+              this.renderSuggestions(
+                source.id,
+                store.suggestions[source.id],
+                config.colors[source.id]
+              )
+          )}
 
           {store.hlPoint && this.renderHighlighted()}
         </Map>

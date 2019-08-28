@@ -355,7 +355,7 @@ class Panel extends React.Component {
                       classes="is-inverted"
                       style={{
                         color:
-                          !store.loadingSuggestions &&
+                          !store.loadingSuggestions[source.id] &&
                           store.displaySuggestions[source.id]
                             ? config.colors[source.id]
                             : "white",
@@ -387,7 +387,7 @@ class Panel extends React.Component {
                         verticalAlign: "middle",
                         fontSize: "120%",
                         color:
-                          store.loadingSuggestions &&
+                          store.loadingSuggestions[source.id] &&
                           store.displaySuggestions[source.id]
                             ? "brown"
                             : "white"
@@ -395,7 +395,7 @@ class Panel extends React.Component {
                     />
                   </div>
                 </div>
-                {!store.loadingSuggestions && (
+                {!store.loadingSuggestions[source.id] && (
                   <div className="list">
                     {store.suggestions[source.id]
                       .filter(g => g)
