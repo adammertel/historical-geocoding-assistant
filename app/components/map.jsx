@@ -110,7 +110,7 @@ class AppMap extends React.Component {
 
   handleClickGeoname(suggestion, e) {
     if (!this.isMeasuring()) {
-      store.useSuggestion(geoname);
+      store.useSuggestion(suggestion);
       map.closeTooltip(e.target._tooltip);
     }
   }
