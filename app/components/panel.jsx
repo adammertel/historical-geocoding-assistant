@@ -379,20 +379,18 @@ class Panel extends React.Component {
                   </div>
 
                   <div style={{ display: "table-cell" }}>
-                    <Button
-                      icon="cog"
-                      label=""
-                      classes="is-inverted fa-spin"
-                      style={{
-                        verticalAlign: "middle",
-                        fontSize: "120%",
-                        color:
-                          store.loadingSuggestions[source.id] &&
-                          store.displaySuggestions[source.id]
-                            ? "brown"
-                            : "white"
-                      }}
-                    />
+                    {store.loadingSuggestions[source.id] && (
+                      <Button
+                        icon="cog"
+                        label=""
+                        classes="is-inverted fa-spin"
+                        style={{
+                          verticalAlign: "middle",
+                          fontSize: "120%",
+                          color: "brown"
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
                 {!store.loadingSuggestions[source.id] && (
