@@ -11,3 +11,4 @@ dist
 .idea
 .vscode
 app/configs/config_api.json
+server.js
