@@ -208,7 +208,7 @@ class Settings extends React.Component {
     return (
       <div>
         <div className="subtitle is-6">
-          Select which column contain which type of information
+          Select which column contain which type of information.
         </div>
         <table className="table centered">
           <tbody>
@@ -232,50 +232,55 @@ class Settings extends React.Component {
     const basemap = store.basemapById("OSM");
 
     return (
-      <Map
-        zoomControl={true}
-        zoomSnap={0.05}
-        zoomDelta={0.05}
-        ref="refMap"
-        bounds={this.state.mapBounds}
-        onViewportChanged={this.handleMapViewport.bind(this)}
-        style={{ width: "100%", height: 400 }}
-      >
-        <Marker
-          key={"corner1"}
-          position={[
-            this.state.extentCorner1.lat,
-            this.state.extentCorner1.lng
-          ]}
-          onDrag={this.handleDragBound.bind(this)}
-          draggable={true}
-          ref="marker1"
-          icon={this.cornerIcon}
-        />
-        <Marker
-          key={"corner2"}
-          position={[
-            this.state.extentCorner2.lat,
-            this.state.extentCorner2.lng
-          ]}
-          onDrag={this.handleDragBound.bind(this)}
-          draggable={true}
-          ref="marker2"
-          icon={this.cornerIcon}
-        />
-        <Marker
-          key={"corner-center"}
-          position={extent.getCenter()}
-          onDrag={this.handleDragRectangle.bind(this)}
-          onDragEnd={this.handleDragRectangleEnd.bind(this)}
-          onDragStart={this.handleDragRectangleStart.bind(this)}
-          draggable={true}
-          ref="marker-center"
-          icon={this.centerIcon}
-        />
-        <Rectangle bounds={extent} />
-        <TileLayer {...basemap} />
-      </Map>
+      <div>
+        <div className="subtitle is-6">
+          Select spatial extent for your dataset.
+        </div>
+        <Map
+          zoomControl={true}
+          zoomSnap={0.05}
+          zoomDelta={0.05}
+          ref="refMap"
+          bounds={this.state.mapBounds}
+          onViewportChanged={this.handleMapViewport.bind(this)}
+          style={{ width: "100%", height: 400 }}
+        >
+          <Marker
+            key={"corner1"}
+            position={[
+              this.state.extentCorner1.lat,
+              this.state.extentCorner1.lng
+            ]}
+            onDrag={this.handleDragBound.bind(this)}
+            draggable={true}
+            ref="marker1"
+            icon={this.cornerIcon}
+          />
+          <Marker
+            key={"corner2"}
+            position={[
+              this.state.extentCorner2.lat,
+              this.state.extentCorner2.lng
+            ]}
+            onDrag={this.handleDragBound.bind(this)}
+            draggable={true}
+            ref="marker2"
+            icon={this.cornerIcon}
+          />
+          <Marker
+            key={"corner-center"}
+            position={extent.getCenter()}
+            onDrag={this.handleDragRectangle.bind(this)}
+            onDragEnd={this.handleDragRectangleEnd.bind(this)}
+            onDragStart={this.handleDragRectangleStart.bind(this)}
+            draggable={true}
+            ref="marker-center"
+            icon={this.centerIcon}
+          />
+          <Rectangle bounds={extent} />
+          <TileLayer {...basemap} />
+        </Map>
+      </div>
     );
   }
 
