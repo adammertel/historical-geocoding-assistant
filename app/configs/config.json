@@ -6,7 +6,7 @@
     "3": "3 - localized but ambiguous",
     "4": "4 - not found"
   },
-  "defaultSettingsOpen": false,
+  "defaultSettingsOpen": "columns",
   "loadingMessages": {
     "loaded": "",
     "config": "loading config files",

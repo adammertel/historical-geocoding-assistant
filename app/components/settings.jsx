@@ -1,8 +1,8 @@
-import React from 'react';
-import { observer } from 'mobx-react';
-import { Map, TileLayer, Rectangle, Marker } from 'react-leaflet';
-import Button from './../bulma/button';
-import Modal from './../bulma/modal';
+import React from "react";
+import { observer } from "mobx-react";
+import { Map, TileLayer, Rectangle, Marker } from "react-leaflet";
+import Button from "./../bulma/button";
+import Modal from "./../bulma/modal";
 
 class Settings extends React.Component {
   constructor(props) {
@@ -10,14 +10,14 @@ class Settings extends React.Component {
     const opts = store.opts;
 
     this.cornerIcon = Base.icon(
-      'fa fa-circle',
-      'color: black',
+      "fa fa-circle",
+      "color: black",
       [12, 12],
       [12, 12]
     );
     this.centerIcon = Base.icon(
-      'fa fa-arrows',
-      'color: black',
+      "fa fa-arrows",
+      "color: black",
       [12, 12],
       [12, 12]
     );
@@ -51,7 +51,7 @@ class Settings extends React.Component {
   }
 
   afterRender() {
-    console.log('after render');
+    console.log("after render");
   }
 
   style() {
@@ -62,8 +62,8 @@ class Settings extends React.Component {
 
   mapStyle() {
     return {
-      width: '100%',
-      height: '100%'
+      width: "100%",
+      height: "100%"
     };
   }
 
@@ -124,7 +124,7 @@ class Settings extends React.Component {
   }
 
   handleDragRectangleStart(e) {
-    console.log('dragging start');
+    console.log("dragging start");
   }
   handleDragRectangleEnd(e) {
     this.lastCenterOrigin = false;
@@ -156,7 +156,7 @@ class Settings extends React.Component {
     this.lastCenterOrigin = ll;
   }
   handleDragBound() {
-    console.log('dragging');
+    console.log("dragging");
     if (this.refs.marker1 && this.refs.marker2) {
       const marker1 = this.refs.marker1.leafletElement;
       const marker2 = this.refs.marker2.leafletElement;
@@ -206,15 +206,20 @@ class Settings extends React.Component {
 
   renderColumns() {
     return (
-      <table className="table centered">
-        <tbody>
-          {this.renderColumnSelect('name', 'place name column')}
-          {this.renderColumnSelect('x', 'x coordinate column')}
-          {this.renderColumnSelect('y', 'y coordinate column')}
-          {this.renderColumnSelect('certainty', 'certainty column')}
-          {this.renderColumnSelect('note', 'localisation notes column')}
-        </tbody>
-      </table>
+      <div>
+        <div className="subtitle is-6">
+          Select which column contain which type of information
+        </div>
+        <table className="table centered">
+          <tbody>
+            {this.renderColumnSelect("name", "place name column")}
+            {this.renderColumnSelect("x", "x coordinate column")}
+            {this.renderColumnSelect("y", "y coordinate column")}
+            {this.renderColumnSelect("certainty", "certainty column")}
+            {this.renderColumnSelect("note", "localisation notes column")}
+          </tbody>
+        </table>
+      </div>
     );
   }
 
@@ -224,7 +229,7 @@ class Settings extends React.Component {
       this.state.extentCorner2
     );
 
-    const basemap = store.basemapById('OSM');
+    const basemap = store.basemapById("OSM");
 
     return (
       <Map
@@ -234,10 +239,10 @@ class Settings extends React.Component {
         ref="refMap"
         bounds={this.state.mapBounds}
         onViewportChanged={this.handleMapViewport.bind(this)}
-        style={{ width: '100%', height: 400 }}
+        style={{ width: "100%", height: 400 }}
       >
         <Marker
-          key={'corner1'}
+          key={"corner1"}
           position={[
             this.state.extentCorner1.lat,
             this.state.extentCorner1.lng
@@ -248,7 +253,7 @@ class Settings extends React.Component {
           icon={this.cornerIcon}
         />
         <Marker
-          key={'corner2'}
+          key={"corner2"}
           position={[
             this.state.extentCorner2.lat,
             this.state.extentCorner2.lng
@@ -259,7 +264,7 @@ class Settings extends React.Component {
           icon={this.cornerIcon}
         />
         <Marker
-          key={'corner-center'}
+          key={"corner-center"}
           position={extent.getCenter()}
           onDrag={this.handleDragRectangle.bind(this)}
           onDragEnd={this.handleDragRectangleEnd.bind(this)}
@@ -281,9 +286,9 @@ class Settings extends React.Component {
         active={true}
         classes=""
         header={
-          store.openedSettings === 'columns'
-            ? 'Column settings'
-            : 'Geo extent settings'
+          store.openedSettings === "columns"
+            ? "Column settings"
+            : "Geo extent settings"
         }
         closeIcon={false}
         footer={
@@ -304,8 +309,8 @@ class Settings extends React.Component {
         }
         body={
           <div>
-            {store.openedSettings === 'columns' && this.renderColumns()}
-            {store.openedSettings === 'extent' && this.renderExtent()}
+            {store.openedSettings === "columns" && this.renderColumns()}
+            {store.openedSettings === "extent" && this.renderExtent()}
           </div>
         }
       />
