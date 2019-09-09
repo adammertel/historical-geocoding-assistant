@@ -9,7 +9,7 @@
 @import "~hint.css/hint.css";
 
 $info: #d9ae5f;
-$warning: #5f8ad9;
+$warning: #d9ae5f;
 $primary: #a64005;
 $success: #707322;
 $danger: #bf0606;
@@ -129,6 +129,10 @@ table.table.centered {
       .menu-icon {
         height: 1rem;
       }
+    }
+
+    .notification {
+      padding: 1em;
     }
 
     .suggestion-section {

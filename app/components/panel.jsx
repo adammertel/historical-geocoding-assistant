@@ -181,12 +181,6 @@ class Panel extends React.Component {
           iconColor={config.colors.main}
         >
           <div>
-            {!Base.inExtent(recordGeo, store.opts.maxGeoExtent) ? (
-              <div className="is-danger notification">
-                <i className="icon fa fa-exclamation" />
-                The coordinates are outside of the chosen geographical extent
-              </div>
-            ) : null}
             <table className="table centered">
               <tbody>
                 <tr key="0">
@@ -305,6 +299,13 @@ class Panel extends React.Component {
                 </div>
               ) : null}
             </div>
+
+            {!Base.inExtent(recordGeo, store.opts.maxGeoExtent) ? (
+              <div className="is-warning notification">
+                <i className="icon fa fa-info" />
+                The coordinates are outside of the chosen spatial extent
+              </div>
+            ) : null}
           </div>
         </Menu>
 
@@ -553,7 +554,7 @@ class Panel extends React.Component {
               />
               <Button
                 classes=""
-                label="geo extent"
+                label="spatial extent"
                 icon="globe"
                 onClick={this.handleGlobalSettingOpen.bind(this, "extent")}
               />
