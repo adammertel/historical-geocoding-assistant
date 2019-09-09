@@ -50,9 +50,7 @@ class Settings extends React.Component {
     this.afterRender();
   }
 
-  afterRender() {
-    console.log("after render");
-  }
+  afterRender() {}
 
   style() {
     return {
@@ -123,9 +121,6 @@ class Settings extends React.Component {
     this.setState(newState);
   }
 
-  handleDragRectangleStart(e) {
-    console.log("dragging start");
-  }
   handleDragRectangleEnd(e) {
     this.lastCenterOrigin = false;
   }
@@ -156,7 +151,6 @@ class Settings extends React.Component {
     this.lastCenterOrigin = ll;
   }
   handleDragBound() {
-    console.log("dragging");
     if (this.refs.marker1 && this.refs.marker2) {
       const marker1 = this.refs.marker1.leafletElement;
       const marker2 = this.refs.marker2.leafletElement;
