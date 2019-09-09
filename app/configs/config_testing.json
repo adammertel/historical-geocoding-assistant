@@ -6,13 +6,13 @@
     "3": "3 - localized but ambiguous",
     "4": "4 - not found"
   },
-  "defaultSettingsOpen": true,
+  "defaultSettingsOpen": false,
   "loadingMessages": {
     "loaded": "",
     "config": "loading config files",
-    "prompting table": "setting google table id...",
-    "signing": "application is signing in",
-    "table": "loading google table",
+    "prompting table": "setting the Google Sheet id...",
+    "signing": "the application is signing in",
+    "table": "loading the Google Sheet",
     "record": "loading record data",
     "save": "saving record data"
   },
@@ -21,31 +21,63 @@
   "mapOpacityRatio": 0.4,
   "mapMeasureUnits": "metres",
   "map": {
-    "zoomMax": 15,
+    "zoomMax": 18,
     "zoomMin": 3
   },
+  "coordinatesPrecision": 100000,
   "colors": {
     "main": "#a64005",
     "otherRecords": "black",
     "geonames": "#056ba6",
-    "wikipedia": "#05a640"
+    "wiki": "#05a640",
+    "tgaz": "#a69105",
+    "getty": "#a60569"
+  },
+  "columnNames": {
+    "name": {
+      "include": [
+        "placename",
+        "locationname",
+        "location",
+        "locality",
+        "localisation",
+        "localization",
+        "place",
+        "label",
+        "settlement"
+      ],
+      "exclude": ["certainty", "certain", "note"]
+    },
+    "x": {
+      "include": ["xcoordinate", "xgeo", "x", "longitude", "lng"],
+      "exclude": ["y", "latitude", "lat"]
+    },
+    "y": {
+      "include": ["ycoordinate", "ygeo", "y", "latitude", "lat"],
+      "exclude": ["x", "longitude", "lng"]
+    },
+    "certainty": {
+      "include": ["certainty", "certain", "precision", "accuracy"],
+      "exclude": ["name"]
+    },
+    "note": {
+      "include": ["placenote", "localizationnote", "localisationnote", "note"],
+      "exclude": []
+    }
   },
   "storeOpts": {
     "basemaps": { "map1": "OSM_DE", "map2": "ESRIWORLD", "opacity": 0.4 },
     "overlays": [{ "id": "COUNTRIES_MODERN", "opacity": 0.7 }],
     "focusZoom": 11,
-    "focusOnRecordChange": 0,
-    "defaultRow": 2,
-    "displayGeonames": false,
-    "displayWikis": false,
-    "displayOtherRecords": true,
     "mapClusters": true,
+    "focusOnRecordChange": true,
+    "defaultRow": 2,
+    "displayOtherRecords": true,
     "mapCenter": [45, 10],
     "mapZoom": 6,
-    "maxGeoExtent": [[-180, -90], [180, 90]],
+    "maxGeoExtent": [[40, 0], [50, 50]],
     "columns": {
       "name": "",
-      "placeName": "",
       "note": "",
       "x": "",
       "y": "",

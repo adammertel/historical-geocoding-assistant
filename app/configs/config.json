@@ -41,6 +41,7 @@
         "location",
         "locality",
         "localisation",
+        "localization",
         "place",
         "label",
         "settlement"
@@ -60,7 +61,7 @@
       "exclude": ["name"]
     },
     "note": {
-      "include": ["placenote", "localisationnotes", "note"],
+      "include": ["placenote", "localizationnote", "localisationnote", "note"],
       "exclude": []
     }
   },
