@@ -233,11 +233,6 @@ export default class AppStore extends React.Component {
     this.mapZoomChange(this.opts.focusZoom);
   };
 
-  @action locateSuggestion = suggestion => {
-    this.mapFocus(suggestion.ll);
-    this.hlLocality(suggestion.ll);
-  };
-
   @action hlLocality = ll => {
     if (this.hlTimeout) {
       clearTimeout(this.hlTimeout);

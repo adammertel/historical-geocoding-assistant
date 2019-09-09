@@ -60,16 +60,19 @@ class Panel extends React.Component {
     Base.openTab("www.peripleo.pelagios.org/ui#q=" + store.recordName);
   }
 
-  handleLocateGeocodedPlaceClick(suggestion) {
-    store.locateSuggestion(suggestion);
-  }
-
-  handleUseGeocodedPlaceClick(suggestion) {
-    store.useSuggestion(suggestion);
-  }
-
   handleSelectRecord(e) {
     store.gotoRecord(e.target.value);
+  }
+
+  /* suggestions actions */
+  handleHighlightSuggestionClick(suggestion) {
+    store.hlLocality(suggestion.ll);
+  }
+  handleLocateSuggestionClick(suggestion) {
+    store.mapFocus(suggestion.ll);
+  }
+  handleStoreSuggestionClick(suggestion) {
+    store.useSuggestion(suggestion);
   }
 
   /* Coordinates actions */
@@ -267,7 +270,7 @@ class Panel extends React.Component {
                     tooltip="highlight location on map"
                     icon="lightbulb-o"
                     label="highlight"
-                    classes="is-inverted hint--top-right"
+                    classes="is-inverted"
                     style={this.styleSmallButton()}
                   />
                   <Button
@@ -275,7 +278,7 @@ class Panel extends React.Component {
                     tooltip="pan map to the location"
                     icon="compass"
                     label="focus"
-                    classes="is-inverted hint--top-right"
+                    classes="is-inverted"
                     style={this.styleSmallButton()}
                   />
                   <Button
@@ -283,7 +286,7 @@ class Panel extends React.Component {
                     tooltip="revert changes to record coordinates"
                     icon="recycle"
                     label="revert"
-                    classes="is-inverted hint--top-right"
+                    classes="is-inverted"
                     style={this.styleSmallButton()}
                   />
                   <Button
@@ -291,7 +294,7 @@ class Panel extends React.Component {
                     tooltip="remove coordinates"
                     icon="trash"
                     label="remove"
-                    classes="is-inverted hint--top-right"
+                    classes="is-inverted"
                     style={this.styleSmallButton()}
                   />
                 </div>
@@ -401,10 +404,21 @@ class Panel extends React.Component {
                         return (
                           <div key={gi}>
                             <Button
-                              tooltip="show on map"
+                              tooltip="highlight on map"
+                              icon="lightbulb-o"
+                              label=""
+                              onClick={this.handleHighlightSuggestionClick.bind(
+                                this,
+                                suggestion
+                              )}
+                              classes="is-inverted"
+                              style={this.styleSmallButton()}
+                            />
+                            <Button
+                              tooltip="pan map to the location"
                               icon="compass"
                               label=""
-                              onClick={this.handleLocateGeocodedPlaceClick.bind(
+                              onClick={this.handleLocateSuggestionClick.bind(
                                 this,
                                 suggestion
                               )}
@@ -416,7 +430,7 @@ class Panel extends React.Component {
                               icon="floppy-o"
                               label=""
                               classes="is-inverted"
-                              onClick={this.handleUseGeocodedPlaceClick.bind(
+                              onClick={this.handleStoreSuggestionClick.bind(
                                 this,
                                 suggestion
                               )}
