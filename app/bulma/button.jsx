@@ -1,13 +1,17 @@
-import React from 'react';
+import React from "react";
 
 export default class Button extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
-    const classes = this.props.medium
-      ? 'button is-primary ' + this.props.classes
-      : 'button is-small is-primary ' + this.props.classes;
+    let classes = this.props.medium
+      ? "button is-primary " + this.props.classes
+      : "button is-small is-primary " + this.props.classes;
+
+    if (this.props.tooltip) {
+      classes += " hint--top-right";
+    }
     return (
       <a
         className={classes}
@@ -17,7 +21,7 @@ export default class Button extends React.Component {
       >
         {this.props.icon ? (
           <span className="icon is-small">
-            <i className={'fa fa-' + this.props.icon} />
+            <i className={"fa fa-" + this.props.icon} />
           </span>
         ) : null}
         {this.props.label ? <span>{this.props.label}</span> : null}
