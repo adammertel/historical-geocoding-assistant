@@ -6,6 +6,7 @@
 
 @import "~leaflet-geonames/L.Control.Geonames.css";
 @import "~font-awesome/css/font-awesome.css";
+@import "~hint.css/hint.css";
 
 $info: #d9ae5f;
 $warning: #d9ae5f;
@@ -89,6 +90,18 @@ table.table.centered {
       font-family: "FontAwesome", "sans-serif";
       border-color: $primary;
     }
+  }
+}
+
+.icon {
+  &.warning {
+    color: $warning;
+  }
+  &.danger {
+    color: $danger;
+  }
+  &.primary {
+    color: $primary;
   }
 }
 
@@ -182,13 +195,16 @@ table.table.centered {
   stroke-width: 0;
 }
 
+.hint {
+  overflow: normal;
+}
+
 .layercontrol-wrapper .menu-wrapper:empty(:not) {
   padding: 15px 15px 0px;
 }
 
 // Import the rest of Bulma
 @import "../node_modules/bulma/bulma";
-@import "./bulma/tooltip.sass";
 @import "./bulma/slider.sass";
 @import "./bulma/checkbox.sass";
 @import "./bulma/switch.sass";

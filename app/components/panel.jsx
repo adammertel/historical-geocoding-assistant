@@ -28,10 +28,8 @@ class Panel extends React.Component {
   styleLabel() {
     return {
       marginLeft: "5px",
-      overflow: "hidden",
       width: "220px",
       display: "inline-block",
-      textOverflow: "ellipsis",
       whiteSpace: "nowrap"
     };
   }
@@ -410,10 +408,11 @@ class Panel extends React.Component {
                                 this,
                                 suggestion
                               )}
-                              classes="is-inverted hint--top-right"
+                              classes="is-inverted"
                               style={this.styleSmallButton()}
                             />
                             <Button
+                              tooltip="save coordinates"
                               icon="floppy-o"
                               label=""
                               classes="is-inverted"
@@ -425,6 +424,7 @@ class Panel extends React.Component {
                             />
                             {suggestion.url && (
                               <Button
+                                tooltip="external link"
                                 icon="external-link"
                                 label=""
                                 classes="is-inverted"
@@ -439,8 +439,8 @@ class Panel extends React.Component {
                               {suggestion.name || ""}
                               {suggestion.country && (
                                 <span
-                                  className="tag is-white tooltip"
-                                  data-tooltip={suggestion.country}
+                                  className="tag is-white hint hint--top"
+                                  aria-label={suggestion.country}
                                   style={this.styleTag()}
                                 >
                                   {suggestion.country}
