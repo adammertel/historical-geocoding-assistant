@@ -24,7 +24,7 @@
     "zoomMax": 18,
     "zoomMin": 3
   },
-  "coordinatesPrecision": 10000,
+  "coordinatesPrecision": 100000,
   "colors": {
     "main": "#a64005",
     "otherRecords": "black",
