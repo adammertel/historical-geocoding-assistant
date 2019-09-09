@@ -50,14 +50,14 @@ class Panel extends React.Component {
   }
 
   handleOpenGMaps() {
-    Base.openTab("www.google.cz/maps/search/" + store.recordName);
+    Base.openTab("google.cz/maps/search/" + store.recordName);
   }
 
   handleOpenGSearch() {
-    Base.openTab("www.google.com/search?q=" + store.recordName);
+    Base.openTab("google.com/search?q=" + store.recordName);
   }
   handleOpenPeripleo() {
-    Base.openTab("www.peripleo.pelagios.org/ui#q=" + store.recordName);
+    Base.openTab("peripleo.pelagios.org/ui#q=" + store.recordName);
   }
 
   handleSelectRecord(e) {
