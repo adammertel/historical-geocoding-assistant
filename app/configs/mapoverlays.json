@@ -13,7 +13,8 @@
     "file": "fra_adm_3.geojson",
     "info": "simplified geometry of French cantons",
     "color": "red",
-    "fillOpacity": 0.1,
+    "fillOpacity": 0.01,
+    "tooltip": "n",
     "type": "geojson"
   },
   "ROADS": {

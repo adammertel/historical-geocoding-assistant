@@ -148,31 +148,45 @@ class AppMap extends React.Component {
   renderOverlays() {
     return (
       <div>
-        {store.opts.overlays.map((o, oid) => {
-          const overlay = overlaymaps[o.id];
-          const zIndex = 400 - oid;
+        {store.opts.overlays
+          .filter(o => o.opacity)
+          .map((o, oid) => {
+            const overlay = overlaymaps[o.id];
+            const zIndex = 400 - oid;
 
-          if (overlay.type === "wms") {
-            return (
-              <WMSTileLayer
-                key={o.id}
-                zIndex={zIndex}
-                {...overlay}
-                opacity={o.opacity}
-              />
-            );
-          } else if (overlay.type === "geojson") {
-            return (
-              <Pane style={{ zIndex: zIndex }} key={o.id} name={overlay.id}>
-                <GeoJSON
+            if (overlay.type === "wms") {
+              return (
+                <WMSTileLayer
+                  key={o.id}
+                  zIndex={zIndex}
                   {...overlay}
-                  opacity={o.opacity * overlay.opacity || o.opacity}
-                  fillOpacity={o.opacity * overlay.fillOpacity || o.opacity}
+                  opacity={o.opacity}
                 />
-              </Pane>
-            );
-          }
-        })}
+              );
+            } else if (overlay.type === "geojson") {
+              const tooltip = (f, layer) => {
+                if (
+                  layer &&
+                  f &&
+                  f.properties &&
+                  overlay.tooltip &&
+                  f.properties[overlay.tooltip]
+                )
+                  layer.bindTooltip("" + f.properties[overlay.tooltip]);
+              };
+
+              return (
+                <Pane style={{ zIndex: zIndex }} key={o.id} name={overlay.id}>
+                  <GeoJSON
+                    {...overlay}
+                    opacity={o.opacity * overlay.opacity || o.opacity}
+                    fillOpacity={o.opacity * overlay.fillOpacity}
+                    onEachFeature={overlay.tooltip ? tooltip : false}
+                  ></GeoJSON>
+                </Pane>
+              );
+            }
+          })}
       </div>
     );
   }
