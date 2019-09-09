@@ -57,13 +57,13 @@ class TablePrompt extends React.Component {
               }}
             />
             <div style={{ padding: 30 }}>
-              Enter the ID number of your Google Sheet (
+              Enter the ID of your Google Sheet (
               <a
                 href="https://developers.google.com/sheets/api/guides/concepts"
                 target="_blank"
               >
                 what is a Google Sheet ID?
-              </a>{" "}
+              </a>
               ):
               <Input
                 value={this.state.sheetId}
