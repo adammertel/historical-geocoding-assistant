@@ -56,7 +56,7 @@
       "exclude": ["x", "longitude", "lng"]
     },
     "certainty": {
-      "include": ["certainty", "certain"],
+      "include": ["certainty", "certain", "precision", "accuracy"],
       "exclude": ["name"]
     },
     "note": {
