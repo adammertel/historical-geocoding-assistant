@@ -385,6 +385,7 @@ class Panel extends React.Component {
                         label=""
                         classes="is-inverted fa-spin"
                         style={{
+                          background: "transparent",
                           verticalAlign: "middle",
                           fontSize: "120%",
                           color: "brown"
