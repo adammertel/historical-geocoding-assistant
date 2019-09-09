@@ -402,7 +402,7 @@ class Panel extends React.Component {
                       .filter(g => g)
                       .map((suggestion, gi) => {
                         return (
-                          <div key={gi}>
+                          <div key={gi} className="suggestion">
                             <Button
                               tooltip="highlight on map"
                               icon="lightbulb-o"
@@ -458,6 +458,17 @@ class Panel extends React.Component {
                                   style={this.styleTag()}
                                 >
                                   {suggestion.country}
+                                </span>
+                              )}
+                              {!Base.inExtent(
+                                suggestion.ll,
+                                store.opts.maxGeoExtent
+                              ) && (
+                                <span
+                                  className="tag post-icon is-white hint hint--top"
+                                  aria-label="outside of the chosen spatial extent"
+                                >
+                                  <i className="icon fa fa-globe is-danger" />
                                 </span>
                               )}
                             </div>

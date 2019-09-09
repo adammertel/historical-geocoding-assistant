@@ -60,6 +60,16 @@ $family-primary: "Lato", sans-serif;
   .fa-map-marker {
     text-shadow: 0px 0px 2px white, 0px 0px 2px white, 0px 0px 2px white;
   }
+
+  &.is-danger {
+    color: $danger;
+  }
+  &.is-primary {
+    color: $primary;
+  }
+  &.is-warning {
+    color: $warning;
+  }
 }
 
 .title.is-5 {
@@ -175,6 +185,14 @@ table.table.centered {
         .list {
           margin-left: 1rem;
           margin-top: 0.5rem;
+          .suggestion {
+            .post-icon {
+              margin: -3px 0px 0px 0px;
+              vertical-align: top;
+              padding: 4px;
+              cursor: default;
+            }
+          }
         }
       }
     }
