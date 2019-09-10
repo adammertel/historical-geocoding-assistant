@@ -15,6 +15,7 @@ export default class AppStore extends React.Component {
   @observable shouldRenderApp = false;
 
   @observable _loadingSuggestions = new Map();
+  @observable _problemSuggestions = new Map();
 
   @observable records = {};
   @observable recordBeforeChanges = {};
@@ -37,6 +38,7 @@ export default class AppStore extends React.Component {
       this._suggestions.set(suggestionSource.id, []);
       this._displaySuggestions.set(suggestionSource.id, true);
       this._loadingSuggestions.set(suggestionSource.id, false);
+      this._problemSuggestions.set(suggestionSource.id, false);
     });
 
     this.noRecords = Sheet.noLines;
@@ -196,6 +198,9 @@ export default class AppStore extends React.Component {
   @computed get loadingSuggestions() {
     return toJS(this._loadingSuggestions);
   }
+  @computed get problemSuggestions() {
+    return toJS(this._problemSuggestions);
+  }
 
   /* ACTIONS */
 
@@ -266,14 +271,17 @@ export default class AppStore extends React.Component {
     if (source) {
       if (this.displaySuggestions[source.id] && this.recordName) {
         this._loadingSuggestions.set(source.id, true);
+        this._problemSuggestions.set(source.id, false);
 
         Base.getSuggestions(
           source,
           this.recordName,
           this.opts.maxGeoExtent,
-          suggestions => {
+          (suggestions, problem) => {
+            console.log("setting suggestions", source.id, suggestions);
             this._suggestions.set(source.id, suggestions);
             this._loadingSuggestions.set(source.id, false);
+            this._problemSuggestions.set(source.id, problem);
           }
         );
       } else {

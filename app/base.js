@@ -21,8 +21,12 @@ var Base = {
             });
             return suggestion;
           });
-          next(parsedRecords);
+          next(parsedRecords, false);
         });
+      })
+      .catch(error => {
+        console.log(error);
+        next([], true);
       });
 
     /*
