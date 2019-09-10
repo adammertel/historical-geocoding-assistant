@@ -4,6 +4,25 @@ import { divIcon } from "leaflet";
 import stringSimilarity from "string-similarity";
 
 var Base = {
+  doFetch(url, params = {}, next) {
+    if (url) {
+      fetch(url, {
+        mode: "cors"
+      })
+        .then(response => {
+          return response.text();
+        })
+        .then(body => {
+          const parsedBody = Base.isJsonString(body) ? JSON.parse(body) : body;
+          next(parsedBody);
+        })
+        .catch(error => {
+          console.log(error);
+          next(false);
+        });
+    }
+  },
+
   getSuggestions(source, recordName, extent, next) {
     const url = source.url(recordName, extent);
     if (url) {
