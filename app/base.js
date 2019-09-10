@@ -5,52 +5,34 @@ import stringSimilarity from "string-similarity";
 
 var Base = {
   getSuggestions(source, recordName, extent, next) {
-    fetch(source.url(recordName, extent), {
-      mode: "cors"
-    })
-      .then(response => {
-        return response.text();
+    const url = source.url(recordName, extent);
+    if (url) {
+      fetch(url, {
+        mode: "cors"
       })
-      .then(body => {
-        const parsedBody = Base.isJsonString(body) ? JSON.parse(body) : body;
-        source.getRecords(parsedBody, res => {
-          const parsedRecords = res.map(rec => {
-            const suggestion = {};
-            Object.keys(source.parse).forEach(key => {
-              suggestion[key] = source.parse[key](rec);
+        .then(response => {
+          return response.text();
+        })
+        .then(body => {
+          const parsedBody = Base.isJsonString(body) ? JSON.parse(body) : body;
+          source.getRecords(parsedBody, res => {
+            const parsedRecords = res.map(rec => {
+              const suggestion = {};
+              Object.keys(source.parse).forEach(key => {
+                suggestion[key] = source.parse[key](rec);
+              });
+              return suggestion;
             });
-            return suggestion;
+            next(parsedRecords, false);
           });
-          next(parsedRecords, false);
+        })
+        .catch(error => {
+          console.log(error);
+          next([], true);
         });
-      })
-      .catch(error => {
-        console.log(error);
-        next([], true);
-      });
-
-    /*
-    $.ajax({
-      url: source.url(recordName, extent),
-      async: true,
-      processData: false,
-      success: data => {
-        source.getRecords(data, res => {
-          const parsedRecords = res.map(rec => {
-            const suggestion = {};
-            Object.keys(source.parse).forEach(key => {
-              suggestion[key] = source.parse[key](rec);
-            });
-            return suggestion;
-          });
-          next(parsedRecords);
-        });
-      },
-      fail: e => {
-        next([]);
-      }
-    });
-    */
+    } else {
+      next([], false);
+    }
   },
 
   doRequest(url, next) {
