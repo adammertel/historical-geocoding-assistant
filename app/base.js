@@ -14,43 +14,12 @@ var Base = {
         })
         .then(body => {
           const parsedBody = Base.isJsonString(body) ? JSON.parse(body) : body;
-          next(parsedBody);
+          next(false, parsedBody);
         })
         .catch(error => {
           console.log(error);
-          next(false);
+          next(error, false);
         });
-    }
-  },
-
-  getSuggestions(source, recordName, extent, next) {
-    const url = source.url(recordName, extent);
-    if (url) {
-      fetch(url, {
-        mode: "cors"
-      })
-        .then(response => {
-          return response.text();
-        })
-        .then(body => {
-          const parsedBody = Base.isJsonString(body) ? JSON.parse(body) : body;
-          source.getRecords(parsedBody, res => {
-            const parsedRecords = res.map(rec => {
-              const suggestion = {};
-              Object.keys(source.parse).forEach(key => {
-                suggestion[key] = source.parse[key](rec);
-              });
-              return suggestion;
-            });
-            next(parsedRecords, false);
-          });
-        })
-        .catch(error => {
-          console.log(error);
-          next([], true);
-        });
-    } else {
-      next([], false);
     }
   },
 

@@ -273,10 +273,14 @@ export default class AppStore extends React.Component {
         this._loadingSuggestions.set(source.id, true);
         this._problemSuggestions.set(source.id, false);
 
-        Base.getSuggestions(
+        /*
+          get records from all suggestion systems and set them to observables
+          TODO: problem list 
+        */
+        source.getRecords(
           source,
           this.recordName,
-          this.opts.maxGeoExtent,
+          this.opts,
           (suggestions, problem) => {
             console.log("setting suggestions", source.id, suggestions);
             this._suggestions.set(source.id, suggestions);

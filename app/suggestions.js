@@ -1,20 +1,63 @@
 import Base from "./base";
 import $ from "jquery";
 
+/* static */
+var data = {};
+var mapRecord = (recordData, mapObject) => {
+  const suggestion = {};
+  Object.keys(mapObject).forEach(key => {
+    suggestion[key] = mapObject[key](recordData);
+  });
+  return suggestion;
+};
+var mapRecords = (recordsData, mapObject) => {
+  return recordsData.map(r => mapRecord(r, mapObject));
+};
+var checkNoLimit = suggestions => {
+  return suggestions.length > 10 ? suggestions.slice(0, 10) : suggestions;
+};
+
+var _doFetch = (url, opts, sourceNext, next) => {
+  Base.doFetch(url, opts, (err, res) => {
+    //console.log("fetching", url, res);
+    if (err) {
+      sourceNext([], err);
+    } else if (!res) {
+      sourceNext([], true);
+    } else {
+      next(res);
+    }
+  });
+};
+
+var domparser = new DOMParser();
+
+/*
+  getRecords returns ([]records, problem)
+*/
 var SuggestionSources = [
   {
     id: "geonames",
     label: "GeoNames",
-    url: (term, extent) =>
-      "http://api.geonames.org/searchJSON?" +
-      "q=" +
-      encodeURIComponent(term) +
-      "&maxRows=10" +
-      "&username=adammertel",
-    getRecords: (res, next) => {
-      next(res.geonames);
+    urls: {
+      base: term =>
+        "http://api.geonames.org/searchJSON?" +
+        "q=" +
+        encodeURIComponent(term) +
+        "&maxRows=10" +
+        "&username=adammertel"
     },
-    parse: {
+    getRecords: (source, term, opts, next) => {
+      const url = source.urls.base(term);
+      _doFetch(url, {}, next, res => {
+        if (res.geonames) {
+          next(mapRecords(res.geonames, source.recordMap), false);
+        } else {
+          next([], true);
+        }
+      });
+    },
+    recordMap: {
       ll: r => [parseFloat(r.lat), parseFloat(r.lng)],
       country: r => r.countryCode,
       rank: r => 100,
@@ -27,15 +70,26 @@ var SuggestionSources = [
   {
     id: "wiki",
     label: "Wikipedia",
-    url: (term, extent) =>
-      "http://api.geonames.org/wikipediaSearchJSON?" +
-      "q=" +
-      encodeURIComponent(term) +
-      "&maxRows=10" +
-      "&username=adammertel&" +
-      Base.extentToUrl(extent),
-    getRecords: (res, next) => next(res.geonames),
-    parse: {
+    urls: {
+      base: term =>
+        "http://api.geonames.org/wikipediaSearchJSON?" +
+        "q=" +
+        encodeURIComponent(term) +
+        "&maxRows=10" +
+        "&username=adammertel&"
+    },
+    getRecords: (source, term, opts, next) => {
+      const url = source.urls.base(term);
+      _doFetch(url, {}, next, res => {
+        if (res.geonames) {
+          next(mapRecords(res.geonames, source.recordMap), false);
+        } else {
+          next([], true);
+        }
+      });
+      next([], true);
+    },
+    recordMap: {
       ll: r => [parseFloat(r.lat), parseFloat(r.lng)],
       country: r => r.countryCode,
       rank: r => r.rank,
@@ -46,110 +100,27 @@ var SuggestionSources = [
     }
   },
   {
-    id: "getty",
-    label: "Getty TGN",
-    url: (term, extent) =>
-      "http://vocab.getty.edu/resource/getty/search?q=" +
-      encodeURIComponent(term) +
-      "&luceneIndex=Full&indexDataset=TGN&_form=%2Fresource%2Fgetty%2Fsearch",
-    getRecords: (res, next) => {
-      const domparser = new DOMParser();
-      const doc = domparser.parseFromString(res, "text/html");
-      const resultNodes = $(doc)
-        .find("#results table tbody tr")
-        .toArray();
-
-      let results = resultNodes.map(result => {
-        const tds = $(result)
-          .find("td")
-          .toArray();
-        const id = $(tds[0])
-          .text()
-          .split("tgn:")[1];
-        return {
-          id: id,
-          url: "http://vocab.getty.edu/tgn/" + id,
-          name: $(tds[1]).text(),
-          info: $(tds[3]).text(),
-          type: $(tds[4]).text()
-        };
-      });
-      //console.log(ids);
-
-      if (results.length > 10) {
-        results = results.slice(0, 10);
-      }
-      const allResults = results.length;
-      let processed = 0;
-      const checkNext = () => {
-        if (processed === allResults) {
-          next(results);
-        }
-      };
-
-      checkNext();
-
-      results.forEach(result => {
-        //console.log("http://vocab.getty.edu/tgn/" + id);
-        $.get("http://vocab.getty.edu/tgn/" + result.id + "-geometry").then(
-          res => {
-            var doc = domparser.parseFromString(res, "text/html");
-            const spans = $(doc)
-              .find("#results td span")
-              .toArray();
-            let lat = false;
-            let lng = false;
-
-            spans.forEach((span, si) => {
-              if (
-                $(span)
-                  .text()
-                  .includes("schema:latitude")
-              ) {
-                lat = $(spans[si + 1]).text();
-              }
-              if (
-                $(span)
-                  .text()
-                  .includes("schema:longitude")
-              ) {
-                lng = $(spans[si + 1]).text();
-              }
-              result.ll = [parseFloat(lat), parseFloat(lng)];
-            });
-            processed++;
-            checkNext();
-          }
-        );
-      });
-    },
-    parse: {
-      ll: r => r.ll,
-      country: r => "",
-      rank: r => 100,
-      name: r => r.name,
-      url: r => r.url,
-      type: r => r.type,
-      info: r => r.info
-    }
-  },
-
-  {
     id: "tgaz",
     label: "China Historical GIS",
-    url: (term, extent) =>
-      "http://maps.cga.harvard.edu/tgaz/placename?" +
-      "n=" +
-      encodeURIComponent(term) +
-      "&fmt=json",
-    getRecords: (res, next) => {
-      let suggestions = res.placenames;
-      if (suggestions.length > 10) {
-        suggestions = suggestions.slice(0, 10);
-      }
-      next(suggestions);
+    urls: {
+      base: term =>
+        "http://maps.cga.harvard.edu/tgaz/placename?" +
+        "n=" +
+        encodeURIComponent(term) +
+        "&fmt=json"
     },
-    parse: {
+    getRecords: (source, term, opts, next) => {
+      const url = source.urls.base(term);
+      _doFetch(url, {}, next, res => {
+        if (res.placenames) {
+          const suggestions = checkNoLimit(res.placenames);
+          next(mapRecords(suggestions, source.recordMap), false);
+        } else {
+          next([], true);
+        }
+      });
+    },
+    recordMap: {
       ll: r => {
         const coords = r["xy coordinates"].split(", ");
         return [parseFloat(coords[1]), parseFloat(coords[0])];
@@ -161,13 +132,84 @@ var SuggestionSources = [
       type: r => r["feature type"],
       info: r => ""
     }
+  },
+  {
+    id: "getty",
+    label: "Getty TGN",
+    urls: {
+      base: term =>
+        "http://vocab.getty.edu/resource/getty/search?q=" +
+        encodeURIComponent(term) +
+        "&luceneIndex=Full&indexDataset=TGN&_form=%2Fresource%2Fgetty%2Fsearch",
+      record: id => "http://vocab.getty.edu/tgn/" + id + "-geometry"
+    },
+
+    getRecords: (source, term, opts, next) => {
+      const url = source.urls.base(term);
+      _doFetch(url, {}, next, res => {
+        const doc = domparser.parseFromString(res, "text/html");
+        const resultNodes = $(doc)
+          .find("#results table tbody tr")
+          .toArray();
+
+        const results = checkNoLimit(
+          resultNodes.map(result => {
+            const tds = $(result)
+              .find("td")
+              .toArray()
+              .map(t => $(t).text());
+            const id = tds[0].split("tgn:")[1];
+            return {
+              id: id,
+              name: tds[1],
+              info: tds[3],
+              type: tds[4]
+            };
+          })
+        );
+
+        const allResults = results.length;
+        let processed = 0;
+
+        const checkNext = () => {
+          if (processed === allResults) {
+            next(mapRecords(results, source.recordMap), false);
+          }
+        };
+
+        checkNext();
+
+        results.forEach(result => {
+          Base.doFetch(source.urls.record(result.id), {}, (err, res) => {
+            if (err) {
+              result.ll = false;
+              processed++;
+              checkNext();
+            }
+            var doc = domparser.parseFromString(res, "text/html");
+            const spans = $(doc)
+              .find("#results td span")
+              .toArray()
+              .map(s => $(s).text());
+
+            result.ll = spans.length > 6 ? [spans[3], spans[6]] : false;
+
+            processed++;
+            checkNext();
+          });
+        });
+      });
+    },
+    recordMap: {
+      ll: r => (r.ll ? [parseFloat(r.ll[0]), parseFloat(r.ll[1])] : false),
+      country: r => "",
+      rank: r => 100,
+      name: r => r.name,
+      url: r => "http://vocab.getty.edu/tgn/" + r.id,
+      type: r => r.type,
+      info: r => r.info
+    }
   }
 ];
-/*
-  http://vocab.getty.edu/tgn/7006465
-  http://vocabsservices.getty.edu/TGNService.asmx/TGNGetTermMatch?name=pressburg&placetypeid=&nationid=
-  http://vocabsservices.getty.edu/TGNService.asmx/TGNGetSubject?subjectID=7006465
-  http://www.getty.edu/vow/TGNServlet?english=Y&find=Abu%C5%9F%C3%ADr&place=&page=1&nation=
- */
 
 module.exports = SuggestionSources;
