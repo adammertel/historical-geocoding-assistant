@@ -5,6 +5,27 @@ import stringSimilarity from "string-similarity";
 
 var Base = {
   getSuggestions(source, recordName, extent, next) {
+    fetch(source.url(recordName, extent), {
+      mode: "cors"
+    })
+      .then(response => {
+        return response.text();
+      })
+      .then(body => {
+        const parsedBody = Base.isJsonString(body) ? JSON.parse(body) : body;
+        source.getRecords(parsedBody, res => {
+          const parsedRecords = res.map(rec => {
+            const suggestion = {};
+            Object.keys(source.parse).forEach(key => {
+              suggestion[key] = source.parse[key](rec);
+            });
+            return suggestion;
+          });
+          next(parsedRecords);
+        });
+      });
+
+    /*
     $.ajax({
       url: source.url(recordName, extent),
       async: true,
@@ -25,6 +46,7 @@ var Base = {
         next([]);
       }
     });
+    */
   },
 
   doRequest(url, next) {
@@ -123,6 +145,15 @@ var Base = {
 
   same(value1, value2) {
     return value1.toString() === value2.toString();
+  },
+
+  isJsonString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
   },
 
   /* 
