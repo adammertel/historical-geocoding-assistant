@@ -310,7 +310,7 @@ class Panel extends React.Component {
           </div>
         </Menu>
 
-        <Menu label="record data" defaultOpen>
+        <Menu label="record data" defaultOpen={!window["TESTING"]}>
           <div>
             <table className="table centered">
               <tbody>
@@ -385,12 +385,25 @@ class Panel extends React.Component {
                       <Button
                         icon="cog"
                         label=""
-                        classes="is-inverted fa-spin"
+                        classes="is-inverted fa-spin is-primary"
                         style={{
                           background: "transparent",
                           verticalAlign: "middle",
-                          fontSize: "120%",
-                          color: "brown"
+                          fontSize: "120%"
+                        }}
+                      />
+                    )}
+                  </div>
+                  <div style={{ display: "table-cell" }}>
+                    {store.problemSuggestions[source.id] && (
+                      <Button
+                        icon="exclamation-triangle"
+                        label=""
+                        classes="is-inverted is-danger"
+                        style={{
+                          background: "transparent",
+                          verticalAlign: "middle",
+                          fontSize: "120%"
                         }}
                       />
                     )}
