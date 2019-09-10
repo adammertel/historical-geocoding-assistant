@@ -209,6 +209,62 @@ var SuggestionSources = [
       type: r => r.type,
       info: r => r.info
     }
+  },
+  {
+    id: "pleiades",
+    label: "Pleiades",
+    preload: () => {
+      data["pleiades"] = [
+        ["tianbian", "423025"],
+        ["tianbian", "423026"],
+        ["sth else", "423027"]
+      ];
+    },
+    urls: {
+      record: id => {
+        return "http://pleiades.stoa.org/places/" + id + "/json";
+      }
+    },
+    getRecords: (source, term, opts, next) => {
+      console.log(term);
+      console.log(data["pleiades"]);
+
+      const ids = checkNoLimit(
+        data["pleiades"].filter(p => p[0] === term).map(r => r[1])
+      );
+
+      const all = ids.length;
+      let processed = 0;
+      const suggestions = [];
+
+      const checkNext = () => {
+        console.log("checking next", suggestions);
+        if (processed === all) {
+          next(mapRecords(suggestions, source.recordMap), false);
+        }
+      };
+      checkNext();
+
+      ids.forEach(id => {
+        const url = source.urls.record(id);
+        Base.doFetch(url, {}, (err, res) => {
+          processed++;
+          if (!err) {
+            suggestions.push(res);
+          }
+          checkNext();
+        });
+      });
+    },
+    recordMap: {
+      ll: r => [r.reprPoint[1], r.reprPoint[0]],
+      country: r => "",
+      rank: r => 100,
+      name: r => r.title,
+      url: r => r.uri,
+      type: r => r.placeTypes.join(),
+      info: r => r.description
+    }
   }
 ];
 
