@@ -310,7 +310,7 @@ class Panel extends React.Component {
           </div>
         </Menu>
 
-        <Menu label="record data" defaultOpen={!window["TESTING"]}>
+        <Menu label="record data" defaultOpen={window["TESTING"]}>
           <div>
             <table className="table centered">
               <tbody>
@@ -414,6 +414,8 @@ class Panel extends React.Component {
                     {store.suggestions[source.id]
                       .filter(g => g)
                       .map((suggestion, gi) => {
+                        const displayName =
+                          Base.shortenText(suggestion.name, 20) || "";
                         return (
                           <div key={gi} className="suggestion">
                             <Button
@@ -463,10 +465,21 @@ class Panel extends React.Component {
                               />
                             )}
                             <div style={this.styleLabel()}>
-                              {suggestion.name || ""}
+                              {displayName.length === suggestion.name ? (
+                                <span className="suggestion-name">
+                                  {displayName}
+                                </span>
+                              ) : (
+                                <span
+                                  className="suggestion-name hint--top"
+                                  aria-label={suggestion.name}
+                                >
+                                  {displayName}
+                                </span>
+                              )}
                               {suggestion.country && (
                                 <span
-                                  className="tag is-white hint hint--top"
+                                  className="suggestion-country tag is-white hint hint--top"
                                   aria-label={suggestion.country}
                                   style={this.styleTag()}
                                 >

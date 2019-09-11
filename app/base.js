@@ -117,6 +117,14 @@ var Base = {
     }
   },
 
+  shortenText(textToShorten, numberOfCharacters = 10) {
+    if (textToShorten.length > numberOfCharacters) {
+      return textToShorten.substr(0, numberOfCharacters) + "...";
+    } else {
+      return textToShorten;
+    }
+  },
+
   same(value1, value2) {
     return value1.toString() === value2.toString();
   },
