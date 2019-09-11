@@ -78,7 +78,10 @@ var Base = {
   },
 
   openTab(path) {
-    const url = path.includes("http://") ? path : "http://" + path;
+    const url =
+      path.includes("http://") || path.includes("https://")
+        ? path
+        : "http://" + path;
     window.open(url, "_blank", "width=800,height=900");
   },
 
