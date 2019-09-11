@@ -79,6 +79,16 @@ $family-primary: "Lato", sans-serif;
         }
       }
     }
+    .leaflet-control-scale {
+      .leaflet-control-scale-line {
+        border-color: $primary;
+        color: $primary;
+        background: white;
+        border-width: 2px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+    }
   }
 
   .polyline-measure-tooltip {
