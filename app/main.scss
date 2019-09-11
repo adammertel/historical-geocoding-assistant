@@ -25,7 +25,43 @@ $family-primary: "Lato", sans-serif;
 .leaflet-container {
   .leaflet-control-container {
     .leaflet-bar {
-      border: 1px solid $primary;
+      border: 2px solid $primary;
+
+      a {
+        color: $primary;
+        border-radius: 0px !important;
+      }
+    }
+
+    .leaflet-control-zoom-in {
+      border-bottom: 1px solid #a64005;
+    }
+
+    .leaflet-geonames-icon {
+      background-image: none;
+
+      &:before {
+        content: "🔍";
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+
+    #polyline-measure-control {
+      background-image: none;
+
+      &:before {
+        content: "↦";
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+    #polyline-measure-control[title="Stop measuring"],
+    .leaflet-geonames-search.active .leaflet-geonames-icon,
+    .leaflet-control-zoom-in:hover,
+    .leaflet-control-zoom-out:hover {
+      color: white;
+      background-color: $primary !important;
     }
 
     .leaflet-geonames-search {
@@ -34,8 +70,13 @@ $family-primary: "Lato", sans-serif;
       &.active {
         height: auto;
       }
-      form input {
-        border-radius: 4px;
+      form {
+        height: 30px;
+        margin: 0;
+        input {
+          border-radius: 4px;
+          padding-left: 35px;
+        }
       }
     }
   }

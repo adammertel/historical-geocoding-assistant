@@ -54,7 +54,7 @@ class AppMap extends React.Component {
         measureControlTitleOff: "Stop measuring",
         clearControlTitle: "Clear Measurements",
         clearControlLabel: "&times",
-        measureControlLabel: "&#128207;",
+        measureControlLabel: "",
         tempLine: {
           color: "black", // Dashed line color
           weight: 2 // Dashed line weight
