@@ -214,11 +214,13 @@ var SuggestionSources = [
     id: "pleiades",
     label: "Pleiades",
     preload: () => {
-      data["pleiades"] = [
-        ["tianbian", "423025"],
-        ["tianbian", "423026"],
-        ["sth else", "423027"]
-      ];
+      Base.doFetch(
+        "https://raw.githubusercontent.com/ryanfb/pleiades-geojson/gh-pages/name_index.json",
+        {},
+        (err, res) => {
+          data["pleiades"] = res.filter(r => r[0] && r[0] !== "Untitled");
+        }
+      );
     },
     urls: {
       record: id => {
@@ -226,24 +228,33 @@ var SuggestionSources = [
       }
     },
     getRecords: (source, term, opts, next) => {
+      if (!data["pleiades"]) {
+        next([], true);
+      }
       console.log(term);
       console.log(data["pleiades"]);
 
       const ids = checkNoLimit(
-        data["pleiades"].filter(p => p[0] === term).map(r => r[1])
+        data["pleiades"]
+          .filter(p => {
+            return p[0] === term;
+          })
+          .map(r => r[1])
       );
 
       const all = ids.length;
       let processed = 0;
       const suggestions = [];
 
-      const checkNext = () => {
+      const checkFinished = () => {
         console.log("checking next", suggestions);
         if (processed === all) {
           next(mapRecords(suggestions, source.recordMap), false);
         }
       };
-      checkNext();
+
+      // in case there are no suggestions
+      checkFinished();
 
       ids.forEach(id => {
         const url = source.urls.record(id);
@@ -252,7 +263,7 @@ var SuggestionSources = [
           if (!err) {
             suggestions.push(res);
           }
-          checkNext();
+          checkFinished();
         });
       });
     },
