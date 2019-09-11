@@ -285,13 +285,19 @@ class AppMap extends React.Component {
 
   renderHighlighted() {
     return (
-      <LayerGroup key="hl-point">
-        <CircleMarker
-          className="hl-point"
-          center={[store.hlPoint[0], store.hlPoint[1]]}
-          radius={10}
-        />
-      </LayerGroup>
+      <Pane
+        style={{ zIndex: 800 }}
+        className="pane-highlight"
+        key="pane-highlight"
+      >
+        <LayerGroup key="hl-point">
+          <CircleMarker
+            className="hl-point"
+            center={[store.hlPoint[0], store.hlPoint[1]]}
+            radius={10}
+          />
+        </LayerGroup>
+      </Pane>
     );
   }
 
@@ -313,6 +319,7 @@ class AppMap extends React.Component {
           <ScaleControl position="topleft" imperial={true} />
           <AttributionControl position="bottomleft" />
           {this.renderBaseLayers()}
+          {store.hlPoint && this.renderHighlighted()}
           {store.opts.overlays.length > 0 && this.renderOverlays()}
           {store.validRecordCoordinates && this.renderThisCoordinate()}
           {store.opts.displayOtherRecords && this.renderOtherRecords()}
@@ -327,8 +334,6 @@ class AppMap extends React.Component {
               config.colors[source.id]
             )
           )}
-
-          {store.hlPoint && this.renderHighlighted()}
         </Map>
       </div>
     );
