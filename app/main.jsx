@@ -11,7 +11,7 @@ import SuggestionSources from "./suggestions.js";
 
 const pcg = require("./../package.json");
 
-const TESTING = false;
+const TESTING = true;
 console.log("testing mode", TESTING);
 
 window["version"] = pcg.version;
@@ -20,6 +20,11 @@ window["version"] = pcg.version;
 window["map"] = false;
 window["Base"] = Base;
 window["SuggestionSources"] = SuggestionSources;
+SuggestionSources.forEach(s => {
+  if (s.preload) {
+    s.preload();
+  }
+});
 
 window["username"] = "";
 

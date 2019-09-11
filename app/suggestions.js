@@ -53,7 +53,7 @@ var SuggestionSources = [
         if (res.geonames) {
           next(mapRecords(res.geonames, source.recordMap), false);
         } else {
-          next([], true);
+          next([], false);
         }
       });
     },
@@ -84,10 +84,9 @@ var SuggestionSources = [
         if (res.geonames) {
           next(mapRecords(res.geonames, source.recordMap), false);
         } else {
-          next([], true);
+          next([], false);
         }
       });
-      next([], true);
     },
     recordMap: {
       ll: r => [parseFloat(r.lat), parseFloat(r.lng)],
@@ -231,8 +230,6 @@ var SuggestionSources = [
       if (!data["pleiades"]) {
         next([], true);
       }
-      console.log(term);
-      console.log(data["pleiades"]);
 
       let similars = [];
 
@@ -286,8 +283,11 @@ var SuggestionSources = [
     },
     recordMap: {
       ll: r => {
-        console.log(r);
-        return [r.reprPoint[1], r.reprPoint[0]];
+        if (r.reprPoint && r.reprPoint.length === 2) {
+          return [r.reprPoint[1], r.reprPoint[0]];
+        } else {
+          return false;
+        }
       },
       country: r => "",
       rank: r => r.sim,

@@ -395,18 +395,19 @@ class Panel extends React.Component {
                     )}
                   </div>
                   <div style={{ display: "table-cell" }}>
-                    {store.problemSuggestions[source.id] && (
-                      <Button
-                        icon="exclamation-triangle"
-                        label=""
-                        classes="is-inverted is-danger"
-                        style={{
-                          background: "transparent",
-                          verticalAlign: "middle",
-                          fontSize: "120%"
-                        }}
-                      />
-                    )}
+                    {!store.loadingSuggestions[source.id] &&
+                      store.problemSuggestions[source.id] && (
+                        <Button
+                          icon="exclamation-triangle"
+                          label=""
+                          classes="is-inverted is-danger"
+                          style={{
+                            background: "transparent",
+                            verticalAlign: "middle",
+                            fontSize: "120%"
+                          }}
+                        />
+                      )}
                   </div>
                 </div>
                 {!store.loadingSuggestions[source.id] && (
