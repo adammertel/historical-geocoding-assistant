@@ -22,20 +22,30 @@ $table-head-cell-border-width: none;
 $family-serif: "Acme", sans-serif;
 $family-primary: "Lato", sans-serif;
 
-.leaflet-control-container {
-  .leaflet-bar {
-    border: 1px solid $primary;
+.leaflet-container {
+  .leaflet-control-container {
+    .leaflet-bar {
+      border: 1px solid $primary;
+    }
+
+    .leaflet-geonames-search {
+      height: 2rem;
+
+      &.active {
+        height: auto;
+      }
+      form input {
+        border-radius: 4px;
+      }
+    }
   }
 
-  .leaflet-geonames-search {
-    height: 2rem;
-
-    &.active {
-      height: auto;
-    }
-    form input {
-      border-radius: 4px;
-    }
+  .polyline-measure-tooltip {
+    text-shadow: 0px 0px 2px white, 0px 0px 2px white, 0px 0px 2px white,
+      0px 0px 2px white, 0px 0px 2px white, 0px 0px 2px white, 0px 0px 2px white,
+      0px 0px 2px white;
+    font-weight: bold;
+    color: black;
   }
 }
 
