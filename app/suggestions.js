@@ -13,8 +13,8 @@ var mapRecord = (recordData, mapObject) => {
 var mapRecords = (recordsData, mapObject) => {
   return recordsData.map(r => mapRecord(r, mapObject));
 };
-var checkNoLimit = suggestions => {
-  return suggestions.length > 10 ? suggestions.slice(0, 10) : suggestions;
+var checkNoLimit = (suggestions, no = 10) => {
+  return suggestions.length > no ? suggestions.slice(0, no) : suggestions;
 };
 
 var _doFetch = (url, opts, sourceNext, next) => {
@@ -91,7 +91,7 @@ var SuggestionSources = [
     recordMap: {
       ll: r => [parseFloat(r.lat), parseFloat(r.lng)],
       country: r => r.countryCode,
-      rank: r => r.rank,
+      rank: r => r.rank / 100,
       name: r => r.title,
       url: r => r.wikipediaUrl,
       type: r => "",
@@ -125,7 +125,7 @@ var SuggestionSources = [
         return [parseFloat(coords[1]), parseFloat(coords[0])];
       },
       country: r => "",
-      rank: r => 100,
+      rank: r => 1,
       name: r => r.transcription,
       url: r => r.uri,
       type: r => r["feature type"],
@@ -139,7 +139,7 @@ var SuggestionSources = [
       base: term =>
         "http://vocab.getty.edu/resource/getty/search?q=" +
         encodeURIComponent(term) +
-        "&luceneIndex=Full&indexDataset=TGN&_form=%2Fresource%2Fgetty%2Fsearch",
+        "&luceneIndex=Full&indexDataset=TGN&limit=500",
       record: id => "http://vocab.getty.edu/tgn/" + id + "-geometry"
     },
 
@@ -151,28 +151,38 @@ var SuggestionSources = [
           .find("#results table tbody tr")
           .toArray();
 
-        const results = checkNoLimit(
-          resultNodes.map(result => {
-            const tds = $(result)
-              .find("td")
-              .toArray()
-              .map(t => $(t).text());
-            const id = tds[0].split("tgn:")[1];
-            return {
-              id: id,
-              name: tds[1],
-              info: tds[3],
-              type: tds[4]
-            };
-          })
-        );
+        let results = [];
+        results = resultNodes.map(result => {
+          const tds = $(result)
+            .find("td")
+            .toArray()
+            .map(t => $(t).text());
+          const id = tds[0].split("tgn:")[1];
+          const name = tds[1];
+          return {
+            id: id,
+            sim: Base.simScore(term, name),
+            name: name,
+            info: tds[3],
+            type: tds[4]
+          };
+        });
 
-        const allResults = results.length;
+        results.sort((a, b) => {
+          if (a.sim === b.sim) {
+            return a.type.includes("inhabited places") ? -1 : 1;
+          } else {
+            return a.sim > b.sim ? -1 : 1;
+          }
+        });
+        results = checkNoLimit(results);
+
         let processed = 0;
 
+        const parsedResults = [];
         const checkNext = () => {
-          if (processed === allResults) {
-            next(mapRecords(results, source.recordMap), false);
+          if (processed === results.length) {
+            next(mapRecords(parsedResults, source.recordMap), false);
           }
         };
 
@@ -180,19 +190,18 @@ var SuggestionSources = [
 
         results.forEach(result => {
           Base.doFetch(source.urls.record(result.id), {}, (err, res) => {
-            if (err) {
-              result.ll = false;
-              processed++;
-              checkNext();
+            if (!err) {
+              var doc = domparser.parseFromString(res, "text/html");
+              const spans = $(doc)
+                .find("#results td span")
+                .toArray()
+                .map(s => $(s).text());
+
+              result.ll = spans.length > 6 ? [spans[3], spans[6]] : false;
+              if (result.ll) {
+                parsedResults.push(result);
+              }
             }
-            var doc = domparser.parseFromString(res, "text/html");
-            const spans = $(doc)
-              .find("#results td span")
-              .toArray()
-              .map(s => $(s).text());
-
-            result.ll = spans.length > 6 ? [spans[3], spans[6]] : false;
-
             processed++;
             checkNext();
           });
@@ -202,7 +211,7 @@ var SuggestionSources = [
     recordMap: {
       ll: r => (r.ll ? [parseFloat(r.ll[0]), parseFloat(r.ll[1])] : false),
       country: r => "",
-      rank: r => 100,
+      rank: r => r.sim,
       name: r => r.name,
       url: r => "http://vocab.getty.edu/tgn/" + r.id,
       type: r => r.type,
@@ -236,8 +245,8 @@ var SuggestionSources = [
       data["pleiades"].forEach(p => {
         const name = p[0];
         const id = p[1];
-        const simScore = Base.simScore(name, term);
-        if (simScore > 0.4) {
+        const simScore = Base.simScore(term, name);
+        if (simScore > 0.65) {
           similars.push({
             id: id,
             name: name,
