@@ -315,6 +315,7 @@ class AppMap extends React.Component {
           attributionControl={false}
           maxZoom={config.map.zoomMax}
           minZoom={config.map.zoomMin}
+          worldCopyJump={true}
         >
           <ScaleControl position="topleft" imperial={true} />
           <AttributionControl position="bottomleft" />
