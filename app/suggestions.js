@@ -236,14 +236,7 @@ var SuggestionSources = [
       data["pleiades"].forEach(p => {
         const name = p[0];
         const id = p[1];
-        let simScore = 0;
-        if (name === term) {
-          simScore = 1;
-        } else if (name.includes(term) || term.includes(name)) {
-          simScore = 0.8;
-        } else {
-          simScore = Base.simScore(name, term);
-        }
+        const simScore = Base.simScore(name, term);
         if (simScore > 0.4) {
           similars.push({
             id: id,
