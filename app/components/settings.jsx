@@ -266,7 +266,6 @@ class Settings extends React.Component {
             position={extent.getCenter()}
             onDrag={this.handleDragRectangle.bind(this)}
             onDragEnd={this.handleDragRectangleEnd.bind(this)}
-            onDragStart={this.handleDragRectangleStart.bind(this)}
             draggable={true}
             ref="marker-center"
             icon={this.centerIcon}
