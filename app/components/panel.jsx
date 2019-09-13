@@ -283,7 +283,7 @@ class Panel extends React.Component {
                   />
                   <Button
                     onClick={this.handleCoordinatesRevert.bind(this)}
-                    tooltip="revert changes to record coordinates"
+                    tooltip="revert changes to coordinates"
                     icon="recycle"
                     label="revert"
                     classes="is-inverted"
@@ -417,6 +417,11 @@ class Panel extends React.Component {
                       .map((suggestion, gi) => {
                         const displayName =
                           Base.shortenText(suggestion.name, 20) || "";
+
+                        const inExtent = Base.inExtent(
+                          suggestion.ll,
+                          store.opts.maxGeoExtent
+                        );
                         return (
                           <div key={gi} className="suggestion">
                             <Button
@@ -467,12 +472,20 @@ class Panel extends React.Component {
                             )}
                             <div style={this.styleLabel()}>
                               {displayName.length === suggestion.name ? (
-                                <span className="suggestion-name">
+                                <span
+                                  className={
+                                    "suggestion-name " +
+                                    (inExtent ? "" : "is-dimmed")
+                                  }
+                                >
                                   {displayName}
                                 </span>
                               ) : (
                                 <span
-                                  className="suggestion-name hint--top"
+                                  className={
+                                    "suggestion-name hint--top " +
+                                    (inExtent ? "" : "is-dimmed")
+                                  }
                                   aria-label={suggestion.name}
                                 >
                                   {displayName}
@@ -480,22 +493,22 @@ class Panel extends React.Component {
                               )}
                               {suggestion.country && (
                                 <span
-                                  className="suggestion-country tag is-white hint hint--top"
+                                  className={
+                                    "suggestion-country tag is-white hint hint--top " +
+                                    (inExtent ? "" : "is-dimmed")
+                                  }
                                   aria-label={suggestion.country}
                                   style={this.styleTag()}
                                 >
                                   {suggestion.country}
                                 </span>
                               )}
-                              {!Base.inExtent(
-                                suggestion.ll,
-                                store.opts.maxGeoExtent
-                              ) && (
+                              {!inExtent && (
                                 <span
                                   className="tag post-icon is-white hint hint--top"
                                   aria-label="outside of the chosen spatial extent"
                                 >
-                                  <i className="icon fa fa-globe is-danger" />
+                                  <i className="icon fa fa-globe is-dimmed" />
                                 </span>
                               )}
                             </div>
