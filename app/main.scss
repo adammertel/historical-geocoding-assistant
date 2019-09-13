@@ -9,10 +9,11 @@
 @import "~hint.css/hint.css";
 
 $info: #d9ae5f;
-$warning: #d9ae5f;
+$warning: #cdaa6b;
 $primary: #a64005;
 $success: #707322;
 $danger: #bf0606;
+$dimmed: #8a8a8a;
 $tooltip-max-width: 200px;
 $checkbox-border: 0.1rem solid $primary;
 $table-cell-border-width: none;
@@ -21,6 +22,11 @@ $table-head-cell-border-width: none;
 
 $family-serif: "Acme", sans-serif;
 $family-primary: "Lato", sans-serif;
+
+.is-dimmed {
+  color: $dimmed !important;
+  border-color: $dimmed !important;
+}
 
 .leaflet-container {
   .leaflet-control-container {
