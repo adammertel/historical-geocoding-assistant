@@ -162,7 +162,7 @@ class Panel extends React.Component {
           className="button-row"
         >
           <Button
-            label="restore"
+            label="discard changes"
             icon="refresh"
             onClick={this.handleRecordRevert.bind(this)}
             classes="is-danger is-small"
@@ -291,9 +291,9 @@ class Panel extends React.Component {
                   />
                   <Button
                     onClick={this.handleCoordinatesRemove.bind(this)}
-                    tooltip="remove coordinates"
+                    tooltip="clear coordinate values"
                     icon="trash"
-                    label="remove"
+                    label="clear coordinates"
                     classes="is-inverted"
                     style={this.styleSmallButton()}
                   />
@@ -422,7 +422,7 @@ class Panel extends React.Component {
                         return (
                           <div key={gi} className="suggestion">
                             <Button
-                              tooltip="highlight on map"
+                              tooltip="highlight"
                               icon="lightbulb-o"
                               label=""
                               onClick={this.handleHighlightSuggestionClick.bind(
@@ -433,7 +433,7 @@ class Panel extends React.Component {
                               style={this.styleSmallButton()}
                             />
                             <Button
-                              tooltip="pan map to the location"
+                              tooltip="focus"
                               icon="compass"
                               label=""
                               onClick={this.handleLocateSuggestionClick.bind(
@@ -444,7 +444,7 @@ class Panel extends React.Component {
                               style={this.styleSmallButton()}
                             />
                             <Button
-                              tooltip="save coordinates"
+                              tooltip="use coordinates"
                               icon="floppy-o"
                               label=""
                               classes="is-inverted"
