@@ -144,8 +144,63 @@ var Base = {
   /* 
     ling similarity
   */
-  simScore(w1, w2) {
-    return stringSimilarity.compareTwoStrings(w1, w2);
+  simAlgorithms: {
+    levenshtein: (a, b) => {
+      // https://github.com/trekhleb/javascript-algorithms/blob/master/src/algorithms/string/levenshtein-distance/levenshteinDistance.js
+      const al = a.length;
+      const bl = b.length;
+      const distanceMatrix = Array(bl + 1)
+        .fill(null)
+        .map(() => Array(al + 1).fill(null));
+      for (let i = 0; i <= al; i += 1) {
+        distanceMatrix[0][i] = i;
+      }
+      for (let j = 0; j <= bl; j += 1) {
+        distanceMatrix[j][0] = j;
+      }
+      for (let j = 1; j <= bl; j += 1) {
+        for (let i = 1; i <= al; i += 1) {
+          const indicator = a[i - 1] === b[j - 1] ? 0 : 1;
+          distanceMatrix[j][i] = Math.min(
+            distanceMatrix[j][i - 1] + 1, // deletion
+            distanceMatrix[j - 1][i] + 1, // insertion
+            distanceMatrix[j - 1][i - 1] + indicator // substitution
+          );
+        }
+      }
+      return 1 - distanceMatrix[bl][al] / (al > bl ? al : bl);
+    },
+    sub: (a, b) => {
+      if (a.includes(b) || b.includes(a)) {
+        return 1;
+      } else {
+        const s1 = a.length <= b.length ? a : b;
+        const s2 = a.length <= b.length ? b : a;
+        for (var i = s1.length - 1; i > 2; i--) {
+          const ss = s1.substr(0, i);
+          if (s2.includes(ss)) {
+            return i / s1.length;
+          }
+        }
+        return 0;
+      }
+    }
+  },
+
+  // TODO: needs something more inteligent
+  simScore(s1, s2) {
+    const a = s1.toLowerCase();
+    const b = s2.toLowerCase();
+    const al = a.length;
+    const bl = b.length;
+    const limit = Math.floor(al / 2) + 3;
+    if (bl > 6 && al > 4 && bl - al > limit) {
+      return Base.simAlgorithms.sub(a, b);
+    } else {
+      const match3 = a.substr(0, 3) === b.substr(0, 3);
+      const score = Base.simAlgorithms.levenshtein(a, b);
+      return match3 ? Math.sqrt(score, 2) : score;
+    }
   },
 
   simScoreMax(w1, ws) {
