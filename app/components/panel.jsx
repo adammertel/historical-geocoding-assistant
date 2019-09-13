@@ -418,10 +418,7 @@ class Panel extends React.Component {
                         const displayName =
                           Base.shortenText(suggestion.name, 20) || "";
 
-                        const inExtent = Base.inExtent(
-                          suggestion.ll,
-                          store.opts.maxGeoExtent
-                        );
+                        const inExtent = suggestion.inExtent;
                         return (
                           <div key={gi} className="suggestion">
                             <Button

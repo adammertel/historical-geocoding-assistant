@@ -282,8 +282,16 @@ export default class AppStore extends React.Component {
           this.recordName,
           this.opts,
           (suggestions, problem) => {
-            console.log("setting suggestions", source.id, suggestions);
-            this._suggestions.set(source.id, suggestions);
+            suggestions.forEach(
+              s => (s.inExtent = Base.inExtent(s.ll, this.opts.maxGeoExtent))
+            );
+
+            const orderedSuggestions = suggestions.sort((a, b) =>
+              a.inExtent ? -1 : 1
+            );
+
+            console.log("setting suggestions", source.id, orderedSuggestions);
+            this._suggestions.set(source.id, orderedSuggestions);
             this._loadingSuggestions.set(source.id, false);
             this._problemSuggestions.set(source.id, problem);
           }
@@ -375,7 +383,6 @@ export default class AppStore extends React.Component {
       this.recordBeforeChanges = Object.assign({}, data[this.row]);
       Object.keys(this.recordBeforeChanges).forEach(recordKey => {
         if (this.recordBeforeChanges[recordKey] === undefined) {
-          console.log("undefined", recordKey);
           this.records[this.row][recordKey] = "";
         }
       });
