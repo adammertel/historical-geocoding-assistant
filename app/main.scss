@@ -20,6 +20,9 @@ $table-cell-border-width: none;
 $table-cell-border: none;
 $table-head-cell-border-width: none;
 
+$black-halo: 0 0 2px black;
+$white-halo: 0 0 2px white;
+
 $family-serif: "Acme", sans-serif;
 $family-primary: "Lato", sans-serif;
 
@@ -28,7 +31,21 @@ $family-primary: "Lato", sans-serif;
   border-color: $dimmed !important;
 }
 
+.black-halo {
+  text-shadow: $black-halo, $black-halo, $black-halo, $black-halo, $black-halo,
+    $black-halo, $black-halo;
+}
+
 .leaflet-container {
+  .suggestion-point {
+    fill-opacity: 0.7;
+    stroke: black;
+    stroke-width: 2px;
+  }
+  .fa-map-marker {
+    text-shadow: $white-halo, $white-halo, $white-halo, $white-halo, $white-halo;
+  }
+
   .leaflet-control-container {
     .leaflet-bar {
       border: 2px solid $primary;
@@ -98,9 +115,8 @@ $family-primary: "Lato", sans-serif;
   }
 
   .polyline-measure-tooltip {
-    text-shadow: 0px 0px 2px white, 0px 0px 2px white, 0px 0px 2px white,
-      0px 0px 2px white, 0px 0px 2px white, 0px 0px 2px white, 0px 0px 2px white,
-      0px 0px 2px white;
+    text-shadow: $white-halo, $white-halo, $white-halo, $white-halo, $white-halo,
+      $white-halo, $white-halo;
     font-weight: bold;
     color: black;
   }
@@ -123,9 +139,6 @@ $family-primary: "Lato", sans-serif;
   i.fa-caret-down,
   i.fa-caret-right {
     margin-left: -10px;
-  }
-  .fa-map-marker {
-    text-shadow: 0px 0px 2px white, 0px 0px 2px white, 0px 0px 2px white;
   }
 
   &.is-danger {

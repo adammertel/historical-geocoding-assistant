@@ -376,7 +376,7 @@ class Panel extends React.Component {
                       <Button
                         icon="circle"
                         label=""
-                        classes="is-inverted"
+                        classes="black-halo is-inverted"
                         style={{
                           color: config.colors[source.id],
                           verticalAlign: "middle",

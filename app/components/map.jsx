@@ -264,13 +264,10 @@ class AppMap extends React.Component {
             return (
               <CircleMarker
                 key={pi}
-                className={id + "-point"}
+                className={"suggestion-point " + id + "-point"}
                 radius={this.circleSize}
                 center={[p.ll[0], p.ll[1]]}
                 fillColor={color}
-                fillOpacity="1"
-                color="white"
-                weight="1"
                 onClick={this.handleClickGeoname.bind(this, p)}
               >
                 <Tooltip direction="bottom" offset={this.suggestionOffset()}>
