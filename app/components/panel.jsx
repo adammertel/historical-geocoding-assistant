@@ -113,13 +113,14 @@ class Panel extends React.Component {
         </div>
         <div className="is-inline">
           <Button
+            medium={true}
             classes="is-inverted"
             label=""
             icon="caret-left"
             onClick={store.previousRecord}
           />
 
-          <div className="select" style={{ width: 300 }}>
+          <div className="select" style={{ width: 300, marginRight: "5px" }}>
             <select
               style={{ width: "100%" }}
               value={store.row}
@@ -145,9 +146,10 @@ class Panel extends React.Component {
 
           <Button
             label=""
+            medium={true}
             icon="caret-right"
             onClick={store.nextRecord}
-            classes="is-inverted is-pulled-right"
+            classes="is-inverted"
           />
         </div>
 
@@ -165,13 +167,13 @@ class Panel extends React.Component {
             label="discard changes"
             icon="refresh"
             onClick={this.handleRecordRevert.bind(this)}
-            classes="is-danger is-small"
+            classes="is-primary is-small"
           />
           <Button
             label="save"
             icon="save"
             onClick={store.saveRecord}
-            classes="is-success is-small "
+            classes="is-primary is-small "
           />
         </div>
 
@@ -400,7 +402,7 @@ class Panel extends React.Component {
                       <Button
                         icon="exclamation-triangle"
                         label=""
-                        classes="is-inverted is-danger"
+                        classes="is-inverted"
                         style={{
                           background: "transparent",
                           verticalAlign: "middle",
@@ -611,13 +613,13 @@ class Panel extends React.Component {
             </div>
             <div className="button-row">
               <Button
-                classes=""
+                classes="is-inverted"
                 label="columns"
                 icon="columns"
                 onClick={this.handleGlobalSettingOpen.bind(this, "columns")}
               />
               <Button
-                classes=""
+                classes="is-inverted"
                 label="spatial extent"
                 icon="globe"
                 onClick={this.handleGlobalSettingOpen.bind(this, "extent")}
