@@ -28,10 +28,11 @@
   "colors": {
     "main": "#a64005",
     "otherRecords": "black",
-    "geonames": "#056ba6",
-    "wiki": "#05a640",
-    "tgaz": "#a69105",
-    "getty": "#a60569"
+    "geonames": "#fdb462",
+    "wiki": "#ffffb3",
+    "tgaz": "#bebada",
+    "getty": "#80b1d3",
+    "pleiades": "#b3de69"
   },
   "columnNames": {
     "name": {

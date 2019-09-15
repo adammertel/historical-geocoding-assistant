@@ -179,9 +179,9 @@ class Panel extends React.Component {
 
         <Menu
           label="localisation"
+          key="localisation"
           defaultOpen
           icon="map-marker"
-          additionalClasses={[]}
         >
           <div>
             <table className="table centered">
@@ -312,7 +312,12 @@ class Panel extends React.Component {
           </div>
         </Menu>
 
-        <Menu label="record data" defaultOpen={window["TESTING"]}>
+        <Menu
+          label="record data"
+          key="record-data"
+          defaultOpen={window["TESTING"]}
+          icon="table"
+        >
           <div>
             <table className="table centered">
               <tbody>
@@ -344,7 +349,7 @@ class Panel extends React.Component {
         </Menu>
 
         {/*suggestions */}
-        <Menu label="suggestions" defaultOpen key="suggestions">
+        <Menu label="suggestions" defaultOpen key="suggestions" icon="globe">
           {SuggestionSources.map(source => {
             let status = "ok";
             if (!store.displaySuggestions[source.id]) {
@@ -524,7 +529,12 @@ class Panel extends React.Component {
         </Menu>
 
         {/* External search */}
-        <Menu label="external search" defaultOpen>
+        <Menu
+          label="external search"
+          key="external-search"
+          defaultOpen
+          icon="external-link"
+        >
           <div>
             <Button
               label="open google search"
@@ -551,12 +561,7 @@ class Panel extends React.Component {
           </div>
         </Menu>
 
-        <Menu
-          label="settings"
-          defaultOpen
-          icon="wrench"
-          iconColor={config.colors.main}
-        >
+        <Menu label="settings" key="settings" defaultOpen icon="wrench">
           <div>
             <div className="checkboxes-line">
               <Checkbox
