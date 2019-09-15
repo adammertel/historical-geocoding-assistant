@@ -179,7 +179,7 @@ class Panel extends React.Component {
           label="localisation"
           defaultOpen
           icon="map-marker"
-          iconColor={config.colors.main}
+          additionalClasses={[]}
         >
           <div>
             <table className="table centered">
@@ -344,29 +344,21 @@ class Panel extends React.Component {
         {/*suggestions */}
         <Menu label="suggestions" defaultOpen key="suggestions">
           {SuggestionSources.map(source => {
+            let status = "ok";
+            if (!store.displaySuggestions[source.id]) {
+              status = "unchecked";
+            } else if (store.problemSuggestions[source.id]) {
+              status = "problem";
+            } else if (store.loadingSuggestions[source.id]) {
+              status = "loading";
+            }
+
             return (
               <div
                 className="suggestion-section"
                 key={"suggestion-section-" + source.id}
               >
                 <div style={{ display: "table" }}>
-                  <div style={{ display: "table-cell" }}>
-                    <Button
-                      icon="circle"
-                      label=""
-                      classes="is-inverted"
-                      style={{
-                        color:
-                          !store.loadingSuggestions[source.id] &&
-                          store.displaySuggestions[source.id]
-                            ? config.colors[source.id]
-                            : "white",
-                        verticalAlign: "middle",
-                        fontSize: "80%"
-                      }}
-                    />
-                  </div>
-
                   <div style={{ display: "table-cell" }}>
                     <Checkbox
                       id={"switch-" + source.id}
@@ -379,13 +371,36 @@ class Panel extends React.Component {
                       )}
                     />
                   </div>
-
                   <div style={{ display: "table-cell" }}>
-                    {store.loadingSuggestions[source.id] && (
+                    {status === "ok" && (
+                      <Button
+                        icon="circle"
+                        label=""
+                        classes="is-inverted"
+                        style={{
+                          color: config.colors[source.id],
+                          verticalAlign: "middle",
+                          fontSize: "80%"
+                        }}
+                      />
+                    )}
+                    {status === "loading" && (
                       <Button
                         icon="cog"
                         label=""
-                        classes="is-inverted fa-spin is-primary"
+                        classes="is-inverted fa-spin is-black"
+                        style={{
+                          background: "transparent",
+                          verticalAlign: "middle",
+                          fontSize: "120%"
+                        }}
+                      />
+                    )}
+                    {status === "problem" && (
+                      <Button
+                        icon="exclamation-triangle"
+                        label=""
+                        classes="is-inverted is-danger"
                         style={{
                           background: "transparent",
                           verticalAlign: "middle",
@@ -394,21 +409,8 @@ class Panel extends React.Component {
                       />
                     )}
                   </div>
-                  <div style={{ display: "table-cell" }}>
-                    {!store.loadingSuggestions[source.id] &&
-                      store.problemSuggestions[source.id] && (
-                        <Button
-                          icon="exclamation-triangle"
-                          label=""
-                          classes="is-inverted is-danger"
-                          style={{
-                            background: "transparent",
-                            verticalAlign: "middle",
-                            fontSize: "120%"
-                          }}
-                        />
-                      )}
-                  </div>
+
+                  <div style={{ display: "table-cell" }}></div>
                 </div>
                 {!store.loadingSuggestions[source.id] && (
                   <div className="list">

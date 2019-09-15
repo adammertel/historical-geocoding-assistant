@@ -15,21 +15,29 @@ export default class Menu extends React.Component {
 
   renderIcon() {
     return this.props.icon ? (
-      <span
-        className="menu-icon icon is-small"
-        style={{ color: this.props.iconColor }}
-      >
+      <span className="menu-icon icon is-small">
         <i className={"fa fa-" + this.props.icon} />
       </span>
     ) : null;
   }
 
   render() {
+    const classes = ["menu"];
+    classes.push(this.state.open ? "open" : "close");
+
+    if (
+      this.props.additionalClasses &&
+      this.props.additionalClasses.length &&
+      Array.isArray(this.props.additionalClasses)
+    ) {
+      this.props.additionalClasses.forEach(c => classes.push(c));
+    }
+
     return (
-      <div className={"menu " + (this.state.open ? "open" : "close")}>
+      <div className={classes.join(" ")}>
         <div className="menu-header" onClick={this.toggleOpen.bind(this)}>
-          <h4 className="menu-label">{this.props.label}</h4>
           {this.renderIcon()}
+          <h4 className="menu-label">{this.props.label}</h4>
           <span className="menu-hider icon">
             <i
               className={
