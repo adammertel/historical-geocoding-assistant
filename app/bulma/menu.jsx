@@ -37,7 +37,7 @@ export default class Menu extends React.Component {
       <div className={classes.join(" ")}>
         <div className="menu-header" onClick={this.toggleOpen.bind(this)}>
           {this.renderIcon()}
-          <h6 className="menu-label title is-6">{this.props.label}</h6>
+          <h6 className="menu-label title">{this.props.label}</h6>
           <span className="menu-hider icon">
             <i
               className={
