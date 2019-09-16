@@ -1,6 +1,6 @@
 {
   "name": "historical-geocoding-assistant",
-  "version": "1.3.3",
+  "version": "1.4.0a",
   "description": "",
   "main": "app/main.jsx",
   "scripts": {
@@ -8,6 +8,7 @@
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "npm run clean-dist && webpack --mode production",
     "deploy": "rsync -avz dist/ hde@hde.geogr.muni.cz:/var/www/hde/hga",
+    "deploy-beta": "rsync -avz dist/ hde@hde.geogr.muni.cz:/var/www/hde/hga-test",
     "build-deploy": "npm run build && npm run deploy",
     "clean-dist": "rm -f -r -d dist"
   },
