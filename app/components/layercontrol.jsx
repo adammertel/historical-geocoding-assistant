@@ -13,11 +13,11 @@ class LayerControl extends React.Component {
   style() {
     return {
       position: "absolute",
-      bottom: 50,
-      left: 30,
+      bottom: 25,
+      left: 10,
       opacity: 0.9,
       fontSize: 12,
-      padding: "15px 15px 0px 15px",
+      padding: 10,
       backgroundColor: "white",
       zIndex: 1100
     };

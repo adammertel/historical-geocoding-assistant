@@ -48,12 +48,16 @@ $family-primary: "Lato", sans-serif;
 
   .leaflet-control-container {
     .leaflet-bar {
-      border: 2px solid $primary;
+      border: 0px;
+      border-radius: 0px !important;
 
       a {
         color: $primary;
         border-radius: 0px !important;
       }
+    }
+    .leaflet-left .leaflet-control-scale {
+      margin-left: 10px;
     }
 
     .leaflet-control-zoom-in {
@@ -88,7 +92,11 @@ $family-primary: "Lato", sans-serif;
     }
 
     .leaflet-geonames-search {
-      height: 2rem;
+      height: 30px;
+
+      &:not(.active) {
+        width: 30px;
+      }
 
       &.active {
         height: auto;
@@ -212,6 +220,9 @@ table.table.centered {
 
 .panel,
 .layercontrol-wrapper {
+  .menu:last-of-type {
+    margin-bottom: 0px;
+  }
   .menu {
     margin-bottom: 10px;
     font-size: 12px;
