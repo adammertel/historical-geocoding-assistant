@@ -113,7 +113,7 @@ class Panel extends React.Component {
         </div>
         <div className="is-inline">
           <Button
-            size="medium"
+            size="normal"
             inverted
             icon="caret-left"
             onClick={store.previousRecord}
@@ -145,7 +145,7 @@ class Panel extends React.Component {
 
           <Button
             inverted
-            size="medium"
+            size="normal"
             icon="caret-right"
             onClick={store.nextRecord}
           />
