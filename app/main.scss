@@ -8,11 +8,8 @@
 @import "~font-awesome/css/font-awesome.css";
 @import "~hint.css/hint.css";
 
-$warning: #cdaa6b;
+$danger: #c98c69;
 $primary: #a64005;
-$primary-dimmed: #c98c69;
-$success: #89b58e;
-$danger: #e75a7c;
 $dimmed: #655d56;
 $color-text: black;
 
@@ -197,18 +194,6 @@ table.table.centered {
       font-family: "FontAwesome", "sans-serif";
       border-color: $primary;
     }
-  }
-}
-
-.icon {
-  &.warning {
-    color: $warning;
-  }
-  &.danger {
-    color: $danger;
-  }
-  &.primary {
-    color: $primary;
   }
 }
 

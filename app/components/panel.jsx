@@ -419,7 +419,7 @@ class Panel extends React.Component {
                           Base.shortenText(suggestion.name, 20) || "";
 
                         const inExtent = suggestion.inExtent;
-                        const color = inExtent ? "primary" : "primary-dimmed";
+                        const color = inExtent ? "primary" : "danger";
                         return (
                           <div key={gi} className="suggestion">
                             <Button
