@@ -37,11 +37,12 @@ export default class Menu extends React.Component {
       <div className={classes.join(" ")}>
         <div className="menu-header" onClick={this.toggleOpen.bind(this)}>
           {this.renderIcon()}
-          <h4 className="menu-label">{this.props.label}</h4>
+          <h6 className="menu-label title is-6">{this.props.label}</h6>
           <span className="menu-hider icon">
             <i
               className={
-                this.state.open ? "fa fa-caret-down" : "fa fa-caret-right"
+                " " +
+                (this.state.open ? "fa fa-caret-down" : "fa fa-caret-right")
               }
               style={{ marginBottom: 12 }}
             />

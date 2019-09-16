@@ -10,9 +10,11 @@
 
 $warning: #cdaa6b;
 $primary: #a64005;
+$primary-dimmed: #c98c69;
 $success: #89b58e;
 $danger: #e75a7c;
-$dimmed: #2c363f;
+$dimmed: #655d56;
+$color-text: black;
 
 $tooltip-max-width: 200px;
 $checkbox-border: 0.1rem solid $primary;
@@ -25,6 +27,21 @@ $white-halo: 0 0 2px white;
 
 $family-serif: "Acme", sans-serif;
 $family-primary: "Lato", sans-serif;
+
+body {
+  .wrapper {
+    width: 100%;
+    height: 100%;
+
+    .content {
+      color: $color-text;
+      top: 0;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+  }
+}
 
 .is-dimmed {
   color: $dimmed !important;
@@ -39,7 +56,7 @@ $family-primary: "Lato", sans-serif;
 .leaflet-container {
   .suggestion-point {
     fill-opacity: 0.7;
-    stroke: black;
+    stroke: $color-text;
     stroke-width: 2px;
   }
   .fa-map-marker {
@@ -126,7 +143,7 @@ $family-primary: "Lato", sans-serif;
     text-shadow: $white-halo, $white-halo, $white-halo, $white-halo, $white-halo,
       $white-halo, $white-halo;
     font-weight: bold;
-    color: black;
+    color: $color-text;
   }
 }
 
@@ -149,16 +166,6 @@ $family-primary: "Lato", sans-serif;
   i.fa-caret-right {
     margin-left: -10px;
   }
-
-  &.is-danger {
-    color: $danger;
-  }
-  &.is-primary {
-    color: $primary;
-  }
-  &.is-warning {
-    color: $warning;
-  }
 }
 
 .title.is-5 {
@@ -166,6 +173,7 @@ $family-primary: "Lato", sans-serif;
 }
 
 table.table.centered {
+  color: $color-text;
   margin-bottom: 0.5rem;
   tr td:first-child {
     text-align: right;
@@ -235,7 +243,6 @@ table.table.centered {
 
       .menu-label {
         font-weight: 800;
-        color: black;
         display: inline;
       }
 
@@ -322,7 +329,7 @@ table.table.centered {
 
 html {
   overflow: hidden;
-  color: black !important;
+  color: $color-text !important;
 }
 
 .is-transition {

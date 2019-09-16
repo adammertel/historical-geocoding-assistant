@@ -292,13 +292,11 @@ class Settings extends React.Component {
         footer={
           <div className="container has-text-right">
             <Button
-              classes="is-danger"
               icon="times-circle"
               label="close without saving"
               onClick={this.handleClose.bind(this)}
             />
             <Button
-              classes="is-success"
               icon="floppy-o"
               label="save and close"
               onClick={this.handleSave.bind(this)}

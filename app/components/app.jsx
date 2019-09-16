@@ -17,27 +17,11 @@ class App extends React.Component {
     super(props);
   }
 
-  style() {
-    return {
-      width: "100%",
-      height: "100%"
-    };
-  }
-
-  bodyStyle() {
-    return {
-      top: 0,
-      position: "absolute",
-      bottom: 0,
-      width: "100%"
-    };
-  }
-
   render() {
     return (
-      <div className="wrapper" style={this.style()}>
+      <div className="wrapper">
         <ErrorBoundary>
-          <div style={this.bodyStyle()}>
+          <div className="content">
             {!store.isLoaded && <LoadingStatus />}
             {store.tablePrompt && <TablePrompt />}
             {!store.isLoaded && <AppHider />}

@@ -5,16 +5,32 @@ export default class Button extends React.Component {
     super(props);
   }
   render() {
-    let classes = this.props.medium
-      ? "button is-primary " + this.props.classes
-      : "button is-small is-primary " + this.props.classes;
+    const classes = Array.isArray(this.props.classes) ? this.props.classes : [];
+
+    classes.push("button");
+
+    if (this.props.size) {
+      classes.push("is-" + this.props.size);
+    } else {
+      classes.push("is-small");
+    }
+
+    if (this.props.inverted) {
+      classes.push("is-inverted");
+    }
+
+    if (this.props.color) {
+      classes.push("is-" + this.props.color);
+    } else {
+      classes.push("is-primary");
+    }
 
     if (this.props.tooltip) {
-      classes += " hint--top-right";
+      classes.push(" hint--top-right");
     }
     return (
       <a
-        className={classes}
+        className={classes.join(" ")}
         onClick={this.props.onClick}
         style={this.props.style}
         aria-label={this.props.tooltip}

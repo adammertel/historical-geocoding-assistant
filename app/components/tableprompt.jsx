@@ -79,7 +79,7 @@ class TablePrompt extends React.Component {
               id : <br />{" "}
               <Button
                 onClick={this.acceptExampleSheetId.bind(this)}
-                label={"copy example sheet id"}
+                label="copy example sheet id"
               />
               <br />
               <br />
@@ -107,7 +107,7 @@ class TablePrompt extends React.Component {
           <Button
             medium
             onClick={this.acceptSheetId.bind(this)}
-            label={"continue and accept cookies"}
+            label="continue and accept cookies"
           />
         }
       />

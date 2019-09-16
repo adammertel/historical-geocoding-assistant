@@ -113,9 +113,8 @@ class Panel extends React.Component {
         </div>
         <div className="is-inline">
           <Button
-            medium={true}
-            classes="is-inverted"
-            label=""
+            size="medium"
+            inverted
             icon="caret-left"
             onClick={store.previousRecord}
           />
@@ -145,11 +144,10 @@ class Panel extends React.Component {
           </div>
 
           <Button
-            label=""
-            medium={true}
+            inverted
+            size="medium"
             icon="caret-right"
             onClick={store.nextRecord}
-            classes="is-inverted"
           />
         </div>
 
@@ -167,14 +165,8 @@ class Panel extends React.Component {
             label="discard changes"
             icon="refresh"
             onClick={this.handleRecordRevert.bind(this)}
-            classes="is-primary is-small"
           />
-          <Button
-            label="save"
-            icon="save"
-            onClick={store.saveRecord}
-            classes="is-primary is-small "
-          />
+          <Button label="save" icon="save" onClick={store.saveRecord} />
         </div>
 
         <Menu
@@ -268,35 +260,35 @@ class Panel extends React.Component {
               {Base.validGeo([store.recordX, store.recordY]) ? (
                 <div className="button-row">
                   <Button
+                    inverted
                     onClick={this.handleCoordinatesHighlight.bind(this)}
                     tooltip="highlight location on map"
                     icon="lightbulb-o"
                     label="highlight"
-                    classes="is-inverted"
                     style={this.styleSmallButton()}
                   />
                   <Button
+                    inverted
                     onClick={this.handleCoordinatesFocus.bind(this)}
                     tooltip="pan map to the location"
                     icon="compass"
                     label="focus"
-                    classes="is-inverted"
                     style={this.styleSmallButton()}
                   />
                   <Button
+                    inverted
                     onClick={this.handleCoordinatesRevert.bind(this)}
                     tooltip="revert changes to coordinates"
                     icon="recycle"
                     label="revert"
-                    classes="is-inverted"
                     style={this.styleSmallButton()}
                   />
                   <Button
+                    inverted
                     onClick={this.handleCoordinatesRemove.bind(this)}
                     tooltip="clear coordinate values"
                     icon="trash"
                     label="clear coordinates"
-                    classes="is-inverted"
                     style={this.styleSmallButton()}
                   />
                 </div>
@@ -381,9 +373,9 @@ class Panel extends React.Component {
                   <div style={{ display: "table-cell" }}>
                     {status === "ok" && (
                       <Button
+                        inverted
                         icon="circle"
-                        label=""
-                        classes="black-halo is-inverted"
+                        classes={["black-halo"]}
                         style={{
                           color: config.colors[source.id],
                           verticalAlign: "middle",
@@ -393,9 +385,9 @@ class Panel extends React.Component {
                     )}
                     {status === "loading" && (
                       <Button
+                        inverted
                         icon="cog"
-                        label=""
-                        classes="is-inverted fa-spin is-black"
+                        classes={["fa-spin", "is-black"]}
                         style={{
                           background: "transparent",
                           verticalAlign: "middle",
@@ -405,9 +397,8 @@ class Panel extends React.Component {
                     )}
                     {status === "problem" && (
                       <Button
+                        inverted
                         icon="exclamation-triangle"
-                        label=""
-                        classes="is-inverted"
                         style={{
                           background: "transparent",
                           verticalAlign: "middle",
@@ -428,35 +419,36 @@ class Panel extends React.Component {
                           Base.shortenText(suggestion.name, 20) || "";
 
                         const inExtent = suggestion.inExtent;
+                        const color = inExtent ? "primary" : "primary-dimmed";
                         return (
                           <div key={gi} className="suggestion">
                             <Button
                               tooltip="highlight"
                               icon="lightbulb-o"
-                              label=""
+                              color={color}
+                              inverted
                               onClick={this.handleHighlightSuggestionClick.bind(
                                 this,
                                 suggestion
                               )}
-                              classes="is-inverted"
                               style={this.styleSmallButton()}
                             />
                             <Button
                               tooltip="focus"
                               icon="compass"
-                              label=""
+                              color={color}
+                              inverted
                               onClick={this.handleLocateSuggestionClick.bind(
                                 this,
                                 suggestion
                               )}
-                              classes="is-inverted"
                               style={this.styleSmallButton()}
                             />
                             <Button
                               tooltip="use coordinates"
                               icon="floppy-o"
-                              label=""
-                              classes="is-inverted"
+                              color={color}
+                              inverted
                               onClick={this.handleStoreSuggestionClick.bind(
                                 this,
                                 suggestion
@@ -467,8 +459,8 @@ class Panel extends React.Component {
                               <Button
                                 tooltip="external link"
                                 icon="external-link"
-                                label=""
-                                classes="is-inverted"
+                                inverted
+                                color={color}
                                 onClick={this.handleOpenUrl.bind(
                                   this,
                                   suggestion.url
@@ -537,25 +529,25 @@ class Panel extends React.Component {
         >
           <div>
             <Button
+              inverted
               label="open google search"
               icon="google"
-              classes="is-inverted"
               onClick={this.handleOpenGSearch.bind(this)}
             />
           </div>
           <div>
             <Button
+              inverted
               label="open google maps"
               icon="map"
-              classes="is-inverted"
               onClick={this.handleOpenGMaps.bind(this)}
             />
           </div>
           <div>
             <Button
+              inverted
               label="open peripleo"
               icon="map-signs"
-              classes="is-inverted"
               onClick={this.handleOpenPeripleo.bind(this)}
             />
           </div>
@@ -618,13 +610,13 @@ class Panel extends React.Component {
             </div>
             <div className="button-row">
               <Button
-                classes="is-inverted"
+                inverted
                 label="columns"
                 icon="columns"
                 onClick={this.handleGlobalSettingOpen.bind(this, "columns")}
               />
               <Button
-                classes="is-inverted"
+                inverted
                 label="spatial extent"
                 icon="globe"
                 onClick={this.handleGlobalSettingOpen.bind(this, "extent")}
