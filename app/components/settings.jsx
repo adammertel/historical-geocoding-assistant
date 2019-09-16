@@ -166,7 +166,7 @@ class Settings extends React.Component {
 
   _renderLabel(label) {
     return (
-      <td key="label" style={{ width: 250, paddingTop: 12 }}>
+      <td key="label">
         <label style={this.styleLabel()} className="label">
           {label}
         </label>
