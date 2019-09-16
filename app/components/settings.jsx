@@ -10,14 +10,14 @@ class Settings extends React.Component {
     const opts = store.opts;
 
     this.cornerIcon = Base.icon(
-      "fa fa-circle",
-      "color: black",
+      "fa fa-circle extent-icon",
+      "",
       [12, 12],
       [12, 12]
     );
     this.centerIcon = Base.icon(
-      "fa fa-arrows",
-      "color: black",
+      "fa fa-arrows extent-icon",
+      "",
       [12, 12],
       [12, 12]
     );
@@ -226,7 +226,7 @@ class Settings extends React.Component {
     const basemap = store.basemapById("OSM");
 
     return (
-      <div>
+      <div className="extent-map-wrapper">
         <div className="subtitle is-6">
           Select spatial extent for your dataset.
         </div>
@@ -240,7 +240,7 @@ class Settings extends React.Component {
           style={{ width: "100%", height: 400 }}
         >
           <Marker
-            key={"corner1"}
+            key="corner1"
             position={[
               this.state.extentCorner1.lat,
               this.state.extentCorner1.lng
@@ -251,7 +251,7 @@ class Settings extends React.Component {
             icon={this.cornerIcon}
           />
           <Marker
-            key={"corner2"}
+            key="corner2"
             position={[
               this.state.extentCorner2.lat,
               this.state.extentCorner2.lng
@@ -262,7 +262,7 @@ class Settings extends React.Component {
             icon={this.cornerIcon}
           />
           <Marker
-            key={"corner-center"}
+            key="corner-center"
             position={extent.getCenter()}
             onDrag={this.handleDragRectangle.bind(this)}
             onDragEnd={this.handleDragRectangleEnd.bind(this)}
@@ -270,7 +270,7 @@ class Settings extends React.Component {
             ref="marker-center"
             icon={this.centerIcon}
           />
-          <Rectangle bounds={extent} />
+          <Rectangle bounds={extent} className="extent-rectangle" />
           <TileLayer {...basemap} />
         </Map>
       </div>

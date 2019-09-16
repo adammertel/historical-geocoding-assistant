@@ -200,6 +200,17 @@ table.table.centered {
   }
 }
 
+.extent-map-wrapper {
+  .extent-rectangle {
+    stroke: $black;
+    fill: $black;
+  }
+
+  .extent-icon {
+    color: $primary;
+  }
+}
+
 .panel {
   position: absolute;
   top: 0;

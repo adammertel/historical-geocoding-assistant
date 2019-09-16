@@ -479,7 +479,7 @@ class Panel extends React.Component {
                               ) : (
                                 <span
                                   className={
-                                    "suggestion-name hint--top hint--medium" +
+                                    "suggestion-name hint--top hint--medium " +
                                     (inExtent ? "" : "is-dimmed")
                                   }
                                   aria-label={
