@@ -290,10 +290,12 @@ export default class AppStore extends React.Component {
               a.inExtent ? -1 : 1
             );
 
-            console.log("setting suggestions", source.id, orderedSuggestions);
-            this._suggestions.set(source.id, orderedSuggestions);
-            this._loadingSuggestions.set(source.id, false);
-            this._problemSuggestions.set(source.id, problem);
+            if (this.displaySuggestions[source.id]) {
+              console.log("setting suggestions", source.id, orderedSuggestions);
+              this._suggestions.set(source.id, orderedSuggestions);
+              this._loadingSuggestions.set(source.id, false);
+              this._problemSuggestions.set(source.id, problem);
+            }
           }
         );
       } else {
