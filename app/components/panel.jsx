@@ -357,8 +357,8 @@ class Panel extends React.Component {
                 className="suggestion-section"
                 key={"suggestion-section-" + source.id}
               >
-                <div style={{ display: "table" }}>
-                  <div style={{ display: "table-cell" }}>
+                <div className="suggestion-name-line">
+                  <div>
                     <Checkbox
                       id={"switch-" + source.id}
                       label={source.label}
@@ -370,7 +370,7 @@ class Panel extends React.Component {
                       )}
                     />
                   </div>
-                  <div style={{ display: "table-cell" }}>
+                  <div>
                     {status === "ok" && (
                       <Button
                         inverted
@@ -407,8 +407,6 @@ class Panel extends React.Component {
                       />
                     )}
                   </div>
-
-                  <div style={{ display: "table-cell" }}></div>
                 </div>
                 {!store.loadingSuggestions[source.id] && (
                   <div className="list">

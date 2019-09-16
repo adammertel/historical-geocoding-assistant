@@ -244,6 +244,15 @@ table.table.centered {
 
     .suggestion-section {
       margin-bottom: 1rem;
+
+      .suggestion-name-line {
+        display: table;
+        margin-left: 0.5rem;
+        div {
+          display: table-cell;
+        }
+      }
+
       .field {
         label {
           padding-right: 0;
