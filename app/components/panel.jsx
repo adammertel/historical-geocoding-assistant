@@ -501,7 +501,7 @@ class Panel extends React.Component {
                                   aria-label={suggestion.country}
                                   style={this.styleTag()}
                                 >
-                                  {suggestion.country}
+                                  {suggestion.country.toUpperCase()}
                                 </span>
                               )}
                               {!inExtent && (
