@@ -103,10 +103,10 @@ class Panel extends React.Component {
     const recordGeo = [store.recordY, store.recordX];
     return (
       <div className="panel">
-        <div id="version">{"version " + window["version"]}</div>
         <div>
           <img src={logoPath} alt="logo" style={{ padding: 20 }} />
         </div>
+        <div id="version">{"version " + window["version"]}</div>
 
         <div style={{ marginRight: 30, textAlign: "right" }}>
           record {store.row - 1} / {store.noRecords - 1}
