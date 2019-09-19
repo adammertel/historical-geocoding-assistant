@@ -465,9 +465,11 @@ export default class AppStore extends React.Component {
     this.openedSettings = false;
   };
 
-  @action saveSettings = settings => {
+  @action saveSettings = (settings, loadNewSuggestions = true) => {
     this.opts = Object.assign(this.opts, settings);
-    this.updateAllSuggestionSources();
+    if (loadNewSuggestions) {
+      this.updateAllSuggestionSources();
+    }
   };
 
   @action toggleDisplaySuggestion = suggestionId => {
@@ -482,14 +484,14 @@ export default class AppStore extends React.Component {
     const newConfig = {
       displayOtherRecords: !this.opts.displayOtherRecords
     };
-    this.saveSettings(newConfig);
+    this.saveSettings(newConfig, false);
   };
 
   @action toggleMapClusters = () => {
     const newConfig = {
       mapClusters: !this.opts.mapClusters
     };
-    this.saveSettings(newConfig);
+    this.saveSettings(newConfig, false);
   };
 
   @action handleChangeSelect = e => {
@@ -503,7 +505,7 @@ export default class AppStore extends React.Component {
     const newConfig = {
       focusOnRecordChange: !this.opts.focusOnRecordChange
     };
-    this.saveSettings(newConfig);
+    this.saveSettings(newConfig, false);
   };
 
   /*
