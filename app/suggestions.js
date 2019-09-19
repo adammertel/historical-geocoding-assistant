@@ -209,7 +209,15 @@ var SuggestionSources = [
       });
     },
     recordMap: {
-      ll: r => (r.ll ? [parseFloat(r.ll[0]), parseFloat(r.ll[1])] : false),
+      ll: r => {
+        return r.ll &&
+          r.ll[0] &&
+          r.ll[1] &&
+          parseFloat(r.ll[0]) &&
+          parseFloat(r.ll[1])
+          ? [parseFloat(r.ll[0]), parseFloat(r.ll[1])]
+          : false;
+      },
       country: r => "",
       rank: r => r.sim,
       name: r => r.name,
