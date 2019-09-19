@@ -222,7 +222,7 @@ class AppMap extends React.Component {
             removeOutsideVisibleBounds={true}
             elementsPlacementStrategy="clock-concentric"
             animate={false}
-            singleMarkerMode={true}
+            singleMarkerMode={false}
             spiderLegPolylineOptions={{ weight: 0 }}
             clockHelpingCircleOptions={{ weight: 0 }}
           >
