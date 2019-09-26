@@ -495,10 +495,9 @@ class Panel extends React.Component {
                               {suggestion.country && (
                                 <span
                                   className={
-                                    "suggestion-country tag is-white hint hint--top " +
+                                    "suggestion-country tag is-white " +
                                     (inExtent ? "" : "is-dimmed")
                                   }
-                                  aria-label={suggestion.country}
                                   style={this.styleTag()}
                                 >
                                   {suggestion.country.toUpperCase()}
