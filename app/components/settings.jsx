@@ -27,7 +27,7 @@ class Settings extends React.Component {
     const extent = new L.latLngBounds(ll1, ll2);
 
     this.state = {
-      mapBounds: [[-90, -180], [90, 180]],
+      mapBounds: [[-55, -140], [85, 180]],
       maxGeoExtent: extent,
       extentCorner1: ll1,
       extentCorner2: ll2,
