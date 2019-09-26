@@ -70,6 +70,12 @@ body {
         border-radius: 0px !important;
       }
     }
+
+    .leaflet-control-attribution {
+      left: 50%;
+      width: 50%;
+    }
+
     .leaflet-left .leaflet-control-scale {
       margin-left: 10px;
     }
@@ -156,9 +162,16 @@ body {
   position: absolute;
   font-style: italic;
   right: 40px;
-  right: 2.5em;
   font-size: 0.8em;
+  right: 2.5em;
   top: 11em;
+}
+
+.modal {
+  #version {
+    right: 13em;
+    top: 15em;
+  }
 }
 
 .icon {
