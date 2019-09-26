@@ -338,8 +338,18 @@ table.table.centered {
   overflow: normal;
 }
 
-.layercontrol-wrapper .menu-wrapper:empty(:not) {
-  padding: 15px 15px 0px;
+.layercontrol-wrapper {
+  position: absolute;
+  bottom: 10;
+  left: 10;
+  opacity: 0.9;
+  font-size: 12;
+  padding: 10;
+  background-color: white;
+  z-index: 1100;
+  .menu-wrapper:empty(:not) {
+    padding: 15px 15px 0px;
+  }
 }
 
 // Import the rest of Bulma

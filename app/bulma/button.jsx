@@ -26,7 +26,8 @@ export default class Button extends React.Component {
     }
 
     if (this.props.tooltip) {
-      classes.push(" hint--top-right");
+      classes.push("hint--top");
+      classes.push("hint--small");
     }
     return (
       <a

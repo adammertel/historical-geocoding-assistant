@@ -307,7 +307,7 @@ class Panel extends React.Component {
         <Menu
           label="record data"
           key="record-data"
-          defaultOpen={window["TESTING"]}
+          defaultOpen={false}
           icon="table"
         >
           <div>

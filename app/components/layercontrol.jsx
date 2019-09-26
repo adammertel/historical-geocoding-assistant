@@ -10,19 +10,6 @@ class LayerControl extends React.Component {
     super(props);
   }
 
-  style() {
-    return {
-      position: "absolute",
-      bottom: 25,
-      left: 10,
-      opacity: 0.9,
-      fontSize: 12,
-      padding: 10,
-      backgroundColor: "white",
-      zIndex: 1100
-    };
-  }
-
   handleMapSelect(id, e) {
     store.changeBaseMap(id, e.target.value);
   }
@@ -55,7 +42,7 @@ class LayerControl extends React.Component {
 
   render() {
     return (
-      <div className="layercontrol-wrapper" style={this.style()}>
+      <div className="layercontrol-wrapper">
         <h5
           className="title is-5"
           style={{ color: "black", fontWeight: 600, marginBottom: 10 }}
