@@ -279,7 +279,7 @@ class Panel extends React.Component {
                     inverted
                     onClick={this.handleCoordinatesRevert.bind(this)}
                     tooltip="revert changes to coordinates"
-                    icon="recycle"
+                    icon="refresh"
                     label="revert"
                     style={this.styleSmallButton()}
                   />
