@@ -7,10 +7,19 @@ var Sheet = {
 
   auth: false,
 
+  spreadsheetId: false,
+  sheetId: false,
+  sheetName: "",
+
   init(next) {
     this.clientId = config.clientId;
     this.apiKey = config.apiKey;
-    this.sId = sheetId;
+
+    const parsedIds = Base.parseSheetFromHash();
+    console.log("initializing sheet", parsedIds);
+    this.spreadsheetId = parsedIds.did;
+    this.sheetId = parsedIds.sid;
+
     this._authentificate(() => {
       this._pingTable(pinged => {
         if (pinged) {
@@ -32,6 +41,15 @@ var Sheet = {
     });
   },
 
+  _getSheetName() {
+    const url =
+      "https://sheets.googleapis.com/v4/spreadsheets/" +
+      this.spreadsheetId +
+      "fields=sheets(properties(sheetId%2Ctitle))" +
+      "?key=" +
+      this.apiKey;
+  },
+
   _authentificate(next) {
     gapi.load("client:auth2", () => {
       store.changeLoadingStatus("table");
@@ -45,14 +63,10 @@ var Sheet = {
         .then(() => {
           this.auth = gapi.auth2.getAuthInstance();
 
-          console.log;
-
           if (this.auth.isSignedIn.get()) {
             next();
           } else {
-            alert(
-              "Application needs to be signed in - please enable pop-ups and reload the page to log in"
-            );
+            alert("Application needs to be signed in - please enable pop-ups and reload the page to log in");
 
             const signedStateChanged = () => {
               console.log("should be signed in now");
@@ -137,9 +151,7 @@ var Sheet = {
     } else {
       if (row && row.result && row.result.values) {
         const data = {};
-        row.result.values[0].map(
-          (value, vi) => (data[this.header[vi]] = value)
-        );
+        row.result.values[0].map((value, vi) => (data[this.header[vi]] = value));
         return data;
       } else {
         return row;
@@ -151,9 +163,7 @@ var Sheet = {
     const records = {};
     response.result.values.map((row, i) => {
       const rowColumns = {};
-      this.header.forEach(
-        (columnName, ci) => (rowColumns[columnName] = row[ci])
-      );
+      this.header.forEach((columnName, ci) => (rowColumns[columnName] = row[ci]));
       records[i + 2] = rowColumns;
     });
 
@@ -162,10 +172,12 @@ var Sheet = {
 
   _readLineUrl(lineNo) {
     const range = "A" + lineNo + ":" + this.noColumns + lineNo;
+
     return (
       "https://sheets.googleapis.com/v4/spreadsheets/" +
-      this.sId +
+      this.spreadsheetId +
       "/values/" +
+      (this.sheetName ? this.sheetName + "!" : "") +
       range +
       "?key=" +
       this.apiKey
@@ -176,7 +188,7 @@ var Sheet = {
     const range = "A" + lineNo + ":" + this.noColumns + lineNo;
     return (
       "https://sheets.googleapis.com/v4/spreadsheets/" +
-      this.sId +
+      this.spreadsheetId +
       "/values/" +
       range +
       "?key=" +
@@ -188,12 +200,7 @@ var Sheet = {
   _readAll() {
     const range = "A2:" + this.noColumns + this.noLines;
     return (
-      "https://sheets.googleapis.com/v4/spreadsheets/" +
-      this.sId +
-      "/values/" +
-      range +
-      "?key=" +
-      this.apiKey
+      "https://sheets.googleapis.com/v4/spreadsheets/" + this.spreadsheetId + "/values/" + range + "?key=" + this.apiKey
     );
   },
 

@@ -25,7 +25,7 @@
     "gapi": true,
     "map": true,
     "overlaymaps": true,
-    "sheetId": true,
+    "sheetUrl": true,
     "initSheet": true,
     "$": true
   },

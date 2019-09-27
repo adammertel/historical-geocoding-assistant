@@ -1,7 +1,7 @@
 // @flow
 import $ from "jquery";
 import { divIcon } from "leaflet";
-import stringSimilarity from "string-similarity";
+import queryString from "query-string";
 
 var Base = {
   doFetch(url, params = {}, next) {
@@ -78,25 +78,13 @@ var Base = {
   },
 
   openTab(path) {
-    const url =
-      path.includes("http://") || path.includes("https://")
-        ? path
-        : "http://" + path;
+    const url = path.includes("http://") || path.includes("https://") ? path : "http://" + path;
     window.open(url, "_blank", "width=800,height=900");
   },
 
   extentToUrl(e, type = "wiki") {
     if (type === "wiki") {
-      return (
-        "south=" +
-        e[0][1] +
-        "&north=" +
-        e[1][1] +
-        "&west=" +
-        e[0][0] +
-        "&east=" +
-        e[1][0]
-      );
+      return "south=" + e[0][1] + "&north=" + e[1][1] + "&west=" + e[0][0] + "&east=" + e[1][0];
     }
   },
 
@@ -104,19 +92,9 @@ var Base = {
     if (!this.validGeo(geom) || !e) {
       return true;
     } else if (geom.ll) {
-      return (
-        e[0][0] < geom.ll[0] &&
-        e[1][0] > geom.ll[0] &&
-        e[0][1] < geom.ll[1] &&
-        e[1][1] > geom.ll[1]
-      );
+      return e[0][0] < geom.ll[0] && e[1][0] > geom.ll[0] && e[0][1] < geom.ll[1] && e[1][1] > geom.ll[1];
     } else {
-      return (
-        e[0][0] < geom[0] &&
-        e[1][0] > geom[0] &&
-        e[0][1] < geom[1] &&
-        e[1][1] > geom[1]
-      );
+      return e[0][0] < geom[0] && e[1][0] > geom[0] && e[0][1] < geom[1] && e[1][1] > geom[1];
     }
   },
 
@@ -219,6 +197,59 @@ var Base = {
       .trim()
       .replace(/_/g, "")
       .replace(/-/g, "");
+  },
+
+  // split given text into parts based on the charToSplit and return the last part
+  // examples:
+  //  - getLastPart('hello world', ' ') -> 'world'
+  //  - getLastPart('/a/b/c/d', '/') -> 'd'
+  getLastPart(text, charToSplit) {
+    if (text && text.includes(charToSplit)) {
+      const parts = text.split(charToSplit);
+      return parts[parts.length - 1];
+    }
+    return false;
+  },
+
+  checkValidSpreadsheetUrl(url) {
+    if (url) {
+      if (url.includes("spreadsheet")) {
+        if (url.includes("docs.google")) {
+          if (url.includes("/d/")) {
+            if (Base.parseSheetUrl(url)["spreadsheetId"]) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
+  },
+
+  parseSheetFromHash() {
+    console.log(location.hash);
+    const hash = queryString.parse(location.hash);
+    if (hash.sid) {
+      return hash;
+    } else {
+      return false;
+    }
+  },
+
+  validHash() {
+    return !!this.parseSheetFromHash();
+  },
+
+  parseSheetUrl(url) {
+    const regExSpreadsheetId = new RegExp("/spreadsheets/d/([a-zA-Z0-9-_]+)", "g");
+    const regExSheetId = new RegExp("[#&]gid=([0-9]+)", "g");
+    const spreadsheetIdUrl = url.match(regExSpreadsheetId);
+    const sheetIdUrl = url.match(regExSheetId);
+
+    return {
+      spreadsheetId: Base.getLastPart(spreadsheetIdUrl[0], "/"),
+      sheetid: sheetIdUrl ? Base.getLastPart(sheetIdUrl[0], "=") : false
+    };
   }
 };
 

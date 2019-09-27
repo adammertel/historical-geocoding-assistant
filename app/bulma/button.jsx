@@ -32,9 +32,10 @@ export default class Button extends React.Component {
     return (
       <a
         className={classes.join(" ")}
-        onClick={this.props.onClick}
+        onClick={!this.props.disabled ? this.props.onClick : () => {}}
         style={this.props.style}
         aria-label={this.props.tooltip}
+        disabled={this.props.disabled}
       >
         {this.props.icon ? (
           <span className="icon is-small">
