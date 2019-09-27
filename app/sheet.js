@@ -8,6 +8,7 @@ var Sheet = {
   auth: false,
 
   spreadsheetId: false,
+  spreadsheetName: false,
   sheetId: false,
   sheetName: "",
 
@@ -23,8 +24,9 @@ var Sheet = {
     this._authentificate(() => {
       this._pingTable(pinged => {
         if (pinged) {
-          this.findCurrentSheetName(() => {
+          this.storeSheetInfo(() => {
             console.log("sheetName", this.sheetName);
+            console.log("spreadsheetName", this.spreadsheetName);
 
             window["username"] = gapi.auth2
               .getAuthInstance()
@@ -99,8 +101,13 @@ var Sheet = {
     });
   },
 
-  findCurrentSheetName(next) {
-    this.getSheetNames(sheets => {
+  storeSheetInfo(next) {
+    this.getSheetInfo(sheetInfo => {
+      // getting sheet name
+      const sheets = sheetInfo.sheets.map(s => s.properties);
+      this.spreadsheetName = sheetInfo.properties.title;
+      console.log("sheet info", sheetInfo);
+
       if (sheets.length) {
         const foundSheet = sheets.find(sheet => sheet.sheetId == this.sheetId);
         this.sheetName = foundSheet ? foundSheet.title : sheets[0].title;
@@ -109,15 +116,15 @@ var Sheet = {
     });
   },
 
-  getSheetNames(next) {
+  getSheetInfo(next) {
     this._ensureAuthentificated(() => {
       gapi.client
         .request({
-          path: this._getSheetNamesUrl(),
+          path: this._sheetInfoUrl(),
           method: "GET"
         })
         .then(
-          response => next(response.result.sheets.map(sheet => sheet.properties)),
+          response => next(response.result),
           response => {
             this._reportError(response);
             next(false);
@@ -126,12 +133,11 @@ var Sheet = {
     });
   },
 
-  _getSheetNamesUrl() {
+  _sheetInfoUrl() {
     return (
       "https://sheets.googleapis.com/v4/spreadsheets/" +
       this.spreadsheetId +
-      "?fields=sheets(properties(sheetId%2Ctitle))" +
-      "&key=" +
+      "?key=" +
       this.apiKey
     );
   },
@@ -152,7 +158,9 @@ var Sheet = {
           if (this.auth.isSignedIn.get()) {
             next();
           } else {
-            alert("Application needs to be signed in - please enable pop-ups and reload the page to log in");
+            alert(
+              "Application needs to be signed in - please enable pop-ups and reload the page to log in"
+            );
 
             const signedStateChanged = () => {
               console.log("should be signed in now");
@@ -237,7 +245,9 @@ var Sheet = {
     } else {
       if (row && row.result && row.result.values) {
         const data = {};
-        row.result.values[0].map((value, vi) => (data[this.header[vi]] = value));
+        row.result.values[0].map(
+          (value, vi) => (data[this.header[vi]] = value)
+        );
         return data;
       } else {
         return row;
@@ -249,7 +259,9 @@ var Sheet = {
     const records = {};
     response.result.values.map((row, i) => {
       const rowColumns = {};
-      this.header.forEach((columnName, ci) => (rowColumns[columnName] = row[ci]));
+      this.header.forEach(
+        (columnName, ci) => (rowColumns[columnName] = row[ci])
+      );
       records[i + 2] = rowColumns;
     });
 

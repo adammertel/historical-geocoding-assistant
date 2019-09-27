@@ -250,7 +250,6 @@ var Base = {
 
   parseSheetFromHash() {
     const hash = queryString.parse(location.hash);
-    console.log(location.hash, hash);
     if (hash.did) {
       return hash;
     } else {
