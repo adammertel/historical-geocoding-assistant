@@ -23,15 +23,19 @@ var Sheet = {
     this._authentificate(() => {
       this._pingTable(pinged => {
         if (pinged) {
-          window["username"] = gapi.auth2
-            .getAuthInstance()
-            .currentUser.get()
-            .getBasicProfile()
-            .getName();
+          this.findCurrentSheetName(() => {
+            console.log("sheetName", this.sheetName);
 
-          console.log("username", username);
+            window["username"] = gapi.auth2
+              .getAuthInstance()
+              .currentUser.get()
+              .getBasicProfile()
+              .getName();
 
-          this._preRead(next);
+            console.log("username", username);
+
+            this._preRead(next);
+          });
         } else {
           alert("table was not ititialized, wrong id");
           location.hash = "";
@@ -41,13 +45,95 @@ var Sheet = {
     });
   },
 
-  _getSheetName() {
-    const url =
+  readLine(lineNo, withoutParsing, next) {
+    this._ensureAuthentificated(() => {
+      gapi.client
+        .request({
+          path: this._readLineUrl(lineNo),
+          method: "GET"
+        })
+        .then(
+          response => next(this._parseRow(response, withoutParsing)),
+          response => {
+            this._reportError(response);
+            next(false);
+          }
+        );
+    });
+  },
+
+  readAllLines(next) {
+    this._ensureAuthentificated(() => {
+      gapi.client
+        .request({
+          path: this._readAll(),
+          method: "GET"
+        })
+        .then(
+          response => {
+            next(this._parseRecords(response));
+          },
+          response => {
+            this._reportError(response);
+            next(false);
+          }
+        );
+    });
+  },
+
+  updateLine(lineNo, data, next) {
+    this._ensureAuthentificated(() => {
+      gapi.client
+        .request({
+          path: this._updateLineUrl(lineNo),
+          method: "PUT",
+          body: this._updateBody(data)
+        })
+        .then(
+          response => next(response.result.values),
+          response => {
+            this._reportError(response);
+            next(false);
+          }
+        );
+    });
+  },
+
+  findCurrentSheetName(next) {
+    this.getSheetNames(sheets => {
+      if (sheets.length) {
+        const foundSheet = sheets.find(sheet => sheet.sheetId == this.sheetId);
+        this.sheetName = foundSheet ? foundSheet.title : sheets[0].title;
+      }
+      next();
+    });
+  },
+
+  getSheetNames(next) {
+    this._ensureAuthentificated(() => {
+      gapi.client
+        .request({
+          path: this._getSheetNamesUrl(),
+          method: "GET"
+        })
+        .then(
+          response => next(response.result.sheets.map(sheet => sheet.properties)),
+          response => {
+            this._reportError(response);
+            next(false);
+          }
+        );
+    });
+  },
+
+  _getSheetNamesUrl() {
+    return (
       "https://sheets.googleapis.com/v4/spreadsheets/" +
       this.spreadsheetId +
-      "fields=sheets(properties(sheetId%2Ctitle))" +
-      "?key=" +
-      this.apiKey;
+      "?fields=sheets(properties(sheetId%2Ctitle))" +
+      "&key=" +
+      this.apiKey
+    );
   },
 
   _authentificate(next) {
@@ -170,9 +256,7 @@ var Sheet = {
     return records;
   },
 
-  _readLineUrl(lineNo) {
-    const range = "A" + lineNo + ":" + this.noColumns + lineNo;
-
+  _url(range) {
     return (
       "https://sheets.googleapis.com/v4/spreadsheets/" +
       this.spreadsheetId +
@@ -184,84 +268,24 @@ var Sheet = {
     );
   },
 
-  _updateLineUrl(lineNo) {
+  _readLineUrl(lineNo) {
     const range = "A" + lineNo + ":" + this.noColumns + lineNo;
-    return (
-      "https://sheets.googleapis.com/v4/spreadsheets/" +
-      this.spreadsheetId +
-      "/values/" +
-      range +
-      "?key=" +
-      this.apiKey +
-      "&valueInputOption=RAW"
-    );
+    return this._url(range);
   },
-
   _readAll() {
     const range = "A2:" + this.noColumns + this.noLines;
-    return (
-      "https://sheets.googleapis.com/v4/spreadsheets/" + this.spreadsheetId + "/values/" + range + "?key=" + this.apiKey
-    );
+    return this._url(range);
+  },
+
+  _updateLineUrl(lineNo) {
+    const range = "A" + lineNo + ":" + this.noColumns + lineNo;
+    return this._url(range) + "&valueInputOption=RAW";
   },
 
   _updateBody(data) {
     return {
       values: [data]
     };
-  },
-
-  readLine(lineNo, withoutParsing, next) {
-    this._ensureAuthentificated(() => {
-      gapi.client
-        .request({
-          path: this._readLineUrl(lineNo),
-          method: "GET"
-        })
-        .then(
-          response => next(this._parseRow(response, withoutParsing)),
-          response => {
-            this._reportError(response);
-            next(false);
-          }
-        );
-    });
-  },
-
-  readAllLines(next) {
-    this._ensureAuthentificated(() => {
-      gapi.client
-        .request({
-          path: this._readAll(),
-          method: "GET"
-        })
-        .then(
-          response => {
-            next(this._parseRecords(response));
-          },
-          response => {
-            this._reportError(response);
-            next(false);
-          }
-        );
-    });
-  },
-
-  updateLine(lineNo, data, next) {
-    this._ensureAuthentificated(() => {
-      gapi.client
-        .request({
-          path: this._updateLineUrl(lineNo),
-          method: "PUT",
-          body: this._updateBody(data)
-        })
-        .then(
-          response => next(response.result.values),
-          response => {
-            this._reportError(response);
-            next(false);
-          }
-        );
-    });
   },
 
   _reportError(errResponse) {
