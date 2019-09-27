@@ -109,24 +109,6 @@ class Panel extends React.Component {
         </div>
         <div id="version">{"version " + window["version"]}</div>
 
-        <div className="table-identification">
-          <div className="spreadsheet">
-            <div>
-              <Button inverted color="black" icon="file" />
-              document:
-            </div>
-            <div className="table-identification-name">
-              {Sheet.spreadsheetName}
-            </div>
-          </div>
-          <div className="sheet">
-            <div>
-              <Button inverted color="black" icon="table" />
-              sheet:
-            </div>
-            <div className="table-identification-name">{Sheet.sheetName}</div>
-          </div>
-        </div>
         <div style={{ marginRight: 30, textAlign: "right" }}>
           record {store.row - 1} / {store.noRecords - 1}
         </div>
@@ -187,6 +169,23 @@ class Panel extends React.Component {
           />
           <Button label="save" icon="save" onClick={store.saveRecord} />
         </div>
+
+        <Menu label="table" key="table" defaultOpen icon="table">
+          <div className="table-identification">
+            <table className="table centered">
+              <tbody>
+                <tr key="0">
+                  <td>document name</td>
+                  <td>{Sheet.spreadsheetName}</td>
+                </tr>
+                <tr>
+                  <td>sheet name</td>
+                  <td>{Sheet.sheetName}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </Menu>
 
         <Menu
           label="localisation"
@@ -327,7 +326,7 @@ class Panel extends React.Component {
           label="record data"
           key="record-data"
           defaultOpen={false}
-          icon="table"
+          icon="database"
         >
           <div>
             <table className="table centered">
