@@ -14,33 +14,6 @@ class Panel extends React.Component {
     super(props);
   }
 
-  styleTag() {
-    return {
-      margin: "0px 5px",
-      fontSize: 8.5,
-      verticalAlign: "top",
-      padding: "4px",
-      border: "1px solid black",
-      marginRight: 0,
-      cursor: "default"
-    };
-  }
-
-  styleLabel() {
-    return {
-      marginLeft: "5px",
-      width: "220px",
-      display: "inline-block",
-      whiteSpace: "nowrap"
-    };
-  }
-
-  styleSmallButton() {
-    return {
-      marginTop: -3
-    };
-  }
-
   handleChangeInput(column, e) {
     const value = e.target.value;
     store.updateRecordValue(column, value);
@@ -283,7 +256,6 @@ class Panel extends React.Component {
                     tooltip="highlight location on map"
                     icon="lightbulb-o"
                     label="highlight"
-                    style={this.styleSmallButton()}
                   />
                   <Button
                     inverted
@@ -291,7 +263,6 @@ class Panel extends React.Component {
                     tooltip="pan map to the location"
                     icon="compass"
                     label="focus"
-                    style={this.styleSmallButton()}
                   />
                   <Button
                     inverted
@@ -299,7 +270,6 @@ class Panel extends React.Component {
                     tooltip="revert changes to coordinates"
                     icon="refresh"
                     label="revert"
-                    style={this.styleSmallButton()}
                   />
                   <Button
                     inverted
@@ -307,7 +277,6 @@ class Panel extends React.Component {
                     tooltip="clear coordinate values"
                     icon="trash"
                     label="clear coordinates"
-                    style={this.styleSmallButton()}
                   />
                 </div>
               ) : null}
@@ -447,7 +416,6 @@ class Panel extends React.Component {
                                 this,
                                 suggestion
                               )}
-                              style={this.styleSmallButton()}
                             />
                             <Button
                               tooltip="focus"
@@ -458,7 +426,6 @@ class Panel extends React.Component {
                                 this,
                                 suggestion
                               )}
-                              style={this.styleSmallButton()}
                             />
                             <Button
                               tooltip="use coordinates"
@@ -469,7 +436,6 @@ class Panel extends React.Component {
                                 this,
                                 suggestion
                               )}
-                              style={this.styleSmallButton()}
                             />
                             {suggestion.url && (
                               <Button
@@ -481,10 +447,9 @@ class Panel extends React.Component {
                                   this,
                                   suggestion.url
                                 )}
-                                style={this.styleSmallButton()}
                               />
                             )}
-                            <div style={this.styleLabel()}>
+                            <div className="suggestion-label">
                               {displayName.length === suggestion.name ? (
                                 <span
                                   className={
@@ -516,7 +481,6 @@ class Panel extends React.Component {
                                     "suggestion-country tag is-white " +
                                     (inExtent ? "" : "is-dimmed")
                                   }
-                                  style={this.styleTag()}
                                 >
                                   {suggestion.country.toUpperCase()}
                                 </span>

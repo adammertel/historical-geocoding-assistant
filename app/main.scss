@@ -46,7 +46,8 @@ body {
 }
 
 .black-halo {
-  text-shadow: $black-halo, $black-halo, $black-halo, $black-halo, $black-halo, $black-halo, $black-halo;
+  text-shadow: $black-halo, $black-halo, $black-halo, $black-halo, $black-halo,
+    $black-halo, $black-halo;
 }
 
 .leaflet-container {
@@ -142,7 +143,8 @@ body {
   }
 
   .polyline-measure-tooltip {
-    text-shadow: $white-halo, $white-halo, $white-halo, $white-halo, $white-halo, $white-halo, $white-halo;
+    text-shadow: $white-halo, $white-halo, $white-halo, $white-halo, $white-halo,
+      $white-halo, $white-halo;
     font-weight: bold;
     color: $color-text;
   }
@@ -322,6 +324,24 @@ table.table.centered {
           margin-left: 1rem;
           margin-top: 0.5rem;
           .suggestion {
+            .button {
+              vertical-align: baseline;
+            }
+            .suggestion-label {
+              margin-left: 5px;
+              width: 220px;
+              display: inline-block;
+              white-space: nowrap;
+            }
+            .suggestion-country {
+              margin: 0px 5px;
+              font-size: 8.5px;
+              vertical-align: top;
+              padding: 4px;
+              border: 1px solid black;
+              margin-right: 0;
+              cursor: default;
+            }
             .post-icon {
               margin: -3px 0px 0px 0px;
               vertical-align: top;
