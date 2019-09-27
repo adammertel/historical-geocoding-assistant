@@ -291,7 +291,7 @@ export default class AppStore extends React.Component {
             );
 
             if (this.displaySuggestions[source.id]) {
-              console.log("setting suggestions", source.id, orderedSuggestions);
+              console.log("suggestions", source.id, orderedSuggestions);
               this._suggestions.set(source.id, orderedSuggestions);
               this._loadingSuggestions.set(source.id, false);
               this._problemSuggestions.set(source.id, problem);

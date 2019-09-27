@@ -78,13 +78,25 @@ var Base = {
   },
 
   openTab(path) {
-    const url = path.includes("http://") || path.includes("https://") ? path : "http://" + path;
+    const url =
+      path.includes("http://") || path.includes("https://")
+        ? path
+        : "http://" + path;
     window.open(url, "_blank", "width=800,height=900");
   },
 
   extentToUrl(e, type = "wiki") {
     if (type === "wiki") {
-      return "south=" + e[0][1] + "&north=" + e[1][1] + "&west=" + e[0][0] + "&east=" + e[1][0];
+      return (
+        "south=" +
+        e[0][1] +
+        "&north=" +
+        e[1][1] +
+        "&west=" +
+        e[0][0] +
+        "&east=" +
+        e[1][0]
+      );
     }
   },
 
@@ -92,9 +104,19 @@ var Base = {
     if (!this.validGeo(geom) || !e) {
       return true;
     } else if (geom.ll) {
-      return e[0][0] < geom.ll[0] && e[1][0] > geom.ll[0] && e[0][1] < geom.ll[1] && e[1][1] > geom.ll[1];
+      return (
+        e[0][0] < geom.ll[0] &&
+        e[1][0] > geom.ll[0] &&
+        e[0][1] < geom.ll[1] &&
+        e[1][1] > geom.ll[1]
+      );
     } else {
-      return e[0][0] < geom[0] && e[1][0] > geom[0] && e[0][1] < geom[1] && e[1][1] > geom[1];
+      return (
+        e[0][0] < geom[0] &&
+        e[1][0] > geom[0] &&
+        e[0][1] < geom[1] &&
+        e[1][1] > geom[1]
+      );
     }
   },
 
@@ -227,9 +249,9 @@ var Base = {
   },
 
   parseSheetFromHash() {
-    console.log(location.hash);
     const hash = queryString.parse(location.hash);
-    if (hash.sid) {
+    console.log(location.hash, hash);
+    if (hash.did) {
       return hash;
     } else {
       return false;
@@ -241,7 +263,10 @@ var Base = {
   },
 
   parseSheetUrl(url) {
-    const regExSpreadsheetId = new RegExp("/spreadsheets/d/([a-zA-Z0-9-_]+)", "g");
+    const regExSpreadsheetId = new RegExp(
+      "/spreadsheets/d/([a-zA-Z0-9-_]+)",
+      "g"
+    );
     const regExSheetId = new RegExp("[#&]gid=([0-9]+)", "g");
     const spreadsheetIdUrl = url.match(regExSpreadsheetId);
     const sheetIdUrl = url.match(regExSheetId);
