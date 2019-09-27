@@ -6,6 +6,7 @@ import Button from "./../bulma/button";
 import Checkbox from "./../bulma/checkbox";
 import Input from "./../bulma/input";
 
+import Sheet from "./../sheet.js";
 const logoPath = require("./../assets/logo.png");
 
 class Panel extends React.Component {
@@ -108,6 +109,24 @@ class Panel extends React.Component {
         </div>
         <div id="version">{"version " + window["version"]}</div>
 
+        <div className="table-identification">
+          <div className="spreadsheet">
+            <div>
+              <Button inverted color="black" icon="file" />
+              document:
+            </div>
+            <div className="table-identification-name">
+              {Sheet.spreadsheetName}
+            </div>
+          </div>
+          <div className="sheet">
+            <div>
+              <Button inverted color="black" icon="table" />
+              sheet:
+            </div>
+            <div className="table-identification-name">{Sheet.sheetName}</div>
+          </div>
+        </div>
         <div style={{ marginRight: 30, textAlign: "right" }}>
           record {store.row - 1} / {store.noRecords - 1}
         </div>
