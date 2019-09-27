@@ -46,8 +46,7 @@ body {
 }
 
 .black-halo {
-  text-shadow: $black-halo, $black-halo, $black-halo, $black-halo, $black-halo,
-    $black-halo, $black-halo;
+  text-shadow: $black-halo, $black-halo, $black-halo, $black-halo, $black-halo, $black-halo, $black-halo;
 }
 
 .leaflet-container {
@@ -143,8 +142,7 @@ body {
   }
 
   .polyline-measure-tooltip {
-    text-shadow: $white-halo, $white-halo, $white-halo, $white-halo, $white-halo,
-      $white-halo, $white-halo;
+    text-shadow: $white-halo, $white-halo, $white-halo, $white-halo, $white-halo, $white-halo, $white-halo;
     font-weight: bold;
     color: $color-text;
   }
@@ -158,6 +156,30 @@ body {
   }
 }
 
+.modal.prompt {
+  div.prompt-wrapper {
+    font-size: 140%;
+    .section {
+      padding: 1em 0;
+    }
+    .logo {
+      width: 80%;
+      margin-left: 10%;
+    }
+    #version {
+      right: 5.5em;
+      top: 14.5em;
+      font-size: 100%;
+    }
+    .example-sheet-url {
+      font-size: 80%;
+    }
+    .prompt-content {
+      padding: 1em;
+    }
+  }
+}
+
 #version {
   position: absolute;
   font-style: italic;
@@ -165,13 +187,6 @@ body {
   font-size: 0.8em;
   right: 2.5em;
   top: 11em;
-}
-
-.modal {
-  #version {
-    right: 13em;
-    top: 15em;
-  }
 }
 
 .icon {
