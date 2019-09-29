@@ -25,4 +25,4 @@ Try it [here](http://hde.geogr.muni.cz/hga/)
 
 [manual](https://github.com/adammertel/historical-geocoder-assistant/tree/master/manual)
 
-![alt text](./imgs/screen.png "Historical Geocoding Assistant Screen")
+![alt text](./imgs/layout.png "Historical Geocoding Assistant Screen")
