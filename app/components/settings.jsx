@@ -202,7 +202,7 @@ class Settings extends React.Component {
     return (
       <div>
         <div className="subtitle is-6">
-          Select which column contain which type of information.
+          Select which column contains which type of information.
         </div>
         <table className="table centered">
           <tbody>

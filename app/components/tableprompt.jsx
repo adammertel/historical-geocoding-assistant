@@ -25,7 +25,11 @@ class TablePrompt extends React.Component {
   acceptSheetUrl() {
     const sheetUrl = this.state.sheetUrl;
     const parsedSheetIds = Base.parseSheetUrl(sheetUrl);
-    location.hash = "did=" + parsedSheetIds["spreadsheetId"] + "&sid=" + parsedSheetIds["sheetid"];
+    location.hash =
+      "did=" +
+      parsedSheetIds["spreadsheetId"] +
+      "&sid=" +
+      parsedSheetIds["sheetid"];
     initSheet();
   }
 
@@ -47,7 +51,10 @@ class TablePrompt extends React.Component {
             <div className="prompt-content">
               <div className="section inputurl-section">
                 Enter the URL of your Google Sheet:
-                <Input value={this.state.sheetUrl} onChange={this.changeSheetUrl.bind(this)} />
+                <Input
+                  value={this.state.sheetUrl}
+                  onChange={this.changeSheetUrl.bind(this)}
+                />
                 Or use the {""}
                 example sheet
                 <br />
@@ -60,22 +67,28 @@ class TablePrompt extends React.Component {
                   </i>
                 </a>
                 <br />
-                <Button onClick={this.pasteExampleSheetUrl.bind(this)} label="paste example sheet url" />
+                <Button
+                  onClick={this.pasteExampleSheetUrl.bind(this)}
+                  label="paste example sheet url"
+                />
               </div>
               <div className="section notes-section">
                 <b>Notes:</b>
                 <ul>
                   <li>
-                    The application has to be signed into a Google Account (you may need to allow pop-ups) and the
-                    browser needs to allow cookies.
+                    The application has to be signed into a Google Account (you
+                    may need to allow pop-ups) and you need to allow cookies in
+                    your browser.
                   </li>
                 </ul>
               </div>
               <div className="section links-section">
-                <b>Other links:</b>
+                <b>Links:</b>
                 <ul>
                   <li>
-                    <a href="https://github.com/adammertel/historical-geocoder-assistant">Code at Github</a>
+                    <a href="https://github.com/adammertel/historical-geocoder-assistant">
+                      Code at GitHub
+                    </a>
                   </li>
                   <li>
                     <a href="https://github.com/adammertel/historical-geocoder-assistant/tree/master/manual">
