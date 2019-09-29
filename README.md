@@ -1,6 +1,6 @@
 # Historical Geocoding Assistant
 
-![Historical Geocoding Assistant Logo](./imgs/logo.png "Historical Geocoding Assistant Logo")
+![Historical Geocoding Assistant Logo](./imgs/logo.png=250x "Historical Geocoding Assistant Logo")
 
 ## Description
 
