@@ -73,6 +73,18 @@ class Panel extends React.Component {
     store.changeCertainty(e.target.value);
   }
 
+  handleLoadNewTable() {
+    store.changeLoadingStatus("prompting table");
+  }
+  handleOpenTableUrl() {
+    Base.openTab(
+      "docs.google.com/spreadsheets/d/" +
+        Sheet.spreadsheetId +
+        "/edit#gid=" +
+        Sheet.sheetId
+    );
+  }
+
   render() {
     const recordGeo = [store.recordY, store.recordX];
     return (
@@ -125,16 +137,7 @@ class Panel extends React.Component {
           />
         </div>
 
-        <div
-          style={{
-            width: "100%",
-            paddingRight: 10,
-            textAlign: "right",
-            marginTop: 10,
-            marginBottom: 10
-          }}
-          className="button-row"
-        >
+        <div className="button-row right">
           <Button
             label="discard changes"
             icon="refresh"
@@ -157,6 +160,20 @@ class Panel extends React.Component {
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div className="button-row right">
+            <Button
+              label="open table"
+              icon="link"
+              inverted
+              onClick={this.handleOpenTableUrl.bind(this)}
+            />
+            <Button
+              label="change table"
+              icon="download"
+              inverted
+              onClick={this.handleLoadNewTable.bind(this)}
+            />
           </div>
         </Menu>
 
