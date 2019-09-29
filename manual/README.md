@@ -1,8 +1,8 @@
-# HISTORICAL GEOCODING ASSISTANT 1.3.0 – MANUAL
+# HISTORICAL GEOCODING ASSISTANT 1.4.0 – MANUAL
 
 ## 1 Description
 
-Historical Geocoding Assistant is a tool to assist the geocoding of historical datasets.
+Historical Geocoding Assistant (HGA) is a tool to assist the geocoding of historical datasets.
 
 ## 2 Table input
 
@@ -102,10 +102,17 @@ Suggestions are made based on the value of the **place name** column (see **2.1.
 
 - [GeoNames](http://www.geonames.org/);
 - [Wikipedia](wikipedia.org).
+- [Pleiades](pleiades.stoa.org);
 - [Getty Thesaurus of Geographic Names](https://www.getty.edu/research/tools/vocabularies/tgn/index.html/);
 - [The China Historical Geographic Information System](http://chgis.fas.harvard.edu/);
 
-Each suggestion has a button to focus on the location and to save the suggested coordinates. Wikipedia suggestions have a button to open a new tab with the original Wikipedia article.
+Each suggestion has a set of buttons to interact with:
+
+- highlight suggested location on map
+- pan the map to the suggested location
+- save coordinates of the suggested location
+- open external link relevant to the suggested location (just in some cases)
+
 ![geocoding image](./imgs/geocoding.png)
 
 ## 6.4 Auxiliary search engines
@@ -138,7 +145,7 @@ The setting section is used to set additional options and rules:
 The map control menu is located in the bottom-left part of the map and has two subsections:
 
 - base layers - presents two overlayed base maps and the opacity of the top one
-- overlay layers - presents auxiliary overlay layers (in various formats - geojson, wms, ...), their order and opacity
+- overlay layers - presents auxiliary overlay layers (in various formats - GeoJSON, WMS...), their order and opacity
 
 ![mapcontrol image](./imgs/mapcontrol.png)
 
