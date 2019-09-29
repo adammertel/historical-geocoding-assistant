@@ -1,30 +1,28 @@
 # Historical Geocoding Assistant
 
-Try it [here](http://hde.geogr.muni.cz/hga/)
+![Historical Geocoding Assistant Logo](./imgs/logo.png "Historical Geocoding Assistant Logo")
 
-Web application for assisted geocoding of historical datasets
+## Description
 
-![Historical Geocoding Assistant Logo](https://github.com/adammertel/historical-geocoder-assistant/blob/master/app/assets/logo.png "Historical Geocoding Assistant Logo")
+The “Historical Geocoding Assistant” is an open-sourced browser-based application for assigning geographic coordinates in a more convenient and faster way than copy-pasting them from services such as Google Maps. The application was designed with historical projects in mind but is suitable for any geocoding work
 
-## Features
+## Essential Features
 
-- integration with a live google drive spreadsheet table
-- dynamical column names
-- suggestion through gazetteers and search engines
-  - Geonames
-  - Pelagios
-  - Getty Thesaurus of Geographic Names
-  - Wikipedia
-  - Google
-- implementation of spatial uncertainty / granularity levels
-- a possibility to set a spatial extent relevant for a project
-- overlay layers support (modern countries, regions...)
-- multiple base layers support (satellite, osm, historical base layers...)
-- customisable environment
+- works online with a live Google Spreadsheets table;
+- gathers suggestions of coordinates from gazetteers for instant use (GeoNames, Wikipedia, Getty Thesaurus of Geographic Names, Pleiades, and China Historical GIS);
+- integrates search services (Google Maps, Google Search, Peripleo);
+- supports multiple base layers (OpenStreetMap, satellite images, Imperium, etc.);
+- supports multiple overlay layers;
+- allows setting relevant spatial extent;
+- allows spatial uncertainty levels.
 - ...
+
+## Testing version
+
+Try it [here](http://hde.geogr.muni.cz/hga/)
 
 ## Manual
 
 [manual](https://github.com/adammertel/historical-geocoder-assistant/tree/master/manual)
 
-![alt text](https://github.com/adammertel/historical-geocoder-assistant/blob/master/screen.png "Historical Geocoding Assistant Screen")
+![alt text](./imgs/screen.png "Historical Geocoding Assistant Screen")
