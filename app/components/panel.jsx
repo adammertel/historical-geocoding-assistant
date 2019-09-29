@@ -18,24 +18,22 @@ class Panel extends React.Component {
     const value = e.target.value;
     store.updateRecordValue(column, value);
   }
-
-  handleOpenUrl(url) {
-    Base.openTab(url);
+  handleSelectRecord(e) {
+    store.gotoRecord(e.target.value);
+  }
+  handleChangeCertainty(e) {
+    store.changeCertainty(e.target.value);
   }
 
+  /* External links */
   handleOpenGMaps() {
     Base.openTab("google.cz/maps/search/" + store.recordName);
   }
-
   handleOpenGSearch() {
     Base.openTab("google.com/search?q=" + store.recordName);
   }
   handleOpenPeripleo() {
     Base.openTab("peripleo.pelagios.org/ui#q=" + store.recordName);
-  }
-
-  handleSelectRecord(e) {
-    store.gotoRecord(e.target.value);
   }
 
   /* suggestions actions */
@@ -47,6 +45,9 @@ class Panel extends React.Component {
   }
   handleStoreSuggestionClick(suggestion) {
     store.useSuggestion(suggestion);
+  }
+  handleOpenUrl(url) {
+    Base.openTab(url);
   }
 
   /* Coordinates actions */
@@ -69,12 +70,11 @@ class Panel extends React.Component {
   handleGlobalSettingOpen(mode) {
     store.openSettings(mode);
   }
-  handleChangeCertainty(e) {
-    store.changeCertainty(e.target.value);
-  }
 
+  /* Table actions */
   handleLoadNewTable() {
     store.changeLoadingStatus("prompting table");
+    location.hash = "";
   }
   handleOpenTableUrl() {
     Base.openTab(
