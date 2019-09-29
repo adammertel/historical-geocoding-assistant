@@ -1,6 +1,6 @@
 # Historical Geocoding Assistant
 
-![Historical Geocoding Assistant Logo](./imgs/logo.png "Historical Geocoding Assistant Logo")
+<img src="./imgs/logo.png" alt="Historical Geocoding Assistant Logo" width="400" />
 
 ## Description
 
@@ -24,5 +24,7 @@ Try it [here](http://hde.geogr.muni.cz/hga/)
 ## Manual
 
 [manual](https://github.com/adammertel/historical-geocoder-assistant/tree/master/manual)
+
+## Screenshot
 
 ![alt text](./imgs/layout.png "Historical Geocoding Assistant Screen")
