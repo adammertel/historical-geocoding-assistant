@@ -13,9 +13,8 @@ class TablePrompt extends React.Component {
     this.state = {
       sheetUrl: ""
     };
-    //this.exampleSheetUrl = "https://docs.google.com/spreadsheets/d/1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU";
     this.exampleSheetUrl =
-      "https://docs.google.com/spreadsheets/d/1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU/edit#gid=951740324";
+      "https://docs.google.com/spreadsheets/d/1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU";
   }
 
   changeSheetUrl(e) {

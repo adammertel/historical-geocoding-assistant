@@ -11,7 +11,7 @@ import SuggestionSources from "./suggestions.js";
 
 const pcg = require("./../package.json");
 
-const TESTING = true;
+const TESTING = false;
 console.log("testing mode", TESTING);
 
 window["version"] = pcg.version;
@@ -76,7 +76,10 @@ loadConfig(config => {
   window.config = config;
   store.loadConfig(config);
 
-  ReactDOM.render(<App />, document.body.appendChild(document.createElement("div")));
+  ReactDOM.render(
+    <App />,
+    document.body.appendChild(document.createElement("div"))
+  );
 
   console.log("valid hash", Base.validHash());
   if (Base.validHash()) {
