@@ -86,12 +86,8 @@ class TablePrompt extends React.Component {
                 <b>Links:</b>
                 <ul>
                   <li>
-                    <a
-                      href="https://github.com/adammertel/historical-geocoder-assistant"
-                      className="fa fa-github"
-                    >
-                      {" "}
-                      Code | Manual
+                    <a href="https://github.com/adammertel/historical-geocoder-assistant">
+                      <i className="fa fa-github" /> Code | Manual
                     </a>
                   </li>
                   <li>
