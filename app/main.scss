@@ -84,24 +84,10 @@ body {
       border-bottom: 1px solid #a64005;
     }
 
-    .leaflet-geonames-icon {
-      background-image: none;
-
-      &:before {
-        content: "🔍";
-        font-size: 20px;
-        font-weight: bold;
-      }
-    }
-
+    .leaflet-geonames-icon,
     #polyline-measure-control {
       background-image: none;
-
-      &:before {
-        content: "↦";
-        font-size: 20px;
-        font-weight: bold;
-      }
+      font-size: 18px;
     }
     #polyline-measure-control[title="Stop measuring"],
     .leaflet-geonames-search.active .leaflet-geonames-icon,

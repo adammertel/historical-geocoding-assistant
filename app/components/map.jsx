@@ -55,6 +55,7 @@ class AppMap extends React.Component {
         clearControlTitle: "Clear Measurements",
         clearControlLabel: "&times",
         measureControlLabel: "",
+        measureControlClasses: ["fa", "fa-arrows-h"],
         tempLine: {
           color: "black", // Dashed line color
           weight: 2 // Dashed line weight
@@ -77,7 +78,7 @@ class AppMap extends React.Component {
         username: "adammertel", // Geonames account username.  Must be provided
         zoomLevel: null, // Max zoom level to zoom to for location.  If null, will use the map's max zoom level.
         maxresults: 5, // Maximum number of results to display per search
-        className: "leaflet-geonames-icon", //class for icon
+        className: "fa fa-search leaflet-geonames-icon", //class for icon
         workingClass: "leaflet-geonames-icon-working", //class for search underway
         featureClasses: ["A", "H", "L", "P", "R", "T", "U", "V"], // feature classes to search against.  See: http://www.geonames.org/export/codes.html
         baseQuery: "isNameRequired=true", // The core query sent to GeoNames, later combined with other parameters above
