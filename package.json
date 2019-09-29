@@ -1,6 +1,6 @@
 {
   "name": "historical-geocoding-assistant",
-  "version": "1.4.0a",
+  "version": "1.4.0b",
   "description": "",
   "main": "app/main.jsx",
   "scripts": {
