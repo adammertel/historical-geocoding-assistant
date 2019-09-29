@@ -55,8 +55,13 @@ class TablePrompt extends React.Component {
                   value={this.state.sheetUrl}
                   onChange={this.changeSheetUrl.bind(this)}
                 />
-                Or use the {""}
-                example sheet
+                Or use the example sheet {""}
+                <Button
+                  inverted
+                  icon="paste"
+                  label="paste the URL"
+                  onClick={this.pasteExampleSheetUrl.bind(this)}
+                />
                 <br />
                 <a
                   target="_blank"
@@ -67,10 +72,6 @@ class TablePrompt extends React.Component {
                   </i>
                 </a>
                 <br />
-                <Button
-                  onClick={this.pasteExampleSheetUrl.bind(this)}
-                  label="paste example sheet url"
-                />
               </div>
               <div className="section notes-section">
                 <b>Notes:</b>
