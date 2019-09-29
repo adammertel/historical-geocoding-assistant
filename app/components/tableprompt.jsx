@@ -50,12 +50,12 @@ class TablePrompt extends React.Component {
             <div id="version">{"version " + window["version"]}</div>
             <div className="prompt-content">
               <div className="section inputurl-section">
-                Enter the URL of your Google Sheet:
+                Copy-paste the URL of your Google Sheets table::
                 <Input
                   value={this.state.sheetUrl}
                   onChange={this.changeSheetUrl.bind(this)}
                 />
-                Or use the example sheet {""}
+                Or use our example spreadsheet {""}
                 <Button
                   inverted
                   icon="paste"
@@ -77,9 +77,8 @@ class TablePrompt extends React.Component {
                 <b>Notes:</b>
                 <ul>
                   <li>
-                    The application has to be signed into a Google Account (you
-                    may need to allow pop-ups) and you need to allow cookies in
-                    your browser.
+                    The application needs to be signed in a Google Account. You
+                    may need to allow pop-ups and cookies in your browser.
                   </li>
                 </ul>
               </div>
