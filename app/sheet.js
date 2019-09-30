@@ -85,6 +85,7 @@ var Sheet = {
 
   updateLine(lineNo, data, next) {
     this._ensureAuthentificated(() => {
+      // console.log("updating", data);
       gapi.client
         .request({
           path: this._updateLineUrl(lineNo),
@@ -286,12 +287,12 @@ var Sheet = {
   },
   _readAll() {
     const range = "A2:" + this.noColumns + this.noLines;
-    return this._url(range);
+    return this._url(range) + "&valueRenderOption=FORMULA";
   },
 
   _updateLineUrl(lineNo) {
     const range = "A" + lineNo + ":" + this.noColumns + lineNo;
-    return this._url(range) + "&valueInputOption=RAW";
+    return this._url(range) + "&valueInputOption=USER_ENTERED";
   },
 
   _updateBody(data) {
