@@ -155,8 +155,9 @@ body {
       margin-left: 10%;
     }
     #version {
-      right: 5.5em;
-      top: 14.5em;
+      float: right;
+      margin-right: 4em;
+      position: inherit;
       font-size: 100%;
     }
     .example-sheet-url {
