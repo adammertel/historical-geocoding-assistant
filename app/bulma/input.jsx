@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default class Input extends React.Component {
   constructor(props) {
@@ -13,18 +13,19 @@ export default class Input extends React.Component {
 
   render() {
     let type = this.props.type;
-    if (type === 'float') type = 'tel';
+    if (type === "float") type = "tel";
 
-    const className = this.props.info ? 'is-info' : 'is-primary';
+    const className = this.props.info ? "is-info" : "is-primary";
 
     return (
       <div className="field">
         <div className="control">
           <input
+            disabled={this.props.disabled}
             style={this.style()}
-            className={'input ' + className}
-            type={type || 'text'}
-            step={this.props.type === 'float' ? 0.001 : 1}
+            className={"input " + className}
+            type={type || "text"}
+            step={this.props.type === "float" ? 0.001 : 1}
             value={this.props.value}
             onChange={this.props.onChange}
           />
