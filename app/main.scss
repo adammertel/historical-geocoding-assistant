@@ -71,11 +71,6 @@ body {
       }
     }
 
-    .leaflet-control-attribution {
-      left: 50%;
-      width: 50%;
-    }
-
     .leaflet-left .leaflet-control-scale {
       margin-left: 10px;
     }
@@ -362,7 +357,7 @@ table.table.centered {
 
 .layercontrol-wrapper {
   position: absolute;
-  bottom: 10;
+  bottom: 50;
   left: 10;
   opacity: 0.9;
   font-size: 12;
