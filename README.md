@@ -1,6 +1,6 @@
 # Historical Geocoding Assistant
 
-<img src="./imgs/logo.png" alt="Historical Geocoding Assistant Logo" width="400" />
+<img src="./imgs/logo.png" alt="Historical Geocoding Assistant Logo" height="150" />
 
 ## Description
 

@@ -45,11 +45,11 @@ If a column named “Editor” is defined, the email address of the Google accou
 
 When the application is loaded, a table prompt window is displayed asking for the table URL, see **2**
 
-![prompt image](./../imgs/welcome.png)
+<img src="./imgs/welcome.png" alt="prompt image" height="300" />
 
 ## 4 Application layout
 
-![app layout](./../imgs/layout.png)
+<img src="./imgs/layout.png" alt="app layout image" height="400" />
 
 The application layout consists of:
 
@@ -79,7 +79,7 @@ The record selection menu is located under the application logo and has the foll
 - buttons to select the record to edit or to move to the next (or previous) record;
 - restore (cancels the edits of the particular record) and save (stores edits to the table) buttons.
 
-![records image](./../imgs/records.png)
+<img src="./imgs/records.png" alt="records image" height="200" />
 
 ## 6.2 Data
 
@@ -91,10 +91,11 @@ The localisation section, which allows the handling of the "localisation columns
 - revert - use original values as stored in the table;
 - remove - remove the current coordinates.
 
-![localisation image](./../imgs/localisation.png)
+<img src="./imgs/localisation.png" alt="localisation image" height="200" />
 
 The subsection “Record data”, which allows values in all columns of the input table to be viewed and edited.
-![data image](./../imgs/data.png)
+
+<img src="./imgs/data.png" alt="data image" height="250" />
 
 ## 6.3 Geocoding suggestions
 
@@ -113,7 +114,7 @@ Each suggestion has a set of buttons to interact with:
 - save coordinates of the suggested location
 - open external link relevant to the suggested location (just in some cases)
 
-![geocoding image](./../imgs/geocoding.png)
+<img src="./imgs/geocoding.png" alt="geocoding image" height="400" />
 
 ## 6.4 Auxiliary search engines
 
@@ -123,13 +124,13 @@ In cases when the suggestions do not provide a relevant answer, the user can try
 - Google maps search
 - [Peripleo](http://peripleo.pelagios.org/) search engine
 
-Clicking on the auxiliary search icon will open a new browser tab with the url of the value of the **place name** column
-![search image](./../imgs/search.png)
+Clicking on the auxiliary search icon will open a new browser tab with the url of the value of the **place name** column.
+
+<img src="./imgs/search.png" alt="search image" height="100" />
 
 ## 6.5 Settings
 
 The setting section is used to set additional options and rules:
-![settings image](./../imgs/settings.png)
 
 - display all records on map - will show all previously geocoded places on the map (as black pins);
 - clusters - will aggregate pins in clusters for clearer arrangement in cases where there are many pins close to each other;
@@ -138,7 +139,9 @@ The setting section is used to set additional options and rules:
 - columns - opens a menu with the possibility to reassign column names for reserved **place name** columns (see **2.1**);
 - geo extent - opens up a menu to set a geographical bounding box that limits the area taken into account for geocoding suggestions: a warning is displayed if the assigned coordinates fall outside this box.
 
-![columns image](./../imgs/columns.png)
+<img src="./imgs/settings.png" alt="settings image" height="100" />
+
+<img src="./imgs/columns.png" alt="columns image" height="150" />
 
 ## 7 Map control
 
@@ -147,7 +150,7 @@ The map control menu is located in the bottom-left part of the map and has two s
 - base layers - presents two overlayed base maps and the opacity of the top one
 - overlay layers - presents auxiliary overlay layers (in various formats - GeoJSON, WMS...), their order and opacity
 
-![mapcontrol image](./../imgs/mapcontrol.png)
+<img src="./imgs/mapcontrol.png" alt="mapcontrol image" height="400" />
 
 ## 8 config files
 
