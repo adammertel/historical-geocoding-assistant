@@ -332,9 +332,6 @@ class Panel extends React.Component {
                         <td title={column}> {shortenColumn} </td>
                         <td>
                           <Input
-                            disabled={
-                              value.length > 1 && value.substring(0, 1) === "="
-                            }
                             value={value}
                             onChange={this.handleChangeInput.bind(this, column)}
                           />
