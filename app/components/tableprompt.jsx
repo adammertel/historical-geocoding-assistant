@@ -112,7 +112,7 @@ class TablePrompt extends React.Component {
                   </a>{" "}
                   and{" "}
                   <a href="http://www.david-zbiral.cz/">
-                    <i className="fa fa-user" /> David Zbíral
+                    <i className="fa fa-user" /> David Zbiral
                   </a>
                 </div>
               </div>
