@@ -85,12 +85,13 @@ class TablePrompt extends React.Component {
                 <b>Links:</b>
                 <ul>
                   <li>
-                    <a href="https://github.com/adammertel/historical-geocoder-assistant">
-                      <i className="fa fa-github" /> Code
-                    </a>{" "}
-                    |{" "}
                     <a href="https://github.com/adammertel/historical-geocoder-assistant/tree/master/manual">
                       <i className="fa fa-github" /> Manual
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/adammertel/historical-geocoder-assistant">
+                      <i className="fa fa-github" /> Code
                     </a>
                   </li>
                   <li>
@@ -104,6 +105,16 @@ class TablePrompt extends React.Component {
                     </a>
                   </li>
                 </ul>
+                <div>
+                  Designed and coded by{" "}
+                  <a href="https://github.com/adammertel">
+                    <i className="fa fa-user" /> Adam Mertel
+                  </a>{" "}
+                  and{" "}
+                  <a href="http://www.david-zbiral.cz/">
+                    <i className="fa fa-user" /> David Zbíral
+                  </a>
+                </div>
               </div>
             </div>
           </div>
