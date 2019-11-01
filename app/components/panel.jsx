@@ -146,7 +146,7 @@ class Panel extends React.Component {
           <Button label="save" icon="save" onClick={store.saveRecord} />
         </div>
 
-        <Menu label="table" key="table" icon="table">
+        <Menu label="dataset" key="table" icon="table">
           <div className="table-identification">
             <table className="table centered">
               <tbody>
