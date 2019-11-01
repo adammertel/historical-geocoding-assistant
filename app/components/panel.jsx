@@ -146,7 +146,7 @@ class Panel extends React.Component {
           <Button label="save" icon="save" onClick={store.saveRecord} />
         </div>
 
-        <Menu label="table" key="table" defaultOpen icon="table">
+        <Menu label="table" key="table" icon="table">
           <div className="table-identification">
             <table className="table centered">
               <tbody>
@@ -169,7 +169,7 @@ class Panel extends React.Component {
               onClick={this.handleOpenTableUrl.bind(this)}
             />
             <Button
-              label="change table"
+              label="choose table"
               icon="download"
               inverted
               onClick={this.handleLoadNewTable.bind(this)}
