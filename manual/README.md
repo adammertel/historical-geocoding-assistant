@@ -81,10 +81,16 @@ The record selection menu is located under the application logo and has the foll
 
 <img src="./../imgs/records.png" alt="records image" height="200" />
 
-## 6.2 Data
+## 6.2 Table
 
-A section to handle and edit values of the record. There are two subsections:
-The localisation section, which allows the handling of the "localisation columns" described in **2.1**; beneath are 4 buttons:
+Document and sheet names and buttons to:
+
+- open the selected table in the new tab of the browswer
+- change the selected table
+
+## 6.3 Localisation
+
+Values of the selected record related to "localisation columns" described in **2.1**; beneath are 4 buttons:
 
 - highlight - highlight the current record’s position on the map (without panning);
 - focus - pan and zoom to the position of the record;
@@ -93,11 +99,13 @@ The localisation section, which allows the handling of the "localisation columns
 
 <img src="./../imgs/localisation.png" alt="localisation image" height="200" />
 
-The subsection “Record data”, which allows values in all columns of the input table to be viewed and edited.
+## 6.4 Record Data
+
+Allow values in all columns of the input table to be viewed and edited.
 
 <img src="./../imgs/data.png" alt="data image" height="250" />
 
-## 6.3 Geocoding suggestions
+## 6.5 Suggestions
 
 Suggestions are made based on the value of the **place name** column (see **2.1.1**). At this moment, four geocoding services are implemented:
 
@@ -116,7 +124,7 @@ Each suggestion has a set of buttons to interact with:
 
 <img src="./../imgs/geocoding.png" alt="geocoding image" height="400" />
 
-## 6.4 Auxiliary search engines
+## 6.6 External search
 
 In cases when the suggestions do not provide a relevant answer, the user can try an auxiliary search engine:
 
@@ -128,7 +136,7 @@ Clicking on the auxiliary search icon will open a new browser tab with the url o
 
 <img src="./../imgs/search.png" alt="search image" height="100" />
 
-## 6.5 Settings
+## 6.7 Settings
 
 The setting section is used to set additional options and rules:
 
