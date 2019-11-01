@@ -103,8 +103,8 @@ Suggestions are made based on the value of the **place name** column (see **2.1.
 
 - [GeoNames](http://www.geonames.org/);
 - [Wikipedia](wikipedia.org).
-- [Pleiades](pleiades.stoa.org);
 - [Getty Thesaurus of Geographic Names](https://www.getty.edu/research/tools/vocabularies/tgn/index.html/);
+- [Pleiades](pleiades.stoa.org);
 - [The China Historical Geographic Information System](http://chgis.fas.harvard.edu/);
 
 Each suggestion has a set of buttons to interact with:
