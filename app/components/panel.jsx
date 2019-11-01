@@ -169,8 +169,8 @@ class Panel extends React.Component {
               onClick={this.handleOpenTableUrl.bind(this)}
             />
             <Button
-              label="choose table"
-              icon="download"
+              label="choose another table"
+              icon="repeat"
               inverted
               onClick={this.handleLoadNewTable.bind(this)}
             />
