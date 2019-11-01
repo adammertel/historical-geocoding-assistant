@@ -387,6 +387,10 @@ html {
   transition: 5s;
 }
 
+.hint--small:after {
+  width: 90px;
+}
+
 // Markercluster styling
 .marker-cluster.marker-cluster-small,
 .marker-cluster.marker-cluster-medium,
