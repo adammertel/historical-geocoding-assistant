@@ -11,7 +11,7 @@ import SuggestionSources from "./suggestions.js";
 
 const pcg = require("./../package.json");
 
-const TESTING = true;
+const TESTING = false;
 console.log("testing mode", TESTING);
 
 window["version"] = pcg.version;

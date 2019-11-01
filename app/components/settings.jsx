@@ -12,14 +12,14 @@ class Settings extends React.Component {
     this.cornerIcon = Base.icon(
       "fa fa-circle extent-icon",
       "",
-      [12, 12],
-      [12, 12]
+      [20, 20],
+      [10, 10]
     );
     this.centerIcon = Base.icon(
       "fa fa-arrows extent-icon",
       "",
-      [12, 12],
-      [12, 12]
+      [20, 20],
+      [20, 20]
     );
     const lls = store.configMaxGeoExtent;
     const ll1 = L.latLng(lls[0][0], lls[0][1]);
@@ -27,7 +27,7 @@ class Settings extends React.Component {
     const extent = new L.latLngBounds(ll1, ll2);
 
     this.state = {
-      mapBounds: [[-55, -140], [85, 180]],
+      mapBounds: [[-70, -180], [75, 180]],
       maxGeoExtent: extent,
       extentCorner1: ll1,
       extentCorner2: ll2,
@@ -228,7 +228,7 @@ class Settings extends React.Component {
     return (
       <div className="extent-map-wrapper">
         <div className="subtitle is-6">
-          Select spatial extent for your dataset.
+          Select the spatial extent for your dataset..
         </div>
         <Map
           zoomControl={true}
@@ -286,7 +286,7 @@ class Settings extends React.Component {
         header={
           store.openedSettings === "columns"
             ? "Column settings"
-            : "Geo extent settings"
+            : "Spatial extent settings"
         }
         closeIcon={false}
         footer={
