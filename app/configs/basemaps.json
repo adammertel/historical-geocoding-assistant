@@ -49,7 +49,7 @@
   },
 
   "IMPERIUM": {
-    "url": "http://pelagios.org/tilesets/imperium/{z}/{x}/{y}.png",
+    "url": "https://dare.ht.lu.se/tiles/imperium/{z}/{x}/{y}.png",
     "attribution": "<a href='http://dare.ht.lu.se/'>Digital Atlas of the Roman Empire (DARE)</a>",
     "name": "Imperium",
     "info": "http://dare.ht.lu.se/",
@@ -63,5 +63,17 @@
     "type": "wms",
     "name": "Cassini map",
     "info": "Historical cassini map of France"
+  },
+
+  "MMS-III": {
+    "id": "MMS-III",
+    "name": "second military mapping",
+    "info": "second military mapping survey of Austrian Empire",
+    "url": "http://geoportal.gov.cz/ArcGIS/services/CENIA/cenia_rt_III_vojenske_mapovani/MapServer/WMSServer?",
+    "layers": "0",
+    "version": "1.3.0",
+    "format": "image/jpeg",
+    "attribution": "geoportal.gov.cz",
+    "type": "wms"
   }
 }
