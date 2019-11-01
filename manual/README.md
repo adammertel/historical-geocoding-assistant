@@ -39,7 +39,7 @@ Optional note by the editor concerning the localisation process (justification o
 
 #### 2.1.6 Editor
 
-If a column named “Editor” is defined, the email address of the Google account of the last editor will be stored here. This serves to identify the last editors of all records.
+If a column named “Editor” is defined, the user name of the Google account of the last editor will be stored here. This serves to identify the last editors of all records.
 
 ## 3 Table Prompt
 

@@ -38,7 +38,8 @@ class Settings extends React.Component {
         x: opts.columns.x,
         y: opts.columns.y,
         note: opts.columns.note,
-        certainty: opts.columns.certainty
+        certainty: opts.columns.certainty,
+        editor: opts.columns.editor
       }
     };
   }
@@ -211,6 +212,7 @@ class Settings extends React.Component {
             {this.renderColumnSelect("y", "y coordinate column")}
             {this.renderColumnSelect("certainty", "certainty column")}
             {this.renderColumnSelect("note", "localisation notes column")}
+            {this.renderColumnSelect("editor", "editor column")}
           </tbody>
         </table>
       </div>

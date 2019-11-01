@@ -58,11 +58,21 @@
       "exclude": ["x", "longitude", "lng"]
     },
     "certainty": {
-      "include": ["certainty", "certain", "precision", "accuracy"],
+      "include": [
+        "localisation certainty",
+        "certainty",
+        "certain",
+        "precision",
+        "accuracy"
+      ],
       "exclude": ["name"]
     },
     "note": {
       "include": ["placenote", "localizationnote", "localisationnote", "note"],
+      "exclude": []
+    },
+    "editor": {
+      "include": ["editor"],
       "exclude": []
     }
   },
@@ -82,7 +92,8 @@
       "note": "",
       "x": "",
       "y": "",
-      "certainty": ""
+      "certainty": "",
+      "editor": ""
     }
   }
 }

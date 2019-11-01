@@ -146,6 +146,9 @@ export default class AppStore extends React.Component {
   @computed get recordY() {
     return this.recordData[this.opts.columns.y] || "";
   }
+  @computed get editor() {
+    return this.recordData[this.opts.columns.editor] || "";
+  }
 
   @computed get recordGeo() {
     return [parseFloat(this.recordY), parseFloat(this.recordX)];
@@ -447,9 +450,7 @@ export default class AppStore extends React.Component {
     this.recordData[cols.x] = parseFloat(this.recordData[cols.x]) || "";
     this.recordData[cols.y] = parseFloat(this.recordData[cols.y]) || "";
 
-    if (Object.keys(this.recordData).includes("Editor")) {
-      this.recordData["Editor"] = window["username"];
-    }
+    this.recordData[cols.editor] = window["username"];
 
     Sheet.updateLine(this.row, Object.values(this.recordData), () =>
       this.updateData()

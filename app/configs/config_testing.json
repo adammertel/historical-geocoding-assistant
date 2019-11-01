@@ -64,6 +64,10 @@
     "note": {
       "include": ["placenote", "localizationnote", "localisationnote", "note"],
       "exclude": []
+    },
+    "editor": {
+      "include": ["editor"],
+      "exclude": []
     }
   },
   "storeOpts": {
@@ -82,7 +86,8 @@
       "note": "",
       "x": "",
       "y": "",
-      "certainty": ""
+      "certainty": "",
+      "editor": ""
     }
   }
 }

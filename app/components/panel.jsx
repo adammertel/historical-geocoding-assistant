@@ -261,6 +261,18 @@ class Panel extends React.Component {
                     />
                   </td>
                 </tr>
+                <tr key="5">
+                  <td>editor</td>
+                  <td>
+                    <Input
+                      onChange={this.handleChangeInput.bind(
+                        this,
+                        store.opts.columns.editor
+                      )}
+                      value={store.editor}
+                    />
+                  </td>
+                </tr>
               </tbody>
             </table>
 
