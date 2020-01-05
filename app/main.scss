@@ -56,6 +56,15 @@ body {
     stroke: $color-text;
     stroke-width: 2px;
   }
+
+  .leaflet-tooltip-pane {
+    .leaflet-tooltip {
+      h4 {
+        margin-bottom: 0;
+      }
+    }
+  }
+
   .fa-map-marker {
     text-shadow: $white-halo, $white-halo, $white-halo, $white-halo, $white-halo;
   }
