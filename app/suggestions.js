@@ -1,5 +1,4 @@
 import Base from "./base";
-import $ from "jquery";
 
 /* static */
 var data = {};
@@ -147,16 +146,14 @@ const suggestionTGN = {
     const url = source.urls.base(term);
     _doFetch(url, {}, next, res => {
       const doc = domparser.parseFromString(res, "text/html");
-      const resultNodes = $(doc)
-        .find("#results table tbody tr")
-        .toArray();
+      const resultNodes = Base.query(doc, "#results table tbody tr");
+
+      console.log("resultNodes", resultNodes);
 
       let results = [];
       results = resultNodes.map(result => {
-        const tds = $(result)
-          .find("td")
-          .toArray()
-          .map(t => $(t).text());
+        const tds = Base.query(result, "td").map(t => t.textContent);
+
         const id = tds[0].split("tgn:")[1];
         const name = tds[1];
         return {
@@ -192,10 +189,9 @@ const suggestionTGN = {
         Base.doFetch(source.urls.record(result.id), {}, (err, res) => {
           if (!err) {
             var doc = domparser.parseFromString(res, "text/html");
-            const spans = $(doc)
-              .find("#results td span")
-              .toArray()
-              .map(s => $(s).text());
+            const spans = Base.query(doc, "#results td span").map(
+              s => s.textContent
+            );
 
             result.ll = spans.length > 6 ? [spans[3], spans[6]] : false;
             if (result.ll) {

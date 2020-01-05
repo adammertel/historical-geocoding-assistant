@@ -1,5 +1,3 @@
-// @flow
-import $ from "jquery";
 import { divIcon } from "leaflet";
 import queryString from "query-string";
 
@@ -41,6 +39,14 @@ var Base = {
         return req.status === 200 ? success(req) : error(req.status);
       }
     };
+  },
+
+  query(context, selectors) {
+    const els = context.querySelectorAll(selectors);
+    if (els) {
+      return Array.from(els);
+    }
+    return [];
   },
 
   validGeo(f) {
