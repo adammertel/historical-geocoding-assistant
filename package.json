@@ -13,7 +13,7 @@
     "clean-dist": "rm -f -r -d dist"
   },
   "dependencies": {
-    "auth0-js": "^9.4.2",
+    "auth0-js": "^9.13.2",
     "bulma": "^0.6.2",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^2.1.1",
