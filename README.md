@@ -19,7 +19,7 @@ The “Historical Geocoding Assistant” is an open-sourced browser-based applic
 
 ## Testing version
 
-Try it [here](http://hde.geogr.muni.cz/hga/)
+Try it [here](http://dissinet.cz/apps/hga)
 
 ## Manual
 
