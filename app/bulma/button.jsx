@@ -4,6 +4,7 @@ export default class Button extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     const classes = Array.isArray(this.props.classes) ? this.props.classes : [];
 
@@ -28,7 +29,11 @@ export default class Button extends React.Component {
     if (this.props.tooltip) {
       classes.push("hint--top");
       classes.push("hint--small");
+      if (this.props.tooltipPosition) {
+        classes.push(`hint--${this.props.tooltipPosition}`);
+      }
     }
+
     return (
       <a
         className={classes.join(" ")}
