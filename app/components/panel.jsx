@@ -111,7 +111,7 @@ class Panel extends React.Component {
               value={store.row}
               onChange={this.handleSelectRecord.bind(this)}
             >
-              {store.geoRecords.map(record => {
+              {store.geoRecords.map((record) => {
                 if (Base.validGeo([record["x"], record["y"]])) {
                   return (
                     <option key={record.row} value={record.row}>
@@ -236,7 +236,7 @@ class Panel extends React.Component {
                         value={store.recordCertainty}
                         onChange={this.handleChangeCertainty.bind(this)}
                       >
-                        {Object.keys(config.certaintyOptions).map(cKey => {
+                        {Object.keys(config.certaintyOptions).map((cKey) => {
                           const value = config.certaintyOptions[cKey];
                           return (
                             <option key={cKey} value={cKey}>
@@ -330,7 +330,7 @@ class Panel extends React.Component {
             <table className="table centered">
               <tbody>
                 {Object.keys(store.recordData)
-                  .filter(c => !store.recordMandatoryColumns.includes(c))
+                  .filter((c) => !store.recordMandatoryColumns.includes(c))
                   .map((column, ci) => {
                     const value = store.recordData[column];
 
@@ -358,7 +358,10 @@ class Panel extends React.Component {
 
         {/*suggestions */}
         <Menu label="suggestions" defaultOpen key="suggestions" icon="globe">
-          {SuggestionSources.map(source => {
+          {SuggestionSources.map((source) => {
+            const suggestionList = store.suggestions[source.id].filter(
+              (g) => g
+            );
             let status = "ok";
             if (!store.displaySuggestions[source.id]) {
               status = "unchecked";
@@ -388,16 +391,19 @@ class Panel extends React.Component {
                   </div>
                   <div>
                     {status === "ok" && (
-                      <Button
-                        inverted
-                        icon="circle"
-                        classes={["black-halo"]}
-                        style={{
-                          color: config.colors[source.id],
-                          verticalAlign: "middle",
-                          fontSize: "80%"
-                        }}
-                      />
+                      <div>
+                        {`[${suggestionList.length} results]`}
+                        <Button
+                          inverted
+                          icon="circle"
+                          classes={["black-halo"]}
+                          style={{
+                            color: config.colors[source.id],
+                            verticalAlign: "middle",
+                            fontSize: "80%",
+                          }}
+                        />
+                      </div>
                     )}
                     {status === "loading" && (
                       <Button
@@ -407,7 +413,7 @@ class Panel extends React.Component {
                         style={{
                           background: "transparent",
                           verticalAlign: "middle",
-                          fontSize: "120%"
+                          fontSize: "120%",
                         }}
                       />
                     )}
@@ -418,7 +424,7 @@ class Panel extends React.Component {
                         style={{
                           background: "transparent",
                           verticalAlign: "middle",
-                          fontSize: "120%"
+                          fontSize: "120%",
                         }}
                       />
                     )}
@@ -426,106 +432,104 @@ class Panel extends React.Component {
                 </div>
                 {!store.loadingSuggestions[source.id] && (
                   <div className="list">
-                    {store.suggestions[source.id]
-                      .filter(g => g)
-                      .map((suggestion, gi) => {
-                        const displayName =
-                          Base.shortenText(suggestion.name, 20) || "";
+                    {suggestionList.map((suggestion, gi) => {
+                      const displayName =
+                        Base.shortenText(suggestion.name, 20) || "";
 
-                        const inExtent = suggestion.inExtent;
-                        const color = inExtent ? "primary" : "danger";
-                        return (
-                          <div key={gi} className="suggestion">
-                            <Button
-                              tooltip="highlight"
-                              icon="lightbulb-o"
-                              color={color}
-                              inverted
-                              onClick={this.handleHighlightSuggestionClick.bind(
-                                this,
-                                suggestion
-                              )}
-                            />
-                            <Button
-                              tooltip="focus"
-                              icon="compass"
-                              color={color}
-                              inverted
-                              onClick={this.handleLocateSuggestionClick.bind(
-                                this,
-                                suggestion
-                              )}
-                            />
-                            <Button
-                              tooltip="use coordinates"
-                              icon="floppy-o"
-                              color={color}
-                              inverted
-                              onClick={this.handleStoreSuggestionClick.bind(
-                                this,
-                                suggestion
-                              )}
-                            />
-                            {suggestion.url && (
-                              <Button
-                                tooltip="external link"
-                                icon="external-link"
-                                inverted
-                                color={color}
-                                onClick={this.handleOpenUrl.bind(
-                                  this,
-                                  suggestion.url
-                                )}
-                              />
+                      const inExtent = suggestion.inExtent;
+                      const color = inExtent ? "primary" : "danger";
+                      return (
+                        <div key={gi} className="suggestion">
+                          <Button
+                            tooltip="highlight"
+                            icon="lightbulb-o"
+                            color={color}
+                            inverted
+                            onClick={this.handleHighlightSuggestionClick.bind(
+                              this,
+                              suggestion
                             )}
-                            <div className="suggestion-label">
-                              {displayName.length === suggestion.name ? (
-                                <span
-                                  className={
-                                    "suggestion-name " +
-                                    (inExtent ? "" : "is-dimmed")
-                                  }
-                                >
-                                  {displayName}
-                                </span>
-                              ) : (
-                                <span
-                                  className={
-                                    "suggestion-name hint--top hint--medium " +
-                                    (inExtent ? "" : "is-dimmed")
-                                  }
-                                  aria-label={
-                                    suggestion.name +
-                                    (suggestion.info
-                                      ? " - " + suggestion.info
-                                      : "")
-                                  }
-                                >
-                                  {displayName}
-                                </span>
+                          />
+                          <Button
+                            tooltip="focus"
+                            icon="compass"
+                            color={color}
+                            inverted
+                            onClick={this.handleLocateSuggestionClick.bind(
+                              this,
+                              suggestion
+                            )}
+                          />
+                          <Button
+                            tooltip="use coordinates"
+                            icon="floppy-o"
+                            color={color}
+                            inverted
+                            onClick={this.handleStoreSuggestionClick.bind(
+                              this,
+                              suggestion
+                            )}
+                          />
+                          {suggestion.url && (
+                            <Button
+                              tooltip="external link"
+                              icon="external-link"
+                              inverted
+                              color={color}
+                              onClick={this.handleOpenUrl.bind(
+                                this,
+                                suggestion.url
                               )}
-                              {suggestion.country && (
-                                <span
-                                  className={
-                                    "suggestion-country tag is-white " +
-                                    (inExtent ? "" : "is-dimmed")
-                                  }
-                                >
-                                  {suggestion.country.toUpperCase()}
-                                </span>
-                              )}
-                              {!inExtent && (
-                                <span
-                                  className="tag post-icon is-white hint hint--top"
-                                  aria-label="outside of the chosen spatial extent"
-                                >
-                                  <i className="icon fa fa-globe is-dimmed" />
-                                </span>
-                              )}
-                            </div>
+                            />
+                          )}
+                          <div className="suggestion-label">
+                            {displayName.length === suggestion.name ? (
+                              <span
+                                className={
+                                  "suggestion-name " +
+                                  (inExtent ? "" : "is-dimmed")
+                                }
+                              >
+                                {displayName}
+                              </span>
+                            ) : (
+                              <span
+                                className={
+                                  "suggestion-name hint--top hint--medium " +
+                                  (inExtent ? "" : "is-dimmed")
+                                }
+                                aria-label={
+                                  suggestion.name +
+                                  (suggestion.info
+                                    ? " - " + suggestion.info
+                                    : "")
+                                }
+                              >
+                                {displayName}
+                              </span>
+                            )}
+                            {suggestion.country && (
+                              <span
+                                className={
+                                  "suggestion-country tag is-white " +
+                                  (inExtent ? "" : "is-dimmed")
+                                }
+                              >
+                                {suggestion.country.toUpperCase()}
+                              </span>
+                            )}
+                            {!inExtent && (
+                              <span
+                                className="tag post-icon is-white hint hint--top"
+                                aria-label="outside of the chosen spatial extent"
+                              >
+                                <i className="icon fa fa-globe is-dimmed" />
+                              </span>
+                            )}
                           </div>
-                        );
-                      })}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
