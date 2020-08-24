@@ -2,15 +2,21 @@ import Base from "./base";
 
 /* static */
 var data = {};
+
+const links = {
+  geonames: "http://api.geonames.org",
+  tgaz: "http://maps.cga.harvard.edu",
+};
+
 var mapRecord = (recordData, mapObject) => {
   const suggestion = {};
-  Object.keys(mapObject).forEach(key => {
+  Object.keys(mapObject).forEach((key) => {
     suggestion[key] = mapObject[key](recordData);
   });
   return suggestion;
 };
 var mapRecords = (recordsData, mapObject) => {
-  return recordsData.map(r => mapRecord(r, mapObject));
+  return recordsData.map((r) => mapRecord(r, mapObject));
 };
 var checkNoLimit = (suggestions, no = 10) => {
   return suggestions.length > no ? suggestions.slice(0, no) : suggestions;
@@ -39,16 +45,17 @@ const suggestionGeonames = {
   id: "geonames",
   label: "GeoNames",
   urls: {
-    base: term =>
-      "http://api.geonames.org/searchJSON?" +
+    base: (term) =>
+      links.geonames +
+      "/searchJSON?" +
       "q=" +
       encodeURIComponent(term) +
       "&maxRows=10" +
-      "&username=adammertel"
+      "&username=adammertel",
   },
   getRecords: (source, term, opts, next) => {
     const url = source.urls.base(term);
-    _doFetch(url, {}, next, res => {
+    _doFetch(url, {}, next, (res) => {
       if (res.geonames) {
         next(mapRecords(res.geonames, source.recordMap), false);
       } else {
@@ -57,29 +64,31 @@ const suggestionGeonames = {
     });
   },
   recordMap: {
-    ll: r => [parseFloat(r.lat), parseFloat(r.lng)],
-    country: r => r.countryCode,
-    rank: r => 100,
-    name: r => r.name,
-    url: r => "",
-    type: r => r.fcodeName,
-    info: r => ""
-  }
+    ll: (r) => [parseFloat(r.lat), parseFloat(r.lng)],
+    country: (r) => r.countryCode,
+    rank: (r) => 1,
+    name: (r) => r.name,
+    url: (r) => "",
+    type: (r) => r.fcodeName,
+    info: (r) => "",
+  },
 };
+
 const suggestionWiki = {
   id: "wiki",
   label: "Wikipedia",
   urls: {
-    base: term =>
-      "http://api.geonames.org/wikipediaSearchJSON?" +
+    base: (term) =>
+      links.geonames +
+      "/wikipediaSearchJSON?" +
       "q=" +
       encodeURIComponent(term) +
       "&maxRows=10" +
-      "&username=adammertel&"
+      "&username=adammertel&",
   },
   getRecords: (source, term, opts, next) => {
     const url = source.urls.base(term);
-    _doFetch(url, {}, next, res => {
+    _doFetch(url, {}, next, (res) => {
       if (res.geonames) {
         next(mapRecords(res.geonames, source.recordMap), false);
       } else {
@@ -88,28 +97,30 @@ const suggestionWiki = {
     });
   },
   recordMap: {
-    ll: r => [parseFloat(r.lat), parseFloat(r.lng)],
-    country: r => r.countryCode,
-    rank: r => r.rank / 100,
-    name: r => r.title,
-    url: r => r.wikipediaUrl,
-    type: r => "",
-    info: r => r.summary
-  }
+    ll: (r) => [parseFloat(r.lat), parseFloat(r.lng)],
+    country: (r) => r.countryCode,
+    rank: (r) => r.rank / 100,
+    name: (r) => r.title,
+    url: (r) => r.wikipediaUrl,
+    type: (r) => "",
+    info: (r) => r.summary,
+  },
 };
+
 const suggestionChina = {
   id: "tgaz",
   label: "China Historical GIS",
   urls: {
-    base: term =>
-      "http://maps.cga.harvard.edu/tgaz/placename?" +
+    base: (term) =>
+      links.tgaz +
+      "/tgaz/placename?" +
       "n=" +
       encodeURIComponent(term) +
-      "&fmt=json"
+      "&fmt=json",
   },
   getRecords: (source, term, opts, next) => {
     const url = source.urls.base(term);
-    _doFetch(url, {}, next, res => {
+    _doFetch(url, {}, next, (res) => {
       if (res.placenames) {
         const suggestions = checkNoLimit(res.placenames);
         next(mapRecords(suggestions, source.recordMap), false);
@@ -119,40 +130,41 @@ const suggestionChina = {
     });
   },
   recordMap: {
-    ll: r => {
+    ll: (r) => {
       const coords = r["xy coordinates"].split(", ");
       return [parseFloat(coords[1]), parseFloat(coords[0])];
     },
-    country: r => "",
-    rank: r => 1,
-    name: r => r.transcription,
-    url: r => r.uri,
-    type: r => r["feature type"],
-    info: r => ""
-  }
+    country: (r) => "",
+    rank: (r) => 1,
+    name: (r) => r.transcription,
+    url: (r) => r.uri,
+    type: (r) => r["feature type"],
+    info: (r) => "",
+  },
 };
+
 const suggestionTGN = {
   id: "getty",
   label: "Getty TGN",
   urls: {
-    base: term =>
+    base: (term) =>
       "http://vocab.getty.edu/resource/getty/search?q=" +
       encodeURIComponent(term) +
       "&luceneIndex=Full&indexDataset=TGN&limit=500",
-    record: id => "http://vocab.getty.edu/tgn/" + id + "-geometry"
+    record: (id) => "http://vocab.getty.edu/tgn/" + id + "-geometry",
   },
 
   getRecords: (source, term, opts, next) => {
     const url = source.urls.base(term);
-    _doFetch(url, {}, next, res => {
+    _doFetch(url, {}, next, (res) => {
       const doc = domparser.parseFromString(res, "text/html");
       const resultNodes = Base.query(doc, "#results table tbody tr");
 
       console.log("resultNodes", resultNodes);
 
       let results = [];
-      results = resultNodes.map(result => {
-        const tds = Base.query(result, "td").map(t => t.textContent);
+      results = resultNodes.map((result) => {
+        const tds = Base.query(result, "td").map((t) => t.textContent);
 
         const id = tds[0].split("tgn:")[1];
         const name = tds[1];
@@ -161,7 +173,7 @@ const suggestionTGN = {
           sim: Base.simScore(term, name),
           name: name,
           info: tds[3],
-          type: tds[4]
+          type: tds[4],
         };
       });
 
@@ -185,12 +197,12 @@ const suggestionTGN = {
 
       checkNext();
 
-      results.forEach(result => {
+      results.forEach((result) => {
         Base.doFetch(source.urls.record(result.id), {}, (err, res) => {
           if (!err) {
             var doc = domparser.parseFromString(res, "text/html");
             const spans = Base.query(doc, "#results td span").map(
-              s => s.textContent
+              (s) => s.textContent
             );
 
             result.ll = spans.length > 6 ? [spans[3], spans[6]] : false;
@@ -205,7 +217,7 @@ const suggestionTGN = {
     });
   },
   recordMap: {
-    ll: r => {
+    ll: (r) => {
       return r.ll &&
         r.ll[0] &&
         r.ll[1] &&
@@ -214,30 +226,33 @@ const suggestionTGN = {
         ? [parseFloat(r.ll[0]), parseFloat(r.ll[1])]
         : false;
     },
-    country: r => "",
-    rank: r => r.sim,
-    name: r => r.name,
-    url: r => "http://vocab.getty.edu/tgn/" + r.id,
-    type: r => r.type,
-    info: r => r.info
-  }
+    country: (r) => "",
+    rank: (r) => r.sim,
+    name: (r) => r.name,
+    url: (r) => "vocab.getty.edu/tgn/" + r.id,
+    type: (r) => r.type,
+    info: (r) => r.info,
+  },
 };
+
 const suggestionPleiades = {
   id: "pleiades",
   label: "Pleiades",
   preload: () => {
     Base.doFetch(
-      "https://raw.githubusercontent.com/ryanfb/pleiades-geojson/gh-pages/name_index.json",
+      "//raw.githubusercontent.com/ryanfb/pleiades-geojson/gh-pages/name_index.json",
       {},
       (err, res) => {
-        data["pleiades"] = res.filter(r => r[0] && r[0] !== "Untitled");
+        if (res) {
+          data["pleiades"] = res.filter((r) => r[0] && r[0] !== "Untitled");
+        }
       }
     );
   },
   urls: {
-    record: id => {
+    record: (id) => {
       return "http://pleiades.stoa.org/places/" + id + "/json";
-    }
+    },
   },
   getRecords: (source, term, opts, next) => {
     if (!data["pleiades"]) {
@@ -246,18 +261,22 @@ const suggestionPleiades = {
 
     let similars = [];
 
-    data["pleiades"].forEach(p => {
-      const name = p[0];
-      const id = p[1];
-      const simScore = Base.simScore(term, name);
-      if (simScore > 0.65) {
-        similars.push({
-          id: id,
-          name: name,
-          sim: simScore
-        });
-      }
-    });
+    if (data["pleiades"]) {
+      data["pleiades"].forEach((p) => {
+        const name = p[0];
+        const id = p[1];
+        const simScore = Base.simScore(term, name);
+        if (simScore > 0.65) {
+          similars.push({
+            id: id,
+            name: name,
+            sim: simScore,
+          });
+        }
+      });
+    } else {
+      data["pleiades"] = [];
+    }
 
     similars.sort((a, b) => (a.sim > b.sim ? -1 : 1));
     similars = checkNoLimit(similars);
@@ -274,7 +293,7 @@ const suggestionPleiades = {
     // in case there are no suggestions
     checkFinished();
 
-    similars.forEach(similar => {
+    similars.forEach((similar) => {
       const id = similar.id;
       const url = source.urls.record(id);
       Base.doFetch(url, {}, (err, res) => {
@@ -288,20 +307,20 @@ const suggestionPleiades = {
     });
   },
   recordMap: {
-    ll: r => {
+    ll: (r) => {
       if (r.reprPoint && r.reprPoint.length === 2) {
         return [r.reprPoint[1], r.reprPoint[0]];
       } else {
         return false;
       }
     },
-    country: r => "",
-    rank: r => r.sim,
-    name: r => r.title,
-    url: r => r.uri,
-    type: r => r.placeTypes.join(),
-    info: r => r.description
-  }
+    country: (r) => "",
+    rank: (r) => r.sim,
+    name: (r) => r.title,
+    url: (r) => r.uri,
+    type: (r) => r.placeTypes.join(),
+    info: (r) => r.description,
+  },
 };
 
 var SuggestionSources = [
@@ -309,6 +328,6 @@ var SuggestionSources = [
   suggestionWiki,
   suggestionTGN,
   suggestionPleiades,
-  suggestionChina
+  suggestionChina,
 ];
 module.exports = SuggestionSources;
