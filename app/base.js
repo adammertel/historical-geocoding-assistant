@@ -1,4 +1,4 @@
-import { divIcon } from "leaflet";
+import * as L from "leaflet";
 import queryString from "query-string";
 
 var Base = {
@@ -79,7 +79,7 @@ var Base = {
    * returns a standardized Leaflet divIcon
    */
   icon(classes, style, size, anchor = false) {
-    return divIcon({
+    return L.divIcon({
       html:
         '<span style="' +
         style +
@@ -177,6 +177,17 @@ var Base = {
       return false;
     }
     return true;
+  },
+
+  /**
+   * distance between two ll points in kilometers
+   */
+  geoDistance(ll1, ll2) {
+    try {
+      return L.latLng(ll1).distanceTo(L.latLng(ll2)) / 1000;
+    } catch (e) {
+      return 0;
+    }
   },
 
   /* 
