@@ -96,6 +96,8 @@ class Panel extends React.Component {
             size="normal"
             inverted
             icon="caret-left"
+            tooltip="save and go to the previous record"
+            tooltipPosition="top-right"
             onClick={store.previousRecord}
           />
 
@@ -126,7 +128,9 @@ class Panel extends React.Component {
           <Button
             inverted
             size="normal"
+            tooltip="save and go to the next record"
             icon="caret-right"
+            tooltipPosition="top-left"
             onClick={store.nextRecord}
           />
         </div>
