@@ -8,6 +8,8 @@ import Sheet from "./sheet.js";
 import Base from "./base.js";
 import SuggestionSources from "./suggestions.js";
 
+import "./../node_modules/leaflet/dist/leaflet.css";
+
 const pcg = require("./../package.json");
 
 const TESTING = false;
@@ -19,7 +21,7 @@ window["version"] = pcg.version;
 window["map"] = false;
 window["Base"] = Base;
 window["SuggestionSources"] = SuggestionSources;
-SuggestionSources.forEach(s => {
+SuggestionSources.forEach((s) => {
   if (s.preload) {
     s.preload();
   }
@@ -41,13 +43,16 @@ simScoreTests.forEach(t => {
 */
 
 // load map layers
-Base.requestConfigFile("basemaps.json", data => (window["basemaps"] = data));
-Base.requestConfigFile("mapoverlays.json", overlays => {
+Base.requestConfigFile("basemaps.json", (data) => (window["basemaps"] = data));
+Base.requestConfigFile("mapoverlays.json", (overlays) => {
   window["overlaymaps"] = overlays;
-  Object.keys(overlaymaps).map(okey => {
+  Object.keys(overlaymaps).map((okey) => {
     const overlay = overlaymaps[okey];
     if (overlaymaps[okey].type === "geojson") {
-      Base.requestDataFile(overlay.file, ovd => (overlaymaps[okey].data = ovd));
+      Base.requestDataFile(
+        overlay.file,
+        (ovd) => (overlaymaps[okey].data = ovd)
+      );
     }
   });
 });
@@ -55,11 +60,12 @@ Base.requestConfigFile("mapoverlays.json", overlays => {
 window["store"] = new AppStore();
 
 // assigning config. If TESTING === true, config will be extended with config_testing.json
-const loadConfig = next => {
+const loadConfig = (next) => {
   store.changeLoadingStatus("config");
   const configPath = TESTING ? "config_testing.json" : "config.json";
-  Base.requestConfigFile(configPath, configData => {
-    Base.requestConfigFile("config_api.json", otherConfigData => {
+  Base.requestConfigFile(configPath, (configData) => {
+    console.log(configData);
+    Base.requestConfigFile("config_api.json", (otherConfigData) => {
       next(Object.assign(configData, otherConfigData));
     });
   });
@@ -70,7 +76,7 @@ window["initSheet"] = () => {
   Sheet.init(() => store.init());
 };
 
-loadConfig(config => {
+loadConfig((config) => {
   console.log("location.hash", location.hash);
   window.config = config;
   store.loadConfig(config);
