@@ -259,23 +259,29 @@ class AppMap extends React.Component {
     );
   }
 
-  renderSuggestions(id, points, color) {
+  renderSuggestions(serviceId, points, color) {
     return (
-      <Pane style={{ zIndex: 500 }} className={"pane-" + id} key={"pane-" + id}>
+      <Pane
+        style={{ zIndex: 500 }}
+        className={"pane-" + serviceId}
+        key={"pane-" + serviceId}
+      >
         {points
           .filter((g) => g && g.ll)
           .map((p, pi) => {
             return (
               <CircleMarker
                 key={pi}
-                className={"suggestion-point " + id + "-point"}
+                className={"suggestion-point " + serviceId + "-point"}
                 radius={this.circleSize}
                 center={[p.ll[0], p.ll[1]]}
                 fillColor={color}
                 onClick={this.handleClickGeoname.bind(this, p)}
               >
                 <Tooltip direction="bottom" offset={this.suggestionOffset()}>
-                  <h4>{id + ": " + p.name}</h4>
+                  <h4>
+                    <i>{serviceId}</i>: {p.name}
+                  </h4>
                 </Tooltip>
               </CircleMarker>
             );

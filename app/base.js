@@ -6,7 +6,7 @@ var Base = {
    * {err, json-body}
    */
   doFetch(url, params = {}, next) {
-    console.log(url);
+    //console.log(url);
     if (url) {
       fetch(url, {
         mode: "cors",
