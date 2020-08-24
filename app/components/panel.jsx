@@ -38,9 +38,6 @@ class Panel extends React.Component {
 
   /* suggestions actions */
   handleHighlightSuggestionClick(suggestion) {
-    store.hlLocality(suggestion.ll);
-  }
-  handleLocateSuggestionClick(suggestion) {
     store.mapFocus(suggestion.ll);
   }
   handleStoreSuggestionClick(suggestion) {
@@ -51,9 +48,6 @@ class Panel extends React.Component {
   }
 
   /* Coordinates actions */
-  handleCoordinatesHighlight() {
-    store.hlLocality(store.recordGeo);
-  }
   handleCoordinatesFocus() {
     store.mapFocus(store.recordGeo);
   }
@@ -281,16 +275,9 @@ class Panel extends React.Component {
                 <div className="button-row">
                   <Button
                     inverted
-                    onClick={this.handleCoordinatesHighlight.bind(this)}
-                    tooltip="highlight location on map"
-                    icon="lightbulb-o"
-                    label="highlight"
-                  />
-                  <Button
-                    inverted
                     onClick={this.handleCoordinatesFocus.bind(this)}
-                    tooltip="pan map to the location"
-                    icon="compass"
+                    tooltip="focus location on map"
+                    icon="lightbulb-o"
                     label="focus"
                   />
                   <Button
@@ -389,7 +376,7 @@ class Panel extends React.Component {
                       )}
                     />
                   </div>
-                  <div>
+                  <div className="suggestion-name-line-status">
                     {status === "ok" && (
                       <div>
                         {`[${suggestionList.length} results]`}
@@ -446,16 +433,6 @@ class Panel extends React.Component {
                             color={color}
                             inverted
                             onClick={this.handleHighlightSuggestionClick.bind(
-                              this,
-                              suggestion
-                            )}
-                          />
-                          <Button
-                            tooltip="focus"
-                            icon="compass"
-                            color={color}
-                            inverted
-                            onClick={this.handleLocateSuggestionClick.bind(
                               this,
                               suggestion
                             )}

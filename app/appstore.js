@@ -3,6 +3,7 @@
 
 import { observable, action, computed, toJS } from "mobx";
 import Sheet from "./sheet.js";
+import Base from "./base.js";
 import React from "react";
 
 export default class AppStore extends React.Component {
@@ -238,19 +239,26 @@ export default class AppStore extends React.Component {
   };
 
   @action mapFocus = (ll) => {
+    const distance = Base.geoDistance(ll, this.mapPosition);
+    //console.log(ll, this.mapPosition, distance);
+
     this.mapCenterChange(ll);
     this.mapZoomChange(this.opts.focusZoom);
-  };
 
-  @action hlLocality = (ll) => {
+    // wait with the highlighting based on the distance from the point of interest
+    const distanceTimeout = distance / 100;
     if (this.hlTimeout) {
       clearTimeout(this.hlTimeout);
     }
-    this.hlPoint = ll;
-    this.hlTimeout = setTimeout(() => {
-      this.hlPoint = false;
-    }, 2000);
+    setTimeout(() => {
+      this.hlPoint = ll;
+      this.hlTimeout = setTimeout(() => {
+        this.hlPoint = false;
+      }, 3000);
+    }, distanceTimeout);
   };
+
+  @action hlLocality = (ll) => {};
 
   @action useSuggestion = (geoname) => {
     this.updateRecordLocation(geoname.ll[1], geoname.ll[0]);
