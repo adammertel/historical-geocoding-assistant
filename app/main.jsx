@@ -29,17 +29,23 @@ SuggestionSources.forEach((s) => {
 
 window["username"] = "";
 
-/* testing simscores
+/**
+ * testing simscores
+ */
 
+/*
 const simScoreTests = [
-  { reference: "coordinatex", p: ["coordinatex", "x"], n: ["y", "coordinatey"] }
+  {
+    reference: "coordinatex",
+    p: ["coordinatex", "x"],
+    n: ["y", "coordinatey"],
+  },
 ];
 
-simScoreTests.forEach(t => {
+simScoreTests.forEach((t) => {
   const score = Base.simScoreBi(t.reference, t.p, t.n);
   console.log(t.reference, ";", t.p, t.n, ";", score);
 });
-
 */
 
 // load map layers

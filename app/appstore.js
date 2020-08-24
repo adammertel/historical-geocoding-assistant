@@ -207,6 +207,23 @@ export default class AppStore extends React.Component {
     return toJS(this._problemSuggestions);
   }
 
+  // check whether the record were changed
+  @computed get wasChanged() {
+    const cols = this.opts.columns;
+
+    Object.keys(cols).forEach((col) => {
+      const colName = this.opts.columns[col];
+      const before = this.recordBeforeChanges[colName];
+      const now = this.records[this.row][colName];
+      console.log(before, now);
+      if ((before || now) && before != now) {
+        return true;
+      }
+    });
+
+    return false;
+  }
+
   /* ACTIONS */
 
   // loading status
@@ -463,7 +480,9 @@ export default class AppStore extends React.Component {
     this.recordData[cols.x] = parseFloat(this.recordData[cols.x]) || "";
     this.recordData[cols.y] = parseFloat(this.recordData[cols.y]) || "";
 
-    this.recordData[cols.editor] = window["username"];
+    if (this.wasChanged) {
+      this.recordData[cols.editor] = window["username"];
+    }
 
     Sheet.updateLine(this.row, Object.values(this.recordData), () =>
       this.updateData()
