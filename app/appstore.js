@@ -11,6 +11,7 @@ export default class AppStore extends React.Component {
   @observable loadingStatus = "";
   @observable changingLoadingStatus = false;
 
+  // false | extent | columns
   @observable openedSettings = false;
   @observable shouldRenderApp = false;
 
@@ -34,7 +35,7 @@ export default class AppStore extends React.Component {
   }
 
   @action init() {
-    SuggestionSources.forEach(suggestionSource => {
+    SuggestionSources.forEach((suggestionSource) => {
       this._suggestions.set(suggestionSource.id, []);
       this._displaySuggestions.set(suggestionSource.id, true);
       this._loadingSuggestions.set(suggestionSource.id, false);
@@ -55,20 +56,20 @@ export default class AppStore extends React.Component {
     looks for the best columns that fits most the mandatory columns based on the set keywords
   */
   @action findDefaultColumnNames(inputColumns = Object.keys(this.recordData)) {
-    const columns = inputColumns.map(c => ({
+    const columns = inputColumns.map((c) => ({
       sanitized: Base.sanitizeWord(c),
-      original: c
+      original: c,
     }));
 
     const columnKeywords = config.columnNames;
 
-    const findBestColumn = mandatoryColumnKey => {
+    const findBestColumn = (mandatoryColumnKey) => {
       const keywords = columnKeywords[mandatoryColumnKey];
 
       let bestScore = -1;
       let bestColumn = false;
 
-      columns.forEach(column => {
+      columns.forEach((column) => {
         const score = Base.simScoreBi(
           column.sanitized,
           keywords.include,
@@ -81,7 +82,7 @@ export default class AppStore extends React.Component {
       return bestColumn;
     };
 
-    Object.keys(columnKeywords).forEach(key => {
+    Object.keys(columnKeywords).forEach((key) => {
       const bestColumn = findBestColumn(key);
       this.opts.columns[key] = bestColumn;
     });
@@ -109,7 +110,7 @@ export default class AppStore extends React.Component {
     const geoExtent = this.opts.maxGeoExtent;
     return [
       [geoExtent[0][0], geoExtent[0][1]],
-      [geoExtent[1][0], geoExtent[1][1]]
+      [geoExtent[1][0], geoExtent[1][1]],
     ];
   }
 
@@ -155,13 +156,13 @@ export default class AppStore extends React.Component {
   }
 
   @computed get geoRecords() {
-    return Object.keys(this.records).map(rowNo => {
+    return Object.keys(this.records).map((rowNo) => {
       const record = this.records[rowNo];
       return {
         x: record[this.opts.columns.x],
         y: record[this.opts.columns.y],
         name: record[this.opts.columns.name],
-        row: rowNo
+        row: rowNo,
       };
     });
   }
@@ -171,11 +172,11 @@ export default class AppStore extends React.Component {
   }
 
   @computed get recordNames() {
-    return Object.keys(this.records).map(rowNo => {
+    return Object.keys(this.records).map((rowNo) => {
       const record = this.records[rowNo];
       return {
         name: record[this.opts.columns.name],
-        row: rowNo
+        row: rowNo,
       };
     });
   }
@@ -208,7 +209,7 @@ export default class AppStore extends React.Component {
   /* ACTIONS */
 
   // loading status
-  @action changeLoadingStatus = newStatus => {
+  @action changeLoadingStatus = (newStatus) => {
     this.changingLoadingStatus = false;
     this.loadingStatus = newStatus;
   };
@@ -221,12 +222,12 @@ export default class AppStore extends React.Component {
   };
 
   // map
-  @action mapMoved = change => {
+  @action mapMoved = (change) => {
     this.opts.mapCenter = change.center;
     this.opts.mapZoom = change.zoom;
   };
-  @action mapCenterChange = center => (this.opts.mapCenter = center);
-  @action mapZoomChange = zoom => (this.opts.mapZoom = zoom);
+  @action mapCenterChange = (center) => (this.opts.mapCenter = center);
+  @action mapZoomChange = (zoom) => (this.opts.mapZoom = zoom);
 
   // pan and zoom to active record
   @action focusRecord = () => {
@@ -236,12 +237,12 @@ export default class AppStore extends React.Component {
     }
   };
 
-  @action mapFocus = ll => {
+  @action mapFocus = (ll) => {
     this.mapCenterChange(ll);
     this.mapZoomChange(this.opts.focusZoom);
   };
 
-  @action hlLocality = ll => {
+  @action hlLocality = (ll) => {
     if (this.hlTimeout) {
       clearTimeout(this.hlTimeout);
     }
@@ -251,7 +252,7 @@ export default class AppStore extends React.Component {
     }, 2000);
   };
 
-  @action useSuggestion = geoname => {
+  @action useSuggestion = (geoname) => {
     this.updateRecordLocation(geoname.ll[1], geoname.ll[0]);
     if (!map.getBounds().contains(L.latLng(geoname.ll[0], geoname.ll[1]))) {
       this.mapCenterChange(geoname.ll);
@@ -264,13 +265,13 @@ export default class AppStore extends React.Component {
   };
 
   @action updateAllSuggestionSources = () => {
-    SuggestionSources.forEach(source => {
+    SuggestionSources.forEach((source) => {
       this.updateSuggestionSource(source.id);
     });
   };
 
   @action updateSuggestionSource(sourceId) {
-    const source = SuggestionSources.find(s => s.id === sourceId);
+    const source = SuggestionSources.find((s) => s.id === sourceId);
     if (source) {
       if (this.displaySuggestions[source.id] && this.recordName) {
         this._loadingSuggestions.set(source.id, true);
@@ -286,11 +287,11 @@ export default class AppStore extends React.Component {
           this.opts,
           (suggestions, problem) => {
             suggestions.forEach(
-              s => (s.inExtent = Base.inExtent(s.ll, this.opts.maxGeoExtent))
+              (s) => (s.inExtent = Base.inExtent(s.ll, this.opts.maxGeoExtent))
             );
 
             const orderedSuggestions = suggestions.sort((a, b) =>
-              a.inExtent ? -1 : 1
+              a.inExtent ? 1 : -1
             );
 
             if (this.displaySuggestions[source.id]) {
@@ -308,7 +309,7 @@ export default class AppStore extends React.Component {
   }
 
   // map tiles
-  @action changeOpacityRatio = opacity => {
+  @action changeOpacityRatio = (opacity) => {
     this.opts.basemaps.opacity = opacity;
   };
 
@@ -317,32 +318,32 @@ export default class AppStore extends React.Component {
   };
 
   // map overlayrow
-  @action addOverlay = overlayId => {
-    const foundOverlay = this.opts.overlays.find(ov => ov.id === overlayId);
+  @action addOverlay = (overlayId) => {
+    const foundOverlay = this.opts.overlays.find((ov) => ov.id === overlayId);
     if (!foundOverlay) {
       this.opts.overlays.push({
         id: overlayId,
-        opacity: 1
+        opacity: 1,
       });
     }
   };
 
   @action overlayChangeOpacity = (overlayId, newOpacity) => {
-    const foundOverlay = this.opts.overlays.find(ov => ov.id === overlayId);
+    const foundOverlay = this.opts.overlays.find((ov) => ov.id === overlayId);
     if (foundOverlay) {
       foundOverlay.opacity = newOpacity;
     }
   };
 
-  @action overlayRemove = overlayId => {
+  @action overlayRemove = (overlayId) => {
     const clonedOverlays = toJS(this.opts.overlays);
-    this.opts.overlays = clonedOverlays.filter(ov => ov.id !== overlayId);
+    this.opts.overlays = clonedOverlays.filter((ov) => ov.id !== overlayId);
   };
 
-  @action overlayMoveUp = overlayId => {
+  @action overlayMoveUp = (overlayId) => {
     const clonedOverlays = this.opts.overlays.slice();
 
-    const fromIndex = clonedOverlays.findIndex(ov => ov.id === overlayId);
+    const fromIndex = clonedOverlays.findIndex((ov) => ov.id === overlayId);
     const toIndex = fromIndex - 1;
 
     if (toIndex > -1) {
@@ -351,10 +352,10 @@ export default class AppStore extends React.Component {
     }
   };
 
-  @action overlayMoveDown = overlayId => {
+  @action overlayMoveDown = (overlayId) => {
     const clonedOverlays = this.opts.overlays.slice();
 
-    const fromIndex = clonedOverlays.findIndex(ov => ov.id === overlayId);
+    const fromIndex = clonedOverlays.findIndex((ov) => ov.id === overlayId);
     const toIndex = fromIndex + 1;
 
     if (toIndex < clonedOverlays.length) {
@@ -374,19 +375,19 @@ export default class AppStore extends React.Component {
     this.updateData();
   };
 
-  @action gotoRecord = recordRow => {
+  @action gotoRecord = (recordRow) => {
     this.row = parseInt(recordRow, 10);
     this.updateData();
   };
 
   // new data are loaded
-  @action updateData = (next = function() {}) => {
+  @action updateData = (next = function () {}) => {
     this.changeLoadingStatus("record");
-    Sheet.readAllLines(data => {
+    Sheet.readAllLines((data) => {
       this.records = data;
 
       this.recordBeforeChanges = Object.assign({}, data[this.row]);
-      Object.keys(this.recordBeforeChanges).forEach(recordKey => {
+      Object.keys(this.recordBeforeChanges).forEach((recordKey) => {
         if (this.recordBeforeChanges[recordKey] === undefined) {
           this.records[this.row][recordKey] = "";
         }
@@ -401,8 +402,8 @@ export default class AppStore extends React.Component {
     });
   };
 
-  @action loadTable = next => {
-    Sheet.readAllLines(data => {
+  @action loadTable = (next) => {
+    Sheet.readAllLines((data) => {
       this.records = data;
       next();
     });
@@ -438,7 +439,7 @@ export default class AppStore extends React.Component {
     }
   };
 
-  @action changeCertainty = newCertaintyValue => {
+  @action changeCertainty = (newCertaintyValue) => {
     this.updateRecordValue(this.opts.columns.certainty, newCertaintyValue);
   };
 
@@ -458,7 +459,7 @@ export default class AppStore extends React.Component {
   };
 
   // settings
-  @action openSettings = mode => {
+  @action openSettings = (mode) => {
     this.openedSettings = mode;
   };
 
@@ -473,7 +474,7 @@ export default class AppStore extends React.Component {
     }
   };
 
-  @action toggleDisplaySuggestion = suggestionId => {
+  @action toggleDisplaySuggestion = (suggestionId) => {
     this._displaySuggestions.set(
       suggestionId,
       !this._displaySuggestions.get(suggestionId)
@@ -483,28 +484,28 @@ export default class AppStore extends React.Component {
 
   @action toggleDisplayOtherRecords = () => {
     const newConfig = {
-      displayOtherRecords: !this.opts.displayOtherRecords
+      displayOtherRecords: !this.opts.displayOtherRecords,
     };
     this.saveSettings(newConfig, false);
   };
 
   @action toggleMapClusters = () => {
     const newConfig = {
-      mapClusters: !this.opts.mapClusters
+      mapClusters: !this.opts.mapClusters,
     };
     this.saveSettings(newConfig, false);
   };
 
-  @action handleChangeSelect = e => {
+  @action handleChangeSelect = (e) => {
     const newConfig = {
-      focusZoom: parseInt(e.target.value, 10)
+      focusZoom: parseInt(e.target.value, 10),
     };
     this.saveSettings(newConfig);
   };
 
   @action toggleFocusChange = () => {
     const newConfig = {
-      focusOnRecordChange: !this.opts.focusOnRecordChange
+      focusOnRecordChange: !this.opts.focusOnRecordChange,
     };
     this.saveSettings(newConfig, false);
   };
