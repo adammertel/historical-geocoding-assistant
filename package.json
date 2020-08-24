@@ -7,8 +7,8 @@
     "test": "npm run lint",
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "npm run clean-dist && webpack --mode production",
-    "deploy": "rsync -avz dist/ adamm@10.38.208.11:~/../../var/www/html/apps/hga/",
-    "deploy-beta": "rsync -avz dist/ adamm@10.38.208.11:~/../../var/www/html/apps/hga-beta/",
+    "deploy": "rsync -avz dist/ adamm@10.16.30.211:~/../../var/www/html/apps/hga/",
+    "deploy-beta": "rsync -avz dist/ adamm@10.16.30.211:~/../../var/www/html/apps/hga-beta/",
     "build-deploy": "npm run build && npm run deploy",
     "clean-dist": "rm -f -r -d dist"
   },
