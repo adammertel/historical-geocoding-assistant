@@ -2,45 +2,55 @@ import { divIcon } from "leaflet";
 import queryString from "query-string";
 
 var Base = {
+  /**
+   * {err, json-body}
+   */
   doFetch(url, params = {}, next) {
+    console.log(url);
     if (url) {
       fetch(url, {
-        mode: "cors"
+        mode: "cors",
       })
-        .then(response => {
+        .then((response) => {
           return response.text();
         })
-        .then(body => {
+        .then((body) => {
           const parsedBody = Base.isJsonString(body) ? JSON.parse(body) : body;
           next(false, parsedBody);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
           next(error, false);
         });
     }
   },
 
+  /**
+   * deprecated
+   */
   doRequest(url, next) {
     const req = new XMLHttpRequest();
     req.open("GET", url, true); // `false` makes the request synchronous
     req.withCredentials = false;
     req.send();
 
-    const success = out => {
+    const success = (out) => {
       next(JSON.parse(out.responseText));
     };
-    const error = status => {
+    const error = (status) => {
       console.log("err", status);
       next(false);
     };
-    req.onreadystatechange = function() {
+    req.onreadystatechange = function () {
       if (req.readyState == 4) {
         return req.status === 200 ? success(req) : error(req.status);
       }
     };
   },
 
+  /**
+   * returns a list of elements based on given selectors
+   */
   query(context, selectors) {
     const els = context.querySelectorAll(selectors);
     if (els) {
@@ -49,15 +59,25 @@ var Base = {
     return [];
   },
 
-  validGeo(f) {
-    if (f && (f[0] || f[0] === 0) && (f[1] || f[1] === 0)) {
-      if (isFinite(f[0]) && isFinite(f[1])) {
+  /**
+   * checks whether the given feature has a valid geometry
+   */
+  validGeo(feature) {
+    if (
+      feature &&
+      (feature[0] || feature[0] === 0) &&
+      (feature[1] || feature[1] === 0)
+    ) {
+      if (isFinite(feature[0]) && isFinite(feature[1])) {
         return true;
       }
     }
     return false;
   },
 
+  /**
+   * returns a standardized Leaflet divIcon
+   */
   icon(classes, style, size, anchor = false) {
     return divIcon({
       html:
@@ -71,18 +91,21 @@ var Base = {
         '"></i></span>',
       className: "map-sort-icon",
       iconAnchor: anchor ? anchor : [size[0] / 2, size[1]],
-      iconSize: size
+      iconSize: size,
     });
   },
 
   requestConfigFile(configPath, next) {
-    this.doRequest("./configs/" + configPath, data => next(data));
+    this.doFetch("./configs/" + configPath, {}, (err, data) => next(data));
   },
 
   requestDataFile(configPath, next) {
-    this.doRequest("./data/" + configPath, data => next(data));
+    this.doFetch("./data/" + configPath, {}, (err, data) => next(data));
   },
 
+  /**
+   * opens url on a new tab
+   */
   openTab(path) {
     const url =
       path.includes("http://") || path.includes("https://")
@@ -106,22 +129,25 @@ var Base = {
     }
   },
 
-  inExtent(geom, e) {
-    if (!this.validGeo(geom) || !e) {
+  /**
+   * check whether the given geometry is in the extent
+   */
+  inExtent(geom, extent) {
+    if (!this.validGeo(geom) || !extent) {
       return true;
     } else if (geom.ll) {
       return (
-        e[0][0] < geom.ll[0] &&
-        e[1][0] > geom.ll[0] &&
-        e[0][1] < geom.ll[1] &&
-        e[1][1] > geom.ll[1]
+        extent[0][0] < geom.ll[0] &&
+        extent[1][0] > geom.ll[0] &&
+        extent[0][1] < geom.ll[1] &&
+        extent[1][1] > geom.ll[1]
       );
     } else {
       return (
-        e[0][0] < geom[0] &&
-        e[1][0] > geom[0] &&
-        e[0][1] < geom[1] &&
-        e[1][1] > geom[1]
+        extent[0][0] < geom[0] &&
+        extent[1][0] > geom[0] &&
+        extent[0][1] < geom[1] &&
+        extent[1][1] > geom[1]
       );
     }
   },
@@ -134,10 +160,16 @@ var Base = {
     }
   },
 
+  /**
+   * checks whether the value 1 is the same as the value 2
+   */
   same(value1, value2) {
     return value1.toString() === value2.toString();
   },
 
+  /**
+   * tries to parse the given string to JSON and returns false if it is not possible
+   */
   isJsonString(str) {
     try {
       JSON.parse(str);
@@ -190,7 +222,7 @@ var Base = {
         }
         return 0;
       }
-    }
+    },
   },
 
   // TODO: needs something more inteligent
@@ -210,7 +242,7 @@ var Base = {
   },
 
   simScoreMax(w1, ws) {
-    return ws.length ? Math.max(...ws.map(o => this.simScore(w1, o))) : 0;
+    return ws.length ? Math.max(...ws.map((o) => this.simScore(w1, o))) : 0;
   },
 
   simScoreBi(w1, positives, negatives) {
@@ -220,11 +252,7 @@ var Base = {
   },
 
   sanitizeWord(w) {
-    return w
-      .toLowerCase()
-      .trim()
-      .replace(/_/g, "")
-      .replace(/-/g, "");
+    return w.toLowerCase().trim().replace(/_/g, "").replace(/-/g, "");
   },
 
   // split given text into parts based on the charToSplit and return the last part
@@ -278,9 +306,9 @@ var Base = {
 
     return {
       spreadsheetId: Base.getLastPart(spreadsheetIdUrl[0], "/"),
-      sheetid: sheetIdUrl ? Base.getLastPart(sheetIdUrl[0], "=") : false
+      sheetid: sheetIdUrl ? Base.getLastPart(sheetIdUrl[0], "=") : false,
     };
-  }
+  },
 };
 
 module.exports = Base;
