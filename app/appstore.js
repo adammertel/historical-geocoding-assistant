@@ -374,11 +374,13 @@ export default class AppStore extends React.Component {
 
   // changing recordRow
   @action nextRecord = () => {
+    this.saveRecord();
     this.row = this.row === this.noRecords ? this.firstRecordRow : this.row + 1;
     this.updateData();
   };
 
   @action previousRecord = () => {
+    this.saveRecord();
     this.row = this.row === this.firstRecordRow ? this.noRecords : this.row - 1;
     this.updateData();
   };
