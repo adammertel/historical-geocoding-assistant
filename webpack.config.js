@@ -6,9 +6,9 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   resolve: {
-    extensions: [".js", ".jsx"]
+    extensions: [".js", ".jsx"],
   },
-
+  devtool: "inline-source-map",
   watch: true,
   entry: "./app/main.jsx",
   module: {
@@ -17,29 +17,29 @@ module.exports = {
         test: /\.js$|\.jsx$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        }
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.html$/,
         use: [
           {
             loader: "html-loader",
-            options: { minimize: true }
-          }
-        ]
+            options: { minimize: true },
+          },
+        ],
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.scss$/,
         use: [
           "style-loader", // creates style nodes from JS strings
           "css-loader", // translates CSS into CommonJS
-          "sass-loader" // compiles Sass to CSS, using Nodea Sass by default
-        ]
+          "sass-loader", // compiles Sass to CSS, using Nodea Sass by default
+        ],
       },
       { test: /\.(eot|ttf|svg|woff|woff2)$/, loader: "file-loader" },
       {
@@ -50,35 +50,35 @@ module.exports = {
             options: {
               name: "[name].[ext]",
               outputPath: "./assets/media/",
-              publicPath: "./assets/media/"
-            }
-          }
-        ]
-      }
-    ]
+              publicPath: "./assets/media/",
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new HtmlWebPackPlugin({
       template: "./app/index.html",
       filename: "./index.html",
-      favicon: "./app/assets/favicon.ico"
+      favicon: "./app/assets/favicon.ico",
     }),
     new MiniCssExtractPlugin({
       filename: "[name].css",
-      chunkFilename: "[id].css"
+      chunkFilename: "[id].css",
     }),
     new CopyWebpackPlugin(
       [
         { from: "./app/assets", to: "assets" },
         { from: "./app/data", to: "data" },
-        { from: "./app/configs", to: "configs" }
+        { from: "./app/configs", to: "configs" },
       ],
       {}
     ),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
     contentBase: "./dist",
-    hot: true
-  }
+    hot: true,
+  },
 };
