@@ -524,7 +524,7 @@ class Panel extends React.Component {
           <div>
             <Button
               inverted
-              label="open google search"
+              label="Open Google search"
               icon="google"
               onClick={this.handleOpenGSearch.bind(this)}
             />
@@ -532,7 +532,7 @@ class Panel extends React.Component {
           <div>
             <Button
               inverted
-              label="open google maps"
+              label="Open Google Maps"
               icon="map"
               onClick={this.handleOpenGMaps.bind(this)}
             />
@@ -540,7 +540,7 @@ class Panel extends React.Component {
           <div>
             <Button
               inverted
-              label="open peripleo"
+              label="Open Peripleo"
               icon="map-signs"
               onClick={this.handleOpenPeripleo.bind(this)}
             />
@@ -552,7 +552,7 @@ class Panel extends React.Component {
             <div className="checkboxes-line">
               <Checkbox
                 id="switch-otherrecords"
-                label="display all records on map"
+                label="Display all records on map"
                 classes="is-small"
                 checked={store.opts.displayOtherRecords}
                 onChange={store.toggleDisplayOtherRecords.bind(store)}
@@ -566,7 +566,7 @@ class Panel extends React.Component {
               ({" "}
               <Checkbox
                 id="switch-clusters"
-                label="clusters )"
+                label="Clusters )"
                 classes="is-small"
                 checked={store.opts.mapClusters}
                 onChange={store.toggleMapClusters.bind(store)}
@@ -575,11 +575,13 @@ class Panel extends React.Component {
             <div className="checkboxes-line">
               <Checkbox
                 id="switch-focus-onchange"
-                label="focus map on record change ("
+                label="Focus map on record change"
                 classes="is-small"
                 checked={store.opts.focusOnRecordChange}
                 onChange={store.toggleFocusChange.bind(store)}
               />
+            </div>
+            <div className="checkboxes-line">
               <div style={{}} className="field">
                 <div
                   style={{ display: "inline-block", fontSize: 9 }}
@@ -587,7 +589,7 @@ class Panel extends React.Component {
                 >
                   <select
                     value={store.opts.focusZoom}
-                    style={{ borderWidth: 2, margin: "0px 3px" }}
+                    style={{ borderWidth: 2 }}
                     onChange={store.handleChangeSelect.bind(store)}
                   >
                     {[8, 9, 10, 11, 12, 13, 14, 15].map((option, oi) => {
@@ -599,7 +601,7 @@ class Panel extends React.Component {
                     })}
                   </select>
                 </div>
-                <label> zoom level )</label>
+                <label style={{ marginLeft: "5px" }}>Focus zoom level</label>
               </div>
             </div>
             <div className="button-row">

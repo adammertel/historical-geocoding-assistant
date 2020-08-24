@@ -1,5 +1,5 @@
 var Sheet = {
-  scope: "https://www.googleapis.com/auth/spreadsheets", // 'https://www.googleapis.com/auth/spreadsheets',
+  scope: "https://www.googleapis.com/auth/spreadsheets",
   header: [],
 
   noLines: 999999,
@@ -22,13 +22,15 @@ var Sheet = {
     this.sheetId = parsedIds.sid;
 
     this._authentificate(() => {
-      this._pingTable(pinged => {
+      this._pingTable((pinged) => {
         if (pinged) {
           this.storeSheetInfo(() => {
             console.log("sheetName", this.sheetName);
             console.log("spreadsheetName", this.spreadsheetName);
 
-            window["username"] = gapi.auth2
+            window[
+              "username"
+            ] = gapi.auth2
               .getAuthInstance()
               .currentUser.get()
               .getBasicProfile()
@@ -52,11 +54,11 @@ var Sheet = {
       gapi.client
         .request({
           path: this._readLineUrl(lineNo),
-          method: "GET"
+          method: "GET",
         })
         .then(
-          response => next(this._parseRow(response, withoutParsing)),
-          response => {
+          (response) => next(this._parseRow(response, withoutParsing)),
+          (response) => {
             this._reportError(response);
             next(false);
           }
@@ -69,13 +71,13 @@ var Sheet = {
       gapi.client
         .request({
           path: this._readAll(),
-          method: "GET"
+          method: "GET",
         })
         .then(
-          response => {
+          (response) => {
             next(this._parseRecords(response));
           },
-          response => {
+          (response) => {
             this._reportError(response);
             next(false);
           }
@@ -90,11 +92,11 @@ var Sheet = {
         .request({
           path: this._updateLineUrl(lineNo),
           method: "PUT",
-          body: this._updateBody(data)
+          body: this._updateBody(data),
         })
         .then(
-          response => next(response.result.values),
-          response => {
+          (response) => next(response.result.values),
+          (response) => {
             this._reportError(response);
             next(false);
           }
@@ -103,14 +105,16 @@ var Sheet = {
   },
 
   storeSheetInfo(next) {
-    this.getSheetInfo(sheetInfo => {
+    this.getSheetInfo((sheetInfo) => {
       // getting sheet name
-      const sheets = sheetInfo.sheets.map(s => s.properties);
+      const sheets = sheetInfo.sheets.map((s) => s.properties);
       this.spreadsheetName = sheetInfo.properties.title;
       console.log("sheet info", sheetInfo);
 
       if (sheets.length) {
-        const foundSheet = sheets.find(sheet => sheet.sheetId == this.sheetId);
+        const foundSheet = sheets.find(
+          (sheet) => sheet.sheetId == this.sheetId
+        );
         this.sheetName = foundSheet ? foundSheet.title : sheets[0].title;
       }
       next();
@@ -122,11 +126,11 @@ var Sheet = {
       gapi.client
         .request({
           path: this._sheetInfoUrl(),
-          method: "GET"
+          method: "GET",
         })
         .then(
-          response => next(response.result),
-          response => {
+          (response) => next(response.result),
+          (response) => {
             this._reportError(response);
             next(false);
           }
@@ -151,7 +155,7 @@ var Sheet = {
       gapi.auth2
         .init({
           clientId: this.clientId,
-          scope: this.scope
+          scope: this.scope,
         })
         .then(() => {
           this.auth = gapi.auth2.getAuthInstance();
@@ -191,7 +195,7 @@ var Sheet = {
   },
 
   _pingTable(next) {
-    this.readLine(1, true, pingedData => {
+    this.readLine(1, true, (pingedData) => {
       if (pingedData) {
         next(true);
       } else {
@@ -201,7 +205,7 @@ var Sheet = {
   },
 
   _checkColumns(next) {
-    this.readLine(1, true, headerData => {
+    this.readLine(1, true, (headerData) => {
       if (headerData) {
         try {
           this.noColumns = headerData.result.range
@@ -217,7 +221,7 @@ var Sheet = {
   },
 
   _checkRows(next) {
-    this.readAllLines(rowsData => {
+    this.readAllLines((rowsData) => {
       if (rowsData) {
         try {
           this.noLines = Math.max(...Object.keys(rowsData));
@@ -230,7 +234,7 @@ var Sheet = {
   },
 
   _loadHeader(next) {
-    this.readLine(1, true, headerData => {
+    this.readLine(1, true, (headerData) => {
       if (headerData) {
         this.header = headerData.result.values[0];
       }
@@ -297,7 +301,7 @@ var Sheet = {
 
   _updateBody(data) {
     return {
-      values: [data]
+      values: [data],
     };
   },
 
@@ -305,7 +309,7 @@ var Sheet = {
     console.log("ERR");
     console.log(errResponse);
     console.log("ERR");
-  }
+  },
 };
 
 module.exports = Sheet;

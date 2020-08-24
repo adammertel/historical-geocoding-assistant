@@ -283,8 +283,43 @@ table.table.centered {
       .suggestion-name-line {
         display: table;
         margin-left: 0.5rem;
-        div {
+        margin-botto div {
           display: table-cell;
+        }
+        .suggestion-name-line-status {
+          display: table-cell;
+        }
+      }
+
+      .list {
+        margin-left: 1rem;
+        margin-top: 0.2rem;
+        .suggestion {
+          height: 25px;
+          .button {
+            vertical-align: baseline;
+          }
+          .suggestion-label {
+            margin-left: 5px;
+            width: 220px;
+            display: inline-block;
+            white-space: nowrap;
+          }
+          .suggestion-country {
+            margin: 0px 5px;
+            font-size: 8.5px;
+            vertical-align: baseline;
+            padding: 4px;
+            border: 1px solid black;
+            margin-right: 0;
+            cursor: default;
+          }
+          .post-icon {
+            margin: -3px 0px 0px 0px;
+            vertical-align: top;
+            padding: 4px;
+            cursor: default;
+          }
         }
       }
 
@@ -310,37 +345,6 @@ table.table.centered {
         padding-top: 0.2rem;
         margin-bottom: 1rem;
         padding-left: 0.5rem;
-
-        .list {
-          margin-left: 1rem;
-          margin-top: 0.5rem;
-          .suggestion {
-            .button {
-              vertical-align: baseline;
-            }
-            .suggestion-label {
-              margin-left: 5px;
-              width: 220px;
-              display: inline-block;
-              white-space: nowrap;
-            }
-            .suggestion-country {
-              margin: 0px 5px;
-              font-size: 8.5px;
-              vertical-align: top;
-              padding: 4px;
-              border: 1px solid black;
-              margin-right: 0;
-              cursor: default;
-            }
-            .post-icon {
-              margin: -3px 0px 0px 0px;
-              vertical-align: top;
-              padding: 4px;
-              cursor: default;
-            }
-          }
-        }
       }
     }
   }
@@ -430,7 +434,7 @@ html {
 }
 
 .checkboxes-line {
-  margin-bottom: 5px;
+  margin-bottom: 7px;
   div {
     display: inline;
   }
