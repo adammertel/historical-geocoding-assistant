@@ -324,6 +324,7 @@ table.table.centered {
       }
 
       .field {
+        display: inline-flex;
         label {
           padding-right: 0;
           margin-right: 0.3rem;
@@ -333,7 +334,6 @@ table.table.centered {
 
     .field {
       margin-bottom: 0.2rem;
-      display: inline-flex;
 
       label::before,
       label::after {
@@ -436,8 +436,9 @@ html {
 }
 
 .checkboxes-line {
+  margin-bottom: 0.2rem;
   div {
-    display: inline;
+    display: inline-flex;
   }
   div:first-child {
     label {
