@@ -6,7 +6,7 @@
     "3": "3 - localized but ambiguous",
     "4": "4 - not found"
   },
-  "defaultSettingsOpen": "columns",
+  "defaultSettingsOpen": false,
   "loadingMessages": {
     "loaded": "",
     "config": "loading config files",
@@ -86,7 +86,10 @@
     "displayOtherRecords": true,
     "mapCenter": [45, 10],
     "mapZoom": 6,
-    "maxGeoExtent": [[-70, -180], [70, 180]],
+    "maxGeoExtent": [
+      [-70, -180],
+      [70, 180]
+    ],
     "columns": {
       "name": "",
       "note": "",

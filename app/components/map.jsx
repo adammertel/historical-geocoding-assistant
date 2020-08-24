@@ -10,7 +10,7 @@ import {
   Marker,
   LayerGroup,
   GeoJSON,
-  Pane
+  Pane,
 } from "react-leaflet";
 
 require("leaflet.measure");
@@ -44,7 +44,7 @@ class AppMap extends React.Component {
       fillColor: "black",
       weight: 0,
       fillOpacity: 1,
-      radius: 3
+      radius: 3,
     };
 
     window["measureControl"] = L.control
@@ -58,23 +58,23 @@ class AppMap extends React.Component {
         measureControlClasses: ["fa", "fa-arrows-h"],
         tempLine: {
           color: "black", // Dashed line color
-          weight: 2 // Dashed line weight
+          weight: 2, // Dashed line weight
         },
         fixedLine: {
           color: "black", // Solid line color
-          weight: 2 // Solid line weight
+          weight: 2, // Solid line weight
         },
         startCircle: measureCircleStyle,
         intermedCircle: measureCircleStyle,
         currentCircle: measureCircleStyle,
-        endCircle: measureCircleStyle
+        endCircle: measureCircleStyle,
       })
       .addTo(map);
 
     window["geonamesControl"] = L.control
       .geonames({
         //position: 'topcenter',  // in addition to standard 4 corner Leaflet control layout, this will position and size from top center
-        geonamesURL: "//api.geonames.org/searchJSON", // override this if using a proxy to get connection to geonames
+        geonamesURL: "http://api.geonames.org/searchJSON", // override this if using a proxy to get connection to geonames
         username: "adammertel", // Geonames account username.  Must be provided
         zoomLevel: null, // Max zoom level to zoom to for location.  If null, will use the map's max zoom level.
         maxresults: 5, // Maximum number of results to display per search
@@ -87,7 +87,7 @@ class AppMap extends React.Component {
         showPopup: true, //Show a tooltip at the selected location
 
         lang: "en",
-        alwaysOpen: false
+        alwaysOpen: false,
       })
       .addTo(map);
   }
@@ -97,7 +97,7 @@ class AppMap extends React.Component {
       position: "absolute",
       left: "0",
       right: "400px",
-      height: "100%"
+      height: "100%",
     };
   }
 
@@ -122,6 +122,9 @@ class AppMap extends React.Component {
       : store.updateRecordLocation(e.latlng.lng, e.latlng.lat);
   }
 
+  /**
+   * render methods
+   */
   renderBaseLayer(top) {
     const basemap = top ? store.basemap1 : store.basemap2;
     const opacity = top
@@ -150,7 +153,7 @@ class AppMap extends React.Component {
     return (
       <div>
         {store.opts.overlays
-          .filter(o => o.opacity)
+          .filter((o) => o.opacity)
           .map((o, oid) => {
             const overlay = overlaymaps[o.id];
             const zIndex = 400 - oid;
@@ -194,8 +197,8 @@ class AppMap extends React.Component {
 
   renderOtherRecords() {
     const records = store.geoRecords
-      .filter(r => Base.validGeo([r.x, r.y]))
-      .filter(r => !Base.same(r.row, store.row))
+      .filter((r) => Base.validGeo([r.x, r.y]))
+      .filter((r) => !Base.same(r.row, store.row))
       .map((record, ri) => {
         return (
           <Marker
@@ -260,7 +263,7 @@ class AppMap extends React.Component {
     return (
       <Pane style={{ zIndex: 500 }} className={"pane-" + id} key={"pane-" + id}>
         {points
-          .filter(g => g && g.ll)
+          .filter((g) => g && g.ll)
           .map((p, pi) => {
             return (
               <CircleMarker
@@ -324,9 +327,9 @@ class AppMap extends React.Component {
           {store.opts.displayOtherRecords && this.renderOtherRecords()}
 
           {SuggestionSources.filter(
-            s =>
+            (s) =>
               !store.loadingSuggestions[s.id] && store.displaySuggestions[s.id]
-          ).map(source =>
+          ).map((source) =>
             this.renderSuggestions(
               source.id,
               store.suggestions[source.id],

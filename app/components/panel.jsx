@@ -37,8 +37,11 @@ class Panel extends React.Component {
   }
 
   /* suggestions actions */
-  handleHighlightSuggestionClick(suggestion) {
+  handleFocusAndHighlightSuggestionClick(suggestion) {
     store.mapFocus(suggestion.ll);
+  }
+  handleHighlightSuggestionClick(suggestion) {
+    store.hlLocality(suggestion.ll);
   }
   handleStoreSuggestionClick(suggestion) {
     store.useSuggestion(suggestion);
@@ -430,13 +433,20 @@ class Panel extends React.Component {
                       const inExtent = suggestion.inExtent;
                       const color = inExtent ? "primary" : "danger";
                       return (
-                        <div key={gi} className="suggestion">
+                        <div
+                          key={gi}
+                          className="suggestion"
+                          onMouseOver={this.handleHighlightSuggestionClick.bind(
+                            this,
+                            suggestion
+                          )}
+                        >
                           <Button
                             tooltip="highlight"
                             icon="lightbulb-o"
                             color={color}
                             inverted
-                            onClick={this.handleHighlightSuggestionClick.bind(
+                            onClick={this.handleFocusAndHighlightSuggestionClick.bind(
                               this,
                               suggestion
                             )}
