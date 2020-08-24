@@ -620,13 +620,11 @@ class Panel extends React.Component {
             </div>
             <div className="button-row">
               <Button
-                inverted
                 label="columns"
                 icon="columns"
                 onClick={this.handleGlobalSettingOpen.bind(this, "columns")}
               />
               <Button
-                inverted
                 label="spatial extent"
                 icon="globe"
                 onClick={this.handleGlobalSettingOpen.bind(this, "extent")}

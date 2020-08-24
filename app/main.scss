@@ -295,7 +295,7 @@ table.table.centered {
         margin-left: 1rem;
         margin-top: 0.2rem;
         .suggestion {
-          height: 25px;
+          height: 1.5rem;
           .button {
             vertical-align: baseline;
           }
@@ -457,7 +457,7 @@ html {
 
 .button-row {
   width: 100%;
-  margin: 10px;
+  margin: 10px 0;
   &.right {
     text-align: right;
     padding-right: 20px;
