@@ -67,14 +67,13 @@ module.exports = {
       filename: "[name].css",
       chunkFilename: "[id].css",
     }),
-    new CopyWebpackPlugin(
-      [
+    new CopyWebpackPlugin({
+      patterns: [
         { from: "./app/assets", to: "assets" },
         { from: "./app/data", to: "data" },
         { from: "./app/configs", to: "configs" },
       ],
-      {}
-    ),
+    }),
     new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
