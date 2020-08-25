@@ -371,18 +371,16 @@ class Panel extends React.Component {
                 key={"suggestion-section-" + source.id}
               >
                 <div className="suggestion-name-line">
-                  <div>
-                    <Checkbox
-                      id={"switch-" + source.id}
-                      label={source.label}
-                      classes="is-small"
-                      checked={store.displaySuggestions[source.id]}
-                      onChange={store.toggleDisplaySuggestion.bind(
-                        store,
-                        source.id
-                      )}
-                    />
-                  </div>
+                  <Checkbox
+                    id={"switch-" + source.id}
+                    label={source.label}
+                    classes="is-small"
+                    checked={store.displaySuggestions[source.id]}
+                    onChange={store.toggleDisplaySuggestion.bind(
+                      store,
+                      source.id
+                    )}
+                  />
                   <div className="suggestion-name-line-status">
                     {status === "ok" && (
                       <div>
@@ -393,8 +391,8 @@ class Panel extends React.Component {
                           classes={["black-halo"]}
                           style={{
                             color: config.colors[source.id],
-                            verticalAlign: "middle",
-                            fontSize: "80%",
+                            verticalAlign: "baseline",
+                            fontSize: "100%",
                           }}
                         />
                       </div>

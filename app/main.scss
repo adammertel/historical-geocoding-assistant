@@ -281,13 +281,18 @@ table.table.centered {
       margin-bottom: 1rem;
 
       .suggestion-name-line {
-        display: table;
+        display: table-row;
         margin-left: 0.5rem;
-        margin-botto div {
-          display: table-cell;
-        }
         .suggestion-name-line-status {
           display: table-cell;
+        }
+      }
+      .field {
+        display: table-cell;
+        label {
+          display: block;
+          padding-right: 0;
+          margin-right: 0.3rem;
         }
       }
 
@@ -320,14 +325,6 @@ table.table.centered {
             padding: 4px;
             cursor: default;
           }
-        }
-      }
-
-      .field {
-        display: inline-flex;
-        label {
-          padding-right: 0;
-          margin-right: 0.3rem;
         }
       }
     }
