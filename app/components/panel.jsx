@@ -185,7 +185,7 @@ class Panel extends React.Component {
           icon="map-marker"
         >
           <div>
-            <table className="table centered">
+            <table className="table centered" style={{ marginBottom: 0 }}>
               <tbody>
                 <tr key="0">
                   <td>x coordinate</td>
@@ -279,7 +279,7 @@ class Panel extends React.Component {
 
             <div>
               {Base.validGeo([store.recordX, store.recordY]) ? (
-                <div className="button-row">
+                <div className="button-row right">
                   <Button
                     inverted
                     onClick={this.handleCoordinatesFocus.bind(this)}
