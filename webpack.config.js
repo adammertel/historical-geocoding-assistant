@@ -8,8 +8,7 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx"],
   },
-  devtool: "inline-source-map",
-  watch: true,
+  devtool: "source-map",
   entry: "./app/main.jsx",
   module: {
     rules: [
