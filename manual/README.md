@@ -39,7 +39,7 @@ Optional note by the editor concerning the localisation process (justification o
 
 #### 2.1.6 Editor
 
-If a column for **Editor** is defined, the email address of the Google account of the last editor will be stored here. This serves to identify the last editors of all records.
+If a column for **Editor** is defined, the email address of the Google account of the last editor that made a change will be stored here. This serves to identify the last editors of all records.
 
 ## 3 Table Prompt
 
@@ -77,7 +77,8 @@ The panel covers the right part of the screen and is used to select and edit rec
 The record selection menu is located under the application logo and has the following subsections:
 
 - **the number of all records** and the position of the selected one;
-- buttons to **select or move to** the next or previous record;
+- **select** list to change the actual record;
+- **goto the next | previous record and save changes** buttons;
 - **discard changes** (to cancel edits of the current record) and **Save** buttons (to store edits to the table).
 
 <img src="./../imgs/records.png" alt="records image" height="200" />
@@ -95,8 +96,7 @@ Document and sheet names and buttons to:
 
 Section where values in the “localisation columns” (described in **2.1**) can be edited. Beneath there are 4 buttons:
 
-- **Highlight** - highlight the current record’s position on the map (without panning);
-- **Focus** - pan and zoom to the position of the record;
+- **Focus** - pan, zoom to the position of the record and highlight the location;
 - **Revert** - use original values as stored in the table;
 - **Clear coordinates** - remove the current coordinates.
 
@@ -118,8 +118,7 @@ This section includes suggestions from geocoding services made on the basis of t
 
 Each suggestion has a set of buttons:
 
-- **Highlight** - highlights the suggested location on the map;
-- **Focus** - pans the map to the suggested location;
+- **Focus** - pans the map to the suggested location and highlight it;
 - **Use coordinates** - pre-fills the coordinates of the suggested location;
 - **External link** - opens an external link relevant to the suggested location; only in the case of some services).
 
@@ -144,7 +143,7 @@ The setting section is used to set additional options and rules:
 - **Display all records on map** - shows all previously geocoded places on the map (as black pins);
 - **Clusters** - will aggregate pins in clusters for clearer arrangement in cases where there are many pins close to each other;
 - **Focus map on record change** - sets whether the map should be refocused when a new record is selected;
-- **Zoom level** - sets the zoom upon refocusing;
+- **Focus zoom level** - sets the zoom upon refocusing;
 - **Columns** - opens a menu with the possibility to reassign column names for reserved localisation columns (see **2.1**);
 - **Spatial extent** - opens a menu to set the geographical bounding box that limits the area taken into account for geocoding suggestions: a warning is displayed if the assigned coordinates fall outside this box.
 

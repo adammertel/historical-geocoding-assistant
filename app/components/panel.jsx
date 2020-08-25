@@ -440,7 +440,7 @@ class Panel extends React.Component {
                           )}
                         >
                           <Button
-                            tooltip="highlight"
+                            tooltip="focus"
                             icon="lightbulb-o"
                             color={color}
                             inverted
