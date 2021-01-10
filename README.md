@@ -15,7 +15,15 @@ The “Historical Geocoding Assistant” is an open-sourced browser-based applic
 - supports multiple overlay layers;
 - allows setting relevant spatial extent;
 - allows spatial uncertainty levels.
-- ...
+- …
+
+## Future Development
+ - integration of additional gazetteers and other relevant services (World-Historical Gazetteer)
+ - possibility to load a custom map service directly from the GUI
+ - further improvement of the algorithm to rank and sort geocode suggestions
+ - management of the custom parametrization of gazetteer calls
+ - integration of line and polygon topologies
+ - user management
 
 ## Testing version
 
