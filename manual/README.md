@@ -1,8 +1,8 @@
-# HISTORICAL GEOCODING ASSISTANT 1.4.0 – MANUAL
+# HISTORICAL GEOCODING ASSISTANT 1.4.2 – MANUAL
 
 ## 1 Description
 
-The “Historical Geocoding Assistant” is an open source browser-based application for assigning geographic coordinates in a more convenient and faster way than copy-pasting them from services such as Google Maps. The application was designed with historical projects in mind but is suitable for any geocoding work.
+The “Historical Geocoding Assistant” is an open-source browser-based application for assigning geographic coordinates in a more convenient and faster way than copy-pasting them from services such as Google Maps. The application was designed with historical projects in mind but is suitable for any geocoding work.
 
 ## 2 Table input
 
@@ -47,7 +47,7 @@ When the application is loaded, a table prompt window is displayed asking for th
 
 <img src="./../imgs/welcome.png" alt="prompt image" height="300" />
 
-## 4 Application layout
+## 4 Application Layout
 
 <img src="./../imgs/layout.png" alt="app layout image" height="400" />
 
@@ -151,7 +151,7 @@ The setting section is used to set additional options and rules:
 
 <img src="./../imgs/columns.png" alt="columns image" height="150" />
 
-## 7 Map control
+## 7 Map Control
 
 The map control menu is located in the bottom-left part of the map and has two subsections:
 
@@ -160,12 +160,20 @@ The map control menu is located in the bottom-left part of the map and has two s
 
 <img src="./../imgs/mapcontrol.png" alt="mapcontrol image" height="400" />
 
-## 8 config files
+## 8 Deployment
+HGA is a client-side application that does not require its own server to run. To deploy your own copy of HGA:
+ - clone the repository
+ - create a ‘config_api.json’ file in ‘app/configs’ with your Google API key and client ID (see below)
+ - install npm and node
+ - install npm dependencies `npm install`
+ - build the application `npm run build`
+ - deploy the `dist` folder to your server
 
 When deploying your own version of HGA, you can use the included config files (json formatted) to customise the content and rules of the application. There are 4 config files:
 
-- **Config.json** - various areas of customisation such as colors, default options etc.;
-- **Config_api.json** - Google API ID and key (note that this file has to be created; it is not in the repository!);
-  `{ "apiKey": YOUR GOOGLE API KEY, "clientId": YOUR CLIENT ID }`
-- **Basemaps.json** - a list of base layers (WMS or tile services);
-- **Mapoverlays.json** - other auxiliary layers in GeoJSON or WMS format (modern countries, etc.).
+- **config.json** - various areas of customisation such as colors, default options etc.;
+- **config_api.json** - Google API ID and key (note that this file has to be created; it is not in the repository!);
+ `{ "apiKey": YOUR GOOGLE API KEY, "clientId": YOUR CLIENT ID }`
+- **basemaps.json** - a list of base layers (WMS or tile services);
+- **papoverlays.json** - other auxiliary layers in GeoJSON or WMS format (modern countries, etc.).
+
