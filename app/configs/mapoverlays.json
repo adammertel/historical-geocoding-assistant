@@ -1,42 +1,42 @@
 {
-  "COUNTRIES_MODERN": {
-    "id": "countries_modern",
-    "name": "modern countries",
-    "file": "admin50.geojson",
-    "info": "natural earth modern countries geojson",
-    "color": "purple",
-    "type": "geojson"
-  },
-  "FRENCH_CANTONS": {
-    "id": "french_cantons",
-    "name": "French cantons",
-    "file": "fra_adm_3.geojson",
-    "info": "simplified geometry of French cantons",
-    "color": "red",
-    "fillOpacity": 0.01,
-    "tooltip": "n",
-    "type": "geojson"
-  },
-  "ROADS": {
-    "id": "roads",
-    "name": "roads of Roman Empire",
-    "info": "roads of the Roman Empire",
-    "url": "http://awmc.unc.edu/cgi-bin/mapserv?map=/awmc-stor/html/awmc/mapfiles/a_la_carte_framework_web_mercator_wms.map",
-    "layers": "roads_m",
-    "format": "image/png",
-    "transparent": "true",
-    "attribution": "awmc",
-    "type": "wms"
-  },
-  "ROME_PROVINCES": {
-    "id": "rome_provinces",
-    "name": "Roman Provinces",
-    "info": "awmc rome provinces",
-    "url": "http://awmc.unc.edu/cgi-bin/mapserv?map=/awmc-stor/html/awmc/mapfiles/a_la_carte_framework_web_mercator_wms.map",
-    "layers": "roman_provinces",
-    "format": "image/png",
-    "transparent": "true",
-    "attribution": "awmc",
-    "type": "wms"
-  }
+    "COUNTRIES_MODERN": {
+        "id": "countries_modern",
+        "name": "modern countries",
+        "file": "admin50.geojson",
+        "info": "natural earth modern countries geojson",
+        "color": "purple",
+        "type": "geojson"
+    },
+    "FRENCH_CANTONS": {
+        "id": "french_cantons",
+        "name": "French cantons",
+        "file": "fra_adm_3.geojson",
+        "info": "simplified geometry of French cantons",
+        "color": "red",
+        "fillOpacity": 0.01,
+        "tooltip": "n",
+        "type": "geojson"
+    },
+    "ROADS": {
+        "id": "roads",
+        "name": "roads of Roman Empire",
+        "info": "roads of the Roman Empire",
+        "url": "http://awmc.unc.edu/cgi-bin/mapserv?map=/awmc-stor/html/awmc/mapfiles/a_la_carte_framework_web_mercator_wms.map",
+        "layers": "roads_m",
+        "format": "image/png",
+        "transparent": "true",
+        "attribution": "awmc",
+        "type": "wms"
+    },
+    "ROME_PROVINCES": {
+        "id": "rome_provinces",
+        "name": "Roman Provinces",
+        "info": "awmc rome provinces",
+        "url": "http://awmc.unc.edu/cgi-bin/mapserv?map=/awmc-stor/html/awmc/mapfiles/a_la_carte_framework_web_mercator_wms.map",
+        "layers": "roman_provinces",
+        "format": "image/png",
+        "transparent": "true",
+        "attribution": "awmc",
+        "type": "wms"
+    }
 }
