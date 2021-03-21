@@ -11,7 +11,7 @@ class TablePrompt extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sheetUrl: ""
+      sheetUrl: "",
     };
     this.exampleSheetUrl =
       "https://docs.google.com/spreadsheets/d/1FaW23x-ZT3pmdmv77eKPJxsfGhoB1urwfvPffN_4keU";
@@ -105,28 +105,45 @@ class TablePrompt extends React.Component {
                     </a>
                   </li>
                 </ul>
-                <div>
-                  Designed and coded by{" "}
-                  <a href="https://github.com/adammertel">
-                    <i className="fa fa-user" /> Adam Mertel
-                  </a>{" "}
-                  and{" "}
-                  <a href="http://www.david-zbiral.cz/">
-                    <i className="fa fa-user" /> David Zbiral
-                  </a>
-                </div>
               </div>
             </div>
+            <Button
+              medium
+              disabled={!validSheet}
+              onClick={this.acceptSheetUrl.bind(this)}
+              label="continue and accept cookies"
+            />
           </div>
         }
-        footerStyle={{ textAlign: "right", display: "block" }}
+        footerStyle={{
+          textAlign: "right",
+          display: "block",
+          backgroundColor: "lightgrey",
+        }}
         footer={
-          <Button
-            medium
-            disabled={!validSheet}
-            onClick={this.acceptSheetUrl.bind(this)}
-            label="continue and accept cookies"
-          />
+          <div>
+            <div>
+              Designed and coded by{" "}
+              <a href="https://github.com/adammertel">
+                <i className="fa fa-user" /> Adam Mertel
+              </a>{" "}
+              and{" "}
+              <a href="http://www.david-zbiral.cz/">
+                <i className="fa fa-user" /> David Zbiral
+              </a>
+            </div>
+            <br />
+            <div>
+              <b>To cite the software: </b>
+            </div>
+            <div>
+              Adam Mertel, David Zbíral, Zdeněk Stachoň, and Hana Hořínková,
+              ‘Historical Geocoding Assistant’, SoftwareX 14 (2021): 100682,
+              <a href="https://doi.org/10.1016/j.softx.2021.100682.">
+                https://doi.org/10.1016/j.softx.2021.100682.
+              </a>
+            </div>
+          </div>
         }
       />
     );

@@ -6,6 +6,11 @@
 
 The “Historical Geocoding Assistant” is an open-sourced browser-based application for assigning geographic coordinates in a more convenient and faster way than copy-pasting them from services such as Google Maps. The application was designed with historical projects in mind but is suitable for any geocoding work
 
+## Citation
+
+To cite the software:
+`Adam Mertel, David Zbíral, Zdeněk Stachoň, and Hana Hořínková, ‘Historical Geocoding Assistant’, SoftwareX 14 (2021): 100682, https://doi.org/10.1016/j.softx.2021.100682.`
+
 ## Essential Features
 
 - works online with a live Google Spreadsheets table;
@@ -18,12 +23,13 @@ The “Historical Geocoding Assistant” is an open-sourced browser-based applic
 - …
 
 ## Future Development
- - integration of additional gazetteers and other relevant services (World-Historical Gazetteer)
- - possibility to load a custom map service directly from the GUI
- - further improvement of the algorithm to rank and sort geocode suggestions
- - management of the custom parametrization of gazetteer calls
- - integration of line and polygon topologies
- - user management
+
+- integration of additional gazetteers and other relevant services (World-Historical Gazetteer)
+- possibility to load a custom map service directly from the GUI
+- further improvement of the algorithm to rank and sort geocode suggestions
+- management of the custom parametrization of gazetteer calls
+- integration of line and polygon topologies
+- user management
 
 ## Testing version
 
