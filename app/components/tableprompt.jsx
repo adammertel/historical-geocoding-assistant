@@ -139,7 +139,7 @@ class TablePrompt extends React.Component {
             <div>
               Adam Mertel, David Zbíral, Zdeněk Stachoň, and Hana Hořínková,
               ‘Historical Geocoding Assistant’, SoftwareX 14 (2021): 100682,
-              <a href="https://doi.org/10.1016/j.softx.2021.100682.">
+              <a href="https://doi.org/10.1016/j.softx.2021.100682">
                 https://doi.org/10.1016/j.softx.2021.100682.
               </a>
             </div>
