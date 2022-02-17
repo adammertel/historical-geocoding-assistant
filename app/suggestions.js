@@ -4,7 +4,7 @@ import Base from "./base";
 var data = {};
 
 const links = {
-  geonames: "http://api.geonames.org",
+  geonames: "https://secure.geonames.org",
   tgaz: "http://maps.cga.harvard.edu",
 };
 
