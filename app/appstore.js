@@ -207,21 +207,16 @@ export default class AppStore extends React.Component {
     return toJS(this._problemSuggestions);
   }
 
-  // check whether the record were changed
+  // check whether the records were changed
   @computed get wasChanged() {
     const cols = this.opts.columns;
 
-    Object.keys(cols).forEach((col) => {
+    return !!Object.keys(cols).find((col) => {
       const colName = this.opts.columns[col];
       const before = this.recordBeforeChanges[colName];
       const now = this.records[this.row][colName];
-      console.log(before, now);
-      if ((before || now) && before != now) {
-        return true;
-      }
+      return (before || now) && before != now;
     });
-
-    return false;
   }
 
   /* ACTIONS */
