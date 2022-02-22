@@ -5,7 +5,8 @@ var data = {};
 
 const links = {
   geonames: "https://secure.geonames.org",
-  tgaz: "http://maps.cga.harvard.edu",
+  tgaz: "https://maps.cga.harvard.edu",
+  nominatim: "https://nominatim.openstreetmap.org/search",
 };
 
 var mapRecord = (recordData, mapObject) => {
@@ -70,6 +71,41 @@ const suggestionGeonames = {
     name: (r) => r.name,
     url: (r) => "",
     type: (r) => r.fcodeName,
+    info: (r) => "",
+  },
+};
+
+const suggestionNominatim = {
+  id: "nominatim",
+  label: "Nominatim",
+  urls: {
+    base: (term) =>
+      links.nominatim +
+      "?format=json&" +
+      "q=" +
+      encodeURIComponent(term) +
+      "&maxRows=10",
+  },
+  getRecords: (source, term, opts, next) => {
+    const url = source.urls.base(term);
+    _doFetch(url, {}, next, (res) => {
+      if (res) {
+        next(mapRecords(res, source.recordMap), false);
+      } else {
+        next([], false);
+      }
+    });
+  },
+  recordMap: {
+    ll: (r) => [parseFloat(r.lat), parseFloat(r.lon)],
+    country: (r) => "",
+    rank: (r) => r.importance,
+    name: (r) => r.display_name,
+    url: (r) =>
+      `https://nominatim.openstreetmap.org/ui/details.html?osmtype=${r.osm_type[0].toUpperCase()}&osmid=${
+        r.osm_id
+      }`,
+    type: (r) => r.type,
     info: (r) => "",
   },
 };
@@ -160,8 +196,6 @@ const suggestionTGN = {
       const doc = domparser.parseFromString(res, "text/html");
       const resultNodes = Base.query(doc, "#results table tbody tr");
 
-      console.log("resultNodes", resultNodes);
-
       let results = [];
       results = resultNodes.map((result) => {
         const tds = Base.query(result, "td").map((t) => t.textContent);
@@ -240,7 +274,7 @@ const suggestionPleiades = {
   label: "Pleiades",
   preload: () => {
     Base.doFetch(
-      "//raw.githubusercontent.com/ryanfb/pleiades-geojson/gh-pages/name_index.json",
+      "https://raw.githubusercontent.com/ryanfb/pleiades-geojson/gh-pages/name_index.json",
       {},
       (err, res) => {
         if (res) {
@@ -251,7 +285,7 @@ const suggestionPleiades = {
   },
   urls: {
     record: (id) => {
-      return "http://pleiades.stoa.org/places/" + id + "/json";
+      return "https://pleiades.stoa.org/places/" + id + "/json";
     },
   },
   getRecords: (source, term, opts, next) => {
@@ -326,7 +360,8 @@ const suggestionPleiades = {
 var SuggestionSources = [
   suggestionGeonames,
   suggestionWiki,
-  suggestionTGN,
+  // suggestionTGN,
+  suggestionNominatim,
   suggestionPleiades,
   suggestionChina,
 ];

@@ -564,7 +564,7 @@ class Panel extends React.Component {
             <div className="checkboxes-line">
               <Checkbox
                 id="switch-otherrecords"
-                label="Display all records on map"
+                label="Display all geocoded records on map"
                 classes="is-small"
                 checked={store.opts.displayOtherRecords}
                 onChange={store.toggleDisplayOtherRecords.bind(store)}

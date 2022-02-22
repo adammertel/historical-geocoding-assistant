@@ -32,7 +32,8 @@
     "wiki": "#05a640",
     "tgaz": "#a69105",
     "getty": "#a60569",
-    "pleiades": "yellow"
+    "pleiades": "yellow",
+    "nominatim": "#a60569"
   },
   "columnNames": {
     "name": {
