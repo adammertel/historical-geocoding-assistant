@@ -1,0 +1,56 @@
+# CI stages to execute against master branch on PR merge
+name: deploy
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  stagedeploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v2
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }} 
+          known_hosts: ${{ secrets.KNOWN_HOSTS }} 
+
+      - name: Create config_api 
+        run: |
+          touch app/configs/config_api.json
+          echo "$CONFIG_API" >> app/configs/config_api.json
+        env:
+          CONFIG_API: ${{secrets.CONFIG_API}}
+
+      - name: Build client
+        run: |
+          npm install
+          npm run build
+
+      - name: Install OpenVPN
+        run: |
+          sudo apt install -y openvpn openvpn-systemd-resolved
+
+      - name: Prepare OpenVPN creds file
+        run: |
+          touch pass.txt
+          echo ${{ secrets.VPN_USER }} >> pass.txt
+          echo ${{ secrets.VPN_PASS }} >> pass.txt
+
+      - name: Pull OpenVPN Config
+        run: |
+          curl https://it.muni.cz/media/3240842/muni-linux.ovpn -o muni-linux.ovpn
+
+      - name: Connect to VPN and deploy
+        run: |
+          sudo openvpn --config muni-linux.ovpn --auth-user-pass pass.txt --daemon
+          sleep 20s
+
+      - name: Deploy 
+        run: ./deploy-beta.sh ${{ secrets.SSH_USER }} ${{ secrets.SSH_HOST }}
