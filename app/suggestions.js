@@ -52,7 +52,7 @@ const suggestionGeonames = {
       "q=" +
       encodeURIComponent(term) +
       "&maxRows=10" +
-      "&username=adammertel",
+      "&username=dissinet_hga",
   },
   getRecords: (source, term, opts, next) => {
     const url = source.urls.base(term);
@@ -120,7 +120,7 @@ const suggestionWiki = {
       "q=" +
       encodeURIComponent(term) +
       "&maxRows=10" +
-      "&username=adammertel&",
+      "&username=dissinet_hga",
   },
   getRecords: (source, term, opts, next) => {
     const url = source.urls.base(term);
