@@ -19,7 +19,10 @@ jobs:
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }} 
-          known_hosts: ${{ secrets.KNOWN_HOSTS }} 
+          known_hosts: 'placeholder'
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: Create config_api 
         run: |
