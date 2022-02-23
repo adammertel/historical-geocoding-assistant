@@ -21,9 +21,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }} 
           known_hosts: 'paceholder'
 
-      - name: Adding Known Hosts
-        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-
       - name: Create config_api 
         run: |
           touch app/configs/config_api.json
@@ -50,10 +47,13 @@ jobs:
         run: |
           curl https://it.muni.cz/media/3240842/muni-linux.ovpn -o muni-linux.ovpn
 
-      - name: Connect to VPN and deploy
+      - name: Connect to VPN
         run: |
           sudo openvpn --config muni-linux.ovpn --auth-user-pass pass.txt --daemon
           sleep 20s
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy 
         run: ./deploy-beta.sh ${{ secrets.SSH_USER }} ${{ secrets.SSH_HOST }}
