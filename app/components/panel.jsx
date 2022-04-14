@@ -7,7 +7,7 @@ import Checkbox from "./../bulma/checkbox";
 import Input from "./../bulma/input";
 
 import Sheet from "./../sheet.js";
-const logoPath = require("./../assets/logo.png");
+const {default: logoPath} = require("./../assets/logo.png");
 
 class Panel extends React.Component {
   constructor(props) {
@@ -233,7 +233,7 @@ class Panel extends React.Component {
                   <td>
                     <div className="select" style={{ width: "100%" }}>
                       <select
-                        style={{ fontSize: "11px", width: "100%" }}
+                        style={{  width: "100%" }}
                         value={store.recordCertainty}
                         onChange={this.handleChangeCertainty.bind(this)}
                       >
@@ -596,7 +596,6 @@ class Panel extends React.Component {
             <div className="checkboxes-line">
               <div style={{}} className="field">
                 <div
-                  style={{ display: "inline-block", fontSize: 9 }}
                   className="select"
                 >
                   <select

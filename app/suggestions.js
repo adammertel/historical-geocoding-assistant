@@ -365,4 +365,5 @@ var SuggestionSources = [
   suggestionPleiades,
   suggestionChina,
 ];
-module.exports = SuggestionSources;
+
+export default SuggestionSources;

@@ -4,7 +4,9 @@ import Modal from "./../bulma/modal";
 import Input from "./../bulma/input";
 import Button from "./../bulma/button";
 
-const logoPath = require("./../assets/logo.png");
+const {default: logoPath} = require("./../assets/logo.png");
+
+console.log(logoPath)
 
 @observer
 class TablePrompt extends React.Component {
