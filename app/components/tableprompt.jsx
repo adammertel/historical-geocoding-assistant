@@ -49,9 +49,6 @@ class TablePrompt extends React.Component {
             <div id="version">{"version " + window["version"]}</div>
             <div className="prompt-content">
               <div className="section inputurl-section">
-              The application is currently down. We are working on a new version that we expect at the beginning of 2022. Sorry for the inconvenience.
-                </div>
-              <div className="section inputurl-section">
                 Copy-paste the URL of your Google Sheets table::
                 <Input
                   value={this.state.sheetUrl}
