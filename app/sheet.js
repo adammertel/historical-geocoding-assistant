@@ -20,33 +20,58 @@ var Sheet = {
     console.log("initializing sheet", parsedIds);
     this.spreadsheetId = parsedIds.did;
     this.sheetId = parsedIds.sid;
+    this._loadGapi(() => {
+      this._authentificate(() => {
+        this._pingTable((pinged) => {
+          if (pinged) {
+            this.storeSheetInfo(() => {
+              console.log("sheetName", this.sheetName);
+              console.log("spreadsheetName", this.spreadsheetName);
 
-    this._authentificate(() => {
-      this._pingTable((pinged) => {
-        if (pinged) {
-          this.storeSheetInfo(() => {
-            console.log("sheetName", this.sheetName);
-            console.log("spreadsheetName", this.spreadsheetName);
+              window["username"] = gapi.auth2
+                .getAuthInstance()
+                .currentUser.get()
+                .getBasicProfile()
+                .getName();
 
-            window[
-              "username"
-            ] = gapi.auth2
-              .getAuthInstance()
-              .currentUser.get()
-              .getBasicProfile()
-              .getName();
+              console.log("username", username);
 
-            console.log("username", username);
-
-            this._preRead(next);
-          });
-        } else {
-          alert("table was not ititialized, wrong id");
-          location.hash = "";
-          location.reload();
-        }
+              this._preRead(next);
+            });
+          } else {
+            alert("table was not ititialized, wrong id");
+            location.hash = "";
+            location.reload();
+          }
+        });
       });
     });
+
+    // this._authentificate(() => {
+    //   this._pingTable((pinged) => {
+    //     if (pinged) {
+    //       this.storeSheetInfo(() => {
+    //         console.log("sheetName", this.sheetName);
+    //         console.log("spreadsheetName", this.spreadsheetName);
+
+    //         // window["username"] = gapi.auth2
+    //         //   .getAuthInstance()
+    //         //   .currentUser.get()
+    //         //   .getBasicProfile()
+    //         //   .getName();
+    //         window["username"] = "test";
+
+    //         console.log("username", username);
+
+    //         this._preRead(next);
+    //       });
+    //     } else {
+    //       alert("table was not ititialized, wrong id");
+    //       location.hash = "";
+    //       location.reload();
+    //     }
+    //   });
+    // });
   },
 
   readLine(lineNo, withoutParsing, next) {
@@ -147,36 +172,64 @@ var Sheet = {
     );
   },
 
-  _authentificate(next) {
-    gapi.load("client:auth2", () => {
-      store.changeLoadingStatus("table");
-      // gapi.client.setApiKey(this.apiKey);
-
-      gapi.auth2
+  _loadGapi(next) {
+    gapi.load("client", () => {
+      gapi.client
         .init({
           clientId: this.clientId,
           scope: this.scope,
         })
         .then(() => {
-          this.auth = gapi.auth2.getAuthInstance();
-
-          if (this.auth.isSignedIn.get()) {
-            next();
-          } else {
-            alert(
-              "Application needs to be signed in - please enable pop-ups and reload the page to log in"
-            );
-
-            const signedStateChanged = () => {
-              console.log("should be signed in now");
-              next();
-            };
-            this.auth.isSignedIn.listen(signedStateChanged);
-            this.auth.signIn();
-          }
+          this.gapiInited = true;
+          next();
         });
     });
   },
+
+  _authentificate(next) {
+    google.accounts.id.initialize({
+      client_id: this.clientId,
+      scope: this.scope,
+      callback: (sth) => {
+        console.log(sth);
+      },
+    });
+    google.accounts.id.prompt();
+    next();
+  },
+
+  // _authentificate(next) {
+  //   gapi.load("client:auth2", () => {
+  //     store.changeLoadingStatus("table");
+  //     // gapi.client.setApiKey(this.apiKey);
+
+  //     gapi.auth2
+  //       .init({
+  //         clientId: this.clientId,
+  //         scope: this.scope,
+  //       })
+  //       .then(() => {
+  //         //this.auth = gapi.auth2.getAuthInstance();
+  //         console.log(this.auth);
+  //         next();
+
+  //         // if (this.auth.isSignedIn.get()) {
+  //         //   next();
+  //         // } else {
+  //         //   alert(
+  //         //     "Application needs to be signed in - please enable pop-ups and reload the page to log in"
+  //         //   );
+
+  //         //   const signedStateChanged = () => {
+  //         //     console.log("should be signed in now");
+  //         //     next();
+  //         //   };
+  //         //   this.auth.isSignedIn.listen(signedStateChanged);
+  //         //   this.auth.signIn();
+  //         // }
+  //       });
+  //   });
+  // },
 
   _ensureAuthentificated(next) {
     if (this.auth) {
