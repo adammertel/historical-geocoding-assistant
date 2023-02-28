@@ -4,7 +4,9 @@ import Modal from "./../bulma/modal";
 import Input from "./../bulma/input";
 import Button from "./../bulma/button";
 
-const logoPath = require("./../assets/logo.png");
+const {default: logoPath} = require("./../assets/logo.png");
+
+console.log(logoPath)
 
 @observer
 class TablePrompt extends React.Component {
@@ -48,9 +50,6 @@ class TablePrompt extends React.Component {
             <img src={logoPath} alt="logo" className="logo" />
             <div id="version">{"version " + window["version"]}</div>
             <div className="prompt-content">
-              <div className="section inputurl-section">
-              The application is currently down. We are working on a new version that we expect at the beginning of 2022. Sorry for the inconvenience.
-                </div>
               <div className="section inputurl-section">
                 Copy-paste the URL of your Google Sheets table::
                 <Input

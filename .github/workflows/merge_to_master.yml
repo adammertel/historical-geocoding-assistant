@@ -19,7 +19,7 @@ jobs:
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }} 
-          known_hosts: ${{ secrets.KNOWN_HOSTS }} 
+          known_hosts: 'placeholder'
 
       - name: Create config_api 
         run: |
@@ -47,10 +47,13 @@ jobs:
         run: |
           curl https://it.muni.cz/media/3404274/muni-main-linux.ovpn -o muni-linux.ovpn
 
-      - name: Connect to VPN and deploy
+      - name: Connect to VPN
         run: |
           sudo openvpn --config muni-linux.ovpn --auth-user-pass pass.txt --daemon
           sleep 20s
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy 
         run: ./deploy.sh ${{ secrets.SSH_USER }} ${{ secrets.SSH_HOST }}

@@ -1,5 +1,7 @@
 const webpack = require("webpack");
 
+const fs = require("fs");
+
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -40,7 +42,18 @@ module.exports = {
           "sass-loader", // compiles Sass to CSS, using Nodea Sass by default
         ],
       },
-      { test: /\.(eot|ttf|svg|woff|woff2)$/, loader: "file-loader" },
+      // {
+      //   test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+      //   use: [
+      //     {
+      //       loader: "file-loader",
+      //       options: {
+      //         name: "[name].[ext]",
+      //         outputPath: "fonts/",
+      //       },
+      //     },
+      //   ],
+      // },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
@@ -76,7 +89,11 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
-    contentBase: "./dist",
+    static: "./dist",
+    host: "localhost",
+    liveReload: true,
+    server: "https",
+    open: true,
     hot: true,
   },
 };

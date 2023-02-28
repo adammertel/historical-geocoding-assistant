@@ -212,10 +212,9 @@ table.table.centered {
     right: 10px;
   }
   div.select {
-    height: auto;
-    line-height: 1.5;
+    height: auto !important;
     select {
-      font-family: "FontAwesome", "sans-serif";
+      font-size: 11px !important;
       border-color: $primary;
     }
   }
@@ -461,6 +460,7 @@ html {
   }
   .button {
     margin-right: 3px;
+    padding-left: 1em;
   }
 }
 

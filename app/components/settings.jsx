@@ -225,7 +225,7 @@ class Settings extends React.Component {
       this.state.extentCorner2
     );
 
-    const basemap = store.basemapById("OSM");
+    const basemap = store.basemapById("OSM_DE");
 
     return (
       <div className="extent-map-wrapper">
