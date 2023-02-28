@@ -10,6 +10,7 @@
     "clean-dist": "rm -f -r -d dist"
   },
   "dependencies": {
+    "@babel/core": "^7.21.0",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-proposal-decorators": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
