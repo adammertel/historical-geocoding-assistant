@@ -50,7 +50,10 @@ jobs:
       - name: Connect to VPN
         run: |
           sudo openvpn --config muni-linux.ovpn --auth-user-pass pass.txt --daemon
-          sleep 20s
+
+      - name: Wait for a VPN connection
+        timeout-minutes: 2
+        run: until ping -w 2 ${{ secrets.SSH_HOST }}; do sleep 2; done
 
       - name: Deploy 
         run: ./deploy.sh ${{ secrets.SSH_USER }} ${{ secrets.SSH_HOST }}
