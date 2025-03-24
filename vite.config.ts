@@ -4,6 +4,21 @@ import path from "path";
 import tailwindcss from "@tailwindcss/vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
+// Create a consistent CSP string for both server and preview
+const createCspHeader = () => {
+  return `
+    default-src 'self'; 
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://accounts.google.com https://apis.google.com https://*.gstatic.com; 
+    script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://accounts.google.com https://apis.google.com https://*.gstatic.com; 
+    connect-src 'self' https://accounts.google.com https://sheets.googleapis.com https://www.googleapis.com https://raw.githubusercontent.com https://*.github.io https://*.githubusercontent.com; 
+    frame-src https://accounts.google.com https://content-sheets.googleapis.com https://*.google.com; 
+    form-action 'self' https://accounts.google.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+    img-src 'self' data: https://*.googleusercontent.com https://*.gstatic.com https://*.github.io https://*.githubusercontent.com; 
+    font-src 'self' https://fonts.gstatic.com;
+  `.replace(/\s+/g, " ");
+};
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   // Load environment variables based on mode
@@ -128,12 +143,27 @@ export default defineConfig(({ mode }) => {
       watch: {
         usePolling: true,
       },
+      // Add headers for development server
+      headers: {
+        "Content-Security-Policy": createCspHeader(),
+      },
     },
     preview: {
       port: 4173,
+      // Also add headers for preview server
+      headers: {
+        "Content-Security-Policy": createCspHeader(),
+      },
     },
     optimizeDeps: {
-      include: ["react", "react-dom", "mobx", "leaflet"],
+      include: [
+        "react",
+        "react-dom",
+        "mobx",
+        "leaflet",
+        "gapi-script",
+        "google-auth-library",
+      ],
       exclude: ["react-leaflet-markercluster"],
     },
     // Disable the public directory since we're using the app directory as root

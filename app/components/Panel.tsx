@@ -1,6 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 import { Menu, MenuLabel, Button } from "./ui";
+import { Sheet } from "lucide-react";
 
 interface PanelProps {
   // Add any props if needed
@@ -12,6 +13,8 @@ const Panel: React.FC<PanelProps> = observer(() => {
   if (!store.shouldRenderApp) {
     return null;
   }
+
+  console.log("store", store);
 
   return (
     <div className="panel">
@@ -78,9 +81,9 @@ const Panel: React.FC<PanelProps> = observer(() => {
         <div className="menu-content">
           {/* Suggestions section */}
           <div className="suggestion-section">
-            {store.suggestions.length > 0 ? (
+            {store.combinedSuggestions.length > 0 ? (
               <div className="list">
-                {store.suggestions.map((suggestion: any, i: number) => (
+                {store.combinedSuggestions.map((suggestion: any, i: number) => (
                   <div key={i} className="suggestion">
                     <Button
                       onClick={() => store.selectSuggestion(suggestion)}

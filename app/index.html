@@ -11,13 +11,19 @@
       content="Geocoding, Historical research, Spatial Humanities" />
     <meta name="author" content="Adam Mertel |  David Zbíral | dissinet.cz" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; 
+               script-src 'self' 'unsafe-inline' 'unsafe-eval' https://accounts.google.com https://apis.google.com https://*.gstatic.com; 
+               script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://accounts.google.com https://apis.google.com https://*.gstatic.com; 
+               connect-src 'self' https://accounts.google.com https://sheets.googleapis.com https://www.googleapis.com https://oauth2.googleapis.com https://people.googleapis.com https://raw.githubusercontent.com https://*.github.io https://*.githubusercontent.com; 
+               frame-src https://accounts.google.com https://content-sheets.googleapis.com https://*.google.com; 
+               form-action 'self' https://accounts.google.com;
+               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+               img-src 'self' data: https://*.googleusercontent.com https://*.gstatic.com https://*.github.io https://*.githubusercontent.com; 
+               font-src 'self' https://fonts.gstatic.com;" />
     <!-- Website Title -->
     <title>Historical geocoding assistant</title>
-
-    <!-- External JS scripts -->
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <!-- Expose React globally for libraries that expect it -->
     <script type="module">

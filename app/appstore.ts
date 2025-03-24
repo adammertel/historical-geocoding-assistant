@@ -134,6 +134,11 @@ export default class AppStore {
       handleChangeSelect: action,
       toggleFocusChange: action,
 
+      prevPlace: action,
+      nextPlace: action,
+      saveLocation: action,
+      selectSuggestion: action,
+
       mapPosition: computed,
       basemap1: computed,
       basemap2: computed,
@@ -160,6 +165,13 @@ export default class AppStore {
       wasChanged: computed,
       noRecords: computed,
       firstRecordRow: computed,
+      placeIndex: computed,
+      rowsNumber: computed,
+      currentPlacename: computed,
+      currentRow: computed,
+      hasLocationSelected: computed,
+      selectedLocation: computed,
+      combinedSuggestions: computed,
     });
 
     SuggestionSources.forEach((source) => {
@@ -169,10 +181,16 @@ export default class AppStore {
 
   saveEmail(email: string): void {
     this.userEmail = email;
+    window.username = email;
   }
 
   setAuth(auth: string): void {
     this.auth = auth;
+
+    // If authentication is successful, load the application
+    if (auth === "yes") {
+      this.loadApplication();
+    }
   }
 
   /* INITIALIZE */
@@ -189,6 +207,18 @@ export default class AppStore {
     } else {
       this.row = this.opts.defaultRow;
     }
+
+    // Explicitly don't set shouldRenderApp here - it's controlled by the TablePrompt
+    // and should only be true after user clicks "continue"
+
+    Sheet.init(() => {
+      // Once Sheet is initialized, load data
+      this.loadTable(() => {
+        // Data loaded, change status to loaded
+        this.changeLoadingStatus("loaded");
+        console.log("Sheet initialized and data loaded");
+      });
+    });
   }
 
   findDefaultColumnNames(): void {
@@ -325,7 +355,7 @@ export default class AppStore {
   }
 
   get tablePrompt(): boolean {
-    return this.loadingStatus === "prompting table";
+    return this.loadingStatus === "prompting table" && !this.shouldRenderApp;
   }
 
   get loadingMessage(): string {
@@ -389,10 +419,14 @@ export default class AppStore {
   }
 
   loadApplication(): void {
-    this.changingLoadingStatus = true;
-    setTimeout(() => {
+    // Check if we have valid hash parameters to load a sheet
+    if (Base.validHash() && this.auth === "yes") {
+      // Authentication is valid, but don't set shouldRenderApp here
+      // It should be set only after user clicks "continue" in TablePrompt
       this.changeLoadingStatus("loaded");
-    }, config.messageLoadingTime);
+    } else {
+      this.changeLoadingStatus("prompting table");
+    }
   }
 
   // map
@@ -442,8 +476,40 @@ export default class AppStore {
   }
 
   useSuggestion(geoname: { ll: LatLng }): void {
-    this.updateRecordLocation(geoname.ll[1], geoname.ll[0]);
-    if (!map.getBounds().contains(L.latLng(geoname.ll[0], geoname.ll[1]))) {
+    // Safety check for valid geoname with lat/lng
+    if (
+      !geoname ||
+      !geoname.ll ||
+      !Array.isArray(geoname.ll) ||
+      geoname.ll.length < 2
+    ) {
+      console.warn("Invalid suggestion data:", geoname);
+      return;
+    }
+
+    const [lat, lng] = geoname.ll;
+
+    // Update record location with the coordinates
+    this.updateRecordLocation(lng, lat);
+
+    // Check if the map is defined before trying to access its methods
+    if (
+      typeof map !== "undefined" &&
+      map &&
+      typeof map.getBounds === "function"
+    ) {
+      try {
+        // Focus map on the location if it's not already visible
+        if (!map.getBounds().contains(L.latLng(lat, lng))) {
+          this.mapCenterChange(geoname.ll);
+        }
+      } catch (error) {
+        console.error("Error when checking map bounds:", error);
+        // Fallback: always center the map on the selected location
+        this.mapCenterChange(geoname.ll);
+      }
+    } else {
+      // If map is not initialized, just center on the coordinates
       this.mapCenterChange(geoname.ll);
     }
   }
@@ -594,9 +660,26 @@ export default class AppStore {
   updateData(next: () => void = () => {}): void {
     this.changeLoadingStatus("record");
     Sheet.readAllLines((data) => {
+      // Check if we received valid data
+      if (!data || Object.keys(data).length === 0) {
+        console.error("No data loaded from sheet - empty response");
+        this.changeLoadingStatus("prompting table");
+        this.shouldRenderApp = false;
+        return;
+      }
+
+      console.log(`Loaded ${Object.keys(data).length} records from sheet`);
       this.records = data;
 
-      this.recordBeforeChanges = Object.assign({}, data[this.row]);
+      // Safety check for this row existing in the data
+      if (!data[this.row]) {
+        console.warn(
+          `Row ${this.row} not found in data, resetting to first row`
+        );
+        this.row = this.firstRecordRow;
+      }
+
+      this.recordBeforeChanges = Object.assign({}, data[this.row] || {});
       Object.keys(this.recordBeforeChanges).forEach((recordKey) => {
         if (this.recordBeforeChanges[recordKey] === undefined) {
           this.records[this.row][recordKey] = "";
@@ -614,6 +697,7 @@ export default class AppStore {
 
   loadTable(next: () => void): void {
     Sheet.readAllLines((data) => {
+      console.log("reading data", data);
       this.records = data;
       next();
     });
@@ -749,5 +833,131 @@ export default class AppStore {
       const floatCoef = config.coordinatesPrecision;
       return Math.round(parseFloat(coord.toString()) * floatCoef) / floatCoef;
     }
+  }
+
+  // Panel navigation methods
+  prevPlace(): void {
+    this.saveRecord();
+    this.previousRecord();
+  }
+
+  canPrevPlace(): boolean {
+    return this.row > this.firstRecordRow;
+  }
+
+  nextPlace(): void {
+    this.saveRecord();
+    this.nextRecord();
+  }
+
+  canNextPlace(): boolean {
+    return this.row < this.noRecords;
+  }
+
+  // Getter properties needed by Panel
+  get placeIndex(): number {
+    return this.rowsNumber > 0 ? this.row - this.firstRecordRow : 0;
+  }
+
+  get rowsNumber(): number {
+    return Object.keys(this.records).length;
+  }
+
+  get currentPlacename(): string {
+    return this.recordName;
+  }
+
+  get currentRow(): number {
+    return this.row;
+  }
+
+  get hasLocationSelected(): boolean {
+    return this.validRecordCoordinates;
+  }
+
+  get selectedLocation(): { name: string; lat: number; lng: number } {
+    return {
+      name: this.recordPlacename || this.recordName,
+      lat: parseFloat(this.recordY),
+      lng: parseFloat(this.recordX),
+    };
+  }
+
+  saveLocation(): void {
+    this.saveRecord();
+    this.nextRecord();
+  }
+
+  selectSuggestion(suggestion: any): void {
+    if (!suggestion) return;
+
+    // Check if the suggestion has latitude/longitude data
+    if (
+      suggestion.ll &&
+      Array.isArray(suggestion.ll) &&
+      suggestion.ll.length >= 2
+    ) {
+      this.useSuggestion(suggestion);
+
+      // Update place name if available
+      if (typeof suggestion.name === "string") {
+        this.updateRecordValue(this.opts.columns.placeName, suggestion.name);
+      }
+
+      // Update notes with country information if available
+      if (typeof suggestion.country === "string") {
+        const currentNotes = this.recordNotes || "";
+        const locationInfo = `${suggestion.name || ""}, ${suggestion.country}`;
+
+        // Append to existing notes or create new note
+        const noteText = currentNotes
+          ? `${currentNotes}; ${locationInfo}`
+          : locationInfo;
+
+        this.updateRecordValue(this.opts.columns.note, noteText);
+      }
+    }
+  }
+
+  // Getting all suggestions across sources
+  get combinedSuggestions(): any[] {
+    const allSuggestions: any[] = [];
+    const suggestionData = this.suggestions || {};
+
+    // Combine suggestions from all sources
+    Object.entries(suggestionData).forEach(([sourceId, sourceSuggestions]) => {
+      if (this.displaySuggestions[sourceId] && sourceSuggestions) {
+        // Ensure sourceSuggestions is an array before iterating
+        (Array.isArray(sourceSuggestions) ? sourceSuggestions : []).forEach(
+          (suggestion) => {
+            if (suggestion) {
+              allSuggestions.push({
+                ...suggestion,
+                source: sourceId,
+              });
+            }
+          }
+        );
+      }
+    });
+
+    // Sort suggestions - in-extent first, then alphabetically
+    return allSuggestions.sort((a, b) => {
+      // Handle missing inExtent property
+      const aInExtent =
+        a && typeof a.inExtent === "boolean" ? a.inExtent : false;
+      const bInExtent =
+        b && typeof b.inExtent === "boolean" ? b.inExtent : false;
+
+      if (aInExtent !== bInExtent) {
+        return aInExtent ? -1 : 1;
+      }
+
+      // Handle missing name property
+      const aName = a && typeof a.name === "string" ? a.name : "";
+      const bName = b && typeof b.name === "string" ? b.name : "";
+
+      return aName.localeCompare(bName);
+    });
   }
 }

@@ -1,5 +1,6 @@
 import Base from "./base";
-import { RecordData } from "./types";
+import { RecordData } from "./types/index";
+import { gapi } from "gapi-script";
 
 // Define types for sheet responses and use proper type guards
 interface SheetResponse {
@@ -15,6 +16,8 @@ interface SheetInfo {
     index: number;
   };
 }
+
+type SheetCallback<T> = (data: T) => void;
 
 // Type guard to check if an object is a SheetResponse
 function isSheetResponse(obj: any): obj is SheetResponse {
@@ -35,21 +38,11 @@ declare global {
       apiKey: string;
       loadingMessages: Record<string, string>;
     };
-    gapi: {
-      load: (api: string, options: any) => void;
-      client: {
-        init: (options: any) => Promise<any>;
-        request: (options: any) => Promise<any>;
-      };
-      auth2: {
-        getAuthInstance: () => any;
-        init: (options: any) => Promise<any>;
-      };
-    };
     store: {
       userEmail: string;
       setAuth: (status: string) => void;
       loadApplication: () => void;
+      changeLoadingStatus: (status: string) => void;
     };
   }
 }
@@ -59,7 +52,7 @@ interface Sheet {
   header: string[];
   noLines: number;
   noColumns: string;
-  auth: any;
+  auth: gapi.auth2.GoogleAuth | null;
   spreadsheetId: string | false;
   spreadsheetName: string | false;
   sheetId: string | false;
@@ -71,20 +64,20 @@ interface Sheet {
   readLine(
     lineNo: number,
     withoutParsing: boolean,
-    next: (data: SheetResponse | RecordData | null) => void
+    next: SheetCallback<SheetResponse | RecordData | null>
   ): void;
-  readAllLines(next: (data: Record<string, RecordData>) => void): void;
+  readAllLines(next: SheetCallback<Record<string, RecordData>>): void;
   updateLine(lineNo: number, data: any[], next: () => void): void;
   storeSheetInfo(next: () => void): void;
-  getSheetInfo(next: (info: SheetInfo[] | null) => void): void;
+  getSheetInfo(next: SheetCallback<SheetInfo[] | null>): void;
 
   _sheetInfoUrl(): string;
   _loadGapi(next: () => void): void;
-  _authentificate(next: () => void): void;
+  _authenticate(next: () => void): void;
   _updateSigninStatus(signedIn: boolean): void;
-  _ensureAuthentificated(next: () => void): void;
+  _ensureAuthenticated(next: () => void): void;
   _preRead(next: () => void): void;
-  _pingTable(next: (success: boolean) => void): void;
+  _pingTable(next: SheetCallback<boolean>): void;
   _checkColumns(next: () => void): void;
   _checkRows(next: () => void): void;
   _loadHeader(next: () => void): void;
@@ -99,7 +92,7 @@ interface Sheet {
 }
 
 const Sheet: Sheet = {
-  scope: "https://www.googleapis.com/auth/spreadsheets",
+  scope: "https://www.googleapis.com/auth/spreadsheets email profile openid",
   header: [],
 
   noLines: 999999,
@@ -123,28 +116,42 @@ const Sheet: Sheet = {
       this.sheetId = parsedIds.sid;
     }
 
-    this.auth = window.gapi.auth2.getAuthInstance();
+    this._loadGapi(() => {
+      this._authenticate(() => {
+        // Check if we have a valid spreadsheet ID
+        if (!this.spreadsheetId) {
+          console.error("No spreadsheet ID provided");
+          next();
+          return;
+        }
 
-    console.log("auth", this.auth);
-    this._pingTable((pinged) => {
-      if (pinged) {
-        this.storeSheetInfo(() => {
-          console.log("sheetName", this.sheetName);
-          this._preRead(() => {
-            console.log("sheet inited");
+        // Ping the table to verify access
+        this._pingTable((pinged) => {
+          if (pinged) {
+            this.storeSheetInfo(() => {
+              console.log("Sheet name:", this.sheetName);
+              this._preRead(() => {
+                console.log("Sheet initialized successfully");
+                next();
+              });
+            });
+          } else {
+            console.error(
+              "Error pinging table - no access or invalid spreadsheet ID"
+            );
+            // Still call next to avoid blocking the application
+            // but the app will show the table prompt again
             next();
-          });
+          }
         });
-      } else {
-        console.log("error pinging table");
-      }
+      });
     });
   },
 
   readLine(lineNo, withoutParsing, next) {
-    this._ensureAuthentificated(() => {
+    this._ensureAuthenticated(() => {
       if (this.spreadsheetId) {
-        window.gapi.client
+        gapi.client
           .request({
             path: this._readLineUrl(lineNo),
             method: "GET",
@@ -170,8 +177,15 @@ const Sheet: Sheet = {
   },
 
   readAllLines(next) {
-    this._ensureAuthentificated(() => {
-      window.gapi.client
+    this._ensureAuthenticated(() => {
+      if (!this.spreadsheetId) {
+        console.error("No spreadsheet ID available for reading lines");
+        next({});
+        return;
+      }
+
+      console.log("Reading all lines from sheet:", this.sheetName);
+      gapi.client
         .request({
           path: this._readAll(),
           method: "GET",
@@ -179,10 +193,15 @@ const Sheet: Sheet = {
         .then(
           (response: SheetResponse) => {
             this.header = response.result.values?.[0] || [];
-            next(this._parseRecords(response));
+            const records = this._parseRecords(response);
+            console.log(
+              `Read ${Object.keys(records).length} records from sheet`
+            );
+            next(records);
           },
           (response: any) => {
             this._reportError(response);
+            console.error("Failed to read data from sheet");
             next({});
           }
         );
@@ -190,8 +209,13 @@ const Sheet: Sheet = {
   },
 
   updateLine(lineNo, data, next) {
-    this._ensureAuthentificated(() => {
-      window.gapi.client
+    this._ensureAuthenticated(() => {
+      if (!this.spreadsheetId) {
+        next();
+        return;
+      }
+
+      gapi.client
         .request({
           path: this._updateLineUrl(lineNo),
           method: "PUT",
@@ -235,8 +259,13 @@ const Sheet: Sheet = {
   },
 
   getSheetInfo(next) {
-    this._ensureAuthentificated(() => {
-      window.gapi.client
+    this._ensureAuthenticated(() => {
+      if (!this.spreadsheetId) {
+        next(null);
+        return;
+      }
+
+      gapi.client
         .request({
           path: this._sheetInfoUrl(),
           method: "GET",
@@ -262,8 +291,16 @@ const Sheet: Sheet = {
   },
 
   _loadGapi(next) {
-    window.gapi.load("client:auth2", () => {
-      window.gapi.client
+    // Check if gapi is already loaded
+    if (typeof gapi !== "undefined" && gapi.client) {
+      next();
+      return;
+    }
+
+    // Load gapi client library
+    gapi.load("client", () => {
+      // Initialize the client with API key and client ID
+      gapi.client
         .init({
           apiKey: this.apiKey,
           clientId: this.clientId,
@@ -274,44 +311,40 @@ const Sheet: Sheet = {
         })
         .then(
           () => {
-            this.auth = window.gapi.auth2.getAuthInstance();
+            console.log("GAPI client initialized successfully");
             next();
           },
           (error: any) => {
-            console.error(error);
+            console.error("Error initializing GAPI client:", error);
+            // Still call next to avoid blocking the application
+            next();
           }
         );
     });
   },
 
-  _authentificate(next) {
-    window.gapi.auth2
-      .init({
-        client_id: this.clientId,
-        scope: this.scope,
-      })
-      .then(
-        () => {
-          this.auth = window.gapi.auth2.getAuthInstance();
-          this.auth.isSignedIn.listen((signedIn: boolean) => {
-            this._updateSigninStatus(signedIn);
-          });
-          this._updateSigninStatus(this.auth.isSignedIn.get());
-          next();
-        },
-        (error: any) => {
-          console.log("error init", error);
-        }
-      );
+  _authenticate(next) {
+    // With @react-oauth/google, authentication is handled through the GoogleLogin component
+    // This function is kept for backwards compatibility, but largely bypassed
+    // Check if the user is already authenticated by checking userEmail in the store
+    if (window.store.userEmail) {
+      console.log("User already authenticated:", window.store.userEmail);
+      this._updateSigninStatus(true);
+      next();
+      return;
+    }
+
+    // If not authenticated, let the user know they need to authenticate
+    console.log(
+      "User not authenticated. Authentication is handled through the TablePrompt component."
+    );
+    this._updateSigninStatus(false);
+    next();
   },
 
   _updateSigninStatus(signedIn) {
-    console.log("signin status", signedIn);
+    console.log("Sign-in status changed:", signedIn);
     if (signedIn) {
-      window.store.userEmail = this.auth.currentUser
-        .get()
-        .getBasicProfile()
-        .getEmail();
       window.store.setAuth("yes");
       window.store.loadApplication();
     } else {
@@ -319,8 +352,17 @@ const Sheet: Sheet = {
     }
   },
 
-  _ensureAuthentificated(next) {
-    next();
+  _ensureAuthenticated(next) {
+    // Check if user email exists in the store
+    if (window.store.userEmail) {
+      next();
+      return;
+    }
+
+    // If not authenticated, handle it gracefully
+    console.log("User not authenticated. Redirecting to authentication flow.");
+    window.store.changeLoadingStatus("prompting table");
+    // Don't call next() here, as we're redirecting to authentication flow
   },
 
   _preRead(next) {
@@ -333,11 +375,7 @@ const Sheet: Sheet = {
 
   _pingTable(next) {
     this.readLine(1, true, (pingedData) => {
-      if (pingedData) {
-        next(true);
-      } else {
-        next(false);
-      }
+      next(!!pingedData);
     });
   },
 
@@ -350,7 +388,7 @@ const Sheet: Sheet = {
             .split(":")[1]
             .split("1")[0];
         } catch (e) {
-          console.log("error reading columns", e);
+          console.error("Error reading columns:", e);
         }
       }
       next();
@@ -366,7 +404,7 @@ const Sheet: Sheet = {
             10
           );
         } catch (e) {
-          console.log("error reading rows", e);
+          console.error("Error reading rows:", e);
         }
       }
       next();
@@ -378,7 +416,7 @@ const Sheet: Sheet = {
       if (isSheetResponse(headerResponse) && headerResponse.result.values) {
         this.header = headerResponse.result.values[0];
       } else {
-        console.log("no header found, assuming A, B, C, ...");
+        console.log("No header found, assuming A, B, C, ...");
         this.header = Array.from(Array(26)).map((e, i) =>
           String.fromCharCode(65 + i)
         );
@@ -452,7 +490,7 @@ const Sheet: Sheet = {
   },
 
   _reportError(errResponse) {
-    console.log("Sheet API error", errResponse);
+    console.error("Sheet API error:", errResponse);
   },
 };
 

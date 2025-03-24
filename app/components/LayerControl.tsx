@@ -92,7 +92,7 @@ const LayerControl: React.FC<LayerControlProps> = observer(() => {
                       <label className="checkbox">
                         <input
                           type="checkbox"
-                          checked={store.overlays.includes(ovKey)}
+                          checked={store.overlays?.includes(ovKey)}
                           onChange={() => store.toggleOverlay(ovKey)}
                         />
                         {ov.name}

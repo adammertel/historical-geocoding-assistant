@@ -101,3 +101,22 @@ This project uses Vite as its build tool and Bun as its JavaScript runtime and p
    ```
    npm run preview
    ```
+
+## Google API Integration
+
+The application uses Google Sheets API for data management. We've moved from loading Google API scripts via CDN to using npm packages:
+
+- `gapi-script`: For Google API client integration
+- `google-auth-library`: For authentication utilities
+- `@types/gapi` and `@types/gapi.auth2`: For TypeScript type definitions
+
+This change improves the application's reliability by:
+
+1. Better error handling
+2. TypeScript integration
+3. Controlled version management
+4. Improved authentication flow
+
+### Authentication
+
+The application uses OAuth 2.0 to authenticate with Google's services. Users need to grant permission to access their spreadsheets.
