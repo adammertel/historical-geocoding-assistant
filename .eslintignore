@@ -1,8 +1,12 @@
 node_modules/**
-static/**
+dist/**
 app/assets/**
-app/ext/**
+app/data/**
+app/configs/**
+**/*.d.ts
 **/*.css
 **/*.html
-webpack.config.js
-webpack.production.config.js
+**/*.scss
+vite.config.js
+app/appstore.js
+vite.config.ts

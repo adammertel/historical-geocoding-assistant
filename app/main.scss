@@ -1,26 +1,25 @@
-// Import the initial variables
-@import "../node_modules/bulma/sass/utilities/initial-variables";
-
 // Import other libraries
-@import "~react-leaflet-markercluster/dist/styles.min.css";
+// @import "~leaflet/dist/leaflet.css";
+// @import "~react-leaflet-markercluster/styles";
+// @import "~leaflet-geonames/L.Control.Geonames.css";
 
-@import "~leaflet-geonames/L.Control.Geonames.css";
-@import "~font-awesome/css/font-awesome.css";
-@import "~hint.css/hint.css";
-
+// Custom colors and variables
 $danger: #c98c69;
 $primary: #a64005;
 $dimmed: #a29d99;
 $color-text: black;
-
 $tooltip-max-width: 200px;
+
 $checkbox-border: 0.1rem solid $primary;
 $table-cell-border-width: none;
 $table-cell-border: none;
 $table-head-cell-border-width: none;
 
-$black-halo: 0 0 2px black;
-$white-halo: 0 0 2px white;
+$black: #000;
+$white: #fff;
+
+$black-halo: 0 0 2px $black;
+$white-halo: 0 0 2px $white;
 
 $family-serif: "Acme", sans-serif;
 $family-primary: "Lato", sans-serif;
@@ -40,7 +39,7 @@ body {
   }
 }
 
-.is-dimmed {
+.text-dimmed {
   color: $dimmed !important;
   border-color: $dimmed !important;
 }
@@ -380,11 +379,7 @@ table.table.centered {
   }
 }
 
-// Import the rest of Bulma
-@import "../node_modules/bulma/bulma";
-@import "./bulma/slider.sass";
-@import "./bulma/checkbox.sass";
-@import "./bulma/switch.sass";
+// Custom styles for the application below
 
 html {
   overflow: hidden;
@@ -467,4 +462,12 @@ html {
 .button {
   padding-left: 0.5em;
   padding-right: 0.5em;
+}
+
+.select:not(.multiple)::after {
+  // Keep your select styling here
+}
+
+.transition {
+  transition: all 0.25s ease-in-out;
 }

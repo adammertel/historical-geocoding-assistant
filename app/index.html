@@ -1,19 +1,36 @@
+<!DOCTYPE html>
 <html>
-  <title>Historical geocoding assistant</title>
-  <meta charset="UTF-8" />
-  <meta
-    name="description"
-    content="browser-based application for assigning geographic coordinates to historical datasets"
-  />
-  <meta
-    name="keywords"
-    content="Geocoding, Historical research, Spatial Humanities"
-  />
-  <meta name="author" content="Adam Mertel |  David Zbíral | dissinet.cz" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://apis.google.com/js/api.js"></script>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="browser-based application for assigning geographic coordinates to historical datasets" />
+    <meta
+      name="keywords"
+      content="Geocoding, Historical research, Spatial Humanities" />
+    <meta name="author" content="Adam Mertel |  David Zbíral | dissinet.cz" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <head> </head>
-  <body></body>
+    <!-- Website Title -->
+    <title>Historical geocoding assistant</title>
+
+    <!-- External JS scripts -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- Expose React globally for libraries that expect it -->
+    <script type="module">
+      import * as React from "react";
+      import * as ReactDOM from "react-dom/client";
+
+      // Make React available globally
+      window.React = React;
+      window.ReactDOM = ReactDOM;
+    </script>
+  </head>
+  <body class="h-full min-h-screen">
+    <div id="app"></div>
+    <script type="module" src="./main.tsx"></script>
+  </body>
 </html>

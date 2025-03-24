@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="browser-based application for assigning geographic coordinates to historical datasets" />
+    <meta
+      name="keywords"
+      content="Geocoding, Historical research, Spatial Humanities" />
+    <meta name="author" content="Adam Mertel |  David Zbíral | dissinet.cz" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Website Title -->
+    <title>Historical geocoding assistant</title>
+
+    <!-- External JS scripts -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- Explicitly expose React (will be replaced by Vite during build) -->
+    <script type="module">
+      import * as React from "react";
+      import * as ReactDOM from "react-dom/client";
+      window.React = React;
+      window.ReactDOM = ReactDOM;
+    </script>
+
+    <!-- Require polyfill that handles common modules -->
+    <script>
+      // Create a cache for modules
+      window._modules = {};
+
+      window.require = function (path) {
+        // Return cached modules if already loaded
+        if (window._modules[path]) {
+          return window._modules[path];
+        }
+
+        // Handle image imports
+        if (path.match(/\.(png|jpg|jpeg|svg|gif|webp)$/)) {
+          const imgPath = path.replace(/^\.\.?\/?/, "/");
+          return imgPath;
+        }
+
+        // Handle react imports
+        if (path === "react") {
+          console.info(
+            'CommonJS require("react") intercepted - using ES module adapter'
+          );
+
+          // Lazy load the adapter
+          if (!window._modules["react"]) {
+            // Will be imported dynamically
+            import("./lib/react-adapter.js")
+              .then((module) => {
+                window._modules["react"] = module.default;
+              })
+              .catch((err) => {
+                console.error("Failed to load React adapter:", err);
+              });
+          }
+
+          // Return React from global scope while adapter loads
+          return window.React || {};
+        }
+
+        if (path === "react-dom") {
+          console.info(
+            'CommonJS require("react-dom") intercepted - using ES module adapter'
+          );
+
+          // Lazy load the adapter if needed
+          if (!window._modules["react"]) {
+            import("./lib/react-adapter.js")
+              .then((module) => {
+                window._modules["react"] = module.default;
+                window._modules["react-dom"] = module.ReactDOM;
+              })
+              .catch((err) => {
+                console.error("Failed to load React adapter:", err);
+              });
+          }
+
+          // Return ReactDOM from global scope while adapter loads
+          return window.ReactDOM || {};
+        }
+
+        console.warn(`Unhandled require for "${path}"`);
+        return {};
+      };
+    </script>
+  </head>
+  <body class="h-full min-h-screen">
+    <div id="app"></div>
+    <script type="module" src="./main.tsx"></script>
+  </body>
+</html>

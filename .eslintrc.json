@@ -1,40 +1,39 @@
 {
-  "env": {
-    "browser": true,
-    "commonjs": true,
-    "node": true,
-    "es6": true
-  },
-  "parser": "babel-eslint",
-  "extends": "eslint:recommended",
+  "env": { "browser": true, "node": true, "es2020": true },
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime"
+  ],
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true,
-      "allowJs": true,
-      "experimentalObjectRestSpread": true
-    },
+    "ecmaFeatures": { "jsx": true },
+    "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": ["react", "@typescript-eslint"],
   "globals": {
-    "store": true,
-    "Base": true,
-    "basemaps": true,
-    "computed": true,
-    "config": true,
-    "gapi": true,
-    "map": true,
-    "overlaymaps": true,
-    "sheetUrl": true,
-    "initSheet": true,
-    "$": true
+    "store": "readonly",
+    "Base": "readonly",
+    "basemaps": "readonly",
+    "computed": "readonly",
+    "config": "readonly",
+    "gapi": "readonly",
+    "map": "readonly",
+    "overlaymaps": "readonly",
+    "sheetUrl": "readonly",
+    "initSheet": "readonly"
   },
+  "settings": { "react": { "version": "detect" } },
   "rules": {
     "no-console": "off",
-    "strict": 0,
     "indent": ["error", 2],
-    "linebreak-style": ["error", "windows"],
-    "quotes": ["error", "single"],
-    "react/jsx-uses-vars": [2]
-  }
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "double"],
+    "react/jsx-uses-vars": [2],
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
+  },
+  "ignorePatterns": ["dist/**/*", "node_modules/**/*"]
 }

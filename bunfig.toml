@@ -1,0 +1,12 @@
+[install]
+# Use exact version when installing dependencies
+exact = true
+
+[install.cache]
+# Enable global cache to speed up installations
+enabled = true
+
+[dev]
+# Configure hot reloading for development
+# Vite already handles this but this is for other scripts
+hot = true 

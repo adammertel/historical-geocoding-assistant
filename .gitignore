@@ -463,3 +463,11 @@ healthchecksdb
 MigrationBackup/
 
 # End of https://www.gitignore.io/api/node,react,visualstudio
+
+# Cursor rules
+.cursorrules
+
+# Bun
+.bun/
+bun.lockb
+
